@@ -40,7 +40,9 @@
         </LinearLayout>
 
         <!-- OPTION HOME -->
-        <LinearLayout style="@style/style_sliding_drawer_option_layout">
+        <LinearLayout
+            android:id="@+id/activity_main_sliding_layout_option_home"
+            style="@style/style_sliding_drawer_option_layout">
 
             <ImageView
                 style="@style/style_sliding_drawer_option_icon"
@@ -52,7 +54,9 @@
         </LinearLayout>
 
         <!-- OPTION CHANGE PASSWORD -->
-        <LinearLayout style="@style/style_sliding_drawer_option_layout">
+        <LinearLayout
+            android:id="@+id/activity_main_sliding_layout_option_password"
+            style="@style/style_sliding_drawer_option_layout">
 
             <ImageView
                 style="@style/style_sliding_drawer_option_icon"
@@ -64,7 +68,9 @@
         </LinearLayout>
 
         <!-- OPTION LANGUAGE -->
-        <LinearLayout style="@style/style_sliding_drawer_option_layout">
+        <LinearLayout
+            android:id="@+id/activity_main_sliding_layout_option_language"
+            style="@style/style_sliding_drawer_option_layout">
 
             <ImageView
                 style="@style/style_sliding_drawer_option_icon"
@@ -76,7 +82,9 @@
         </LinearLayout>
 
         <!-- OPTION FAQ -->
-        <LinearLayout style="@style/style_sliding_drawer_option_layout">
+        <LinearLayout
+            android:id="@+id/activity_main_sliding_layout_option_faq"
+            style="@style/style_sliding_drawer_option_layout">
 
             <ImageView
                 style="@style/style_sliding_drawer_option_icon"
@@ -88,7 +96,9 @@
         </LinearLayout>
 
         <!-- OPTION T&C -->
-        <LinearLayout style="@style/style_sliding_drawer_option_layout">
+        <LinearLayout
+            android:id="@+id/activity_main_sliding_layout_option_term_and_condition"
+            style="@style/style_sliding_drawer_option_layout">
 
             <ImageView
                 style="@style/style_sliding_drawer_option_icon"
@@ -100,7 +110,9 @@
         </LinearLayout>
 
         <!-- OPTION CONTACT MOBIL PAY -->
-        <LinearLayout style="@style/style_sliding_drawer_option_layout">
+        <LinearLayout
+            android:id="@+id/activity_main_sliding_layout_option_contact_mobil_pay"
+            style="@style/style_sliding_drawer_option_layout">
 
             <ImageView
                 style="@style/style_sliding_drawer_option_icon"
@@ -118,7 +130,9 @@
             android:layout_weight="0.5" />
 
         <!-- OPTION LOGOUT -->
-        <LinearLayout style="@style/style_sliding_drawer_option_layout">
+        <LinearLayout
+            android:id="@+id/activity_main_sliding_layout_option_logout"
+            style="@style/style_sliding_drawer_option_layout">
 
             <ImageView
                 style="@style/style_sliding_drawer_option_icon"
