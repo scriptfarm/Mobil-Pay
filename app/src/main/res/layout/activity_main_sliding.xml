@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_back"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- USER PROFILE INFO -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_main_sliding_content_padding">
+
+            <!-- User Logo -->
+            <ImageView
+                android:id="@+id/activity_main_sliding_imageView_logo"
+                android:layout_width="@dimen/activity_main_sliding_profile_logo_width"
+                android:layout_height="@dimen/activity_main_sliding_profile_logo_height"
+                android:background="#FFFFFF" />
+
+            <!-- User Name -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_main_sliding_content_margin_ver"
+                android:text="Hi\nTHE MKR"
+                android:textColor="@color/activity_main_sliding_title_text_color"
+                android:textSize="@dimen/activity_main_sliding_title_text_size"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- OPTION HOME -->
+        <LinearLayout style="@style/style_sliding_drawer_option_layout">
+
+            <ImageView
+                style="@style/style_sliding_drawer_option_icon"
+                android:src="@drawable/ic_sliding_home" />
+
+            <TextView
+                style="@style/style_sliding_drawer_option_text"
+                android:text="@string/home" />
+        </LinearLayout>
+
+        <!-- OPTION CHANGE PASSWORD -->
+        <LinearLayout style="@style/style_sliding_drawer_option_layout">
+
+            <ImageView
+                style="@style/style_sliding_drawer_option_icon"
+                android:src="@drawable/ic_sliding_change_password" />
+
+            <TextView
+                style="@style/style_sliding_drawer_option_text"
+                android:text="@string/change_password" />
+        </LinearLayout>
+
+        <!-- OPTION LANGUAGE -->
+        <LinearLayout style="@style/style_sliding_drawer_option_layout">
+
+            <ImageView
+                style="@style/style_sliding_drawer_option_icon"
+                android:src="@drawable/ic_sliding_language" />
+
+            <TextView
+                style="@style/style_sliding_drawer_option_text"
+                android:text="@string/language" />
+        </LinearLayout>
+
+        <!-- OPTION FAQ -->
+        <LinearLayout style="@style/style_sliding_drawer_option_layout">
+
+            <ImageView
+                style="@style/style_sliding_drawer_option_icon"
+                android:src="@drawable/ic_sliding_faq" />
+
+            <TextView
+                style="@style/style_sliding_drawer_option_text"
+                android:text="@string/faq" />
+        </LinearLayout>
+
+        <!-- OPTION T&C -->
+        <LinearLayout style="@style/style_sliding_drawer_option_layout">
+
+            <ImageView
+                style="@style/style_sliding_drawer_option_icon"
+                android:src="@drawable/ic_sliding_term_and_condition" />
+
+            <TextView
+                style="@style/style_sliding_drawer_option_text"
+                android:text="@string/terms_and_condition" />
+        </LinearLayout>
+
+        <!-- OPTION CONTACT MOBIL PAY -->
+        <LinearLayout style="@style/style_sliding_drawer_option_layout">
+
+            <ImageView
+                style="@style/style_sliding_drawer_option_icon"
+                android:src="@drawable/ic_sliding_contact_mobilpay" />
+
+            <TextView
+                style="@style/style_sliding_drawer_option_text"
+                android:text="@string/contact_mobil_pay" />
+        </LinearLayout>
+
+        <!-- View to consume free space -->
+        <View
+            android:layout_width="1px"
+            android:layout_height="0dp"
+            android:layout_weight="0.5" />
+
+        <!-- OPTION LOGOUT -->
+        <LinearLayout style="@style/style_sliding_drawer_option_layout">
+
+            <ImageView
+                style="@style/style_sliding_drawer_option_icon"
+                android:src="@drawable/ic_sliding_logout" />
+
+            <TextView
+                style="@style/style_sliding_drawer_option_text"
+                android:text="@string/logout" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

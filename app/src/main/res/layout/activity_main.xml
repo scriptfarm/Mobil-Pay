@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,14 +7,39 @@
     android:background="@color/screen_back"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/activity_main_toolbar"
-        style="@style/toolbar_dimen" />
-
-    <FrameLayout
-        android:id="@+id/activity_main_fragment_container"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/activity_main_drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-</LinearLayout>
+        <!-- VISIBLE VIEW -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/activity_main_toolbar"
+                style="@style/toolbar_dimen" />
+
+            <FrameLayout
+                android:id="@+id/activity_main_fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <!-- SLIDING VIEW -->
+        <FrameLayout
+            android:id="@+id/activity_main_hide_layout"
+            android:layout_width="@dimen/activity_main_sliding_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:choiceMode="singleChoice">
+
+            <include layout="@layout/activity_main_sliding" />
+        </FrameLayout>
+    </android.support.v4.widget.DrawerLayout>
+
+</FrameLayout>

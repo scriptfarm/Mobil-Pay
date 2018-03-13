@@ -5,4 +5,11 @@
     <string name="login_to_your_account">Login to your account</string>
     <string name="caps_sign_in">SIGN IN</string>
     <string name="use_finger_print_question">Use Fingerprint?</string>
+    <string name="home">Home</string>
+    <string name="change_password">Change Password</string>
+    <string name="language">Language</string>
+    <string name="faq">FAQ</string>
+    <string name="terms_and_condition">Terms &amp; Condition</string>
+    <string name="contact_mobil_pay">Contact MobilPay</string>
+    <string name="logout">Logout</string>
 </resources>

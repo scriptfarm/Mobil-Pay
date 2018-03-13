@@ -2,6 +2,7 @@ package com.mkrworld.mobilpay.ui.activity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,16 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
         onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.fragmentMerchantLogin), null, false, FragmentTag.fragmentMerchantLogin);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Tracer.debug(TAG, "onBackPressed: ");
+        if (isDrawerVisible()) {
+            hideDrawer();
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override
@@ -64,5 +75,25 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
             fragment.setArguments(bundle);
         }
         fragmentTransaction.commit();
+    }
+
+    /**
+     * Method to check weather the drawer View is visible or not
+     *
+     * @return TRUE if drawer is visible, else FALSE
+     */
+    private boolean isDrawerVisible() {
+        Tracer.debug(TAG, "isDrawerVisible: ");
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawer_layout);
+        return drawerLayout != null && drawerLayout.isDrawerVisible(findViewById(R.id.activity_main_hide_layout));
+    }
+
+    /**
+     * Method to hide the Drawer
+     */
+    private void hideDrawer() {
+        Tracer.debug(TAG, "hideDrawer: ");
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawer_layout);
+        drawerLayout.closeDrawer(findViewById(R.id.activity_main_hide_layout));
     }
 }

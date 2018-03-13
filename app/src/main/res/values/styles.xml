@@ -49,7 +49,7 @@
     <style name="style_text_input_layout_inputText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textColor">@color/text_color_black</item>
         <item name="android:textSize">@dimen/text_input_layout_text_size</item>
     </style>
 
@@ -74,4 +74,31 @@
         <item name="android:layout_weight">0.5</item>
     </style>
     <!-- Button Layout End -->
+
+    <!-- Sliding Drawer Property Start -->
+    <style name="style_sliding_drawer_option_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">@dimen/activity_main_sliding_content_padding</item>
+        <item name="android:paddingBottom">@dimen/activity_main_sliding_content_padding</item>
+        <item name="android:paddingLeft">@dimen/activity_main_sliding_content_padding</item>
+        <item name="android:paddingRight">@dimen/activity_main_sliding_content_padding</item>
+    </style>
+
+    <style name="style_sliding_drawer_option_icon">
+        <item name="android:layout_width">@dimen/activity_main_sliding_logo_dim</item>
+        <item name="android:layout_height">@dimen/activity_main_sliding_logo_dim</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <style name="style_sliding_drawer_option_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/activity_main_sliding_content_padding</item>
+        <item name="android:text">@string/app_name</item>
+        <item name="android:textColor">@color/activity_main_sliding_text_color</item>
+        <item name="android:textSize">@dimen/activity_main_sliding_text_size</item>
+    </style>
+    <!-- Sliding Drawer Property End -->
 </resources>

@@ -6,11 +6,16 @@
     <color name="toolbar_back">@color/colorPrimary</color>
     <color name="toolbar_text_color">@android:color/white</color>
     <color name="transparent">#00000000</color>
-    <color name="text_color">#000000</color>
+    <color name="text_color_black">#000000</color>
+    <color name="text_color_white">#FFFFFF</color>
     <color name="screen_back">#EEEEEE</color>
     <color name="card_background">#FFFFFF</color>
     <color name="button_background">@color/colorPrimary</color>
-    <color name="button_text_color">#FFFFFF</color>
+    <color name="button_text_color">@color/text_color_white</color>
+
+    <!-- ACTIVITY MAIN SLIDING -->
+    <color name="activity_main_sliding_title_text_color">@color/text_color_white</color>
+    <color name="activity_main_sliding_text_color">#555555</color>
 
     <!-- FRAGMENT MERCHANT LOGIN -->
     <color name="fragment_login_card_title_text">@color/colorAccent</color>

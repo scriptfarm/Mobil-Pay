@@ -30,7 +30,7 @@
                     android:layout_marginTop="@dimen/fragment_merchant_login_content_margin"
                     android:gravity="center"
                     android:text="@string/login_to_your_account"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/fragment_login_card_title_text"
                     android:textSize="@dimen/fragment_merchant_login_card_title_text_size" />
 
                 <!-- MERCHANT-ID / MOBILE-NUMBER -->
@@ -78,7 +78,7 @@
                     android:layout_marginBottom="@dimen/fragment_merchant_login_content_margin"
                     android:gravity="center"
                     android:text="@string/use_finger_print_question"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/fragment_login_card_title_text"
                     android:textSize="@dimen/fragment_merchant_login_card_title_text_size" />
 
             </LinearLayout>

@@ -25,6 +25,16 @@
     <dimen name="button_padding_hor">@dimen/mkrdp_2</dimen>
     <dimen name="button_text_size">@dimen/text_size</dimen>
 
+    <!-- ACTIVITY MAIN -->
+    <dimen name="activity_main_sliding_width">@dimen/mkrdp_80</dimen>
+    <dimen name="activity_main_sliding_content_padding">@dimen/mkrdp_3</dimen>
+    <dimen name="activity_main_sliding_profile_logo_width">@dimen/mkrdp_20</dimen>
+    <dimen name="activity_main_sliding_profile_logo_height">@dimen/mkrdp_15</dimen>
+    <dimen name="activity_main_sliding_logo_dim">@dimen/mkrdp_6</dimen>
+    <dimen name="activity_main_sliding_title_text_size">@dimen/title_text_size</dimen>
+    <dimen name="activity_main_sliding_content_margin_ver">@dimen/mkrdp_1</dimen>
+    <dimen name="activity_main_sliding_text_size">@dimen/text_size</dimen>
+
     <!-- FRAGMENT MERCHANT LOGIN -->
     <dimen name="fragment_merchant_login_card_title_text_size">@dimen/title_text_size</dimen>
     <dimen name="fragment_merchant_login_content_margin">@dimen/mkrdp_4</dimen>
