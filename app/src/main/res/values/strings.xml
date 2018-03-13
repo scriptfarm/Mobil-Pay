@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Mobil Pay</string>
+    <string name="merchant_id_slash_mobile_number">Merchant-ID/Mobile-Number</string>
 </resources>

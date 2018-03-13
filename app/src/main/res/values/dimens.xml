@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- CARD PROPERTY -->
+    <dimen name="card_corner">@dimen/mkrdp_1.49</dimen>
+    <dimen name="card_content_padding_ver">@dimen/mkrdp_1.49</dimen>
+    <dimen name="card_content_padding_hor">@dimen/mkrdp_1.49</dimen>
+    <dimen name="card_margin_hor">@dimen/mkrdp_1.49</dimen>
+    <dimen name="card_margin_ver">@dimen/mkrdp_1</dimen>
+
+    <!-- TEXT INPUT LAYOUT -->
+    <dimen name="text_input_layout_hint_text_size">@dimen/mkrdp_3</dimen>
+    <dimen name="text_input_layout_text_size">@dimen/mkrdp_5</dimen>
+</resources>

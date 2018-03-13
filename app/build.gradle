@@ -1,7 +1,11 @@
 apply plugin: 'com.android.application'
 
+def STRING = "String"
+def BASE_TAG = "BASE_TAG"
+def BASE_TAG_VALUE = "\"MKRWorld.MobilPay\""
 android {
     compileSdkVersion 26
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.mkrworld.mobilpay"
         minSdkVersion 16
@@ -11,6 +15,12 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField STRING, BASE_TAG, BASE_TAG_VALUE
+            multiDexEnabled true
+        }
+
+        release.initWith(buildTypes.debug)
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -19,9 +29,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    implementation project(':mkr-android-lib')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:26.0.2'
+    testCompile 'junit:junit:4.12'
+    compile project(':mkr-android-lib')
 }

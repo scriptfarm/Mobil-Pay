@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -8,4 +8,23 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- CardView Property Start -->
+    <style name="style_card_view_property">
+        <item name="android:layout_marginBottom">@dimen/card_margin_ver</item>
+        <item name="android:layout_marginLeft">@dimen/card_margin_hor</item>
+        <item name="android:layout_marginRight">@dimen/card_margin_hor</item>
+        <item name="android:layout_marginTop">@dimen/card_margin_ver</item>
+        <!--<item name="app:cardCornerRadius">@dimen/card_corner</item>-->
+        <!--<item name="app:contentPaddingBottom">@dimen/card_content_padding_ver</item>-->
+        <!--<item name="app:contentPaddingLeft">@dimen/card_content_padding_hor</item>-->
+        <!--<item name="app:contentPaddingRight">@dimen/card_content_padding_hor</item>-->
+        <!--<item name="app:contentPaddingTop">@dimen/card_content_padding_ver</item>-->
+    </style>
+    <!-- CardView Property End -->
+
+    <!-- TextInputLayout Property Start -->
+    <!--<style name="style_text_input_layout_property" parent="TextAppearance.Design.Hint">-->
+        <!--<item name="android:textSize">@dimen/text_input_layout_hint_text_size</item>-->
+    <!--</style>-->
+    <!-- TextInputLayout Property End -->
 </resources>
