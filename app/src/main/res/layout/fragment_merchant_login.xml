@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/screen_back"
     android:fillViewport="true">
 
     <LinearLayout
@@ -14,26 +15,55 @@
         <android.support.v7.widget.CardView
             style="@style/style_card_view_property"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/card_background">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/passwordWrapper"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/fragment_merchant_login_content_margin"
+                    android:layout_marginTop="@dimen/fragment_merchant_login_content_margin"
+                    android:gravity="center"
+                    android:text="@string/login_to_your_account"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/fragment_merchant_login_card_title_text_size" />
+
+                <!-- MERCHANT-ID / MOBILE-NUMBER -->
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/fragment_merchant_login_textInputLayout_merchant_id_mobile_number"
+                    style="@style/style_text_input_layout_hint">
 
                     <EditText
-                        android:id="@+id/password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/fragment_merchant_login_editText_merchant_id_mobile_number"
+                        style="@style/style_text_input_layout_inputText"
                         android:hint="@string/merchant_id_slash_mobile_number"
+                        android:inputType="textNoSuggestions" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <!-- PASSWORD -->
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/fragment_merchant_login_textInputLayout_password"
+                    style="@style/style_text_input_layout_hint">
+
+                    <EditText
+                        android:id="@+id/fragment_merchant_login_editText_password"
+                        style="@style/style_text_input_layout_inputText"
+                        android:hint="@string/password"
                         android:inputType="textPassword" />
 
                 </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/fragment_merchant_login_textView_sign_in"
+                    style="@style/style_button"
+                    android:layout_marginTop="@dimen/fragment_merchant_login_content_margin"
+                    android:text="@string/caps_sign_in" />
 
             </LinearLayout>
         </android.support.v7.widget.CardView>

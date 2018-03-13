@@ -6,6 +6,21 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColorPrimary">@color/toolbar_text_color</item>
+        <item name="actionOverflowMenuStyle">@style/PopupMenu</item>
+    </style>
+
+    <style name="PopupMenu" parent="@style/Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/colorPrimaryDark</item>
+    </style>
+
+    <!-- TOOLBAR STYLE -->
+    <style name="toolbar_dimen">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <item name="android:background">@color/toolbar_back</item>
     </style>
 
     <!-- CardView Property Start -->
@@ -14,17 +29,49 @@
         <item name="android:layout_marginLeft">@dimen/card_margin_hor</item>
         <item name="android:layout_marginRight">@dimen/card_margin_hor</item>
         <item name="android:layout_marginTop">@dimen/card_margin_ver</item>
-        <!--<item name="app:cardCornerRadius">@dimen/card_corner</item>-->
-        <!--<item name="app:contentPaddingBottom">@dimen/card_content_padding_ver</item>-->
-        <!--<item name="app:contentPaddingLeft">@dimen/card_content_padding_hor</item>-->
-        <!--<item name="app:contentPaddingRight">@dimen/card_content_padding_hor</item>-->
-        <!--<item name="app:contentPaddingTop">@dimen/card_content_padding_ver</item>-->
+        <item name="cardCornerRadius">@dimen/card_corner</item>
+        <item name="contentPaddingBottom">@dimen/card_content_padding_ver</item>
+        <item name="contentPaddingLeft">@dimen/card_content_padding_hor</item>
+        <item name="contentPaddingRight">@dimen/card_content_padding_hor</item>
+        <item name="contentPaddingTop">@dimen/card_content_padding_ver</item>
     </style>
     <!-- CardView Property End -->
 
     <!-- TextInputLayout Property Start -->
-    <!--<style name="style_text_input_layout_property" parent="TextAppearance.Design.Hint">-->
-        <!--<item name="android:textSize">@dimen/text_input_layout_hint_text_size</item>-->
-    <!--</style>-->
+    <style name="style_text_input_layout_hint">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="hintTextAppearance">@style/style_text_input_layout_hint_appearince</item>
+        <item name="android:layout_marginTop">@dimen/text_input_layout_margin_ver</item>
+        <item name="android:layout_marginBottom">@dimen/text_input_layout_margin_ver</item>
+    </style>
+
+    <style name="style_text_input_layout_inputText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">@dimen/text_input_layout_text_size</item>
+    </style>
+
+    <style name="style_text_input_layout_hint_appearince" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">@dimen/text_input_layout_hint_text_size</item>
+    </style>
     <!-- TextInputLayout Property End -->
+
+    <!-- Button Layout Start -->
+    <style name="style_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/shape_button</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:textColor">@color/button_text_color</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- Use in case when set in linear layout where orientation is horizontal -->
+    <style name="style_button_width_weight" parent="style_button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">0.5</item>
+    </style>
+    <!-- Button Layout End -->
 </resources>

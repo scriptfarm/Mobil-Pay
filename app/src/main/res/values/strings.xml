@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Mobil Pay</string>
     <string name="merchant_id_slash_mobile_number">Merchant-ID/Mobile-Number</string>
+    <string name="password">Password</string>
+    <string name="login_to_your_account">Login to your account</string>
+    <string name="caps_sign_in">SIGN IN</string>
 </resources>

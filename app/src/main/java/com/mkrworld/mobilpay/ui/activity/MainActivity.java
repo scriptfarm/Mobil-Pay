@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.utils.Tracer;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
         Tracer.debug(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
+        setSupportActionBar(toolbar);
         onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.fragmentMerchantLogin), null, false, FragmentTag.fragmentMerchantLogin);
     }
 
