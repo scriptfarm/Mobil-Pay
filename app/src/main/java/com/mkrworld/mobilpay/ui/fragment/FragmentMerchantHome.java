@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
 import com.mkrworld.androidlib.ui.adapter.BaseAdapter;
 import com.mkrworld.androidlib.ui.adapter.BaseAdapterItem;
+import com.mkrworld.androidlib.ui.adapter.BaseViewHolder;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
  * Created by mkr on 13/3/18.
  */
 
-public class FragmentMerchantHome extends Fragment implements OnBaseFragmentListener {
+public class FragmentMerchantHome extends Fragment implements OnBaseFragmentListener, BaseViewHolder.VHClickable {
     private static final String TAG = BuildConfig.BASE_TAG + ".FragmentMerchantHome";
 
     @Nullable
@@ -64,6 +65,19 @@ public class FragmentMerchantHome extends Fragment implements OnBaseFragmentList
         Tracer.debug(TAG, "onRefresh: ");
     }
 
+    @Override
+    public void onViewHolderClicked(BaseViewHolder holder, View view) {
+        Tracer.debug(TAG, "onViewHolderClicked: ");
+        switch (view.getId()) {
+            case R.id.item_merchant_home_parent:
+                if (view.getTag() instanceof DTOMerchantHomeTab) {
+                    DTOMerchantHomeTab dtoMerchantHomeTab = (DTOMerchantHomeTab) view.getTag();
+                    // TO DO
+                }
+                break;
+        }
+    }
+
     /**
      * Method to initialize the Fragment
      */
@@ -82,6 +96,7 @@ public class FragmentMerchantHome extends Fragment implements OnBaseFragmentList
         int colorDivider = ContextCompat.getColor(getActivity(), R.color.divider_color);
         GridSpacingItemDecoration gridSpacingItemDecoration = new GridSpacingItemDecoration(2, getResources().getDimensionPixelOffset(R.dimen.divider_size), colorDivider, false);
         recyclerView.addItemDecoration(gridSpacingItemDecoration);
+        baseAdapter.setVHClickCallback(this);
     }
 
     /**

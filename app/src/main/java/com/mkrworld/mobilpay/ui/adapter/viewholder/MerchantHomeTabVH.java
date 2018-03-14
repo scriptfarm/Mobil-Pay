@@ -27,6 +27,7 @@ public class MerchantHomeTabVH extends BaseViewHolder<DTOMerchantHomeTab> {
     public MerchantHomeTabVH(View itemView) {
         super(itemView);
         Tracer.debug(TAG, "MerchantHomeTabVH: ");
+        getParent().setOnClickListener(this);
         mImageViewIcon = itemView.findViewById(R.id.item_merchant_home_imageView_icon);
         mTextViewLabel = itemView.findViewById(R.id.item_merchant_home_textView_label);
     }
@@ -37,6 +38,7 @@ public class MerchantHomeTabVH extends BaseViewHolder<DTOMerchantHomeTab> {
         if (dtoMerchantHomeTab == null) {
             return;
         }
+        getParent().setTag(dtoMerchantHomeTab);
         mImageViewIcon.setImageResource(dtoMerchantHomeTab.getIconResId());
         mTextViewLabel.setText(dtoMerchantHomeTab.getLabel());
     }
