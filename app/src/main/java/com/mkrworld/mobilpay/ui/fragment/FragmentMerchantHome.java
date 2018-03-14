@@ -1,19 +1,14 @@
 package com.mkrworld.mobilpay.ui.fragment;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
@@ -87,13 +82,27 @@ public class FragmentMerchantHome extends Fragment implements OnBaseFragmentList
                                 ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, bundle, true, FragmentTag.MERCHANT_QR_CODE);
                             }
                             break;
+                        case DYNAMIC_QR_CODE:
+                            if (getActivity() instanceof OnBaseActivityListener) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, "THE MKR");
+                                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TEXT, "I AM THE MANISH KUMAR REWALLIYA");
+                                Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_QR_CODE_GENERATOR);
+                                ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, bundle, true, FragmentTag.MERCHANT_QR_CODE_GENERATOR);
+                            }
+                            break;
                         case SEND_BILL:
                             break;
                         case UPI_COLLECT:
                             break;
                         case AEPS_COLLECT:
-                            break;
-                        case DYNAMIC_QR_CODE:
+                            if (getActivity() instanceof OnBaseActivityListener) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, "THE MKR");
+                                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TEXT, "I AM THE MANISH KUMAR REWALLIYA");
+                                Fragment fragment = FragmentProvider.getFragment(FragmentTag.AEPS_COLLECT);
+                                ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, bundle, true, FragmentTag.AEPS_COLLECT);
+                            }
                             break;
                         case COLLECTION_SUMMARY:
                             break;
@@ -110,7 +119,7 @@ public class FragmentMerchantHome extends Fragment implements OnBaseFragmentList
     private void setTitle() {
         Tracer.debug(TAG, "setTitle: ");
         if (getActivity() instanceof OnBaseActivityListener) {
-            ((OnBaseActivityListener) getActivity()).onBaseActivitySetScreenTitle(getString(R.string.screen_title_home));
+            ((OnBaseActivityListener) getActivity()).onBaseActivitySetScreenTitle(getString(R.string.screen_title_merchant_home));
         }
     }
 

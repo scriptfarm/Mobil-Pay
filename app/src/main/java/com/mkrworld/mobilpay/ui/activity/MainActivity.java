@@ -1,6 +1,7 @@
 package com.mkrworld.mobilpay.ui.activity;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
+import com.mkrworld.mobilpay.utils.Utils;
 
 public class MainActivity extends AppCompatActivity implements OnBaseActivityListener {
     private static final String TAG = BuildConfig.BASE_TAG + ".MainActivity";
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
-        onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME), null, false, FragmentTag.MERCHANT_HOME);
+        onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN), null, false, FragmentTag.MERCHANT_LOGIN);
     }
 
     @Override
@@ -65,11 +67,20 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
     @Override
     public void onBaseActivityReplaceFragment(Fragment fragment, Bundle bundle, String tag) {
         Tracer.debug(TAG, "onBaseActivityReplaceFragment: ");
+        onBaseActivityReplaceFragment(R.id.activity_main_fragment_container, fragment, bundle, tag);
     }
 
     @Override
     public void onBaseActivityReplaceFragment(int containerId, Fragment fragment, Bundle bundle, String tag) {
         Tracer.debug(TAG, "onBaseActivityReplaceFragment: ");
+        Utils.hideKeyboard(this);
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(containerId, fragment, tag);
+        if (bundle != null) {
+            fragment.setArguments(bundle);
+        }
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -81,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
     @Override
     public void onBaseActivityAddFragment(int containerId, Fragment fragment, Bundle bundle, boolean isAddToBackStack, String tag) {
         Tracer.debug(TAG, "onBaseActivityAddFragment: ");
+        Utils.hideKeyboard(this);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(containerId, fragment, tag);
         if (isAddToBackStack) {

@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">Mobil Pay</string>
-    <string name="screen_title_login">Login</string>
-    <string name="screen_title_home">Home</string>
-    <string name="screen_title_qrcode">QR-Code</string>
+    <string name="symbol_rs">₹</string>
+
+    <!-- SCREE TITLE-->
+    <string name="screen_title_merchant_login">Merchant Login</string>
+    <string name="screen_title_merchant_home">Merchant Home</string>
+    <string name="screen_title_merchant_qrcode">Merchant Code</string>
+    <string name="screen_title_aeps_collect">AEPS Collect</string>
 
     <!-- SLIDING DRAWER -->
     <string name="home">Home</string>
@@ -27,5 +31,21 @@
     <string name="aeps_collect">AEPS Collect</string>
     <string name="send_bill">Send Bill</string>
     <string name="collection_summary">Collection Summary</string>
+
+    <!-- MERCHANT QR-CODE GENERATOR -->
+    <string name="merchant_qrcode_generator">Merchant QR-Code Generator</string>
+    <string name="bill_number_star">Bill Number *</string>
+    <string name="bill_description">Bill Description</string>
+    <string name="bill_amount">Bill Amount ₹</string>
+    <string name="caps_generate">GENERATE</string>
+    <string name="caps_cancel">CANCEL</string>
+
+    <!-- AEPS COLLECT -->
+    <string name="caps_aeps">AEPS</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="bank_name">Bank Name</string>
+    <string name="Transaction_amount_star">Transaction Amount *</string>
+    <string name="mobile_number_star">Mobile Number *</string>
+    <string name="enter_last_4_digit_aadhar_number">Enter Last 4 Digit Aadhar Number</string>
 
 </resources>

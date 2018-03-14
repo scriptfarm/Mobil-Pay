@@ -4,9 +4,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +12,11 @@ import android.widget.TextView;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
-import com.mkrworld.androidlib.ui.adapter.BaseAdapter;
-import com.mkrworld.androidlib.ui.adapter.BaseAdapterItem;
-import com.mkrworld.androidlib.ui.adapter.BaseViewHolder;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
-import com.mkrworld.mobilpay.dto.DTOMerchantHomeTab;
-import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler;
-import com.mkrworld.mobilpay.ui.adapter.GridSpacingItemDecoration;
 
 import net.glxn.qrgen.android.QRCode;
-import net.glxn.qrgen.core.scheme.VCard;
-
-import java.util.ArrayList;
 
 /**
  * Created by mkr on 13/3/18.
@@ -77,7 +65,7 @@ public class FragmentMerchantQrCode extends Fragment implements OnBaseFragmentLi
     private void setTitle() {
         Tracer.debug(TAG, "setTitle: ");
         if (getActivity() instanceof OnBaseActivityListener) {
-            ((OnBaseActivityListener) getActivity()).onBaseActivitySetScreenTitle(getString(R.string.screen_title_qrcode));
+            ((OnBaseActivityListener) getActivity()).onBaseActivitySetScreenTitle(getString(R.string.screen_title_merchant_qrcode));
         }
     }
 

@@ -51,6 +51,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text_color_black</item>
         <item name="android:textSize">@dimen/text_input_layout_text_size</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <style name="style_text_input_layout_hint_appearince" parent="TextAppearance.Design.Hint">
@@ -62,7 +63,7 @@
     <style name="style_button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/shape_button</item>
+        <item name="android:background">@drawable/selector_button</item>
         <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:textColor">@color/button_text_color</item>
         <item name="android:gravity">center</item>

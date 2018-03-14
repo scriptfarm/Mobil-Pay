@@ -12,6 +12,7 @@
     <color name="screen_back">#EEEEEE</color>
     <color name="card_background">#FFFFFF</color>
     <color name="button_background">@color/colorPrimary</color>
+    <color name="button_background_f">@color/colorPrimaryDark</color>
     <color name="button_text_color">@color/text_color_white</color>
 
     <!-- ACTIVITY MAIN SLIDING -->
@@ -23,4 +24,7 @@
 
     <!-- FRAGMENT MERCHANT QR-CODE -->
     <color name="fragment_merchant_qrcode_card_title_text">@color/colorAccent</color>
+
+    <!-- FRAGMENT MERCHANT QR-CODE GENERATOR -->
+    <color name="fragment_merchant_qrcode_generator_card_title_text">@color/colorAccent</color>
 </resources>

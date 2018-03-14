@@ -1,32 +1,35 @@
 package com.mkrworld.mobilpay.ui.fragment;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
-import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
-import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
+
+import net.glxn.qrgen.android.QRCode;
 
 /**
  * Created by mkr on 13/3/18.
  */
 
-public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentListener, View.OnClickListener {
-    private static final String TAG = BuildConfig.BASE_TAG + ".FragmentMerchantLogin";
+public class FragmentAEPSCollect extends Fragment implements OnBaseFragmentListener {
+    private static final String TAG = BuildConfig.BASE_TAG + ".FragmentAEPSCollect";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Tracer.debug(TAG, "onCreateView: ");
-        return inflater.inflate(R.layout.fragment_merchant_login, container, false);
+        return inflater.inflate(R.layout.fragment_aeps_collect, container, false);
     }
 
     @Override
@@ -54,35 +57,24 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         Tracer.debug(TAG, "onRefresh: ");
     }
 
-    @Override
-    public void onClick(View view) {
-        Tracer.debug(TAG, "onClick: ");
-        switch (view.getId()) {
-            case R.id.fragment_merchant_login_textView_sign_in:
-                Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
-                ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
-                break;
-        }
-    }
-
     /**
      * Method to set the Activity Title
      */
     private void setTitle() {
         Tracer.debug(TAG, "setTitle: ");
         if (getActivity() instanceof OnBaseActivityListener) {
-            ((OnBaseActivityListener) getActivity()).onBaseActivitySetScreenTitle(getString(R.string.screen_title_merchant_login));
+            ((OnBaseActivityListener) getActivity()).onBaseActivitySetScreenTitle(getString(R.string.screen_title_aeps_collect));
         }
     }
 
     /**
-     * Method to init the Fragment
+     * Method to initialize the Fragment
      */
     private void init() {
         Tracer.debug(TAG, "init: ");
-        if (getView() == null) {
+        Bundle bundle = getArguments();
+        if (getView() == null || bundle == null) {
             return;
         }
-        getView().findViewById(R.id.fragment_merchant_login_textView_sign_in).setOnClickListener(this);
     }
 }

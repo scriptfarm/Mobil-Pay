@@ -8,4 +8,6 @@ public interface FragmentTag {
     String MERCHANT_LOGIN = "FragmentMerchantLogin";
     String MERCHANT_HOME = "FragmentMerchantHome";
     String MERCHANT_QR_CODE = "FragmentMerchantQrCode";
+    String MERCHANT_QR_CODE_GENERATOR = "FragmentMerchantQrCodeGenerator";
+    String AEPS_COLLECT = "FragmentAEPSCollect";
 }
