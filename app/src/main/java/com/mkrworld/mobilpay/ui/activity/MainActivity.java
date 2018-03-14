@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
+import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
@@ -34,7 +35,21 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
             hideDrawer();
             return;
         }
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.activity_main_fragment_container);
+        if (fragment != null && fragment instanceof OnBaseFragmentListener && ((OnBaseFragmentListener) fragment).onBackPressed()) {
+            return;
+        }
         super.onBackPressed();
+        fragment = getSupportFragmentManager().findFragmentById(R.id.activity_main_fragment_container);
+        if (fragment != null && fragment instanceof OnBaseFragmentListener) {
+            ((OnBaseFragmentListener) fragment).onPopFromBackStack();
+        }
+    }
+
+    @Override
+    public void onBaseActivitySetScreenTitle(String title) {
+        Tracer.debug(TAG, "onBaseActivitySetScreenTitle: ");
+        getSupportActionBar().setTitle(title);
     }
 
     @Override

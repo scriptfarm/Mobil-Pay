@@ -6,6 +6,7 @@ import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantHome;
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantLogin;
+import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantQrCode;
 
 /**
  * Created by mkr on 13/3/18.
@@ -27,6 +28,8 @@ public class FragmentProvider {
                 return new FragmentMerchantLogin();
             case FragmentTag.MERCHANT_HOME:
                 return new FragmentMerchantHome();
+            case FragmentTag.MERCHANT_QR_CODE:
+                return new FragmentMerchantQrCode();
             default:
                 return null;
         }

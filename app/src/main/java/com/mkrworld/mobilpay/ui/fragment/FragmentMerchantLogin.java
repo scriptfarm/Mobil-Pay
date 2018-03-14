@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
@@ -30,6 +31,7 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Tracer.debug(TAG, "onViewCreated: ");
         super.onViewCreated(view, savedInstanceState);
+        setTitle();
     }
 
     @Override
@@ -41,10 +43,21 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
     @Override
     public void onPopFromBackStack() {
         Tracer.debug(TAG, "onPopFromBackStack: ");
+        setTitle();
     }
 
     @Override
     public void onRefresh() {
         Tracer.debug(TAG, "onRefresh: ");
+    }
+
+    /**
+     * Method to set the Activity Title
+     */
+    private void setTitle() {
+        Tracer.debug(TAG, "setTitle: ");
+        if(getActivity() instanceof OnBaseActivityListener){
+            ((OnBaseActivityListener)getActivity()).onBaseActivitySetScreenTitle(getString(R.string.screen_title_login));
+        }
     }
 }

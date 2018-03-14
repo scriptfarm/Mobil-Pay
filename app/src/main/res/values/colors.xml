@@ -21,5 +21,6 @@
     <!-- FRAGMENT MERCHANT LOGIN -->
     <color name="fragment_login_card_title_text">@color/colorAccent</color>
 
-
+    <!-- FRAGMENT MERCHANT QR-CODE -->
+    <color name="fragment_merchant_qrcode_card_title_text">@color/colorAccent</color>
 </resources>

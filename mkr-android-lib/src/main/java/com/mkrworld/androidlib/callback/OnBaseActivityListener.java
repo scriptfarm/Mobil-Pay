@@ -10,6 +10,13 @@ import android.support.v4.app.Fragment;
 public interface OnBaseActivityListener {
 
     /**
+     * Method to set the Title of the Screen
+     *
+     * @param title Title to set at the top of the Screen
+     */
+    public void onBaseActivitySetScreenTitle(String title);
+
+    /**
      * Method to notifyTaskResponse that there is need to show the Ad
      */
     public void onBaseActivityShowInterstitialAd();

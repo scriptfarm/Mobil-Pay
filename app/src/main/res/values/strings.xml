@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Mobil Pay</string>
+    <string name="screen_title_login">Login</string>
+    <string name="screen_title_home">Home</string>
+    <string name="screen_title_qrcode">QR-Code</string>
 
     <!-- SLIDING DRAWER -->
     <string name="home">Home</string>
