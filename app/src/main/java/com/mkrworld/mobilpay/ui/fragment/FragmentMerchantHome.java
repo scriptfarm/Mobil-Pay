@@ -153,12 +153,12 @@ public class FragmentMerchantHome extends Fragment implements OnBaseFragmentList
         Tracer.debug(TAG, "getHomeTabList: ");
         ArrayList<BaseAdapterItem> baseAdapterItemList = new ArrayList<>();
         int adapterViewType = AdapterItemHandler.AdapterItemViewType.MERCHANT_HOME_TAB.ordinal();
-        baseAdapterItemList.add(new BaseAdapterItem(adapterViewType, new DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.STATIC_QR_CODE, R.drawable.ic_thumb, getString(R.string.static_qr_code))));
-        baseAdapterItemList.add(new BaseAdapterItem(adapterViewType, new DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.DYNAMIC_QR_CODE, R.drawable.ic_thumb, getString(R.string.dynamic_qr_code))));
-        baseAdapterItemList.add(new BaseAdapterItem(adapterViewType, new DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.UPI_COLLECT, R.drawable.ic_thumb, getString(R.string.upi_collect))));
-        baseAdapterItemList.add(new BaseAdapterItem(adapterViewType, new DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.AEPS_COLLECT, R.drawable.ic_thumb, getString(R.string.aeps_collect))));
-        baseAdapterItemList.add(new BaseAdapterItem(adapterViewType, new DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.SEND_BILL, R.drawable.ic_thumb, getString(R.string.send_bill))));
-        baseAdapterItemList.add(new BaseAdapterItem(adapterViewType, new DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.COLLECTION_SUMMARY, R.drawable.ic_thumb, getString(R.string.collection_summary))));
+        baseAdapterItemList.add(new BaseAdapterItem(adapterViewType, new DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.STATIC_QR_CODE, R.drawable.ic_static_qr_code, getString(R.string.static_qr_code))));
+        baseAdapterItemList.add(new BaseAdapterItem(adapterViewType, new DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.DYNAMIC_QR_CODE, R.drawable.ic_qr_code, getString(R.string.dynamic_qr_code))));
+        baseAdapterItemList.add(new BaseAdapterItem(adapterViewType, new DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.UPI_COLLECT, R.drawable.ic_upi_collect, getString(R.string.upi_collect))));
+        baseAdapterItemList.add(new BaseAdapterItem(adapterViewType, new DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.AEPS_COLLECT, R.drawable.ic_aeps_collect, getString(R.string.aeps_collect))));
+        baseAdapterItemList.add(new BaseAdapterItem(adapterViewType, new DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.SEND_BILL, R.drawable.ic_send_bill, getString(R.string.send_bill))));
+        baseAdapterItemList.add(new BaseAdapterItem(adapterViewType, new DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.COLLECTION_SUMMARY, R.drawable.ic_collection_summary, getString(R.string.collection_summary))));
         return baseAdapterItemList;
     }
 }

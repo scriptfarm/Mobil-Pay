@@ -45,6 +45,7 @@
 
     <!-- ITEM MERCHANT HOME -->
     <dimen name="item_merchant_home_icon_dim">@dimen/mkrdp_30</dimen>
+    <dimen name="item_merchant_home_icon_padding">@dimen/mkrdp_5</dimen>
     <dimen name="item_merchant_home_text_size">@dimen/text_size</dimen>
     <dimen name="item_merchant_home_content_padding">@dimen/mkrdp_2</dimen>
 
@@ -54,7 +55,8 @@
     <dimen name="fragment_merchant_qrcode_content_margin">@dimen/mkrdp_4</dimen>
 
     <!-- FRAGMENT MERCHANT QR-CODE GENERATOR -->
-    <dimen name="fragment_merchant_qrcode_generator_card_title_text_size">@dimen/title_text_size</dimen>
+    <dimen name="fragment_merchant_qrcode_generator_card_title_text_size">@dimen/title_text_size
+    </dimen>
     <dimen name="fragment_merchant_qrcode_generator_content_margin">@dimen/mkrdp_4</dimen>
 
     <!-- FRAGMENT AEPS COLLECT -->

@@ -14,6 +14,7 @@
         android:id="@+id/item_merchant_home_imageView_icon"
         android:layout_width="@dimen/item_merchant_home_icon_dim"
         android:layout_height="@dimen/item_merchant_home_icon_dim"
+        android:padding="@dimen/item_merchant_home_icon_padding"
         android:clickable="false"
         android:src="@drawable/ic_thumb" />
 
