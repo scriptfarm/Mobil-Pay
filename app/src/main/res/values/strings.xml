@@ -7,6 +7,7 @@
     <string name="screen_title_merchant_home">Merchant Home</string>
     <string name="screen_title_merchant_qrcode">Merchant Code</string>
     <string name="screen_title_aeps_collect">AEPS Collect</string>
+    <string name="screen_title_send_bill">Send Bill</string>
 
     <!-- SLIDING DRAWER -->
     <string name="home">Home</string>
@@ -35,10 +36,16 @@
     <!-- MERCHANT QR-CODE GENERATOR -->
     <string name="merchant_qrcode_generator">Merchant QR-Code Generator</string>
     <string name="bill_number_star">Bill Number *</string>
-    <string name="bill_description">Bill Description</string>
-    <string name="bill_amount">Bill Amount ₹</string>
+    <string name="bill_description_star">Bill Description *</string>
+    <string name="bill_amount_star">Bill Amount ₹ *</string>
     <string name="caps_generate">GENERATE</string>
     <string name="caps_cancel">CANCEL</string>
+
+    <!-- MERCHANT SEND BILL ==>  MERCHANT QR-CODE GENERATOR -->
+    <string name="customer_id_slash_mobile_number">Customer-ID/Mobile-Number</string>
+    <string name="bill_number">Bill Number</string>
+    <string name="caps_send">SEND</string>
+
 
     <!-- AEPS COLLECT -->
     <string name="caps_aeps">AEPS</string>

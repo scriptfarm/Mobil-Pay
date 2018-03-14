@@ -22,8 +22,8 @@ import net.glxn.qrgen.android.QRCode;
  * Created by mkr on 13/3/18.
  */
 
-public class FragmentAEPSCollect extends Fragment implements OnBaseFragmentListener {
-    private static final String TAG = BuildConfig.BASE_TAG + ".FragmentAEPSCollect";
+public class FragmentMerchantAEPSCollect extends Fragment implements OnBaseFragmentListener {
+    private static final String TAG = BuildConfig.BASE_TAG + ".FragmentMerchantAEPSCollect";
 
     @Nullable
     @Override

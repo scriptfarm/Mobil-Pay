@@ -4,11 +4,12 @@ import android.support.v4.app.Fragment;
 
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
-import com.mkrworld.mobilpay.ui.fragment.FragmentAEPSCollect;
+import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantAEPSCollect;
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantHome;
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantLogin;
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantQrCode;
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantQrCodeGenerator;
+import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantSendBill;
 
 /**
  * Created by mkr on 13/3/18.
@@ -34,8 +35,10 @@ public class FragmentProvider {
                 return new FragmentMerchantQrCode();
             case FragmentTag.MERCHANT_QR_CODE_GENERATOR:
                 return new FragmentMerchantQrCodeGenerator();
-            case FragmentTag.AEPS_COLLECT:
-                return new FragmentAEPSCollect();
+            case FragmentTag.MERCHANT_AEPS_COLLECT:
+                return new FragmentMerchantAEPSCollect();
+            case FragmentTag.MERCHANT_SEND_BILL:
+                return new FragmentMerchantSendBill();
             default:
                 return null;
         }

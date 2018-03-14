@@ -61,4 +61,7 @@
 
     <!-- FRAGMENT AEPS COLLECT -->
     <dimen name="fragment_apes_collect_content_margin">@dimen/mkrdp_4</dimen>
+
+    <!-- FRAGMENT MERCHANT SEND BILL -->
+    <dimen name="fragment_merchant_send_bill_content_margin">@dimen/mkrdp_4</dimen>
 </resources>

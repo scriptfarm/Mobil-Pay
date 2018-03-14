@@ -84,24 +84,22 @@ public class FragmentMerchantHome extends Fragment implements OnBaseFragmentList
                             break;
                         case DYNAMIC_QR_CODE:
                             if (getActivity() instanceof OnBaseActivityListener) {
-                                Bundle bundle = new Bundle();
-                                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, "THE MKR");
-                                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TEXT, "I AM THE MANISH KUMAR REWALLIYA");
                                 Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_QR_CODE_GENERATOR);
-                                ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, bundle, true, FragmentTag.MERCHANT_QR_CODE_GENERATOR);
+                                ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, null, true, FragmentTag.MERCHANT_QR_CODE_GENERATOR);
                             }
                             break;
                         case SEND_BILL:
+                            if (getActivity() instanceof OnBaseActivityListener) {
+                                Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_SEND_BILL);
+                                ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, null, true, FragmentTag.MERCHANT_SEND_BILL);
+                            }
                             break;
                         case UPI_COLLECT:
                             break;
                         case AEPS_COLLECT:
                             if (getActivity() instanceof OnBaseActivityListener) {
-                                Bundle bundle = new Bundle();
-                                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, "THE MKR");
-                                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TEXT, "I AM THE MANISH KUMAR REWALLIYA");
-                                Fragment fragment = FragmentProvider.getFragment(FragmentTag.AEPS_COLLECT);
-                                ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, bundle, true, FragmentTag.AEPS_COLLECT);
+                                Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_AEPS_COLLECT);
+                                ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, null, true, FragmentTag.MERCHANT_AEPS_COLLECT);
                             }
                             break;
                         case COLLECTION_SUMMARY:
