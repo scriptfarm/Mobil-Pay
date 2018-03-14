@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
+import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantHome;
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantLogin;
 
 /**
@@ -22,8 +23,10 @@ public class FragmentProvider {
     public static final Fragment getFragment(String fragmentTag) {
         Tracer.debug(TAG, "getFragment: " + fragmentTag);
         switch (fragmentTag) {
-            case FragmentTag.fragmentMerchantLogin:
+            case FragmentTag.MERCHANT_LOGIN:
                 return new FragmentMerchantLogin();
+            case FragmentTag.MERCHANT_HOME:
+                return new FragmentMerchantHome();
             default:
                 return null;
         }

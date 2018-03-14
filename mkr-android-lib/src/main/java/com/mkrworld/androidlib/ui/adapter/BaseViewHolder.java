@@ -12,7 +12,7 @@ public abstract class BaseViewHolder<V> extends RecyclerView.ViewHolder implemen
     protected View mParent;
     private VHClickable mClickCallback;
     private VHLongClickable mLongClickCallback;
-    private AdapterItem mAdapterItem;
+    private BaseAdapterItem mBaseAdapterItem;
 
     /**
      * Constructor
@@ -32,9 +32,9 @@ public abstract class BaseViewHolder<V> extends RecyclerView.ViewHolder implemen
         return mParent.getContext();
     }
 
-    public void bindFeedItem(AdapterItem<V> adapterItem) {
-        mAdapterItem = adapterItem;
-        bindData(adapterItem.getBindingData());
+    public void bindFeedItem(BaseAdapterItem<V> baseAdapterItem) {
+        mBaseAdapterItem = baseAdapterItem;
+        bindData(baseAdapterItem.getBindingData());
     }
 
     /**
@@ -43,8 +43,8 @@ public abstract class BaseViewHolder<V> extends RecyclerView.ViewHolder implemen
      */
     protected abstract void bindData(V v);
 
-    public AdapterItem getAdapterItem() {
-        return mAdapterItem;
+    public BaseAdapterItem getAdapterItem() {
+        return mBaseAdapterItem;
     }
 
     @Override

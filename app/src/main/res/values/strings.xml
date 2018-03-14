@@ -1,10 +1,7 @@
 <resources>
     <string name="app_name">Mobil Pay</string>
-    <string name="merchant_id_slash_mobile_number">Merchant-ID/Mobile-Number</string>
-    <string name="password">Password</string>
-    <string name="login_to_your_account">Login to your account</string>
-    <string name="caps_sign_in">SIGN IN</string>
-    <string name="use_finger_print_question">Use Fingerprint?</string>
+
+    <!-- SLIDING DRAWER -->
     <string name="home">Home</string>
     <string name="change_password">Change Password</string>
     <string name="language">Language</string>
@@ -12,4 +9,20 @@
     <string name="terms_and_condition">Terms &amp; Condition</string>
     <string name="contact_mobil_pay">Contact MobilPay</string>
     <string name="logout">Logout</string>
+
+    <!-- MERCHANT LOGIN -->
+    <string name="merchant_id_slash_mobile_number">Merchant-ID/Mobile-Number</string>
+    <string name="password">Password</string>
+    <string name="login_to_your_account">Login to your account</string>
+    <string name="caps_sign_in">SIGN IN</string>
+    <string name="use_finger_print_question">Use Fingerprint?</string>
+
+    <!-- MERCHANT HOME -->
+    <string name="static_qr_code">Static QR Code</string>
+    <string name="dynamic_qr_code">Dynamic QR Code</string>
+    <string name="upi_collect">UPI Collect</string>
+    <string name="aeps_collect">AEPS Collect</string>
+    <string name="send_bill">Send Bill</string>
+    <string name="collection_summary">Collection Summary</string>
+
 </resources>

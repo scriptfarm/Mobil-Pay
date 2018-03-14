@@ -8,6 +8,7 @@
     <color name="transparent">#00000000</color>
     <color name="text_color_black">#000000</color>
     <color name="text_color_white">#FFFFFF</color>
+    <color name="divider_color">#77777777</color>
     <color name="screen_back">#EEEEEE</color>
     <color name="card_background">#FFFFFF</color>
     <color name="button_background">@color/colorPrimary</color>
@@ -19,4 +20,6 @@
 
     <!-- FRAGMENT MERCHANT LOGIN -->
     <color name="fragment_login_card_title_text">@color/colorAccent</color>
+
+
 </resources>

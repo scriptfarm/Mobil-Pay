@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
-        onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.fragmentMerchantLogin), null, false, FragmentTag.fragmentMerchantLogin);
+        onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME), null, false, FragmentTag.MERCHANT_HOME);
     }
 
     @Override

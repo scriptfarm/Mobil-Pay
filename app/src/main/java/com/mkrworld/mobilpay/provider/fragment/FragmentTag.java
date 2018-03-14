@@ -5,5 +5,6 @@ package com.mkrworld.mobilpay.provider.fragment;
  * Interface to hold the tag of the Fragment
  */
 public interface FragmentTag {
-    String fragmentMerchantLogin = "FragmentMerchantLogin";
+    String MERCHANT_LOGIN = "FragmentMerchantLogin";
+    String MERCHANT_HOME = "FragmentMerchantHome";
 }

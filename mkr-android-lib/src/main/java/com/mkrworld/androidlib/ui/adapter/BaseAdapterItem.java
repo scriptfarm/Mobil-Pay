@@ -1,6 +1,6 @@
 package com.mkrworld.androidlib.ui.adapter;
 
-public class AdapterItem<MKR> {
+public class BaseAdapterItem<MKR> {
     private int mViewType;
     private MKR mMkr;
 
@@ -10,7 +10,7 @@ public class AdapterItem<MKR> {
      * @param viewType
      * @param d         Object Data pass to the BaseViewHolder
      */
-    public AdapterItem(int viewType, MKR d) {
+    public BaseAdapterItem(int viewType, MKR d) {
         mViewType = viewType;
         mMkr = d;
     }
@@ -26,9 +26,9 @@ public class AdapterItem<MKR> {
     @Override
     public boolean equals(Object obj) {
         try {
-            if (obj instanceof AdapterItem) {
-                AdapterItem adapterItem = (AdapterItem) obj;
-                if (adapterItem.mViewType == mViewType && adapterItem.mMkr.equals(mMkr)) {
+            if (obj instanceof BaseAdapterItem) {
+                BaseAdapterItem baseAdapterItem = (BaseAdapterItem) obj;
+                if (baseAdapterItem.mViewType == mViewType && baseAdapterItem.mMkr.equals(mMkr)) {
                     return true;
                 }
             }

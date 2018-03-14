@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 /**
  *
  */
-public abstract class AdapterItemHandler {
+public abstract class BaseAdapterItemHandler {
 
     /**
      * Method to get the Adapter View

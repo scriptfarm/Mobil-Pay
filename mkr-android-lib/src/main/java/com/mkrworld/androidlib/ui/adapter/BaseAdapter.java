@@ -12,20 +12,20 @@ import java.util.ArrayList;
  * Created by himanshu on 05/09/15.
  */
 public class BaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements BaseViewHolder.VHClickable, BaseViewHolder.VHLongClickable {
-    private ArrayList<AdapterItem> mAdapterItemList;
+    private ArrayList<BaseAdapterItem> mBaseAdapterItemList;
     private BaseViewHolder.VHLongClickable longClickCallback;
     private BaseViewHolder.VHClickable clickCallback;
     private boolean mIsUpdatingList;
-    private AdapterItemHandler mAdapterItemHandler;
+    private BaseAdapterItemHandler mBaseAdapterItemHandler;
 
     /**
      * Constructor
      *
-     * @param adapterItemHandler
+     * @param baseAdapterItemHandler
      */
-    public BaseAdapter(AdapterItemHandler adapterItemHandler) {
-        mAdapterItemList = new ArrayList<>();
-        mAdapterItemHandler = adapterItemHandler;
+    public BaseAdapter(BaseAdapterItemHandler baseAdapterItemHandler) {
+        mBaseAdapterItemList = new ArrayList<>();
+        mBaseAdapterItemHandler = baseAdapterItemHandler;
     }
 
     /**
@@ -47,7 +47,7 @@ public class BaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 if (!mIsUpdatingList) {
                     if (recyclerView.getChildCount() > 1) {
                         int childAdapterPosition = recyclerView.getChildAdapterPosition(recyclerView.getChildAt(recyclerView.getChildCount() - 1));
-                        if (!(childAdapterPosition < (mAdapterItemList.size() - 1))) {
+                        if (!(childAdapterPosition < (mBaseAdapterItemList.size() - 1))) {
                             mIsUpdatingList = true;
                             onLoadMoreItemListener.onLoadMoreItemListener();
                         }
@@ -59,7 +59,7 @@ public class BaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        BaseViewHolder viewHolder = mAdapterItemHandler.createHolder(LayoutInflater.from(parent.getContext()), parent, viewType);
+        BaseViewHolder viewHolder = mBaseAdapterItemHandler.createHolder(LayoutInflater.from(parent.getContext()), parent, viewType);
         viewHolder.setVHClickCallback(this);
         viewHolder.setVHLongClickCallback(this);
         return viewHolder;
@@ -69,8 +69,8 @@ public class BaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (!(holder instanceof BaseViewHolder)) return;
         BaseViewHolder baseViewHolder = (BaseViewHolder) holder;
-        AdapterItem adapterItem = getItem(position);
-        baseViewHolder.bindFeedItem(adapterItem);
+        BaseAdapterItem baseAdapterItem = getItem(position);
+        baseViewHolder.bindFeedItem(baseAdapterItem);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class BaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     @Override
     public int getItemCount() {
-        return mAdapterItemList.size();
+        return mBaseAdapterItemList.size();
     }
 
     @Override
@@ -96,13 +96,13 @@ public class BaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     }
 
     /**
-     * Method to get the AdapterItem
+     * Method to get the BaseAdapterItem
      *
      * @param position
      * @return
      */
-    public AdapterItem getItem(int position) {
-        return mAdapterItemList.get(position);
+    public BaseAdapterItem getItem(int position) {
+        return mBaseAdapterItemList.get(position);
     }
 
     /**
@@ -110,10 +110,10 @@ public class BaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
      *
      * @param list
      */
-    public void updateAdapterItemList(ArrayList<AdapterItem> list) {
-        mAdapterItemList.clear();
+    public void updateAdapterItemList(ArrayList<BaseAdapterItem> list) {
+        mBaseAdapterItemList.clear();
         if (list != null) {
-            mAdapterItemList.addAll(list);
+            mBaseAdapterItemList.addAll(list);
         }
         mIsUpdatingList = false;
         notifyDataSetChanged();
@@ -124,9 +124,9 @@ public class BaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
      *
      * @param list
      */
-    public void appendAdapterItemList(ArrayList<AdapterItem> list) {
+    public void appendAdapterItemList(ArrayList<BaseAdapterItem> list) {
         if (list != null) {
-            mAdapterItemList.addAll(list);
+            mBaseAdapterItemList.addAll(list);
         }
         mIsUpdatingList = false;
         notifyDataSetChanged();
