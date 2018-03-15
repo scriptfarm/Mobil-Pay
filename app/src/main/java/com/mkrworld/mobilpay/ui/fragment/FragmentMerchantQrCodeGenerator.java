@@ -73,6 +73,9 @@ public class FragmentMerchantQrCodeGenerator extends Fragment implements OnBaseF
     public void onPopFromBackStack() {
         Tracer.debug(TAG, "onPopFromBackStack: ");
         setTitle();
+        if (getActivity() != null) {
+            getActivity().onBackPressed();
+        }
     }
 
     @Override
@@ -131,7 +134,7 @@ public class FragmentMerchantQrCodeGenerator extends Fragment implements OnBaseF
      */
     private void startQRCodeGeneratingProcess() {
         Tracer.debug(TAG, "startQRCodeGeneratingProcess: ");
-        Utils.hideKeyboard(getActivity());
+        Utils.hideKeyboard(getActivity(), getView());
         if (!isLoginDetailValid()) {
             return;
         }

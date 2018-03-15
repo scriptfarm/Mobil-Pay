@@ -33,6 +33,20 @@ public class Utils {
     }
 
     /**
+     * Method to hide the soft keyboard
+     *
+     * @param view
+     */
+    public static final void hideKeyboard(Context context, View view) {
+        Tracer.debug(TAG, "hideKeyboard: " + view);
+        if (view != null) {
+            view.requestFocus();
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+        }
+    }
+
+    /**
      * Method to show the soft keyboard
      *
      * @param context

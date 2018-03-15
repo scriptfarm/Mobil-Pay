@@ -110,6 +110,7 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
      */
     private void startSignInProcess() {
         Tracer.debug(TAG, "startSignInProcess: ");
+        Utils.hideKeyboard(getActivity(), getView());
         if (!isLoginDetailValid()) {
             return;
         }
