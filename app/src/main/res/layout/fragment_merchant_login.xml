@@ -57,7 +57,7 @@
                 android:id="@+id/fragment_merchant_login_textView_sign_in"
                 style="@style/style_button"
                 android:layout_marginTop="@dimen/fragment_merchant_login_content_margin"
-                android:text="@string/caps_sign_in" />
+                android:text="@string/sign_in_caps" />
 
             <ImageView
                 android:layout_width="@dimen/fragment_merchant_thumb_icon_dimen"

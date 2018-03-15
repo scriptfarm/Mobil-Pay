@@ -1,19 +1,27 @@
 package com.mkrworld.mobilpay.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
+import com.mkrworld.androidlib.utils.MKRDialogUtil;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
+import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener;
+import com.mkrworld.mobilpay.utils.Utils;
 
 /**
  * Created by mkr on 13/3/18.
@@ -21,6 +29,10 @@ import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
 
 public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentListener, View.OnClickListener {
     private static final String TAG = BuildConfig.BASE_TAG + ".FragmentMerchantLogin";
+    private TextInputLayout mTextInputLayoutMerchantIdMobileNumber;
+    private TextInputLayout mTextInputLayoutPassword;
+    private EditText mEditTextMerchantIdMobileNumber;
+    private EditText mEditTextPassword;
 
     @Nullable
     @Override
@@ -59,8 +71,7 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         Tracer.debug(TAG, "onClick: ");
         switch (view.getId()) {
             case R.id.fragment_merchant_login_textView_sign_in:
-                Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
-                ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
+                startSignInProcess();
                 break;
         }
     }
@@ -84,5 +95,76 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
             return;
         }
         getView().findViewById(R.id.fragment_merchant_login_textView_sign_in).setOnClickListener(this);
+        mTextInputLayoutMerchantIdMobileNumber = (TextInputLayout) getView().findViewById(R.id.fragment_merchant_login_textInputLayout_merchant_id_mobile_number);
+        mEditTextMerchantIdMobileNumber = (EditText) getView().findViewById(R.id.fragment_merchant_login_editText_merchant_id_mobile_number);
+        mTextInputLayoutPassword = (TextInputLayout) getView().findViewById(R.id.fragment_merchant_login_textInputLayout_password);
+        mEditTextPassword = (EditText) getView().findViewById(R.id.fragment_merchant_login_editText_password);
+
+        // ADD TEXT CHANGE LISTENER
+        mEditTextMerchantIdMobileNumber.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutMerchantIdMobileNumber));
+        mEditTextPassword.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutPassword));
+    }
+
+    /**
+     * Method to initiate the User Sign In Process
+     */
+    private void startSignInProcess() {
+        Tracer.debug(TAG, "startSignInProcess: ");
+        if (!isLoginDetailValid()) {
+            return;
+        }
+        String merchantIdMobileNumber = mEditTextMerchantIdMobileNumber.getText().toString();
+        String password = mEditTextPassword.getText().toString();
+        
+        MKRDialogUtil.showLoadingDialog(getActivity());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                MKRDialogUtil.dismissLoadingDialog();
+                if (getActivity() instanceof OnBaseActivityListener) {
+                    Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
+                    ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
+                }
+            }
+        }, 3000);
+    }
+
+    /**
+     * Method to check weather the Login detail insert by merchant is valid or not
+     *
+     * @return
+     */
+    private boolean isLoginDetailValid() {
+        if (getView() == null) {
+            return false;
+        }
+        String merchantIdMobileNumber = mEditTextMerchantIdMobileNumber.getText().toString();
+        String password = mEditTextPassword.getText().toString();
+
+        // Validate Merchant-Id/Mobile-Number
+        if (Utils.isStringEmpty(merchantIdMobileNumber)) {
+            showTextInputError(mTextInputLayoutMerchantIdMobileNumber, getString(R.string.field_should_not_be_empty_caps));
+            return false;
+        }
+
+        // Validate Password
+        if (Utils.isStringEmpty(password)) {
+            TextInputLayout textInputLayout = (TextInputLayout) getView().findViewById(R.id.fragment_merchant_login_textInputLayout_password);
+            showTextInputError(mTextInputLayoutPassword, getString(R.string.field_should_not_be_empty_caps));
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Method to show the error in textInputLayout
+     *
+     * @param textInputLayout
+     * @param errorMessage
+     */
+    private void showTextInputError(TextInputLayout textInputLayout, String errorMessage) {
+        Tracer.debug(TAG, "showTextInputError: " + textInputLayout + "    " + errorMessage);
+        textInputLayout.setErrorEnabled(true);
+        textInputLayout.setError(errorMessage);
     }
 }

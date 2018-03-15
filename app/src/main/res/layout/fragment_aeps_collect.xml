@@ -89,7 +89,7 @@
                 style="@style/style_button"
                 android:layout_marginBottom="@dimen/fragment_apes_collect_content_margin"
                 android:layout_marginTop="@dimen/fragment_apes_collect_content_margin"
-                android:text="@string/caps_aeps" />
+                android:text="@string/aeps_caps" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </ScrollView>

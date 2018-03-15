@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Mobil Pay</string>
     <string name="symbol_rs">₹</string>
+    <string name="field_should_not_be_empty_caps">FIELD SHOULD NOT BE EMPTY</string>
 
     <string name="screen_title_merchant_login">Merchant Login</string>
     <string name="screen_title_merchant_home">Merchant Home</string>
@@ -21,7 +22,7 @@
     <string name="merchant_id_slash_mobile_number">Merchant-ID/Mobile-Number</string>
     <string name="password">Password</string>
     <string name="login_to_your_account">Login to your account</string>
-    <string name="caps_sign_in">SIGN IN</string>
+    <string name="sign_in_caps">SIGN IN</string>
     <string name="use_finger_print_question">Use Fingerprint?</string>
 
     <string name="static_qr_code">Static QR Code</string>
@@ -35,14 +36,14 @@
     <string name="bill_number_star">Bill Number *</string>
     <string name="bill_description_star">Bill Description *</string>
     <string name="bill_amount_star">Bill Amount ₹ *</string>
-    <string name="caps_generate">GENERATE</string>
-    <string name="caps_cancel">CANCEL</string>
+    <string name="generate_caps">GENERATE</string>
+    <string name="cancel_caps">CANCEL</string>
 
     <string name="customer_id_slash_mobile_number">Customer-ID/Mobile-Number</string>
     <string name="bill_number">Bill Number</string>
-    <string name="caps_send">SEND</string>
+    <string name="send_caps">SEND</string>
 
-    <string name="caps_aeps">AEPS</string>
+    <string name="aeps_caps">AEPS</string>
     <string name="customer_name">Customer Name</string>
     <string name="bank_name">Bank Name</string>
     <string name="Transaction_amount_star">Transaction Amount *</string>
@@ -53,7 +54,7 @@
     <string name="last_name_star">Last Name *</string>
     <string name="email_star">Email *</string>
     <string name="enter_your_login_details">Enter Your Login Details</string>
-    <string name="caps_submit">SUBMIT</string>
+    <string name="submit_caps">SUBMIT</string>
 
     <string name="forgot_password_question">Forgot Password ?</string>
     <string name="old_password_star">Old Password *</string>

@@ -79,13 +79,13 @@
                 <TextView
                     android:id="@+id/fragment_merchant_send_bill_textView_generate"
                     style="@style/style_button_width_weight"
-                    android:text="@string/caps_send" />
+                    android:text="@string/send_caps" />
 
                 <TextView
                     android:id="@+id/fragment_merchant_send_bill_textView_cancel"
                     style="@style/style_button_width_weight"
                     android:layout_marginLeft="@dimen/fragment_merchant_send_bill_content_margin"
-                    android:text="@string/caps_cancel" />
+                    android:text="@string/cancel_caps" />
             </LinearLayout>
 
         </LinearLayout>

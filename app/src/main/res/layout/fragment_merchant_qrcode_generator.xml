@@ -76,13 +76,13 @@
                 <TextView
                     android:id="@+id/fragment_merchant_qrcode_generator_textView_generate"
                     style="@style/style_button_width_weight"
-                    android:text="@string/caps_generate" />
+                    android:text="@string/generate_caps" />
 
                 <TextView
                     android:id="@+id/fragment_merchant_qrcode_generator_textView_cancel"
                     style="@style/style_button_width_weight"
                     android:layout_marginLeft="@dimen/fragment_merchant_qrcode_generator_content_margin"
-                    android:text="@string/caps_cancel" />
+                    android:text="@string/cancel_caps" />
             </LinearLayout>
 
         </LinearLayout>

@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
                 onBaseActivityAddFragment(fragment, null, true, FragmentTag.CHANGE_PASSWORD);
                 break;
         }
-        if(isDrawerVisible()){
+        if (isDrawerVisible()) {
             hideDrawer();
         }
     }

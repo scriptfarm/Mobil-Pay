@@ -46,4 +46,15 @@ public class Utils {
         }
     }
 
+    /**
+     * Method to check weather the String is empty or not
+     *
+     * @param str
+     * @return
+     */
+    public static boolean isStringEmpty(String str) {
+        Tracer.debug(TAG, "isStringEmpty: " + str);
+        return str == null || str.trim().isEmpty();
+    }
+
 }
