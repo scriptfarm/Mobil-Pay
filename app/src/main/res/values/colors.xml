@@ -27,4 +27,10 @@
 
     <!-- FRAGMENT MERCHANT QR-CODE GENERATOR -->
     <color name="fragment_merchant_qrcode_generator_card_title_text">@color/colorAccent</color>
+
+    <!-- FRAGMENT FORGOT PASSWORD -->
+    <color name="fragment_forgot_password_card_title_text">@color/colorAccent</color>
+
+    <!-- FRAGMENT FORGOT PASSWORD -->
+    <color name="fragment_change_password_card_title_text">@color/colorAccent</color>
 </resources>

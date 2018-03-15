@@ -3,6 +3,7 @@
     <!-- STANDARD SIZE -->
     <dimen name="text_size">@dimen/mkrdp_5</dimen>
     <dimen name="title_text_size">@dimen/mkrdp_7</dimen>
+    <dimen name="sub_text_size">@dimen/mkrdp_3.49</dimen>
     <dimen name="divider_size">@dimen/mkrdp_0.2</dimen>
     <integer name="length_mobile_number">10</integer>
     <integer name="length_aadhar_number_4">4</integer>
@@ -64,4 +65,14 @@
 
     <!-- FRAGMENT MERCHANT SEND BILL -->
     <dimen name="fragment_merchant_send_bill_content_margin">@dimen/mkrdp_4</dimen>
+
+    <!-- FRAGMENT FORGOT PASSWORD -->
+    <dimen name="fragment_forgot_password_content_margin">@dimen/mkrdp_4</dimen>
+    <dimen name="fragment_forgot_password_title_text_size">@dimen/title_text_size</dimen>
+
+    <!-- FRAGMENT FORGOT PASSWORD -->
+    <dimen name="fragment_change_password_content_margin">@dimen/mkrdp_4</dimen>
+    <dimen name="fragment_change_password_title_text_size">@dimen/title_text_size</dimen>
+    <dimen name="fragment_change_password_sub_text_size">@dimen/sub_text_size</dimen>
+
 </resources>

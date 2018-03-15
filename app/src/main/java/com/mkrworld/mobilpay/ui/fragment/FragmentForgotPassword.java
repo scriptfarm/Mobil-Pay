@@ -19,14 +19,14 @@ import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
  * Created by mkr on 13/3/18.
  */
 
-public class FragmentMerchantSendBill extends Fragment implements OnBaseFragmentListener, View.OnClickListener {
-    private static final String TAG = BuildConfig.BASE_TAG + ".FragmentMerchantSendBill";
+public class FragmentForgotPassword extends Fragment implements OnBaseFragmentListener, View.OnClickListener {
+    private static final String TAG = BuildConfig.BASE_TAG + ".FragmentForgotPassword";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Tracer.debug(TAG, "onCreateView: ");
-        return inflater.inflate(R.layout.fragment_merchant_send_bill, container, false);
+        return inflater.inflate(R.layout.fragment_forgot_password, container, false);
     }
 
     @Override
@@ -47,6 +47,9 @@ public class FragmentMerchantSendBill extends Fragment implements OnBaseFragment
     public void onPopFromBackStack() {
         Tracer.debug(TAG, "onPopFromBackStack: ");
         setTitle();
+        if (getActivity() != null) {
+            getActivity().onBackPressed();
+        }
     }
 
     @Override
@@ -57,6 +60,14 @@ public class FragmentMerchantSendBill extends Fragment implements OnBaseFragment
     @Override
     public void onClick(View view) {
         Tracer.debug(TAG, "onClick: ");
+        switch (view.getId()) {
+            case R.id.fragment_forgot_password_textView_submit:
+                if (getActivity() instanceof OnBaseActivityListener) {
+                    Fragment fragment = FragmentProvider.getFragment(FragmentTag.CHANGE_PASSWORD_BY_OTP);
+                    ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, null, true, FragmentTag.CHANGE_PASSWORD_BY_OTP);
+                }
+                break;
+        }
     }
 
     /**
@@ -65,7 +76,7 @@ public class FragmentMerchantSendBill extends Fragment implements OnBaseFragment
     private void setTitle() {
         Tracer.debug(TAG, "setTitle: ");
         if (getActivity() instanceof OnBaseActivityListener) {
-            ((OnBaseActivityListener) getActivity()).onBaseActivitySetScreenTitle(getString(R.string.screen_title_send_bill));
+            ((OnBaseActivityListener) getActivity()).onBaseActivitySetScreenTitle(getString(R.string.screen_title_forgot_password));
         }
     }
 
@@ -77,5 +88,6 @@ public class FragmentMerchantSendBill extends Fragment implements OnBaseFragment
         if (getView() == null) {
             return;
         }
+        getView().findViewById(R.id.fragment_forgot_password_textView_submit).setOnClickListener(this);
     }
 }

@@ -4,6 +4,9 @@ import android.support.v4.app.Fragment;
 
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
+import com.mkrworld.mobilpay.ui.fragment.FragmentChangePassword;
+import com.mkrworld.mobilpay.ui.fragment.FragmentChangePasswordByOtp;
+import com.mkrworld.mobilpay.ui.fragment.FragmentForgotPassword;
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantAEPSCollect;
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantHome;
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantLogin;
@@ -39,6 +42,12 @@ public class FragmentProvider {
                 return new FragmentMerchantAEPSCollect();
             case FragmentTag.MERCHANT_SEND_BILL:
                 return new FragmentMerchantSendBill();
+            case FragmentTag.FORGOT_PASSWORD:
+                return new FragmentForgotPassword();
+            case FragmentTag.CHANGE_PASSWORD:
+                return new FragmentChangePassword();
+            case FragmentTag.CHANGE_PASSWORD_BY_OTP:
+                return new FragmentChangePasswordByOtp();
             default:
                 return null;
         }

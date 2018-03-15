@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
@@ -17,7 +18,7 @@ import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
 import com.mkrworld.mobilpay.utils.Utils;
 
-public class MainActivity extends AppCompatActivity implements OnBaseActivityListener {
+public class MainActivity extends AppCompatActivity implements OnBaseActivityListener, View.OnClickListener {
     private static final String TAG = BuildConfig.BASE_TAG + ".MainActivity";
 
     @Override
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
+        init();
         onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN), null, false, FragmentTag.MERCHANT_LOGIN);
     }
 
@@ -45,6 +47,20 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
         fragment = getSupportFragmentManager().findFragmentById(R.id.activity_main_fragment_container);
         if (fragment != null && fragment instanceof OnBaseFragmentListener) {
             ((OnBaseFragmentListener) fragment).onPopFromBackStack();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        Tracer.debug(TAG, "onClick: ");
+        switch (view.getId()) {
+            case R.id.activity_main_sliding_layout_option_password:
+                Fragment fragment = FragmentProvider.getFragment(FragmentTag.CHANGE_PASSWORD);
+                onBaseActivityAddFragment(fragment, null, true, FragmentTag.CHANGE_PASSWORD);
+                break;
+        }
+        if(isDrawerVisible()){
+            hideDrawer();
         }
     }
 
@@ -81,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
             fragment.setArguments(bundle);
         }
         fragmentTransaction.commit();
+        setNavigationDrawerSwipeState(tag);
     }
 
     @Override
@@ -102,6 +119,15 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
             fragment.setArguments(bundle);
         }
         fragmentTransaction.commit();
+        setNavigationDrawerSwipeState(tag);
+    }
+
+    /**
+     * Method to init activity
+     */
+    private void init() {
+        Tracer.debug(TAG, "init: ");
+        findViewById(R.id.activity_main_sliding_layout_option_password).setOnClickListener(this);
     }
 
     /**
@@ -122,5 +148,37 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
         Tracer.debug(TAG, "hideDrawer: ");
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawer_layout);
         drawerLayout.closeDrawer(findViewById(R.id.activity_main_hide_layout));
+    }
+
+    /**
+     * Method to set the state of the navigation drawer swipe gesture
+     *
+     * @param currentFragmentTag
+     */
+    private void setNavigationDrawerSwipeState(String currentFragmentTag) {
+        if (currentFragmentTag != null && currentFragmentTag.trim().equalsIgnoreCase(FragmentTag.MERCHANT_LOGIN)) {
+            lockDrawerSwipe();
+        } else {
+            unlockDrawerSwipe();
+        }
+    }
+
+    /**
+     * Method to lock Drawer Swipe Gesture
+     */
+    private void lockDrawerSwipe() {
+        Tracer.debug(TAG, "lockDrawerSwipe: ");
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawer_layout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        drawerLayout.closeDrawer(findViewById(R.id.activity_main_hide_layout));
+    }
+
+    /**
+     * Method to unlock Drawer Swipe Gesture
+     */
+    private void unlockDrawerSwipe() {
+        Tracer.debug(TAG, "unlockDrawerSwipe: ");
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawer_layout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 }

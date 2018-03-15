@@ -2,14 +2,14 @@
     <string name="app_name">Mobil Pay</string>
     <string name="symbol_rs">₹</string>
 
-    <!-- SCREE TITLE-->
     <string name="screen_title_merchant_login">Merchant Login</string>
     <string name="screen_title_merchant_home">Merchant Home</string>
     <string name="screen_title_merchant_qrcode">Merchant Code</string>
     <string name="screen_title_aeps_collect">AEPS Collect</string>
     <string name="screen_title_send_bill">Send Bill</string>
+    <string name="screen_title_forgot_password">Forgot Password</string>
+    <string name="screen_title_change_password">Change Password</string>
 
-    <!-- SLIDING DRAWER -->
     <string name="home">Home</string>
     <string name="change_password">Change Password</string>
     <string name="language">Language</string>
@@ -18,14 +18,12 @@
     <string name="contact_mobil_pay">Contact MobilPay</string>
     <string name="logout">Logout</string>
 
-    <!-- MERCHANT LOGIN -->
     <string name="merchant_id_slash_mobile_number">Merchant-ID/Mobile-Number</string>
     <string name="password">Password</string>
     <string name="login_to_your_account">Login to your account</string>
     <string name="caps_sign_in">SIGN IN</string>
     <string name="use_finger_print_question">Use Fingerprint?</string>
 
-    <!-- MERCHANT HOME -->
     <string name="static_qr_code">Static QR Code</string>
     <string name="dynamic_qr_code">Dynamic QR Code</string>
     <string name="upi_collect">UPI Collect</string>
@@ -33,7 +31,6 @@
     <string name="send_bill">Send Bill</string>
     <string name="collection_summary">Collection Summary</string>
 
-    <!-- MERCHANT QR-CODE GENERATOR -->
     <string name="merchant_qrcode_generator">Merchant QR-Code Generator</string>
     <string name="bill_number_star">Bill Number *</string>
     <string name="bill_description_star">Bill Description *</string>
@@ -41,18 +38,28 @@
     <string name="caps_generate">GENERATE</string>
     <string name="caps_cancel">CANCEL</string>
 
-    <!-- MERCHANT SEND BILL ==>  MERCHANT QR-CODE GENERATOR -->
     <string name="customer_id_slash_mobile_number">Customer-ID/Mobile-Number</string>
     <string name="bill_number">Bill Number</string>
     <string name="caps_send">SEND</string>
 
-
-    <!-- AEPS COLLECT -->
     <string name="caps_aeps">AEPS</string>
     <string name="customer_name">Customer Name</string>
     <string name="bank_name">Bank Name</string>
     <string name="Transaction_amount_star">Transaction Amount *</string>
     <string name="mobile_number_star">Mobile Number *</string>
     <string name="enter_last_4_digit_aadhar_number">Enter Last 4 Digit Aadhar Number</string>
+
+    <string name="first_name_star">First Name *</string>
+    <string name="last_name_star">Last Name *</string>
+    <string name="email_star">Email *</string>
+    <string name="enter_your_login_details">Enter Your Login Details</string>
+    <string name="caps_submit">SUBMIT</string>
+
+    <string name="forgot_password_question">Forgot Password ?</string>
+    <string name="old_password_star">Old Password *</string>
+    <string name="new_password_star">New Password *</string>
+    <string name="confirm_password_star">Confirm Password *</string>
+    <string name="code_received_via_sms">Code Received via SMS *</string>
+    <string name="change_your_password">Change Your Password</string>
 
 </resources>
