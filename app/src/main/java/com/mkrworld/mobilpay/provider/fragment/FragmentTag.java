@@ -13,6 +13,7 @@ public interface FragmentTag {
     String MERCHANT_QR_CODE_GENERATOR = "FragmentMerchantQrCodeGenerator";
     String MERCHANT_AEPS_COLLECT = "FragmentMerchantAEPSCollect";
     String MERCHANT_SEND_BILL = "FragmentMerchantSendBill";
+    String MERCHANT_COLLECTION_SUMMARY = "FragmentMerchantCollectionSummary";
     String FORGOT_PASSWORD = "FragmentForgotPassword";
     String CHANGE_PASSWORD = "FragmentChangePassword";
     String CHANGE_PASSWORD_BY_OTP = "FragmentChangePasswordByOtp";

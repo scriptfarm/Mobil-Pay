@@ -8,6 +8,7 @@ import com.mkrworld.mobilpay.ui.fragment.FragmentChangePassword;
 import com.mkrworld.mobilpay.ui.fragment.FragmentChangePasswordByOtp;
 import com.mkrworld.mobilpay.ui.fragment.FragmentForgotPassword;
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantAEPSCollect;
+import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantCollectionSummary;
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantHome;
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantLogin;
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantQrCode;
@@ -48,6 +49,8 @@ public class FragmentProvider {
                 return new FragmentChangePassword();
             case FragmentTag.CHANGE_PASSWORD_BY_OTP:
                 return new FragmentChangePasswordByOtp();
+            case FragmentTag.MERCHANT_COLLECTION_SUMMARY:
+                return new FragmentMerchantCollectionSummary();
             default:
                 return null;
         }

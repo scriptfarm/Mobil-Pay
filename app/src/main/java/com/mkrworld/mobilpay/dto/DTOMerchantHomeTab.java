@@ -49,7 +49,7 @@ public class DTOMerchantHomeTab {
     }
 
     /**
-     * Method to get the TabType
+     * Method to get the RowType
      *
      * @return
      */

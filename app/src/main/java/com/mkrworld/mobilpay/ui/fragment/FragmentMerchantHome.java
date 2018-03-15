@@ -103,6 +103,10 @@ public class FragmentMerchantHome extends Fragment implements OnBaseFragmentList
                             }
                             break;
                         case COLLECTION_SUMMARY:
+                            if (getActivity() instanceof OnBaseActivityListener) {
+                                Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_COLLECTION_SUMMARY);
+                                ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, null, true, FragmentTag.MERCHANT_COLLECTION_SUMMARY);
+                            }
                             break;
                         default:
                     }
