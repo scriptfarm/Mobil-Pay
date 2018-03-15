@@ -1,19 +1,25 @@
 package com.mkrworld.mobilpay.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
+import com.mkrworld.androidlib.utils.MKRDialogUtil;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
+import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener;
+import com.mkrworld.mobilpay.utils.Utils;
 
 /**
  * Created by mkr on 13/3/18.
@@ -21,6 +27,12 @@ import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
 
 public class FragmentChangePassword extends Fragment implements OnBaseFragmentListener, View.OnClickListener {
     private static final String TAG = BuildConfig.BASE_TAG + ".FragmentChangePassword";
+    private TextInputLayout mTextInputLayoutOldPassword;
+    private TextInputLayout mTextInputLayoutNewPassword;
+    private TextInputLayout mTextInputLayoutConfirmPassword;
+    private EditText mEditTextOldPassword;
+    private EditText mEditTextNewPassword;
+    private EditText mEditTextConfirmPassword;
 
     @Nullable
     @Override
@@ -65,10 +77,7 @@ public class FragmentChangePassword extends Fragment implements OnBaseFragmentLi
                 }
                 break;
             case R.id.fragment_change_password_textView_submit:
-                if (getActivity() instanceof OnBaseActivityListener) {
-                    Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
-                    ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
-                }
+                startSendOtpProcess();
                 break;
         }
     }
@@ -91,7 +100,101 @@ public class FragmentChangePassword extends Fragment implements OnBaseFragmentLi
         if (getView() == null) {
             return;
         }
+
         getView().findViewById(R.id.fragment_change_password_textView_forgot_password).setOnClickListener(this);
         getView().findViewById(R.id.fragment_change_password_textView_submit).setOnClickListener(this);
+
+        mTextInputLayoutOldPassword = (TextInputLayout) getView().findViewById(R.id.fragment_change_password_textInputLayout_old_password);
+        mEditTextOldPassword = (EditText) getView().findViewById(R.id.fragment_change_password_editText_old_password);
+        mTextInputLayoutNewPassword = (TextInputLayout) getView().findViewById(R.id.fragment_change_password_textInputLayout_new_password);
+        mEditTextNewPassword = (EditText) getView().findViewById(R.id.fragment_change_password_editText_new_password);
+        mTextInputLayoutConfirmPassword = (TextInputLayout) getView().findViewById(R.id.fragment_change_password_textInputLayout_confirm_password);
+        mEditTextConfirmPassword = (EditText) getView().findViewById(R.id.fragment_change_password_editText_confirm_password);
+
+        // ADD TEXT CHANGE LISTENER
+        mEditTextOldPassword.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutOldPassword));
+        mEditTextNewPassword.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutNewPassword));
+        mEditTextConfirmPassword.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutConfirmPassword));
+    }
+
+    /**
+     * Method to initiate the Send OTP Process
+     */
+    private void startSendOtpProcess() {
+        Tracer.debug(TAG, "startSendOtpProcess: ");
+        Utils.hideKeyboard(getActivity(), getView());
+        if (!isUserDetailValid()) {
+            return;
+        }
+
+        String oldPassword = mEditTextOldPassword.getText().toString();
+        String newPassword = mEditTextNewPassword.getText().toString();
+        String confirmPassword = mEditTextConfirmPassword.getText().toString();
+
+        MKRDialogUtil.showLoadingDialog(getActivity());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                MKRDialogUtil.dismissLoadingDialog();
+                if (getActivity() instanceof OnBaseActivityListener) {
+                    Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
+                    ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
+                }
+            }
+        }, 3000);
+    }
+
+    /**
+     * Method to check weather the user detail insert by merchant is valid or not
+     *
+     * @return
+     */
+    private boolean isUserDetailValid() {
+        Tracer.debug(TAG, "isUserDetailValid: ");
+        if (getView() == null) {
+            return false;
+        }
+
+        String oldPassword = mEditTextOldPassword.getText().toString();
+        String newPassword = mEditTextNewPassword.getText().toString();
+        String confirmPassword = mEditTextConfirmPassword.getText().toString();
+
+        // Validate old password
+        if (Utils.isStringEmpty(oldPassword)) {
+            showTextInputError(mTextInputLayoutOldPassword, getString(R.string.field_should_not_be_empty_caps));
+            return false;
+        }
+
+        // Validate New password
+        if (Utils.isStringEmpty(newPassword)) {
+            showTextInputError(mTextInputLayoutNewPassword, getString(R.string.field_should_not_be_empty_caps));
+            return false;
+        }
+
+        // Validate confirm password
+        if (Utils.isStringEmpty(confirmPassword)) {
+            showTextInputError(mTextInputLayoutConfirmPassword, getString(R.string.field_should_not_be_empty_caps));
+            return false;
+        }
+
+        // Validate confirm password
+        if (!confirmPassword.trim().equals(newPassword.trim())) {
+            showTextInputError(mTextInputLayoutConfirmPassword, getString(R.string.password_does_not_match_with_new_password));
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Method to show the error in textInputLayout
+     *
+     * @param textInputLayout
+     * @param errorMessage
+     */
+    private void showTextInputError(TextInputLayout textInputLayout, String errorMessage) {
+        Tracer.debug(TAG, "showTextInputError: " + textInputLayout + "    " + errorMessage);
+        textInputLayout.setErrorEnabled(true);
+        textInputLayout.setError(errorMessage);
     }
 }

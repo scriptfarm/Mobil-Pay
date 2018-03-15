@@ -1,13 +1,9 @@
 package com.mkrworld.mobilpay.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,25 +11,14 @@ import android.widget.EditText;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
-import com.mkrworld.androidlib.ui.adapter.BaseAdapter;
-import com.mkrworld.androidlib.ui.adapter.BaseAdapterItem;
-import com.mkrworld.androidlib.ui.adapter.BaseViewHolder;
-import com.mkrworld.androidlib.utils.MKRDialogUtil;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
-import com.mkrworld.mobilpay.dto.DTOMerchantHomeTab;
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
-import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler;
-import com.mkrworld.mobilpay.ui.adapter.GridSpacingItemDecoration;
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener;
 import com.mkrworld.mobilpay.utils.Constants;
 import com.mkrworld.mobilpay.utils.Utils;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 /**
  * Created by mkr on 13/3/18.
@@ -135,9 +120,12 @@ public class FragmentMerchantQrCodeGenerator extends Fragment implements OnBaseF
     private void startQRCodeGeneratingProcess() {
         Tracer.debug(TAG, "startQRCodeGeneratingProcess: ");
         Utils.hideKeyboard(getActivity(), getView());
-        if (!isLoginDetailValid()) {
+        if (!isQrCodeDetailValid()) {
             return;
         }
+        String billNumber = mEditTextBillNumber.getText().toString();
+        String billDescription = mEditTextBillDescription.getText().toString();
+        String billAmount = mEditTextBillAmount.getText().toString();
 
         if (getActivity() instanceof OnBaseActivityListener) {
             if (getActivity() instanceof OnBaseActivityListener) {
@@ -151,12 +139,12 @@ public class FragmentMerchantQrCodeGenerator extends Fragment implements OnBaseF
     }
 
     /**
-     * Method to check weather the Login detail insert by merchant is valid or not
+     * Method to check weather the QR-Code generation detail insert by merchant is valid or not
      *
      * @return
      */
-
-    private boolean isLoginDetailValid() {
+    private boolean isQrCodeDetailValid() {
+        Tracer.debug(TAG, "isQrCodeDetailValid: ");
         if (getView() == null) {
             return false;
         }
@@ -190,7 +178,7 @@ public class FragmentMerchantQrCodeGenerator extends Fragment implements OnBaseF
                 return false;
             }
         } catch (Exception e) {
-            Tracer.error(TAG, "isLoginDetailValid: " + e.getMessage() + "  " + e.getMessage());
+            Tracer.error(TAG, "isQrCodeDetailValid: " + e.getMessage() + "  " + e.getMessage());
             return false;
         }
         return true;

@@ -136,6 +136,7 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
      * @return
      */
     private boolean isLoginDetailValid() {
+        Tracer.debug(TAG, "isLoginDetailValid: ");
         if (getView() == null) {
             return false;
         }

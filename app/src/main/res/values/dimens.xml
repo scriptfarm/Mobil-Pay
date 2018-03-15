@@ -20,7 +20,7 @@
     <dimen name="card_margin_ver">@dimen/mkrdp_2</dimen>
 
     <!-- TEXT INPUT LAYOUT -->
-    <dimen name="text_input_layout_margin_ver">@dimen/mkrdp_2</dimen>
+    <dimen name="text_input_layout_margin_ver">@dimen/mkrdp_1</dimen>
     <dimen name="text_input_layout_hint_text_size">@dimen/mkrdp_3.49</dimen>
     <dimen name="text_input_layout_text_size">@dimen/text_size</dimen>
 

@@ -1,19 +1,25 @@
 package com.mkrworld.mobilpay.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
+import com.mkrworld.androidlib.utils.MKRDialogUtil;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
+import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener;
+import com.mkrworld.mobilpay.utils.Utils;
 
 /**
  * Created by mkr on 13/3/18.
@@ -21,6 +27,10 @@ import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
 
 public class FragmentForgotPassword extends Fragment implements OnBaseFragmentListener, View.OnClickListener {
     private static final String TAG = BuildConfig.BASE_TAG + ".FragmentForgotPassword";
+    private TextInputLayout mTextInputLayoutMobileNumber;
+    private TextInputLayout mTextInputLayoutEmail;
+    private EditText mEditTextMobileNumber;
+    private EditText mEditTextEmail;
 
     @Nullable
     @Override
@@ -62,10 +72,7 @@ public class FragmentForgotPassword extends Fragment implements OnBaseFragmentLi
         Tracer.debug(TAG, "onClick: ");
         switch (view.getId()) {
             case R.id.fragment_forgot_password_textView_submit:
-                if (getActivity() instanceof OnBaseActivityListener) {
-                    Fragment fragment = FragmentProvider.getFragment(FragmentTag.CHANGE_PASSWORD_BY_OTP);
-                    ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, null, true, FragmentTag.CHANGE_PASSWORD_BY_OTP);
-                }
+                startSendOtpProcess();
                 break;
         }
     }
@@ -89,5 +96,80 @@ public class FragmentForgotPassword extends Fragment implements OnBaseFragmentLi
             return;
         }
         getView().findViewById(R.id.fragment_forgot_password_textView_submit).setOnClickListener(this);
+
+        mTextInputLayoutMobileNumber = (TextInputLayout) getView().findViewById(R.id.fragment_forgot_password_textInputLayout_mobile_number);
+        mEditTextMobileNumber = (EditText) getView().findViewById(R.id.fragment_forgot_password_editText_mobile_number);
+        mTextInputLayoutEmail = (TextInputLayout) getView().findViewById(R.id.fragment_forgot_password_textInputLayout_email);
+        mEditTextEmail = (EditText) getView().findViewById(R.id.fragment_forgot_password_editText_email);
+
+        // ADD TEXT WATCHER
+        mEditTextMobileNumber.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutMobileNumber));
+        mEditTextEmail.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutEmail));
+    }
+
+    /**
+     * Method to initiate the Send OTP Process
+     */
+    private void startSendOtpProcess() {
+        Tracer.debug(TAG, "startSendOtpProcess: ");
+        Utils.hideKeyboard(getActivity(), getView());
+        if (!isGenerateOtpDetailValid()) {
+            return;
+        }
+
+        String mobileNumber = mEditTextMobileNumber.getText().toString();
+        String email = mEditTextEmail.getText().toString();
+
+        MKRDialogUtil.showLoadingDialog(getActivity());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                MKRDialogUtil.dismissLoadingDialog();
+                if (getActivity() instanceof OnBaseActivityListener) {
+                    Fragment fragment = FragmentProvider.getFragment(FragmentTag.CHANGE_PASSWORD_BY_OTP);
+                    ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, null, true, FragmentTag.CHANGE_PASSWORD_BY_OTP);
+                }
+            }
+        }, 3000);
+    }
+
+    /**
+     * Method to check weather the OTP generation detail insert by merchant is valid or not
+     *
+     * @return
+     */
+    private boolean isGenerateOtpDetailValid() {
+        Tracer.debug(TAG, "isGenerateOtpDetailValid: ");
+        if (getView() == null) {
+            return false;
+        }
+
+        String mobileNumber = mEditTextMobileNumber.getText().toString();
+        String email = mEditTextEmail.getText().toString();
+
+        // Validate Mobile Number
+        if (Utils.isStringEmpty(mobileNumber)) {
+            showTextInputError(mTextInputLayoutMobileNumber, getString(R.string.field_should_not_be_empty_caps));
+            return false;
+        }
+
+        // Validate Email
+        if (Utils.isStringEmpty(email)) {
+            showTextInputError(mTextInputLayoutEmail, getString(R.string.field_should_not_be_empty_caps));
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Method to show the error in textInputLayout
+     *
+     * @param textInputLayout
+     * @param errorMessage
+     */
+    private void showTextInputError(TextInputLayout textInputLayout, String errorMessage) {
+        Tracer.debug(TAG, "showTextInputError: " + textInputLayout + "    " + errorMessage);
+        textInputLayout.setErrorEnabled(true);
+        textInputLayout.setError(errorMessage);
     }
 }
