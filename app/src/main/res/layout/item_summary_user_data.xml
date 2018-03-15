@@ -1,37 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_merchant_home_parent"
+    style="@style/style_card_view_property"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/transparent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="@dimen/item_merchant_home_content_padding">
-
-    <ImageView
-        android:id="@+id/item_merchant_home_imageView_icon"
-        android:layout_width="@dimen/item_merchant_home_icon_dim"
-        android:layout_height="@dimen/item_merchant_home_icon_dim"
-        android:padding="@dimen/item_merchant_home_icon_padding"
-        android:clickable="false"
-        android:src="@drawable/ic_thumb" />
+    android:background="@color/card_background">
 
     <LinearLayout
-        android:layout_width="1px"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <TextView
-        android:id="@+id/item_merchant_home_textView_label"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:clickable="false"
-        android:minLines="2"
-        android:text="@string/app_name"
-        android:textColor="@color/text_color_black"
-        android:textSize="@dimen/item_merchant_home_text_size" />
+        android:orientation="vertical">
 
-</LinearLayout>
+        <TextView
+            style="@style/style_text_view_default"
+            android:text="@string/amount_caps" />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

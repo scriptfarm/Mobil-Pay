@@ -11,35 +11,23 @@
 
     <TextView
         android:id="@+id/item_collection_summary_consolidate_data_textView_mode"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/style_text_view_default_width_weight"
         android:layout_weight="0.4"
-        android:clickable="false"
         android:gravity="left"
-        android:text="@string/mode_caps"
-        android:textColor="@color/text_color_black"
-        android:textSize="@dimen/item_summary_consolidate_data_text_size" />
+        android:text="@string/mode_caps" />
 
     <TextView
         android:id="@+id/item_collection_summary_consolidate_data_textView_count"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/style_text_view_default_width_weight"
         android:layout_weight="0.25"
-        android:clickable="false"
         android:gravity="right"
-        android:text="@string/txns_caps"
-        android:textColor="@color/text_color_black"
-        android:textSize="@dimen/item_summary_consolidate_data_text_size" />
+        android:text="@string/txns_caps" />
 
     <TextView
         android:id="@+id/item_collection_summary_consolidate_data_textView_amount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/style_text_view_default_width_weight"
         android:layout_weight="0.35"
-        android:clickable="false"
         android:gravity="right"
-        android:text="@string/amount_caps"
-        android:textColor="@color/text_color_black"
-        android:textSize="@dimen/item_summary_consolidate_data_text_size" />
+        android:text="@string/amount_caps" />
 
 </LinearLayout>

@@ -13,7 +13,6 @@
     <color name="card_background">#FFFFFF</color>
     <color name="button_background">@color/colorPrimary</color>
     <color name="button_background_f">@color/colorPrimaryDark</color>
-    <color name="button_text_color">@color/text_color_white</color>
 
     <!-- ACTIVITY MAIN SLIDING -->
     <color name="activity_main_sliding_title_text_color">@color/text_color_white</color>

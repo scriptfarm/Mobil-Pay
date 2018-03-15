@@ -22,13 +22,11 @@
     <!-- TEXT INPUT LAYOUT -->
     <dimen name="text_input_layout_margin_ver">@dimen/mkrdp_1</dimen>
     <dimen name="text_input_layout_hint_text_size">@dimen/mkrdp_3.49</dimen>
-    <dimen name="text_input_layout_text_size">@dimen/text_size</dimen>
 
     <!-- BUTTON LAYOUT -->
     <dimen name="button_corner">@dimen/mkrdp_0.50</dimen>
     <dimen name="button_padding_ver">@dimen/mkrdp_3</dimen>
     <dimen name="button_padding_hor">@dimen/mkrdp_2</dimen>
-    <dimen name="button_text_size">@dimen/text_size</dimen>
 
     <!-- ACTIVITY MAIN -->
     <dimen name="activity_main_sliding_width">@dimen/mkrdp_80</dimen>
@@ -38,7 +36,6 @@
     <dimen name="activity_main_sliding_logo_dim">@dimen/mkrdp_6</dimen>
     <dimen name="activity_main_sliding_title_text_size">@dimen/title_text_size</dimen>
     <dimen name="activity_main_sliding_content_margin_ver">@dimen/mkrdp_1</dimen>
-    <dimen name="activity_main_sliding_text_size">@dimen/text_size</dimen>
 
     <!-- FRAGMENT MERCHANT LOGIN -->
     <dimen name="fragment_merchant_login_card_title_text_size">@dimen/title_text_size</dimen>
@@ -48,11 +45,9 @@
     <!-- ITEM MERCHANT HOME -->
     <dimen name="item_merchant_home_icon_dim">@dimen/mkrdp_25</dimen>
     <dimen name="item_merchant_home_icon_padding">@dimen/mkrdp_5</dimen>
-    <dimen name="item_merchant_home_text_size">@dimen/text_size</dimen>
     <dimen name="item_merchant_home_content_padding">@dimen/mkrdp_2</dimen>
 
     <!-- ITEM SUMMARY CONSOLIDATE DATA -->
-    <dimen name="item_summary_consolidate_data_text_size">@dimen/text_size</dimen>
 
     <!-- FRAGMENT MERCHANT QR-CODE -->
     <dimen name="fragment_merchant_qrcode_card_title_text_size">@dimen/title_text_size</dimen>

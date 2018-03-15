@@ -14,8 +14,8 @@
         android:id="@+id/item_merchant_home_imageView_icon"
         android:layout_width="@dimen/item_merchant_home_icon_dim"
         android:layout_height="@dimen/item_merchant_home_icon_dim"
-        android:padding="@dimen/item_merchant_home_icon_padding"
         android:clickable="false"
+        android:padding="@dimen/item_merchant_home_icon_padding"
         android:src="@drawable/ic_thumb" />
 
     <LinearLayout
@@ -25,13 +25,9 @@
 
     <TextView
         android:id="@+id/item_merchant_home_textView_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        style="@style/style_text_view_default"
         android:clickable="false"
-        android:minLines="2"
-        android:text="@string/app_name"
-        android:textColor="@color/text_color_black"
-        android:textSize="@dimen/item_merchant_home_text_size" />
+        android:gravity="center"
+        android:minLines="2" />
 
 </LinearLayout>
