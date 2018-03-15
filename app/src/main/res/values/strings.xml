@@ -2,6 +2,7 @@
     <string name="app_name">Mobil Pay</string>
     <string name="symbol_rs">₹</string>
     <string name="field_should_not_be_empty_caps">FIELD SHOULD NOT BE EMPTY</string>
+    <string name="amount_should_be_greater_then_caps">AMOUNT SHOULD BE GREATER THEN </string>
 
     <string name="screen_title_merchant_login">Merchant Login</string>
     <string name="screen_title_merchant_home">Merchant Home</string>

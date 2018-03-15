@@ -115,7 +115,7 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         }
         String merchantIdMobileNumber = mEditTextMerchantIdMobileNumber.getText().toString();
         String password = mEditTextPassword.getText().toString();
-        
+
         MKRDialogUtil.showLoadingDialog(getActivity());
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -149,7 +149,6 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
 
         // Validate Password
         if (Utils.isStringEmpty(password)) {
-            TextInputLayout textInputLayout = (TextInputLayout) getView().findViewById(R.id.fragment_merchant_login_textInputLayout_password);
             showTextInputError(mTextInputLayoutPassword, getString(R.string.field_should_not_be_empty_caps));
             return false;
         }
