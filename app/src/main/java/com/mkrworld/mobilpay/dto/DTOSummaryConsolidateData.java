@@ -1,10 +1,14 @@
 package com.mkrworld.mobilpay.dto;
 
+import com.mkrworld.androidlib.utils.Tracer;
+import com.mkrworld.mobilpay.BuildConfig;
+
 /**
  * Created by mkr on 14/3/18.
  * Class to hold the data of the Merchant Summary Consolidate Data
  */
 public class DTOSummaryConsolidateData {
+    private static final String TAG = BuildConfig.BASE_TAG + ".DTOSummaryConsolidateData";
 
     /**
      * TYPE OF THE TAB ON THE HOME SCREEN
@@ -27,6 +31,7 @@ public class DTOSummaryConsolidateData {
      * @param amount
      */
     public DTOSummaryConsolidateData(RowType rowType, String mode, String count, String amount) {
+        Tracer.debug(TAG, "DTOSummaryConsolidateData: " + rowType + "  " + mode);
         mRowType = rowType;
         mMode = mode;
         mCount = count;
@@ -82,6 +87,6 @@ public class DTOSummaryConsolidateData {
 
     @Override
     public int hashCode() {
-        return mRowType.hashCode();
+        return mMode.hashCode();
     }
 }

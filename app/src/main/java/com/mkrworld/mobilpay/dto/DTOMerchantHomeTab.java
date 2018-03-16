@@ -1,10 +1,14 @@
 package com.mkrworld.mobilpay.dto;
 
+import com.mkrworld.androidlib.utils.Tracer;
+import com.mkrworld.mobilpay.BuildConfig;
+
 /**
  * Created by mkr on 14/3/18.
  * Class to hold the data of the Merchant Home Tab
  */
 public class DTOMerchantHomeTab {
+    private static final String TAG = BuildConfig.BASE_TAG + ".DTOMerchantHomeTab";
 
     /**
      * TYPE OF THE TAB ON THE HOME SCREEN
@@ -25,6 +29,7 @@ public class DTOMerchantHomeTab {
      * @param label
      */
     public DTOMerchantHomeTab(TabType tabType, int iconResId, String label) {
+        Tracer.debug(TAG, "DTOMerchantHomeTab: " + tabType + "  " + label);
         mTabType = tabType;
         mIconResId = iconResId;
         mLabel = label;
