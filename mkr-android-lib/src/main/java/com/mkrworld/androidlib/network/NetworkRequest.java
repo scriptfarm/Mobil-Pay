@@ -17,6 +17,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -36,7 +38,7 @@ public class NetworkRequest {
      * @param timeOut
      * @param retryCount
      */
-    public static void sendAsyncRequest(final NetworkConstants.RequestType requestType, final String URL, final JSONObject jsonObject, final OnNetworkRequestListener onNetworkRequestListener, final long timeOut, final int retryCount) {
+    public static void sendAsyncRequest(final NetworkConstants.RequestType requestType, final String URL, final JSONObject jsonObject, final Map<String, String> headers, final OnNetworkRequestListener onNetworkRequestListener, final long timeOut, final int retryCount) {
         Tracer.debug(TAG, "NetworkRequest.sendAsyncRequest() RequestType: " + requestType.name() + " URL: " + URL);
         new AsyncTask<Void, Void, Object>() {
             @Override
@@ -44,7 +46,7 @@ public class NetworkRequest {
                 try {
                     int i = 0;
                     while (i < retryCount) {
-                        Object requestServer = executeRequest(requestType, URL, jsonObject, timeOut);
+                        Object requestServer = executeRequest(requestType, URL, jsonObject, headers, timeOut);
                         if (requestServer instanceof JSONObject) {
                             return requestServer;
                         }
@@ -78,11 +80,14 @@ public class NetworkRequest {
     /**
      * Method to send Post Request
      *
+     * @param requestType
      * @param strURL
      * @param jsonObject
+     * @param headers
+     * @param timeOut
      * @return
      */
-    private static Object executeRequest(NetworkConstants.RequestType requestType, String strURL, JSONObject jsonObject, long timeOut) {
+    private static Object executeRequest(NetworkConstants.RequestType requestType, String strURL, JSONObject jsonObject, Map<String, String> headers, long timeOut) {
         Tracer.debug(TAG, "executeRequest: " + strURL);
         HttpURLConnection urlConnection = null;
         try {
@@ -96,8 +101,12 @@ public class NetworkRequest {
             }
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod(getRequestType(requestType));
-            urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0(macintosh;U;Intel Mac 05 X104; en-us; rv:1.9.2.2) Gecko/20100316 Firefox/19.0");
-            urlConnection.setRequestProperty("Content-Type", "application/json");
+            if (headers != null) {
+                Set<String> keys = headers.keySet();
+                for (String key : keys) {
+                    urlConnection.setRequestProperty(key, headers.get(key));
+                }
+            }
             urlConnection.setReadTimeout((int) timeOut);
             urlConnection.setConnectTimeout((int) timeOut);
             switch (requestType) {
