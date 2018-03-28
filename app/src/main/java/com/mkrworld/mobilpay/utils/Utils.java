@@ -7,6 +7,11 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
+import com.mkrworld.mobilpay.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by mkr on 14/3/18.
@@ -14,6 +19,7 @@ import com.mkrworld.mobilpay.BuildConfig;
 
 public class Utils {
     private static final String TAG = BuildConfig.BASE_TAG + ".Utils";
+    public static String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
 
     /**
      * Method to hide the soft keyboard
@@ -71,4 +77,52 @@ public class Utils {
         return str == null || str.trim().isEmpty();
     }
 
+    /**
+     * Method to get the Date in UTC Format
+     *
+     * @param date
+     * @param dateFormat
+     * @return
+     */
+    public static String getDateTimeFormate(Date date, String dateFormat) {
+        final SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        sdf.setTimeZone(TimeZone.getDefault());
+        final String utcTime = sdf.format(date);
+        return utcTime;
+    }
+
+    /**
+     * Method to create the token
+     *
+     * @param context
+     * @param url
+     * @param date
+     * @return
+     */
+    public static String createToken(Context context, String url, Date date) {
+        long unixTime = date.getTime() / 1000;
+        String md5Format = (""+unixTime).trim() + ":" + context.getString(R.string.private_key).trim() + ":" + context.getString(R.string.public_key).trim() + ":" + url.trim();// + ":" + context.getString(R.string.salt);
+        String md5Token = md5(md5Format.toLowerCase());
+        return md5Token;
+    }
+
+    /**
+     * Method to encrypt String in md5 Hash
+     *
+     * @param md5
+     * @return
+     */
+    public static String md5(String md5) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(md5.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+        }
+        return null;
+    }
 }

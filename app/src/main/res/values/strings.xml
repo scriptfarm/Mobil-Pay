@@ -2,6 +2,10 @@
     <string name="app_name">Mobil Pay</string>
     <string name="symbol_rs">₹</string>
 
+    <string name="public_key">791E14FF-6243-4A73-A6E1-08B143EF0F2B</string>
+    <string name="private_key">15080811-E0DC-4F3E-B826-C799D3477967</string>
+    <string name="salt">Nupaysvi6uEWaiqjHvx8B3lhnLuZBaDyEEAO1QEo4UboTRam4y0LPfdGk0oHjatgjKed9oxgrROXq03RaKs9WNoExVcrM5aXvnMwBaroQ7acCLGyPbfrfOJnnmhxwjrCplMtTXMZ2v6XAh2gZqligqM16wMpJQ7t0QxemsQIqs9OUvAdza7hMMfjwjwjXPjpuA55sbzsUdldWPI5hBxFUyGoRDTDEnOqhvJhMaKOIjq2X1SpuQ7Fxslj3ZuPfGgSNupay</string>
+    <string name="no_data_fetch_from_server">No Data Fetch From Server</string>
 
     <string name="field_should_not_be_empty_caps">FIELD SHOULD NOT BE EMPTY</string>
     <string name="amount_should_be_greater_then_caps">AMOUNT SHOULD BE GREATER THEN </string>

@@ -24,6 +24,8 @@ import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider;
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener;
 import com.mkrworld.mobilpay.utils.Utils;
 
+import java.util.Date;
+
 /**
  * Created by mkr on 13/3/18.
  */
@@ -40,7 +42,11 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         public void onSuccess(DTOMerchantLoginResponse dtoMerchantLoginResponse) {
             Tracer.debug(TAG, "onSuccess : " + dtoMerchantLoginResponse);
             MKRDialogUtil.dismissLoadingDialog();
-            Tracer.showSnack(getView(), "Login Successful");
+            if (dtoMerchantLoginResponse == null) {
+                Tracer.showSnack(getView(), R.string.no_data_fetch_from_server);
+                return;
+            }
+            Tracer.showSnack(getView(), dtoMerchantLoginResponse.getMessage());
             Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
             ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
         }
@@ -141,14 +147,12 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         if (!isLoginDetailValid()) {
             return;
         }
-        //String merchantIdMobileNumber = mEditTextMerchantIdMobileNumber.getText().toString();
-        //String password = mEditTextPassword.getText().toString();
-
-        String token = "5dd66bed93ab24d7b028dd224b2dc0a4";
-        String timeStamp = "13-06-2015 23:45:52";
-        String userId = "ashish@gmail.com";
-        String password = "ashish";
-        String publicKey = "123456";
+        String userId = mEditTextMerchantIdMobileNumber.getText().toString();
+        String password = mEditTextPassword.getText().toString();
+        Date date = new Date();
+        String timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT);
+        String token = Utils.createToken(getActivity(), "merchantLogin", date);
+        String publicKey = getString(R.string.public_key);
         String pushId = "123";
         String gcmId = "123";
         DTOMerchantLoginRequest dtoMerchantLoginRequest = new DTOMerchantLoginRequest(token, timeStamp, userId, password, publicKey, pushId, gcmId);
