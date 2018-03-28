@@ -3,6 +3,8 @@ apply plugin: 'com.android.application'
 def STRING = "String"
 def BASE_TAG = "BASE_TAG"
 def BASE_TAG_VALUE = "\"MKRWorld.MobilPay\""
+def BASE_URL = "BASE_URL"
+def BASE_URL_VALUE = "\"http://192.168.43.129/nupay_dev/\""
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
@@ -19,6 +21,7 @@ android {
     buildTypes {
         debug {
             buildConfigField STRING, BASE_TAG, BASE_TAG_VALUE
+            buildConfigField STRING, BASE_URL, BASE_URL_VALUE
             multiDexEnabled true
         }
 
@@ -35,5 +38,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.github.kenglxn.QRGen:android:2.2.0'
+    compile 'com.google.code.gson:gson:2.2.4'
     compile project(':mkr-android-lib')
 }

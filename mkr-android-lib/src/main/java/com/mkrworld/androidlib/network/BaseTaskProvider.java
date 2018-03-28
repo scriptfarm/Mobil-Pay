@@ -1,5 +1,8 @@
 package com.mkrworld.androidlib.network;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by A1ZFKXA3 on 1/30/2018.
  */
@@ -42,8 +45,4 @@ public class BaseTaskProvider {
             networkCallBack.onError(errorMessage, errorCode);
         }
     }
-
-
-
-
 }

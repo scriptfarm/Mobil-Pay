@@ -11,8 +11,8 @@ import com.mkrworld.androidlib.ui.adapter.BaseViewHolder;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
-import com.mkrworld.mobilpay.dto.DTOSummaryConsolidateData;
-import com.mkrworld.mobilpay.dto.DTOSummaryConsolidateDataList;
+import com.mkrworld.mobilpay.dto.appdata.DTOSummaryConsolidateData;
+import com.mkrworld.mobilpay.dto.appdata.DTOSummaryConsolidateDataList;
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler;
 import com.mkrworld.mobilpay.ui.adapter.GridSpacingItemDecoration;
 

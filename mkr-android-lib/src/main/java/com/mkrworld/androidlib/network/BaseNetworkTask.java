@@ -3,10 +3,12 @@ package com.mkrworld.androidlib.network;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by A1ZFKXA3 on 1/30/2018.
@@ -37,7 +39,7 @@ public abstract class BaseNetworkTask<MKR> {
      *
      * @return
      */
-    public Context getContext() {
+    protected Context getContext() {
         return mContext;
     }
 
@@ -72,10 +74,41 @@ public abstract class BaseNetworkTask<MKR> {
             }
             return;
         }
+
+        if (isActualNetworkConnected()) {
+            ConnectivityInfoUtils.isConnected(mContext, new ConnectivityInfoUtils.OnConnectivityInfoUtilsListener() {
+                @Override
+                public void onConnectivityInfoUtilsNetworkConnected() {
+                    callApi();
+                }
+
+                @Override
+                public void onConnectivityInfoUtilsNetworkDisconnected() {
+                    if (mNetworkCallBack != null) {
+                        mNetworkCallBack.onError("No Network Connection", -1);
+                    }
+                }
+            });
+        } else if (ConnectivityInfoUtils.isConnected(mContext)) {
+            callApi();
+        } else {
+            mNetworkCallBack.onError("No Network Connection", -1);
+        }
+
+    }
+
+    /**
+     * Method to call the API
+     */
+    private void callApi() {
         NetworkRequest.sendAsyncRequest(getRequestType(), getUrl(), mRequestJsonObject, getHeader(), new NetworkRequest.OnNetworkRequestListener() {
             @Override
             public void onNetworkRequestCompleted(final JSONObject json) {
                 if (mNetworkCallBack != null) {
+                    if (!isBusinessResponseSuccess(json)) {
+                        mNetworkCallBack.onError(getBusinessResponseErrorMessage(json), -1);
+                        return;
+                    }
                     new AsyncTask<Void, Void, MKR>() {
 
                         @Override
@@ -104,14 +137,14 @@ public abstract class BaseNetworkTask<MKR> {
     /**
      * Method to get the timeout time
      */
-    public long getTimeOut() {
+    protected long getTimeOut() {
         return NetworkConstants.SOCKET_TIME_OUT;
     }
 
     /**
      * Method to get the retry count
      */
-    public int getRetryCount() {
+    protected int getRetryCount() {
         return 3;
     }
 
@@ -121,6 +154,16 @@ public abstract class BaseNetworkTask<MKR> {
      * @return
      */
     protected boolean isUsedLocalResponse() {
+        return false;
+    }
+
+
+    /**
+     * Method to check the network connectivity of adapter or actual network
+     *
+     * @return TRUE to check actual network connectivity, FALSE check Adapter connectivity
+     */
+    protected boolean isActualNetworkConnected() {
         return false;
     }
 
@@ -161,7 +204,25 @@ public abstract class BaseNetworkTask<MKR> {
      * @param jsonObject
      * @return
      */
-    public abstract MKR parseNetworkResponse(JSONObject jsonObject);
+    protected abstract MKR parseNetworkResponse(JSONObject jsonObject);
+
+
+    /**
+     * Method to check weather the Business Response is successful or not<br>
+     * Ex : In response JSON code = 0 means success, AND code = 1 means failed
+     *
+     * @param jsonObject
+     * @return
+     */
+    protected abstract boolean isBusinessResponseSuccess(JSONObject jsonObject);
+
+    /**
+     * Method to get Business Response error message<br>
+     *
+     * @param jsonObject
+     * @return
+     */
+    protected abstract String getBusinessResponseErrorMessage(JSONObject jsonObject);
 
     /**
      * Method to get the API URL
@@ -175,7 +236,7 @@ public abstract class BaseNetworkTask<MKR> {
      *
      * @return
      */
-    public abstract String getLocalResponseJsonPath();
+    protected abstract String getLocalResponseJsonPath();
 
     /**
      * Method to get the Header required to call API<br>Default Header Add in API call
@@ -186,12 +247,34 @@ public abstract class BaseNetworkTask<MKR> {
      *
      * @return NULL if not pass any header
      */
-    public abstract HashMap<String, String> getCustomHeader();
+    protected abstract HashMap<String, String> getCustomHeader();
 
     /**
      * Method to get the Request Type
      *
      * @return
      */
-    public abstract NetworkConstants.RequestType getRequestType();
+    protected abstract NetworkConstants.RequestType getRequestType();
+
+    /**
+     * Method to get the JSONObject from HAshMap
+     *
+     * @param params
+     * @return
+     */
+    protected static JSONObject getParamJSOBObject(HashMap<String, String> params) {
+        JSONObject jsonObject = new JSONObject();
+        if (params == null) {
+            return jsonObject;
+        }
+        Set<String> keys = params.keySet();
+        for (String key : keys) {
+            try {
+                jsonObject.put(key, params.get(key));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return jsonObject;
+    }
 }

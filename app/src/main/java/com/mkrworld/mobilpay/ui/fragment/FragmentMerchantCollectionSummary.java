@@ -3,8 +3,6 @@ package com.mkrworld.mobilpay.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,12 +16,10 @@ import com.mkrworld.androidlib.ui.adapter.BaseAdapter;
 import com.mkrworld.androidlib.ui.adapter.BaseAdapterItem;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.R;
-import com.mkrworld.mobilpay.dto.DTOMerchantHomeTab;
-import com.mkrworld.mobilpay.dto.DTOSummaryConsolidateData;
-import com.mkrworld.mobilpay.dto.DTOSummaryConsolidateDataList;
-import com.mkrworld.mobilpay.dto.DTOSummaryUserData;
+import com.mkrworld.mobilpay.dto.appdata.DTOSummaryConsolidateData;
+import com.mkrworld.mobilpay.dto.appdata.DTOSummaryConsolidateDataList;
+import com.mkrworld.mobilpay.dto.appdata.DTOSummaryUserData;
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler;
-import com.mkrworld.mobilpay.ui.adapter.GridSpacingItemDecoration;
 
 import java.util.ArrayList;
 

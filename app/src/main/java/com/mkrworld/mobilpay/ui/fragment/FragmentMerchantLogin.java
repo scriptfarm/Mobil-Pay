@@ -1,12 +1,9 @@
 package com.mkrworld.mobilpay.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +11,16 @@ import android.widget.EditText;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
+import com.mkrworld.androidlib.network.NetworkCallBack;
 import com.mkrworld.androidlib.utils.MKRDialogUtil;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
+import com.mkrworld.mobilpay.dto.merchantlogin.DTOMerchantLoginRequest;
+import com.mkrworld.mobilpay.dto.merchantlogin.DTOMerchantLoginResponse;
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
+import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider;
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener;
 import com.mkrworld.mobilpay.utils.Utils;
 
@@ -33,6 +34,24 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
     private TextInputLayout mTextInputLayoutPassword;
     private EditText mEditTextMerchantIdMobileNumber;
     private EditText mEditTextPassword;
+    private MerchantNetworkTaskProvider mMerchantNetworkTaskProvider;
+    private NetworkCallBack<DTOMerchantLoginResponse> mMerchantLoginResponseNetworkCallBack = new NetworkCallBack<DTOMerchantLoginResponse>() {
+        @Override
+        public void onSuccess(DTOMerchantLoginResponse dtoMerchantLoginResponse) {
+            Tracer.debug(TAG, "onSuccess : " + dtoMerchantLoginResponse);
+            MKRDialogUtil.dismissLoadingDialog();
+            Tracer.showSnack(getView(), "Login Successful");
+            Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
+            ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
+        }
+
+        @Override
+        public void onError(String errorMessage, int errorCode) {
+            Tracer.debug(TAG, "onError : " + errorMessage);
+            MKRDialogUtil.dismissLoadingDialog();
+            Tracer.showSnack(getView(), errorMessage);
+        }
+    };
 
     @Nullable
     @Override
@@ -45,8 +64,16 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Tracer.debug(TAG, "onViewCreated: ");
         super.onViewCreated(view, savedInstanceState);
+        mMerchantNetworkTaskProvider = new MerchantNetworkTaskProvider();
+        mMerchantNetworkTaskProvider.attachProvider();
         setTitle();
         init();
+    }
+
+    @Override
+    public void onDestroyView() {
+        mMerchantNetworkTaskProvider.detachProvider();
+        super.onDestroyView();
     }
 
     @Override
@@ -114,20 +141,19 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         if (!isLoginDetailValid()) {
             return;
         }
-        String merchantIdMobileNumber = mEditTextMerchantIdMobileNumber.getText().toString();
-        String password = mEditTextPassword.getText().toString();
+        //String merchantIdMobileNumber = mEditTextMerchantIdMobileNumber.getText().toString();
+        //String password = mEditTextPassword.getText().toString();
 
+        String token = "5dd66bed93ab24d7b028dd224b2dc0a4";
+        String timeStamp = "13-06-2015 23:45:52";
+        String userId = "ashish@gmail.com";
+        String password = "ashish";
+        String publicKey = "123456";
+        String pushId = "123";
+        String gcmId = "123";
+        DTOMerchantLoginRequest dtoMerchantLoginRequest = new DTOMerchantLoginRequest(token, timeStamp, userId, password, publicKey, pushId, gcmId);
         MKRDialogUtil.showLoadingDialog(getActivity());
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                MKRDialogUtil.dismissLoadingDialog();
-                if (getActivity() instanceof OnBaseActivityListener) {
-                    Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
-                    ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
-                }
-            }
-        }, 3000);
+        mMerchantNetworkTaskProvider.merchantLoginTask(getActivity(), dtoMerchantLoginRequest, mMerchantLoginResponseNetworkCallBack);
     }
 
     /**

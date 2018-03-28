@@ -8,8 +8,7 @@ import com.mkrworld.androidlib.ui.adapter.BaseViewHolder;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
-import com.mkrworld.mobilpay.dto.DTOMerchantHomeTab;
-import com.mkrworld.mobilpay.dto.DTOSummaryConsolidateData;
+import com.mkrworld.mobilpay.dto.appdata.DTOSummaryConsolidateData;
 
 /**
  * Created by mkr on 14/3/18.

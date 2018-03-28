@@ -70,7 +70,7 @@ public class NetworkRequest {
                         onNetworkRequestListener.onNetworkRequestFailed((Error) result);
                     } else {
                         Tracer.debug(TAG, ".onPostExecute(...).new AsyncTask() {...}.onPostExecute(UNKNOWN)");
-                        onNetworkRequestListener.onNetworkRequestFailed(new Error(3, "Unknown Error"));
+                        onNetworkRequestListener.onNetworkRequestFailed(new Error(-1, "Unknown Error"));
                     }
                 }
             }
@@ -142,16 +142,19 @@ public class NetworkRequest {
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            new Error(-1, "Network error : " + e.getMessage());
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            new Error(-1, "Network error : " + e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
+            new Error(-1, "Network error : " + e.getMessage());
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
         }
-        return new Error(1, "Network error");
+        return new Error(-1, "Network error");
     }
 
     /**

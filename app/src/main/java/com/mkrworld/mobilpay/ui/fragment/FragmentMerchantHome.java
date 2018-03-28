@@ -18,7 +18,7 @@ import com.mkrworld.androidlib.ui.adapter.BaseViewHolder;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
-import com.mkrworld.mobilpay.dto.DTOMerchantHomeTab;
+import com.mkrworld.mobilpay.dto.appdata.DTOMerchantHomeTab;
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler;

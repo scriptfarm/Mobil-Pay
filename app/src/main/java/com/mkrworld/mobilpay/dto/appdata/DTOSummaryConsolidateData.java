@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.dto;
+package com.mkrworld.mobilpay.dto.appdata;
 
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
