@@ -16,9 +16,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 
 
 /**
@@ -27,54 +29,69 @@ import java.util.Set;
 
 public class NetworkRequest {
     private static final String TAG = BuildConfig.BASE_TAG + ".NetworkRequest";
+    private static final int MAX_THREAD_COUNT = 4;
+    private static Vector<NetworkRequest> mNetworkRequestList = new Vector<>();
+    private static int mThreadCount = 0;
+    private static Watcher mWatcher;
+    private NetworkConstants.RequestType mRequestType;
+    private String mURL;
+    private JSONObject mJsonObject;
+    private Map<String, String> mHeaders;
+    private OnNetworkRequestListener mOnNetworkRequestListener;
+    private long mTimeOut = 60000;
+    private int mRetryCount = 3;
 
     /**
-     * Method to send Async Request to the server
+     * Constructor
      *
      * @param requestType
-     * @param URL
+     * @param url
      * @param jsonObject
+     * @param headers
      * @param onNetworkRequestListener
      * @param timeOut
      * @param retryCount
      */
-    public static void sendAsyncRequest(final NetworkConstants.RequestType requestType, final String URL, final JSONObject jsonObject, final Map<String, String> headers, final OnNetworkRequestListener onNetworkRequestListener, final long timeOut, final int retryCount) {
-        Tracer.debug(TAG, "NetworkRequest.sendAsyncRequest() RequestType: " + requestType.name() + " URL: " + URL);
-        new AsyncTask<Void, Void, Object>() {
-            @Override
-            protected Object doInBackground(Void... params) {
-                try {
-                    int i = 0;
-                    while (i < retryCount) {
-                        Object requestServer = executeRequest(requestType, URL, jsonObject, headers, timeOut);
-                        if (requestServer instanceof JSONObject) {
-                            return requestServer;
-                        }
-                        i++;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Tracer.error(TAG, "sendAsyncRequest(...).new AsyncTask() {...}.doInBackground() " + e.getMessage());
-                }
-                return null;
-            }
+    private NetworkRequest(NetworkConstants.RequestType requestType, String url, JSONObject jsonObject, Map<String, String> headers, OnNetworkRequestListener onNetworkRequestListener, long timeOut, int retryCount) {
+        mRequestType = requestType;
+        mURL = url;
+        mJsonObject = jsonObject;
+        mHeaders = new HashMap<>();
+        if (headers != null) {
+            mHeaders.putAll(headers);
+        }
+        mOnNetworkRequestListener = onNetworkRequestListener;
+        mTimeOut = timeOut;
+        mRequestType = requestType;
+    }
 
-            protected void onPostExecute(Object result) {
-                super.onPostExecute(result);
-                if (onNetworkRequestListener != null) {
-                    if (result instanceof JSONObject) {
-                        Tracer.debug(TAG, "onPostExecute(...).new AsyncTask() {...}.onPostExecute(JSON)");
-                        onNetworkRequestListener.onNetworkRequestCompleted((JSONObject) result);
-                    } else if (result instanceof Error) {
-                        Tracer.debug(TAG, ".onPostExecute(...).new AsyncTask() {...}.onPostExecute(ERROR)");
-                        onNetworkRequestListener.onNetworkRequestFailed((Error) result);
-                    } else {
-                        Tracer.debug(TAG, ".onPostExecute(...).new AsyncTask() {...}.onPostExecute(UNKNOWN)");
-                        onNetworkRequestListener.onNetworkRequestFailed(new Error(-1, "Unknown Error"));
-                    }
-                }
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    /**
+     * Method to add the Network request in the QUEUE
+     *
+     * @param requestType
+     * @param URL
+     * @param jsonObject
+     * @param headers
+     * @param onNetworkRequestListener
+     * @param timeOut
+     * @param retryCount
+     */
+    public static void addToRequestQueue(final NetworkConstants.RequestType requestType, final String URL, final JSONObject jsonObject, final Map<String, String> headers, final OnNetworkRequestListener onNetworkRequestListener, final long timeOut, final int retryCount) {
+        Tracer.debug(TAG, "NetworkRequest.addToRequestQueue() RequestType: " + requestType.name() + " URL: " + URL);
+        NetworkRequest networkRequest = new NetworkRequest(requestType, URL, jsonObject, headers, onNetworkRequestListener, timeOut, retryCount);
+        mNetworkRequestList.add(networkRequest);
+        initiateWatcher();
+    }
+
+    /**
+     * Method to initiate the Request Queue Watcher
+     */
+    private static void initiateWatcher() {
+        Tracer.debug(TAG, "initiateWatcher : ");
+        if (mNetworkRequestList.size() > 0 && (mWatcher == null || !mWatcher.isWatching())) {
+            mWatcher = new Watcher();
+            mWatcher.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
     }
 
     /**
@@ -208,6 +225,118 @@ public class NetworkRequest {
             url += "?" + param;
         }
         return url;
+    }
+
+    /**
+     * Class to watch the Performance
+     */
+    private static class Watcher extends AsyncTask<Void, NetworkRequest, Void> {
+        private Boolean mIsWatching;
+
+        /**
+         * Constructor
+         */
+        public Watcher() {
+            setWatching(true);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            setWatching(true);
+            while (mNetworkRequestList.size() > 0 || mThreadCount > 0) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (mThreadCount < MAX_THREAD_COUNT && mNetworkRequestList.size() > 0) {
+                    NetworkRequest networkRequest = mNetworkRequestList.get(0);
+                    mNetworkRequestList.remove(0);
+                    publishProgress(networkRequest);
+                    mThreadCount++;
+                }
+            }
+            setWatching(false);
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(NetworkRequest... values) {
+            super.onProgressUpdate(values);
+            new Worker(values[0]).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            setWatching(false);
+            initiateWatcher();
+        }
+
+        /**
+         * Method to set the Watching state
+         *
+         * @param isWatching
+         */
+        private synchronized void setWatching(boolean isWatching) {
+            mIsWatching = isWatching;
+        }
+
+        /**
+         * Method to check weather the watcher is watching or not
+         *
+         * @return
+         */
+        public synchronized boolean isWatching() {
+            return mIsWatching != null ? mIsWatching : false;
+        }
+    }
+
+    /**
+     * Worker class to perform the API Calling Operation
+     */
+    private static class Worker extends AsyncTask<Void, Void, Object> {
+        private NetworkRequest mNetworkRequest;
+
+        public Worker(NetworkRequest networkRequest) {
+            mNetworkRequest = networkRequest;
+        }
+
+        @Override
+        protected Object doInBackground(Void... params) {
+            try {
+                int i = 0;
+                while (i < mNetworkRequest.mRetryCount) {
+                    Object requestServer = executeRequest(mNetworkRequest.mRequestType, mNetworkRequest.mURL, mNetworkRequest.mJsonObject, mNetworkRequest.mHeaders, mNetworkRequest.mTimeOut);
+                    if (requestServer instanceof JSONObject) {
+                        return requestServer;
+                    }
+                    i++;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Tracer.error(TAG, "sendAsyncRequest(...).new AsyncTask() {...}.doInBackground() " + e.getMessage());
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Object result) {
+            super.onPostExecute(result);
+            mThreadCount--;
+            if (mNetworkRequest.mOnNetworkRequestListener != null) {
+                if (result instanceof JSONObject) {
+                    Tracer.debug(TAG, "onPostExecute(...).new AsyncTask() {...}.onPostExecute(JSON)");
+                    mNetworkRequest.mOnNetworkRequestListener.onNetworkRequestCompleted((JSONObject) result);
+                } else if (result instanceof Error) {
+                    Tracer.debug(TAG, ".onPostExecute(...).new AsyncTask() {...}.onPostExecute(ERROR)");
+                    mNetworkRequest.mOnNetworkRequestListener.onNetworkRequestFailed((Error) result);
+                } else {
+                    Tracer.debug(TAG, ".onPostExecute(...).new AsyncTask() {...}.onPostExecute(UNKNOWN)");
+                    mNetworkRequest.mOnNetworkRequestListener.onNetworkRequestFailed(new Error(-1, "Unknown Error"));
+                }
+            }
+        }
+
     }
 
     // ==========================================================================================================

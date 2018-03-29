@@ -101,7 +101,7 @@ public abstract class BaseNetworkTask<MKR> {
      * Method to call the API
      */
     private void callApi() {
-        NetworkRequest.sendAsyncRequest(getRequestType(), getUrl(), mRequestJsonObject, getHeader(), new NetworkRequest.OnNetworkRequestListener() {
+        NetworkRequest.addToRequestQueue(getRequestType(), getUrl(), mRequestJsonObject, getHeader(), new NetworkRequest.OnNetworkRequestListener() {
             @Override
             public void onNetworkRequestCompleted(final JSONObject json) {
                 if (mNetworkCallBack != null) {

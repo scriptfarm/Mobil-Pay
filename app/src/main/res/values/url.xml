@@ -1,3 +1,4 @@
 <resources>
     <string name="url_merchant_login">merchantLogin</string>
+    <string name="endpoint_merchant_login">merchantLogin</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.mkrworld.mobilpay.ui.fragment;
 
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -18,6 +19,7 @@ import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
 import com.mkrworld.mobilpay.dto.merchantlogin.DTOMerchantLoginRequest;
 import com.mkrworld.mobilpay.dto.merchantlogin.DTOMerchantLoginResponse;
+import com.mkrworld.mobilpay.fingerprintauth.OnFingerPrintAuthCallback;
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
 import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider;
@@ -30,7 +32,7 @@ import java.util.Date;
  * Created by mkr on 13/3/18.
  */
 
-public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentListener, View.OnClickListener {
+public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentListener, View.OnClickListener, OnFingerPrintAuthCallback {
     private static final String TAG = BuildConfig.BASE_TAG + ".FragmentMerchantLogin";
     private TextInputLayout mTextInputLayoutMerchantIdMobileNumber;
     private TextInputLayout mTextInputLayoutPassword;
@@ -109,6 +111,31 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         }
     }
 
+    @Override
+    public void onFingerPrintAuthNoFingerPrintHardwareFound() {
+        Tracer.debug(TAG, "onFingerPrintAuthNoFingerPrintHardwareFound : ");
+    }
+
+    @Override
+    public void onFingerPrintAuthNoFingerPrintRegistered() {
+        Tracer.debug(TAG, "onFingerPrintAuthNoFingerPrintRegistered : ");
+    }
+
+    @Override
+    public void onFingerPrintAuthBelowMarshmallow() {
+        Tracer.debug(TAG, "onFingerPrintAuthBelowMarshmallow : ");
+    }
+
+    @Override
+    public void onFingerPrintAuthSuccess(FingerprintManager.CryptoObject cryptoObject) {
+        Tracer.debug(TAG, "onFingerPrintAuthSuccess : ");
+    }
+
+    @Override
+    public void onFingerPrintAuthFailed(int errorCode, String errorMessage) {
+        Tracer.debug(TAG, "onFingerPrintAuthFailed : ");
+    }
+
     /**
      * Method to set the Activity Title
      */
@@ -151,7 +178,7 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         String password = mEditTextPassword.getText().toString();
         Date date = new Date();
         String timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT);
-        String token = Utils.createToken(getActivity(), "merchantLogin", date);
+        String token = Utils.createToken(getActivity(), getString(R.string.endpoint_merchant_login), date);
         String publicKey = getString(R.string.public_key);
         String pushId = "123";
         String gcmId = "123";
