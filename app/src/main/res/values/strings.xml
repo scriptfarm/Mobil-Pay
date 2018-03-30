@@ -79,4 +79,10 @@
     <string name="amount_caps">AMOUNT</string>
     <string name="txns_caps">TXN\'s</string>
 
+    <string name="enable_finger_print">Enable Finger Print</string>
+    <string name="are_you_sure_enable_finger_print_login">Are you sure to enable finger print login ??</string>
+    <string name="no_finger_print_device_not_detected">No finger print device detected</string>
+    <string name="no_finger_print_register">No finger print register</string>
+    <string name="error_scanning_finger_not_recognized">Error : Scanning finger not recognized</string>
+
 </resources>

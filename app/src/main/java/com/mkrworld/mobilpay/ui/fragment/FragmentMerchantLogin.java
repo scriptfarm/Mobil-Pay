@@ -1,6 +1,9 @@
 package com.mkrworld.mobilpay.ui.fragment;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -19,11 +22,13 @@ import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
 import com.mkrworld.mobilpay.dto.merchantlogin.DTOMerchantLoginRequest;
 import com.mkrworld.mobilpay.dto.merchantlogin.DTOMerchantLoginResponse;
+import com.mkrworld.mobilpay.fingerprintauth.FingerPrintAuthHelper;
 import com.mkrworld.mobilpay.fingerprintauth.OnFingerPrintAuthCallback;
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
 import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider;
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener;
+import com.mkrworld.mobilpay.utils.PreferenceData;
 import com.mkrworld.mobilpay.utils.Utils;
 
 import java.util.Date;
@@ -38,6 +43,9 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
     private TextInputLayout mTextInputLayoutPassword;
     private EditText mEditTextMerchantIdMobileNumber;
     private EditText mEditTextPassword;
+    private boolean mIsFingerPrintDeviceWorkingFine;
+    private boolean mIsSignedViaFingerPrint = false;
+    private FingerPrintAuthHelper mFingerPrintAuthHelper;
     private MerchantNetworkTaskProvider mMerchantNetworkTaskProvider;
     private NetworkCallBack<DTOMerchantLoginResponse> mMerchantLoginResponseNetworkCallBack = new NetworkCallBack<DTOMerchantLoginResponse>() {
         @Override
@@ -49,8 +57,17 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
                 return;
             }
             Tracer.showSnack(getView(), dtoMerchantLoginResponse.getMessage());
-            Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
-            ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
+            String userId = mEditTextMerchantIdMobileNumber.getText().toString();
+            String password = mEditTextPassword.getText().toString();
+            if (!PreferenceData.isHaveFingerPrintConsent(getActivity()) && mIsFingerPrintDeviceWorkingFine && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)) {
+                showEnableFingerPrintDialog(userId, password);
+            } else {
+                if (mIsSignedViaFingerPrint) {
+                    PreferenceData.setMerchantLoginPassword(getActivity(), password);
+                    PreferenceData.setMerchantLoginId(getActivity(), userId);
+                }
+                goToSuccessScreen();
+            }
         }
 
         @Override
@@ -80,6 +97,7 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
 
     @Override
     public void onDestroyView() {
+        mFingerPrintAuthHelper.stopAuth();
         mMerchantNetworkTaskProvider.detachProvider();
         super.onDestroyView();
     }
@@ -114,11 +132,21 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
     @Override
     public void onFingerPrintAuthNoFingerPrintHardwareFound() {
         Tracer.debug(TAG, "onFingerPrintAuthNoFingerPrintHardwareFound : ");
+        mIsFingerPrintDeviceWorkingFine = false;
+        if (getView() == null) {
+            return;
+        }
+        Tracer.showSnack(getView(), R.string.no_finger_print_device_not_detected);
     }
 
     @Override
     public void onFingerPrintAuthNoFingerPrintRegistered() {
         Tracer.debug(TAG, "onFingerPrintAuthNoFingerPrintRegistered : ");
+        mIsFingerPrintDeviceWorkingFine = false;
+        if (getView() == null) {
+            return;
+        }
+        Tracer.showSnack(getView(), R.string.no_finger_print_register);
     }
 
     @Override
@@ -129,11 +157,20 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
     @Override
     public void onFingerPrintAuthSuccess(FingerprintManager.CryptoObject cryptoObject) {
         Tracer.debug(TAG, "onFingerPrintAuthSuccess : ");
+        mIsSignedViaFingerPrint = true;
+        mEditTextPassword.setText(PreferenceData.getMerchantLoginPassword(getActivity()));
+        mEditTextMerchantIdMobileNumber.setText(PreferenceData.getMerchantLoginId(getActivity()));
+        startSignInProcess();
     }
 
     @Override
     public void onFingerPrintAuthFailed(int errorCode, String errorMessage) {
         Tracer.debug(TAG, "onFingerPrintAuthFailed : ");
+        mIsSignedViaFingerPrint = false;
+        if (getView() == null) {
+            return;
+        }
+        Tracer.showSnack(getView(), R.string.error_scanning_finger_not_recognized);
     }
 
     /**
@@ -154,6 +191,9 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         if (getView() == null) {
             return;
         }
+        mIsFingerPrintDeviceWorkingFine = true;
+        mFingerPrintAuthHelper = FingerPrintAuthHelper.getHelper(getActivity(), this);
+        mFingerPrintAuthHelper.startAuth();
         getView().findViewById(R.id.fragment_merchant_login_textView_sign_in).setOnClickListener(this);
         mTextInputLayoutMerchantIdMobileNumber = (TextInputLayout) getView().findViewById(R.id.fragment_merchant_login_textInputLayout_merchant_id_mobile_number);
         mEditTextMerchantIdMobileNumber = (EditText) getView().findViewById(R.id.fragment_merchant_login_editText_merchant_id_mobile_number);
@@ -224,5 +264,44 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         Tracer.debug(TAG, "showTextInputError: " + textInputLayout + "    " + errorMessage);
         textInputLayout.setErrorEnabled(true);
         textInputLayout.setError(errorMessage);
+    }
+
+    /**
+     * Method to show dialog to enable the finger print
+     */
+    private void showEnableFingerPrintDialog(final String loginId, final String loginPassword) {
+        Tracer.debug(TAG, "showEnableFingerPrintDialog : ");
+        Context context = getActivity();
+        int iconId = R.drawable.ic_fingerprint_normal;
+        String title = getString(R.string.enable_finger_print);
+        String message = getString(R.string.are_you_sure_enable_finger_print_login);
+        DialogInterface.OnClickListener onOkClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                PreferenceData.setHaveFingerPrintConsent(getActivity());
+                PreferenceData.setMerchantLoginId(getActivity(), loginId);
+                PreferenceData.setMerchantLoginPassword(getActivity(), loginPassword);
+                goToSuccessScreen();
+            }
+        };
+        DialogInterface.OnClickListener onCancelClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                goToSuccessScreen();
+            }
+        };
+        boolean cancellable = false;
+        MKRDialogUtil.showOKCancelDialog(context, iconId, title, message, onOkClickListener, onCancelClickListener, cancellable);
+    }
+
+    /**
+     * Method to move user from this screen to the success screen
+     */
+    private void goToSuccessScreen() {
+        Tracer.debug(TAG, "goToSuccessScreen : ");
+        Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
+        ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
     }
 }
