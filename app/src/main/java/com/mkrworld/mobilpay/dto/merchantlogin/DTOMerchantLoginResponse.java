@@ -22,7 +22,7 @@ public class DTOMerchantLoginResponse {
      * @return
      */
     public String getMessage() {
-        return mMessage;
+        return mMessage != null ? mMessage : "";
     }
 
     /**
@@ -37,7 +37,7 @@ public class DTOMerchantLoginResponse {
     /**
      * Class to hold the Response Data
      */
-    private class Data {
+    public class Data {
 
         @SerializedName("user_id")
         private String mUserId;
@@ -66,7 +66,7 @@ public class DTOMerchantLoginResponse {
          * @return
          */
         public String getEmail() {
-            return mEmail;
+            return mEmail != null ? mEmail : "";
         }
 
         /**
@@ -87,7 +87,7 @@ public class DTOMerchantLoginResponse {
          * @return
          */
         public String getMerchantLogo() {
-            return mMerchantLogo;
+            return mMerchantLogo != null ? mMerchantLogo : "";
         }
 
         /**
@@ -96,7 +96,7 @@ public class DTOMerchantLoginResponse {
          * @return
          */
         public String getName() {
-            return mName;
+            return mName != null ? mName : "";
         }
 
         /**
@@ -105,7 +105,7 @@ public class DTOMerchantLoginResponse {
          * @return
          */
         public String getNupayId() {
-            return mNupayId;
+            return mNupayId != null ? mNupayId : "";
         }
 
         /**
@@ -114,7 +114,7 @@ public class DTOMerchantLoginResponse {
          * @return
          */
         public String getPhone() {
-            return mPhone;
+            return mPhone != null ? mPhone : "";
         }
 
         /**
@@ -123,7 +123,7 @@ public class DTOMerchantLoginResponse {
          * @return
          */
         public String getUserId() {
-            return mUserId;
+            return mUserId != null ? mUserId : "";
         }
     }
 }

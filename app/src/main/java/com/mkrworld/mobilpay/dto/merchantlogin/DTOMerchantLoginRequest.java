@@ -2,28 +2,20 @@ package com.mkrworld.mobilpay.dto.merchantlogin;
 
 import com.google.gson.annotations.SerializedName;
 import com.mkrworld.mobilpay.BuildConfig;
+import com.mkrworld.mobilpay.dto.DTOBaseRequest;
 
 /**
  * Created by mkr on 27/3/18.
  */
 
-public class DTOMerchantLoginRequest {
+public class DTOMerchantLoginRequest extends DTOBaseRequest {
     private static final String TAG = BuildConfig.BASE_TAG + ".DTOMerchantLoginResponse";
-
-    @SerializedName("token")
-    private String mToken;
-
-    @SerializedName("timestamp")
-    private String mTimeStamp;
 
     @SerializedName("user_id")
     private String mUserId;
 
     @SerializedName("password")
     private String mPassword;
-
-    @SerializedName("public_key")
-    private String mPublicKey;
 
     @SerializedName("extra")
     private Extra mExtra;
@@ -33,18 +25,16 @@ public class DTOMerchantLoginRequest {
      *
      * @param token
      * @param timeStamp
+     * @param publicKey
      * @param userId
      * @param password
-     * @param publicKey
      * @param pushId
      * @param gcmId
      */
-    public DTOMerchantLoginRequest(String token, String timeStamp, String userId, String password, String publicKey, String pushId, String gcmId) {
-        mToken = token;
-        mTimeStamp = timeStamp;
+    public DTOMerchantLoginRequest(String token, String timeStamp, String publicKey, String userId, String password, String pushId, String gcmId) {
+        super(token, timeStamp, publicKey);
         mUserId = userId;
         mPassword = password;
-        mPublicKey = publicKey;
         mExtra = new Extra(pushId, gcmId);
     }
 

@@ -139,7 +139,6 @@ public class FragmentMerchantSendBill extends Fragment implements OnBaseFragment
             if (getActivity() instanceof OnBaseActivityListener) {
                 Bundle bundle = new Bundle();
                 bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, "THE MKR");
-                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TEXT, "I AM THE MANISH KUMAR REWALLIYA");
                 Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_QR_CODE);
                 ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, bundle, true, FragmentTag.MERCHANT_QR_CODE);
             }

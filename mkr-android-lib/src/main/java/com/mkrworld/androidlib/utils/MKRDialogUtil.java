@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
@@ -152,12 +153,12 @@ public class MKRDialogUtil {
         Tracer.debug(TAG, "dismissLoadingDialog: ");
     }
 
+    /**
+     * Method to show the loading dialog
+     *
+     * @param context
+     */
     public static void showLoadingDialog(Context context) {
-        if (alertDialog != null && alertDialog.isShowing()) {
-            return;
-        }
-        alertDialog = new Dialog(context);
-        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         RelativeLayout relativeLayout = new RelativeLayout(context);
         int paddingBottom = (int) ((float) context.getResources().getDisplayMetrics().heightPixels * 0.2F);
         relativeLayout.setPadding(0, 0, 0, paddingBottom);
@@ -168,7 +169,23 @@ public class MKRDialogUtil {
         relativeLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         relativeLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         relativeLayout.addView(progressView, relativeLayoutParams);
-        alertDialog.setContentView(relativeLayout);
+        showLoadingDialog(context, relativeLayout);
+    }
+
+
+    /**
+     * Method to show the loading dialog
+     *
+     * @param context
+     * @param view    Custom view of the Dialog
+     */
+    public static void showLoadingDialog(Context context, View view) {
+        if (alertDialog != null && alertDialog.isShowing()) {
+            return;
+        }
+        alertDialog = new Dialog(context);
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alertDialog.setContentView(view);
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.setCancelable(false);
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));

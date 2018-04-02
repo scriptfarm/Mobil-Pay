@@ -9,6 +9,9 @@
     <integer name="length_mobile_number">10</integer>
     <integer name="length_aadhar_number_4">4</integer>
 
+    <dimen name="dialog_progress_circle_dim">@dimen/mkrdp_25</dimen>
+    <dimen name="dialog_progress_progress_width">@dimen/mkrdp_1.49</dimen>
+
     <!-- TOOL BAR DIMENSION -->
     <dimen name="toolbar_height">@dimen/mkrdp_15</dimen>
 

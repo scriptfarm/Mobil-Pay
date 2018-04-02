@@ -131,7 +131,7 @@ public class FragmentChangePassword extends Fragment implements OnBaseFragmentLi
         String newPassword = mEditTextNewPassword.getText().toString();
         String confirmPassword = mEditTextConfirmPassword.getText().toString();
 
-        MKRDialogUtil.showLoadingDialog(getActivity());
+        Utils.showLoadingDialog(getActivity());
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

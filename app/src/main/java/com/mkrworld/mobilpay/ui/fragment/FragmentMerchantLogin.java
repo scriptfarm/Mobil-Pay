@@ -44,7 +44,6 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
     private EditText mEditTextMerchantIdMobileNumber;
     private EditText mEditTextPassword;
     private boolean mIsFingerPrintDeviceWorkingFine;
-    private boolean mIsSignedViaFingerPrint = false;
     private FingerPrintAuthHelper mFingerPrintAuthHelper;
     private MerchantNetworkTaskProvider mMerchantNetworkTaskProvider;
     private NetworkCallBack<DTOMerchantLoginResponse> mMerchantLoginResponseNetworkCallBack = new NetworkCallBack<DTOMerchantLoginResponse>() {
@@ -52,22 +51,25 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         public void onSuccess(DTOMerchantLoginResponse dtoMerchantLoginResponse) {
             Tracer.debug(TAG, "onSuccess : " + dtoMerchantLoginResponse);
             MKRDialogUtil.dismissLoadingDialog();
-            if (dtoMerchantLoginResponse == null) {
+            if (dtoMerchantLoginResponse == null && dtoMerchantLoginResponse.getData() == null) {
                 Tracer.showSnack(getView(), R.string.no_data_fetch_from_server);
                 return;
             }
             Tracer.showSnack(getView(), dtoMerchantLoginResponse.getMessage());
+            PreferenceData.setMerchantNupayId(getActivity(), dtoMerchantLoginResponse.getData().getNupayId());
+            PreferenceData.setMerchantId(getActivity(), dtoMerchantLoginResponse.getData().getUserId());
             String userId = mEditTextMerchantIdMobileNumber.getText().toString();
             String password = mEditTextPassword.getText().toString();
-            if (!PreferenceData.isHaveFingerPrintConsent(getActivity()) && mIsFingerPrintDeviceWorkingFine && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)) {
-                showEnableFingerPrintDialog(userId, password);
-            } else {
-                if (mIsSignedViaFingerPrint) {
-                    PreferenceData.setMerchantLoginPassword(getActivity(), password);
-                    PreferenceData.setMerchantLoginId(getActivity(), userId);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (!PreferenceData.isHaveFingerPrintConsent(getActivity()) && mIsFingerPrintDeviceWorkingFine) {
+                    showEnableFingerPrintDialog(userId, password);
+                    return;
+                } else if (PreferenceData.isHaveFingerPrintConsent(getActivity()) && (!PreferenceData.getMerchantLoginId(getActivity()).equalsIgnoreCase(userId.trim()) || !PreferenceData.getMerchantLoginPassword(getActivity()).equalsIgnoreCase(password.trim()))) {
+                    showUpdateFingerLoginDetailDialog(userId, password);
+                    return;
                 }
-                goToSuccessScreen();
             }
+            goToSuccessScreen();
         }
 
         @Override
@@ -157,7 +159,6 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
     @Override
     public void onFingerPrintAuthSuccess(FingerprintManager.CryptoObject cryptoObject) {
         Tracer.debug(TAG, "onFingerPrintAuthSuccess : ");
-        mIsSignedViaFingerPrint = true;
         mEditTextPassword.setText(PreferenceData.getMerchantLoginPassword(getActivity()));
         mEditTextMerchantIdMobileNumber.setText(PreferenceData.getMerchantLoginId(getActivity()));
         startSignInProcess();
@@ -166,7 +167,6 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
     @Override
     public void onFingerPrintAuthFailed(int errorCode, String errorMessage) {
         Tracer.debug(TAG, "onFingerPrintAuthFailed : ");
-        mIsSignedViaFingerPrint = false;
         if (getView() == null) {
             return;
         }
@@ -222,8 +222,8 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         String publicKey = getString(R.string.public_key);
         String pushId = "123";
         String gcmId = "123";
-        DTOMerchantLoginRequest dtoMerchantLoginRequest = new DTOMerchantLoginRequest(token, timeStamp, userId, password, publicKey, pushId, gcmId);
-        MKRDialogUtil.showLoadingDialog(getActivity());
+        DTOMerchantLoginRequest dtoMerchantLoginRequest = new DTOMerchantLoginRequest(token, timeStamp, publicKey, userId, password, pushId, gcmId);
+        Utils.showLoadingDialog(getActivity());
         mMerchantNetworkTaskProvider.merchantLoginTask(getActivity(), dtoMerchantLoginRequest, mMerchantLoginResponseNetworkCallBack);
     }
 
@@ -280,6 +280,35 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
                 PreferenceData.setHaveFingerPrintConsent(getActivity());
+                PreferenceData.setMerchantLoginId(getActivity(), loginId);
+                PreferenceData.setMerchantLoginPassword(getActivity(), loginPassword);
+                goToSuccessScreen();
+            }
+        };
+        DialogInterface.OnClickListener onCancelClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                goToSuccessScreen();
+            }
+        };
+        boolean cancellable = false;
+        MKRDialogUtil.showOKCancelDialog(context, iconId, title, message, onOkClickListener, onCancelClickListener, cancellable);
+    }
+
+    /**
+     * Method to show dialog to update fingerprint login detail
+     */
+    private void showUpdateFingerLoginDetailDialog(final String loginId, final String loginPassword) {
+        Tracer.debug(TAG, "showUpdateFingerLoginDetailDialog : ");
+        Context context = getActivity();
+        int iconId = R.drawable.ic_fingerprint_normal;
+        String title = getString(R.string.update_finger_print);
+        String message = getString(R.string.are_you_sure_to_update_the_login_detail);
+        DialogInterface.OnClickListener onOkClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
                 PreferenceData.setMerchantLoginId(getActivity(), loginId);
                 PreferenceData.setMerchantLoginPassword(getActivity(), loginPassword);
                 goToSuccessScreen();

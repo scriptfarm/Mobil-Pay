@@ -37,6 +37,20 @@ public class UrlUtils {
         switch (urlResId) {
             case R.string.url_merchant_login:
                 return context.getString(R.string.url_merchant_login);
+            case R.string.url_merchant_logo:
+                return context.getString(R.string.url_merchant_logo);
+            case R.string.url_generate_qr_code_token:
+                return context.getString(R.string.url_generate_qr_code_token);
+            case R.string.url_add_future_bill:
+                return context.getString(R.string.url_add_future_bill);
+            case R.string.url_mobile_number_status:
+                return context.getString(R.string.url_mobile_number_status);
+            case R.string.url_merchant_logout:
+                return context.getString(R.string.url_merchant_logout);
+            case R.string.url_change_password:
+                return context.getString(R.string.url_change_password);
+            case R.string.url_merchant_details_by_nupay_id:
+                return context.getString(R.string.url_merchant_details_by_nupay_id);
         }
         return "";
     }

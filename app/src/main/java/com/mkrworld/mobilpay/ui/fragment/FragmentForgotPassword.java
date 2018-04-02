@@ -120,7 +120,7 @@ public class FragmentForgotPassword extends Fragment implements OnBaseFragmentLi
         String mobileNumber = mEditTextMobileNumber.getText().toString();
         String email = mEditTextEmail.getText().toString();
 
-        MKRDialogUtil.showLoadingDialog(getActivity());
+        Utils.showLoadingDialog(getActivity());
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

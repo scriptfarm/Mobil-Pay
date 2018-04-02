@@ -10,13 +10,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
-
-import net.glxn.qrgen.android.QRCode;
+import com.mkrworld.mobilpay.qrcodehelper.Contents;
+import com.mkrworld.mobilpay.qrcodehelper.QRCodeEncoder;
+import com.mkrworld.mobilpay.utils.PreferenceData;
+import com.mkrworld.mobilpay.utils.UrlUtils;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by mkr on 13/3/18.
@@ -24,7 +29,10 @@ import net.glxn.qrgen.android.QRCode;
 
 public class FragmentMerchantQrCode extends Fragment implements OnBaseFragmentListener {
     public static final String EXTRA_QR_CODE_TITLE = "EXTRA_QR_CODE_TITLE";
-    public static final String EXTRA_QR_CODE_TEXT = "EXTRA_QR_CODE_TEXT";
+    public static final String EXTRA_IS_DYNAMIC_QR_CODE = "EXTRA_IS_DYNAMIC_QR_CODE";
+    public static final String EXTRA_BILL_AMOUNT = "EXTRA_BILL_AMOUNT";
+    public static final String EXTRA_BILL_NUMBER = "EXTRA_BILL_NUMBER";
+    public static final String EXTRA_QR_CODE_TOKEN = "EXTRA_QR_CODE_TOKEN";
     private static final String TAG = BuildConfig.BASE_TAG + ".FragmentMerchantQrCode";
 
     @Nullable
@@ -78,14 +86,45 @@ public class FragmentMerchantQrCode extends Fragment implements OnBaseFragmentLi
         if (getView() == null || bundle == null) {
             return;
         }
-        String qrCodeText = bundle.getString(EXTRA_QR_CODE_TEXT, "");
         String qrCodeTitle = bundle.getString(EXTRA_QR_CODE_TITLE, "");
         ((TextView) getView().findViewById(R.id.fragment_merchant_qrcode_textView_name)).setText(qrCodeTitle);
-        // DRAW QR-CODE
+        if (bundle.getBoolean(EXTRA_IS_DYNAMIC_QR_CODE, false)) {
+            generateDynamicQRCode(bundle);
+        } else {
+            generateStaticQRCode(bundle);
+        }
+    }
+
+    /**
+     * Method to generate static QR Code
+     *
+     * @param bundle Argument bundle
+     */
+    private void generateStaticQRCode(Bundle bundle) {
+        Tracer.debug(TAG, "generateStaticQRCode : ");
+        String url = UrlUtils.getUrl(getActivity(), R.string.url_merchant_logo) + PreferenceData.getMerchantId(getActivity()) + ".png";
+        // System.out.println("======url=========="+url);
+        Picasso.with(getActivity()).load(url).placeholder(R.mipmap.ic_launcher).into(((ImageView) getView().findViewById(R.id.fragment_merchant_qrcode_imageView_qrcode)));
+    }
+
+    /**
+     * Method to generate Dynamic QR Code
+     *
+     * @param bundle Argument Bundel
+     */
+    private void generateDynamicQRCode(Bundle bundle) {
+        Tracer.debug(TAG, "generateDynamicQRCode : ");
+        String qrCodeToken = bundle.getString(EXTRA_QR_CODE_TOKEN, "");
         int qrCodeSize = getResources().getDimensionPixelSize(R.dimen.fragment_merchant_qrcode_qrcode_dimen);
-        Bitmap bitmapQRCode = QRCode.from(qrCodeText).withSize(qrCodeSize, qrCodeSize).bitmap();
-        if (bitmapQRCode != null && !bitmapQRCode.isRecycled()) {
-            ((ImageView) getView().findViewById(R.id.fragment_merchant_qrcode_imageView_qrcode)).setImageBitmap(bitmapQRCode);
+        QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(qrCodeToken, null, Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeSize);
+        try {
+            Bitmap bitmapQRCode = qrCodeEncoder.encodeAsBitmap();
+            if (bitmapQRCode != null && !bitmapQRCode.isRecycled()) {
+                ((ImageView) getView().findViewById(R.id.fragment_merchant_qrcode_imageView_qrcode)).setImageBitmap(bitmapQRCode);
+            }
+        } catch (WriterException e) {
+            Tracer.showSnack(getView(), R.string.unable_to_generate_qr_code);
+            e.printStackTrace();
         }
     }
 }

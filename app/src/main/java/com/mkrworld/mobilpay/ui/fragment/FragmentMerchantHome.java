@@ -23,6 +23,7 @@ import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler;
 import com.mkrworld.mobilpay.ui.adapter.GridSpacingItemDecoration;
+import com.mkrworld.mobilpay.utils.PreferenceData;
 
 import java.util.ArrayList;
 
@@ -76,8 +77,7 @@ public class FragmentMerchantHome extends Fragment implements OnBaseFragmentList
                         case STATIC_QR_CODE:
                             if (getActivity() instanceof OnBaseActivityListener) {
                                 Bundle bundle = new Bundle();
-                                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, "THE MKR");
-                                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TEXT, "I AM THE MANISH KUMAR REWALLIYA");
+                                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, PreferenceData.getMerchantLoginId(getActivity()));
                                 Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_QR_CODE);
                                 ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, bundle, true, FragmentTag.MERCHANT_QR_CODE);
                             }

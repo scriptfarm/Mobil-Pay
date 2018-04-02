@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.mkrworld.androidlib.ui.view.CircularImageView
+        android:layout_width="@dimen/dialog_progress_circle_dim"
+        android:layout_height="@dimen/dialog_progress_circle_dim"
+        android:background="@color/transparent"
+        app:progress_color="@color/colorAccent"
+        android:layout_centerInParent="true"
+        app:progress_image="@drawable/ic_nupay_load"
+        app:progress_width="@dimen/dialog_progress_progress_width" />
+</RelativeLayout>

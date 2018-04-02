@@ -3,12 +3,9 @@ package com.mkrworld.mobilpay.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
-import com.mkrworld.mobilpay.R;
 
 /**
  * Created by mkr on 30/3/18.
@@ -18,6 +15,8 @@ public class PreferenceData {
     private static final String TAG = BuildConfig.BASE_TAG + ".PreferenceData";
     private static final String STORE = "STORE_8";
     private static String FINGER_PRINT_CONSENT = "FINGER_PRINT_CONSENT";
+    private static String MERCHANT_ID = "MERCHANT_ID";
+    private static String MERCHANT_NUPAY_ID = "MERCHANT_NUPAY_ID";
     private static String MERCHANT_LOGIN_ID = "MERCHANT_LOGIN_ID";
     private static String MERCHANT_LOGIN_PASSWORD = "MERCHANT_LOGIN_PASSWORD";
 
@@ -48,6 +47,50 @@ public class PreferenceData {
     }
 
     /**
+     * Method to get the Merchant Id
+     *
+     * @param context
+     * @return id of the Merchant
+     */
+    public static String getMerchantId(Context context) {
+        Tracer.debug(TAG, "getMerchantId : ");
+        return getShearedPreference(context).getString(MERCHANT_ID, "").trim();
+    }
+
+    /**
+     * Method to set the Merchant Id
+     *
+     * @param context
+     * @param id
+     */
+    public static void setMerchantId(Context context, String id) {
+        Tracer.debug(TAG, "setMerchantId : ");
+        getShearedPreferenceEditor(context).putString(MERCHANT_ID, id).commit();
+    }
+
+    /**
+     * Method to get the Merchant Nupay Id
+     *
+     * @param context
+     * @return Nupay id of the Merchant
+     */
+    public static String getMerchantNupayId(Context context) {
+        Tracer.debug(TAG, "getMerchantNupayId : ");
+        return getShearedPreference(context).getString(MERCHANT_NUPAY_ID, "").trim();
+    }
+
+    /**
+     * Method to set the Merchant Nupay Id
+     *
+     * @param context
+     * @param nupayId
+     */
+    public static void setMerchantNupayId(Context context, String nupayId) {
+        Tracer.debug(TAG, "setMerchantNupayId : ");
+        getShearedPreferenceEditor(context).putString(MERCHANT_NUPAY_ID, nupayId).commit();
+    }
+
+    /**
      * Method to get the Merchant Login Id
      *
      * @param context
@@ -55,7 +98,7 @@ public class PreferenceData {
      */
     public static String getMerchantLoginId(Context context) {
         Tracer.debug(TAG, "getMerchantLoginId : ");
-        return getShearedPreference(context).getString(MERCHANT_LOGIN_ID, "");
+        return getShearedPreference(context).getString(MERCHANT_LOGIN_ID, "").trim();
     }
 
     /**
@@ -77,7 +120,7 @@ public class PreferenceData {
      */
     public static String getMerchantLoginPassword(Context context) {
         Tracer.debug(TAG, "getMerchantLoginPassword : ");
-        return getShearedPreference(context).getString(MERCHANT_LOGIN_PASSWORD, "");
+        return getShearedPreference(context).getString(MERCHANT_LOGIN_PASSWORD, "").trim();
     }
 
     /**

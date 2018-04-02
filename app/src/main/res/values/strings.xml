@@ -2,6 +2,11 @@
     <string name="app_name">Mobil Pay</string>
     <string name="symbol_rs">₹</string>
 
+    <string name="no_finger_print_device_not_detected">No finger print device detected</string>
+    <string name="no_finger_print_register">No finger print register</string>
+    <string name="error_scanning_finger_not_recognized">Error : Scanning finger not recognized</string>
+    <string name="unable_to_generate_qr_code">Unable to generate the QR-Code</string>
+
     <string name="public_key">791E14FF-6243-4A73-A6E1-08B143EF0F2B</string>
     <string name="private_key">15080811-E0DC-4F3E-B826-C799D3477967</string>
     <string name="salt">Nupaysvi6uEWaiqjHvx8B3lhnLuZBaDyEEAO1QEo4UboTRam4y0LPfdGk0oHjatgjKed9oxgrROXq03RaKs9WNoExVcrM5aXvnMwBaroQ7acCLGyPbfrfOJnnmhxwjrCplMtTXMZ2v6XAh2gZqligqM16wMpJQ7t0QxemsQIqs9OUvAdza7hMMfjwjwjXPjpuA55sbzsUdldWPI5hBxFUyGoRDTDEnOqhvJhMaKOIjq2X1SpuQ7Fxslj3ZuPfGgSNupay</string>
@@ -81,8 +86,7 @@
 
     <string name="enable_finger_print">Enable Finger Print</string>
     <string name="are_you_sure_enable_finger_print_login">Are you sure to enable finger print login ??</string>
-    <string name="no_finger_print_device_not_detected">No finger print device detected</string>
-    <string name="no_finger_print_register">No finger print register</string>
-    <string name="error_scanning_finger_not_recognized">Error : Scanning finger not recognized</string>
+    <string name="update_finger_print">Update Finger Print</string>
+    <string name="are_you_sure_to_update_the_login_detail">Are you sure to update the login detail used at the time of login via finger print</string>
 
 </resources>

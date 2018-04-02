@@ -11,14 +11,22 @@ import android.widget.EditText;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
+import com.mkrworld.androidlib.network.NetworkCallBack;
+import com.mkrworld.androidlib.utils.MKRDialogUtil;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
+import com.mkrworld.mobilpay.dto.merchantqrcodegenarator.DTOMerchantQRCodeGeneratorRequest;
+import com.mkrworld.mobilpay.dto.merchantqrcodegenarator.DTOMerchantQRCodeGeneratorResponse;
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
+import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider;
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener;
 import com.mkrworld.mobilpay.utils.Constants;
+import com.mkrworld.mobilpay.utils.PreferenceData;
 import com.mkrworld.mobilpay.utils.Utils;
+
+import java.util.Date;
 
 /**
  * Created by mkr on 13/3/18.
@@ -32,6 +40,39 @@ public class FragmentMerchantQrCodeGenerator extends Fragment implements OnBaseF
     private EditText mEditTextBillNumber;
     private EditText mEditTextBillDescription;
     private EditText mEditTextBillAmount;
+    private MerchantNetworkTaskProvider mMerchantNetworkTaskProvider;
+    private NetworkCallBack<DTOMerchantQRCodeGeneratorResponse> mQRCodeGeneratorResponseNetworkCallBack = new NetworkCallBack<DTOMerchantQRCodeGeneratorResponse>() {
+        @Override
+        public void onSuccess(DTOMerchantQRCodeGeneratorResponse dtoQRCodeGeneratorResponse) {
+            Tracer.debug(TAG, "onSuccess : ");
+            MKRDialogUtil.dismissLoadingDialog();
+            if(dtoQRCodeGeneratorResponse==null || dtoQRCodeGeneratorResponse.getData()==null){
+                Tracer.showSnack(getView(), R.string.no_data_fetch_from_server);
+                return;
+            }
+            DTOMerchantQRCodeGeneratorResponse.Data data = dtoQRCodeGeneratorResponse.getData();
+            if (getActivity() instanceof OnBaseActivityListener) {
+                Bundle bundle = new Bundle();
+                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, PreferenceData.getMerchantLoginId(getActivity()));
+                bundle.putBoolean(FragmentMerchantQrCode.EXTRA_IS_DYNAMIC_QR_CODE, true);
+                bundle.putString(FragmentMerchantQrCode.EXTRA_BILL_NUMBER, data.getBillNumber());
+                bundle.putString(FragmentMerchantQrCode.EXTRA_BILL_AMOUNT, data.getAmount());
+                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TOKEN, data.getQrCodeToken());
+                Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_QR_CODE);
+                ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, bundle, true, FragmentTag.MERCHANT_QR_CODE);
+            }
+        }
+
+        @Override
+        public void onError(String errorMessage, int errorCode) {
+            Tracer.debug(TAG, "onError : ");
+            MKRDialogUtil.dismissLoadingDialog();
+            if (getView() == null) {
+                return;
+            }
+            Tracer.showSnack(getView(), errorMessage);
+        }
+    };
 
     @Nullable
     @Override
@@ -46,6 +87,14 @@ public class FragmentMerchantQrCodeGenerator extends Fragment implements OnBaseF
         super.onViewCreated(view, savedInstanceState);
         setTitle();
         init();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mMerchantNetworkTaskProvider != null) {
+            mMerchantNetworkTaskProvider.detachProvider();
+        }
+        super.onDestroyView();
     }
 
     @Override
@@ -99,6 +148,8 @@ public class FragmentMerchantQrCodeGenerator extends Fragment implements OnBaseF
         if (getView() == null) {
             return;
         }
+        mMerchantNetworkTaskProvider = new MerchantNetworkTaskProvider();
+        mMerchantNetworkTaskProvider.attachProvider();
         getView().findViewById(R.id.fragment_merchant_qrcode_generator_textView_generate).setOnClickListener(this);
         getView().findViewById(R.id.fragment_merchant_qrcode_generator_textView_cancel).setOnClickListener(this);
         mTextInputLayoutBillNumber = (TextInputLayout) getView().findViewById(R.id.fragment_merchant_qrcode_generator_textInputLayout_bill_number);
@@ -126,16 +177,14 @@ public class FragmentMerchantQrCodeGenerator extends Fragment implements OnBaseF
         String billNumber = mEditTextBillNumber.getText().toString();
         String billDescription = mEditTextBillDescription.getText().toString();
         String billAmount = mEditTextBillAmount.getText().toString();
-
-        if (getActivity() instanceof OnBaseActivityListener) {
-            if (getActivity() instanceof OnBaseActivityListener) {
-                Bundle bundle = new Bundle();
-                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, "THE MKR");
-                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TEXT, "I AM THE MANISH KUMAR REWALLIYA");
-                Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_QR_CODE);
-                ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, bundle, true, FragmentTag.MERCHANT_QR_CODE);
-            }
-        }
+        Date date = new Date();
+        String timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT);
+        String token = Utils.createToken(getActivity(), getString(R.string.endpoint_generate_qr_code_token), date);
+        String publicKey = getString(R.string.public_key);
+        String nupayId = PreferenceData.getMerchantNupayId(getActivity());
+        DTOMerchantQRCodeGeneratorRequest dtoQRCodeGeneratorRequest = new DTOMerchantQRCodeGeneratorRequest(token, timeStamp, publicKey, billAmount, billNumber, billDescription, nupayId);
+        Utils.showLoadingDialog(getActivity());
+        mMerchantNetworkTaskProvider.merchantQRCodeGeneratorTask(getActivity(), dtoQRCodeGeneratorRequest, mQRCodeGeneratorResponseNetworkCallBack);
     }
 
     /**

@@ -2,9 +2,11 @@ package com.mkrworld.mobilpay.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.mkrworld.androidlib.utils.MKRDialogUtil;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
@@ -101,7 +103,7 @@ public class Utils {
      */
     public static String createToken(Context context, String url, Date date) {
         long unixTime = date.getTime() / 1000;
-        String md5Format = (""+unixTime).trim() + ":" + context.getString(R.string.private_key).trim() + ":" + context.getString(R.string.public_key).trim() + ":" + url.trim();// + ":" + context.getString(R.string.salt);
+        String md5Format = ("" + unixTime).trim() + ":" + context.getString(R.string.private_key).trim() + ":" + context.getString(R.string.public_key).trim() + ":" + url.trim();// + ":" + context.getString(R.string.salt);
         String md5Token = md5(md5Format.toLowerCase());
         return md5Token;
     }
@@ -124,5 +126,23 @@ public class Utils {
         } catch (java.security.NoSuchAlgorithmException e) {
         }
         return null;
+    }
+
+    /**
+     * Method to show the Loading Dialog
+     *
+     * @param context
+     */
+    public static final void showLoadingDialog(Context context) {
+        Tracer.debug(TAG, "showLoadingDialog : ");
+        MKRDialogUtil.showLoadingDialog(context, ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.dialog_progress, null));
+    }
+
+    /**
+     * Method to dismiss the Loading Dialog
+     */
+    public static final void dismissLoadingDialog() {
+        Tracer.debug(TAG, "dismissLoadingDialog : ");
+        MKRDialogUtil.dismissLoadingDialog();
     }
 }
