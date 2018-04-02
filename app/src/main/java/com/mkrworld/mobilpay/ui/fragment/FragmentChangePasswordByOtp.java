@@ -41,31 +41,6 @@ public class FragmentChangePasswordByOtp extends FragmentChangePassword {
     private EditText mEditTextNewPassword;
     private EditText mEditTextConfirmPassword;
     private MerchantNetworkTaskProvider mMerchantNetworkTaskProvider;
-    private NetworkCallBack<DTOMerchantSendForgotPasswordOtpResponse> mMerchantSendForgotPasswordOtpResponseNetworkCallBack = new NetworkCallBack<DTOMerchantSendForgotPasswordOtpResponse>() {
-        @Override
-        public void onSuccess(DTOMerchantSendForgotPasswordOtpResponse dtoMerchantSendForgotPasswordOtpResponse) {
-            Tracer.debug(TAG, "onSuccess : ");
-            Utils.dismissLoadingDialog();
-            if (getView() == null) {
-                return;
-            }
-            if (dtoMerchantSendForgotPasswordOtpResponse == null || dtoMerchantSendForgotPasswordOtpResponse.getData() == null) {
-                Tracer.showSnack(getView(), R.string.no_data_fetch_from_server);
-            }
-            Tracer.showSnack(getView(), dtoMerchantSendForgotPasswordOtpResponse.getMessage());
-        }
-
-        @Override
-        public void onError(String errorMessage, int errorCode) {
-            Tracer.debug(TAG, "onError : ");
-            Utils.dismissLoadingDialog();
-            if (getView() == null) {
-                return;
-            }
-            Tracer.showSnack(getView(), errorMessage);
-        }
-    };
-
     private NetworkCallBack<DTOMerchantForgotPasswordResponse> mMerchantForgotPasswordResponseNetworkCallBack = new NetworkCallBack<DTOMerchantForgotPasswordResponse>() {
         @Override
         public void onSuccess(DTOMerchantForgotPasswordResponse dtoMerchantForgotPasswordResponse) {
@@ -76,6 +51,7 @@ public class FragmentChangePasswordByOtp extends FragmentChangePassword {
             }
             if (dtoMerchantForgotPasswordResponse == null || dtoMerchantForgotPasswordResponse.getData() == null) {
                 Tracer.showSnack(getView(), R.string.no_data_fetch_from_server);
+                return;
             }
             Tracer.showSnack(getView(), dtoMerchantForgotPasswordResponse.getMessage());
             if (getActivity() instanceof OnBaseActivityListener) {
@@ -178,18 +154,6 @@ public class FragmentChangePasswordByOtp extends FragmentChangePassword {
         mEditTextOtp.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutOtp));
         mEditTextNewPassword.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutNewPassword));
         mEditTextConfirmPassword.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutConfirmPassword));
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    startSendOtpProcess();
-                } catch (Exception e) {
-                    Tracer.error(TAG, "run : " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-        }, 200);
     }
 
     /**
@@ -210,20 +174,6 @@ public class FragmentChangePasswordByOtp extends FragmentChangePassword {
         DTOMerchantForgotPasswordRequest dtoMerchantForgotPasswordRequest = new DTOMerchantForgotPasswordRequest(token, timeStamp, publicKey, PreferenceData.getMerchantNupayId(getActivity()), confirmPassword, otp, "123");
         Utils.showLoadingDialog(getActivity());
         mMerchantNetworkTaskProvider.merchantForgotPasswordTask(getActivity(), dtoMerchantForgotPasswordRequest, mMerchantForgotPasswordResponseNetworkCallBack);
-    }
-
-    /**
-     * Method to initiate the Send OTP Process
-     */
-    private void startSendOtpProcess() {
-        Tracer.debug(TAG, "startSendOtpProcess : ");
-        Date date = new Date();
-        String timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT);
-        String token = Utils.createToken(getActivity(), getString(R.string.endpoint_change_password), date);
-        String publicKey = getString(R.string.public_key);
-        DTOMerchantSendForgotPasswordOtpRequest dtoMerchantSendForgotPasswordOtpRequest = new DTOMerchantSendForgotPasswordOtpRequest(token, timeStamp, publicKey, PreferenceData.getMerchantId(getActivity()));
-        Utils.showLoadingDialog(getActivity());
-        mMerchantNetworkTaskProvider.merchantSendForgotPasswordOtpTask(getActivity(), dtoMerchantSendForgotPasswordOtpRequest, mMerchantSendForgotPasswordOtpResponseNetworkCallBack);
     }
 
     /**

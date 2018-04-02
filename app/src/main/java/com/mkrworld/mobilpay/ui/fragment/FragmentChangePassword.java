@@ -49,6 +49,7 @@ public class FragmentChangePassword extends Fragment implements OnBaseFragmentLi
             }
             if (dtoMerchantChangePasswordResponse == null || dtoMerchantChangePasswordResponse.getData() == null) {
                 Tracer.showSnack(getView(), R.string.no_data_fetch_from_server);
+                return;
             }
             Tracer.showSnack(getView(), dtoMerchantChangePasswordResponse.getMessage());
             if (getActivity() instanceof OnBaseActivityListener) {

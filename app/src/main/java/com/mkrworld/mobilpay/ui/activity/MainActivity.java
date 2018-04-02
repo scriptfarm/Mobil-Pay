@@ -11,15 +11,46 @@ import android.view.View;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
+import com.mkrworld.androidlib.network.NetworkCallBack;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
+import com.mkrworld.mobilpay.dto.merchantlogout.DTOMerchantLogoutResponse;
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
+import com.mkrworld.mobilpay.utils.PreferenceData;
 import com.mkrworld.mobilpay.utils.Utils;
 
 public class MainActivity extends AppCompatActivity implements OnBaseActivityListener, View.OnClickListener {
     private static final String TAG = BuildConfig.BASE_TAG + ".MainActivity";
+    private NetworkCallBack<DTOMerchantLogoutResponse> mMerchantLogoutResponseNetworkCallBack = new NetworkCallBack<DTOMerchantLogoutResponse>() {
+        @Override
+        public void onSuccess(DTOMerchantLogoutResponse dtoMerchantLogoutResponse) {
+            Tracer.debug(TAG, "onSuccess : ");
+            Utils.dismissLoadingDialog();
+            try {
+                if (dtoMerchantLogoutResponse == null) {
+                    Tracer.showSnack(findViewById(R.id.activity_main_parent), R.string.no_data_fetch_from_server);
+                    return;
+                }
+                Tracer.showSnack(findViewById(R.id.activity_main_parent), dtoMerchantLogoutResponse.getMessage());
+                PreferenceData.clearStore(getApplicationContext());
+            } catch (Exception e) {
+                Tracer.error(TAG, "onSuccess : " + e.getMessage());
+            }
+        }
+
+        @Override
+        public void onError(String errorMessage, int errorCode) {
+            Tracer.debug(TAG, "onError : ");
+            Utils.dismissLoadingDialog();
+            try {
+                Tracer.showSnack(findViewById(R.id.activity_main_parent), errorMessage);
+            } catch (Exception e) {
+                Tracer.error(TAG, "onError : " + e.getMessage());
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
