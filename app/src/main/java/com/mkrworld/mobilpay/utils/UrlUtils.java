@@ -51,6 +51,10 @@ public class UrlUtils {
                 return context.getString(R.string.url_change_password);
             case R.string.url_merchant_details_by_nupay_id:
                 return context.getString(R.string.url_merchant_details_by_nupay_id);
+            case R.string.url_send_forgot_password_otp:
+                return context.getString(R.string.url_send_forgot_password_otp);
+            case R.string.url_forgot_password:
+                return context.getString(R.string.url_forgot_password);
         }
         return "";
     }

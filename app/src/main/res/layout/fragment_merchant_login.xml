@@ -58,6 +58,16 @@
                 android:layout_marginTop="@dimen/fragment_merchant_login_content_margin"
                 android:text="@string/sign_in_caps" />
 
+            <TextView
+                android:id="@+id/fragment_merchant_login_textView_forgot_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_change_password_content_margin"
+                android:gravity="center"
+                android:text="@string/forgot_password_question"
+                android:textColor="@color/fragment_login_card_title_text"
+                android:textSize="@dimen/fragment_change_password_sub_text_size" />
+
             <ImageView
                 android:layout_width="@dimen/fragment_merchant_thumb_icon_dimen"
                 android:layout_height="@dimen/fragment_merchant_thumb_icon_dimen"

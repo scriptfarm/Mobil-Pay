@@ -1,7 +1,6 @@
 package com.mkrworld.mobilpay.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -13,7 +12,6 @@ import android.widget.EditText;
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
 import com.mkrworld.androidlib.network.NetworkCallBack;
-import com.mkrworld.androidlib.utils.MKRDialogUtil;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
@@ -23,7 +21,6 @@ import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
 import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider;
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener;
-import com.mkrworld.mobilpay.utils.PreferenceData;
 import com.mkrworld.mobilpay.utils.Utils;
 
 import java.util.Date;
@@ -54,7 +51,7 @@ public class FragmentForgotPassword extends Fragment implements OnBaseFragmentLi
             Tracer.showSnack(getView(), dtoMerchantSendForgotPasswordOtpResponse.getMessage());
             if (getActivity() instanceof OnBaseActivityListener) {
                 Fragment fragment = FragmentProvider.getFragment(FragmentTag.CHANGE_PASSWORD_BY_OTP);
-                ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.CHANGE_PASSWORD_BY_OTP);
+                ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, null, true, FragmentTag.CHANGE_PASSWORD_BY_OTP);
             }
         }
 
@@ -168,9 +165,9 @@ public class FragmentForgotPassword extends Fragment implements OnBaseFragmentLi
         Tracer.debug(TAG, "startSendOtpProcess : ");
         Date date = new Date();
         String timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT);
-        String token = Utils.createToken(getActivity(), getString(R.string.endpoint_change_password), date);
+        String token = Utils.createToken(getActivity(), getString(R.string.endpoint_send_forgot_password_otp), date);
         String publicKey = getString(R.string.public_key);
-        DTOMerchantSendForgotPasswordOtpRequest dtoMerchantSendForgotPasswordOtpRequest = new DTOMerchantSendForgotPasswordOtpRequest(token, timeStamp, publicKey, PreferenceData.getMerchantId(getActivity()));
+        DTOMerchantSendForgotPasswordOtpRequest dtoMerchantSendForgotPasswordOtpRequest = new DTOMerchantSendForgotPasswordOtpRequest(token, timeStamp, publicKey, email);
         Utils.showLoadingDialog(getActivity());
         mMerchantNetworkTaskProvider.merchantSendForgotPasswordOtpTask(getActivity(), dtoMerchantSendForgotPasswordOtpRequest, mMerchantSendForgotPasswordOtpResponseNetworkCallBack);
     }

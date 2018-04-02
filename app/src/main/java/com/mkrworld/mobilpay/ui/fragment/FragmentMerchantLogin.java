@@ -128,6 +128,12 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
             case R.id.fragment_merchant_login_textView_sign_in:
                 startSignInProcess();
                 break;
+            case R.id.fragment_merchant_login_textView_forgot_password:
+                if (getActivity() instanceof OnBaseActivityListener) {
+                    Fragment fragment = FragmentProvider.getFragment(FragmentTag.FORGOT_PASSWORD);
+                    ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, null, true, FragmentTag.FORGOT_PASSWORD);
+                }
+                break;
         }
     }
 
@@ -195,6 +201,7 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         mFingerPrintAuthHelper = FingerPrintAuthHelper.getHelper(getActivity(), this);
         mFingerPrintAuthHelper.startAuth();
         getView().findViewById(R.id.fragment_merchant_login_textView_sign_in).setOnClickListener(this);
+        getView().findViewById(R.id.fragment_merchant_login_textView_forgot_password).setOnClickListener(this);
         mTextInputLayoutMerchantIdMobileNumber = (TextInputLayout) getView().findViewById(R.id.fragment_merchant_login_textInputLayout_merchant_id_mobile_number);
         mEditTextMerchantIdMobileNumber = (EditText) getView().findViewById(R.id.fragment_merchant_login_editText_merchant_id_mobile_number);
         mTextInputLayoutPassword = (TextInputLayout) getView().findViewById(R.id.fragment_merchant_login_textInputLayout_password);

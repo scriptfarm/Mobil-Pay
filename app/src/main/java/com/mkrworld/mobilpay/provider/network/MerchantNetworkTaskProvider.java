@@ -250,7 +250,7 @@ public class MerchantNetworkTaskProvider extends BaseTaskProvider {
      */
     public void merchantSendForgotPasswordOtpTask(Context context, DTOMerchantSendForgotPasswordOtpRequest request, final NetworkCallBack<DTOMerchantSendForgotPasswordOtpResponse> networkCallBack) {
         Tracer.debug(TAG, "merchantSendForgotPasswordOtpTask : ");
-        JSONObject requestJson = parseDtoToJson(request, DTOMobileNumberStatusRequest.class, networkCallBack);
+        JSONObject requestJson = parseDtoToJson(request, DTOMerchantSendForgotPasswordOtpRequest.class, networkCallBack);
         if (requestJson == null) {
             return;
         }
@@ -278,7 +278,7 @@ public class MerchantNetworkTaskProvider extends BaseTaskProvider {
      */
     public void merchantForgotPasswordTask(Context context, DTOMerchantForgotPasswordRequest request, final NetworkCallBack<DTOMerchantForgotPasswordResponse> networkCallBack) {
         Tracer.debug(TAG, "merchantForgotPasswordTask : ");
-        JSONObject requestJson = parseDtoToJson(request, DTOMobileNumberStatusRequest.class, networkCallBack);
+        JSONObject requestJson = parseDtoToJson(request, DTOMerchantForgotPasswordRequest.class, networkCallBack);
         if (requestJson == null) {
             return;
         }

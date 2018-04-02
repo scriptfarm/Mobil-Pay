@@ -51,6 +51,7 @@ public class FragmentChangePassword extends Fragment implements OnBaseFragmentLi
                 Tracer.showSnack(getView(), R.string.no_data_fetch_from_server);
                 return;
             }
+            PreferenceData.setMerchantLoginPassword(getActivity(), mEditTextConfirmPassword.getText().toString().trim());
             Tracer.showSnack(getView(), dtoMerchantChangePasswordResponse.getMessage());
             if (getActivity() instanceof OnBaseActivityListener) {
                 Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);

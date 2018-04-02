@@ -1,7 +1,6 @@
 package com.mkrworld.mobilpay.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -11,14 +10,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
+import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
 import com.mkrworld.androidlib.network.NetworkCallBack;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
 import com.mkrworld.mobilpay.dto.merchantforgotpassword.DTOMerchantForgotPasswordRequest;
 import com.mkrworld.mobilpay.dto.merchantforgotpassword.DTOMerchantForgotPasswordResponse;
-import com.mkrworld.mobilpay.dto.merchantsendforgotpasswordotp.DTOMerchantSendForgotPasswordOtpRequest;
-import com.mkrworld.mobilpay.dto.merchantsendforgotpasswordotp.DTOMerchantSendForgotPasswordOtpResponse;
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
 import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider;
@@ -32,7 +30,7 @@ import java.util.Date;
  * Created by mkr on 15/3/18.
  */
 
-public class FragmentChangePasswordByOtp extends FragmentChangePassword {
+public class FragmentChangePasswordByOtp extends Fragment implements OnBaseFragmentListener, View.OnClickListener {
     private static final String TAG = BuildConfig.BASE_TAG + ".FragmentChangePasswordByOtp";
     private TextInputLayout mTextInputLayoutOtp;
     private TextInputLayout mTextInputLayoutNewPassword;
@@ -53,6 +51,7 @@ public class FragmentChangePasswordByOtp extends FragmentChangePassword {
                 Tracer.showSnack(getView(), R.string.no_data_fetch_from_server);
                 return;
             }
+            PreferenceData.setMerchantLoginPassword(getActivity(), mEditTextConfirmPassword.getText().toString().trim());
             Tracer.showSnack(getView(), dtoMerchantForgotPasswordResponse.getMessage());
             if (getActivity() instanceof OnBaseActivityListener) {
                 Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
@@ -169,7 +168,7 @@ public class FragmentChangePasswordByOtp extends FragmentChangePassword {
         String confirmPassword = mEditTextConfirmPassword.getText().toString().trim();
         Date date = new Date();
         String timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT);
-        String token = Utils.createToken(getActivity(), getString(R.string.endpoint_change_password), date);
+        String token = Utils.createToken(getActivity(), getString(R.string.endpoint_forgot_password), date);
         String publicKey = getString(R.string.public_key);
         DTOMerchantForgotPasswordRequest dtoMerchantForgotPasswordRequest = new DTOMerchantForgotPasswordRequest(token, timeStamp, publicKey, PreferenceData.getMerchantNupayId(getActivity()), confirmPassword, otp, "123");
         Utils.showLoadingDialog(getActivity());
