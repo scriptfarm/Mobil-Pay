@@ -1,6 +1,7 @@
 package com.mkrworld.mobilpay.dto.merchantlogout;
 
 import com.google.gson.annotations.SerializedName;
+import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.dto.DTOBaseRequest;
 
@@ -24,6 +25,7 @@ public class DTOMerchantLogoutRequest extends DTOBaseRequest {
      */
     public DTOMerchantLogoutRequest(String token, String timeStamp, String publicKey, String nupayId) {
         super(token, timeStamp, publicKey);
+        Tracer.debug(TAG, "DTOMerchantLogoutRequest : ");
         mNupayId = nupayId;
     }
 }

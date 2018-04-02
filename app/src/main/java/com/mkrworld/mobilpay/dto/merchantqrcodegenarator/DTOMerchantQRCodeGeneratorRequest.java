@@ -1,6 +1,7 @@
 package com.mkrworld.mobilpay.dto.merchantqrcodegenarator;
 
 import com.google.gson.annotations.SerializedName;
+import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.dto.DTOBaseRequest;
 
@@ -36,6 +37,7 @@ public class DTOMerchantQRCodeGeneratorRequest extends DTOBaseRequest{
      */
     public DTOMerchantQRCodeGeneratorRequest(String token, String timeStamp, String publicKey, String amount, String billNumber, String details, String nupayId) {
         super(token, timeStamp, publicKey);
+        Tracer.debug(TAG, "DTOMerchantQRCodeGeneratorRequest : ");
         mAmount = amount;
         mBillNumber = billNumber;
         mDetails = details;

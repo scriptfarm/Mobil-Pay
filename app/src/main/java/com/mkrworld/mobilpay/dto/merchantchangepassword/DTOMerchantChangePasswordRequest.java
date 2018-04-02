@@ -1,6 +1,7 @@
 package com.mkrworld.mobilpay.dto.merchantchangepassword;
 
 import com.google.gson.annotations.SerializedName;
+import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.dto.DTOBaseRequest;
 
@@ -32,6 +33,7 @@ public class DTOMerchantChangePasswordRequest extends DTOBaseRequest {
      */
     public DTOMerchantChangePasswordRequest(String token, String timeStamp, String publicKey, String nupayId, String oldPassword, String newPassword) {
         super(token, timeStamp, publicKey);
+        Tracer.debug(TAG, "DTOMerchantChangePasswordRequest : ");
         mNepayId = nupayId;
         mOldPassword = oldPassword;
         mNewPassword = newPassword;

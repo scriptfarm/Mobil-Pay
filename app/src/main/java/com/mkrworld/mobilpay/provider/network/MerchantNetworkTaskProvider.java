@@ -13,20 +13,25 @@ import com.mkrworld.mobilpay.dto.merchantchangepassword.DTOMerchantChangePasswor
 import com.mkrworld.mobilpay.dto.merchantchangepassword.DTOMerchantChangePasswordResponse;
 import com.mkrworld.mobilpay.dto.merchantdetails.DTOMerchantDetailByNewpayIdRequest;
 import com.mkrworld.mobilpay.dto.merchantdetails.DTOMerchantDetailByNupayIdResponse;
+import com.mkrworld.mobilpay.dto.merchantforgotpassword.DTOMerchantForgotPasswordRequest;
 import com.mkrworld.mobilpay.dto.merchantlogin.DTOMerchantLoginRequest;
 import com.mkrworld.mobilpay.dto.merchantlogin.DTOMerchantLoginResponse;
 import com.mkrworld.mobilpay.dto.merchantlogout.DTOMerchantLogoutRequest;
 import com.mkrworld.mobilpay.dto.merchantlogout.DTOMerchantLogoutResponse;
 import com.mkrworld.mobilpay.dto.merchantqrcodegenarator.DTOMerchantQRCodeGeneratorRequest;
 import com.mkrworld.mobilpay.dto.merchantqrcodegenarator.DTOMerchantQRCodeGeneratorResponse;
+import com.mkrworld.mobilpay.dto.merchantsendforgotpasswordotp.DTOMerchantSendForgotPasswordOtpRequest;
+import com.mkrworld.mobilpay.dto.merchantsendforgotpasswordotp.DTOMerchantSendForgotPasswordOtpResponse;
 import com.mkrworld.mobilpay.dto.mobilenumberstatus.DTOMobileNumberStatusRequest;
 import com.mkrworld.mobilpay.dto.mobilenumberstatus.DTOMobileNumberStatusResponse;
 import com.mkrworld.mobilpay.task.MerchantAddFutureBillTask;
 import com.mkrworld.mobilpay.task.MerchantChangePasswordTask;
 import com.mkrworld.mobilpay.task.MerchantDetailByNupayIdTask;
+import com.mkrworld.mobilpay.task.MerchantForgotPasswordTask;
 import com.mkrworld.mobilpay.task.MerchantLoginTask;
 import com.mkrworld.mobilpay.task.MerchantLogoutTask;
 import com.mkrworld.mobilpay.task.MerchantQRCodeGeneratorTask;
+import com.mkrworld.mobilpay.task.MerchantSendForgotPasswordOtpTask;
 import com.mkrworld.mobilpay.task.MobileNumberStatusTask;
 
 import org.json.JSONException;
@@ -43,20 +48,20 @@ public class MerchantNetworkTaskProvider extends BaseTaskProvider {
      * Method called to login the merchant
      *
      * @param context
-     * @param dtoMerchantLoginRequest
+     * @param request
      * @param networkCallBack
      */
-    public void merchantLoginTask(Context context, DTOMerchantLoginRequest dtoMerchantLoginRequest, final NetworkCallBack<DTOMerchantLoginResponse> networkCallBack) {
+    public void merchantLoginTask(Context context, DTOMerchantLoginRequest request, final NetworkCallBack<DTOMerchantLoginResponse> networkCallBack) {
         Tracer.debug(TAG, "merchantLoginTask : ");
-        JSONObject requestJson = parseDtoToJson(dtoMerchantLoginRequest, DTOMerchantLoginRequest.class, networkCallBack);
+        JSONObject requestJson = parseDtoToJson(request, DTOMerchantLoginRequest.class, networkCallBack);
         if (requestJson == null) {
             return;
         }
-        MerchantLoginTask merchantLoginTask = new MerchantLoginTask(context, requestJson, new NetworkCallBack<DTOMerchantLoginResponse>() {
+        MerchantLoginTask task = new MerchantLoginTask(context, requestJson, new NetworkCallBack<DTOMerchantLoginResponse>() {
 
             @Override
-            public void onSuccess(DTOMerchantLoginResponse dtoMerchantLoginResponse) {
-                notifyTaskResponse(networkCallBack, dtoMerchantLoginResponse);
+            public void onSuccess(DTOMerchantLoginResponse networkResponse) {
+                notifyTaskResponse(networkCallBack, networkResponse);
             }
 
             @Override
@@ -64,27 +69,27 @@ public class MerchantNetworkTaskProvider extends BaseTaskProvider {
                 notifyTaskResponse(networkCallBack, errorMessage, errorCode);
             }
         });
-        merchantLoginTask.executeTask();
+        task.executeTask();
     }
 
     /**
      * Method called to generate merchant qr code
      *
      * @param context
-     * @param dtoQRCodeGeneratorRequest
+     * @param request
      * @param networkCallBack
      */
-    public void merchantQRCodeGeneratorTask(Context context, DTOMerchantQRCodeGeneratorRequest dtoQRCodeGeneratorRequest, final NetworkCallBack<DTOMerchantQRCodeGeneratorResponse> networkCallBack) {
+    public void merchantQRCodeGeneratorTask(Context context, DTOMerchantQRCodeGeneratorRequest request, final NetworkCallBack<DTOMerchantQRCodeGeneratorResponse> networkCallBack) {
         Tracer.debug(TAG, "merchantQrCodeGeneratorTask : ");
-        JSONObject requestJson = parseDtoToJson(dtoQRCodeGeneratorRequest, DTOMerchantQRCodeGeneratorRequest.class, networkCallBack);
+        JSONObject requestJson = parseDtoToJson(request, DTOMerchantQRCodeGeneratorRequest.class, networkCallBack);
         if (requestJson == null) {
             return;
         }
-        MerchantQRCodeGeneratorTask merchantQrCodeGeneratorTask = new MerchantQRCodeGeneratorTask(context, requestJson, new NetworkCallBack<DTOMerchantQRCodeGeneratorResponse>() {
+        MerchantQRCodeGeneratorTask task = new MerchantQRCodeGeneratorTask(context, requestJson, new NetworkCallBack<DTOMerchantQRCodeGeneratorResponse>() {
 
             @Override
-            public void onSuccess(DTOMerchantQRCodeGeneratorResponse dtoQRCodeGeneratorResponse) {
-                notifyTaskResponse(networkCallBack, dtoQRCodeGeneratorResponse);
+            public void onSuccess(DTOMerchantQRCodeGeneratorResponse networkResponse) {
+                notifyTaskResponse(networkCallBack, networkResponse);
             }
 
             @Override
@@ -92,27 +97,27 @@ public class MerchantNetworkTaskProvider extends BaseTaskProvider {
                 notifyTaskResponse(networkCallBack, errorMessage, errorCode);
             }
         });
-        merchantQrCodeGeneratorTask.executeTask();
+        task.executeTask();
     }
 
     /**
      * Method called merchant Add Merchant Future Bill
      *
      * @param context
-     * @param dtoMerchantAddFutureBillRequest
+     * @param request
      * @param networkCallBack
      */
-    public void merchantAddFutureBillTask(Context context, DTOMerchantAddFutureBillRequest dtoMerchantAddFutureBillRequest, final NetworkCallBack<DTOMerchantAddFutureBillResponse> networkCallBack) {
+    public void merchantAddFutureBillTask(Context context, DTOMerchantAddFutureBillRequest request, final NetworkCallBack<DTOMerchantAddFutureBillResponse> networkCallBack) {
         Tracer.debug(TAG, "merchantAddFutureBillTask : ");
-        JSONObject requestJson = parseDtoToJson(dtoMerchantAddFutureBillRequest, DTOMerchantAddFutureBillRequest.class, networkCallBack);
+        JSONObject requestJson = parseDtoToJson(request, DTOMerchantAddFutureBillRequest.class, networkCallBack);
         if (requestJson == null) {
             return;
         }
-        MerchantAddFutureBillTask merchantAddFutureBillTask = new MerchantAddFutureBillTask(context, requestJson, new NetworkCallBack<DTOMerchantAddFutureBillResponse>() {
+        MerchantAddFutureBillTask task = new MerchantAddFutureBillTask(context, requestJson, new NetworkCallBack<DTOMerchantAddFutureBillResponse>() {
 
             @Override
-            public void onSuccess(DTOMerchantAddFutureBillResponse dtoMerchantAddFutureBillResponse) {
-                notifyTaskResponse(networkCallBack, dtoMerchantAddFutureBillResponse);
+            public void onSuccess(DTOMerchantAddFutureBillResponse networkResponse) {
+                notifyTaskResponse(networkCallBack, networkResponse);
             }
 
             @Override
@@ -120,27 +125,27 @@ public class MerchantNetworkTaskProvider extends BaseTaskProvider {
                 notifyTaskResponse(networkCallBack, errorMessage, errorCode);
             }
         });
-        merchantAddFutureBillTask.executeTask();
+        task.executeTask();
     }
 
     /**
      * Method called to change Merchant Password
      *
      * @param context
-     * @param dtoMerchantChangePasswordRequest
+     * @param request
      * @param networkCallBack
      */
-    public void merchantChangePasswordTask(Context context, DTOMerchantChangePasswordRequest dtoMerchantChangePasswordRequest, final NetworkCallBack<DTOMerchantChangePasswordResponse> networkCallBack) {
+    public void merchantChangePasswordTask(Context context, DTOMerchantChangePasswordRequest request, final NetworkCallBack<DTOMerchantChangePasswordResponse> networkCallBack) {
         Tracer.debug(TAG, "merchantChangePasswordTask : ");
-        JSONObject requestJson = parseDtoToJson(dtoMerchantChangePasswordRequest, DTOMerchantChangePasswordRequest.class, networkCallBack);
+        JSONObject requestJson = parseDtoToJson(request, DTOMerchantChangePasswordRequest.class, networkCallBack);
         if (requestJson == null) {
             return;
         }
-        MerchantChangePasswordTask merchantChangePasswordTask = new MerchantChangePasswordTask(context, requestJson, new NetworkCallBack<DTOMerchantChangePasswordResponse>() {
+        MerchantChangePasswordTask task = new MerchantChangePasswordTask(context, requestJson, new NetworkCallBack<DTOMerchantChangePasswordResponse>() {
 
             @Override
-            public void onSuccess(DTOMerchantChangePasswordResponse dtoMerchantChangePasswordResponse) {
-                notifyTaskResponse(networkCallBack, dtoMerchantChangePasswordResponse);
+            public void onSuccess(DTOMerchantChangePasswordResponse networkResponse) {
+                notifyTaskResponse(networkCallBack, networkResponse);
             }
 
             @Override
@@ -148,27 +153,27 @@ public class MerchantNetworkTaskProvider extends BaseTaskProvider {
                 notifyTaskResponse(networkCallBack, errorMessage, errorCode);
             }
         });
-        merchantChangePasswordTask.executeTask();
+        task.executeTask();
     }
 
     /**
      * Method called to get Merchant Detail BY Nupay Id
      *
      * @param context
-     * @param dtoMerchantDetailByNewpayIdRequest
+     * @param request
      * @param networkCallBack
      */
-    public void merchantDetailByNupayIdTask(Context context, DTOMerchantDetailByNewpayIdRequest dtoMerchantDetailByNewpayIdRequest, final NetworkCallBack<DTOMerchantDetailByNupayIdResponse> networkCallBack) {
+    public void merchantDetailByNupayIdTask(Context context, DTOMerchantDetailByNewpayIdRequest request, final NetworkCallBack<DTOMerchantDetailByNupayIdResponse> networkCallBack) {
         Tracer.debug(TAG, "merchantDetailByNupayIdTask : ");
-        JSONObject requestJson = parseDtoToJson(dtoMerchantDetailByNewpayIdRequest, DTOMerchantDetailByNewpayIdRequest.class, networkCallBack);
+        JSONObject requestJson = parseDtoToJson(request, DTOMerchantDetailByNewpayIdRequest.class, networkCallBack);
         if (requestJson == null) {
             return;
         }
-        MerchantDetailByNupayIdTask merchantDetailByNupayIdTask = new MerchantDetailByNupayIdTask(context, requestJson, new NetworkCallBack<DTOMerchantDetailByNupayIdResponse>() {
+        MerchantDetailByNupayIdTask task = new MerchantDetailByNupayIdTask(context, requestJson, new NetworkCallBack<DTOMerchantDetailByNupayIdResponse>() {
 
             @Override
-            public void onSuccess(DTOMerchantDetailByNupayIdResponse dtoMerchantDetailByNupayIdResponse) {
-                notifyTaskResponse(networkCallBack, dtoMerchantDetailByNupayIdResponse);
+            public void onSuccess(DTOMerchantDetailByNupayIdResponse networkResponse) {
+                notifyTaskResponse(networkCallBack, networkResponse);
             }
 
             @Override
@@ -176,27 +181,27 @@ public class MerchantNetworkTaskProvider extends BaseTaskProvider {
                 notifyTaskResponse(networkCallBack, errorMessage, errorCode);
             }
         });
-        merchantDetailByNupayIdTask.executeTask();
+        task.executeTask();
     }
 
     /**
      * Method called to Logout Merchant
      *
      * @param context
-     * @param dtoMerchantLogoutRequest
+     * @param request
      * @param networkCallBack
      */
-    public void merchantLogoutTask(Context context, DTOMerchantLogoutRequest dtoMerchantLogoutRequest, final NetworkCallBack<DTOMerchantLogoutResponse> networkCallBack) {
+    public void merchantLogoutTask(Context context, DTOMerchantLogoutRequest request, final NetworkCallBack<DTOMerchantLogoutResponse> networkCallBack) {
         Tracer.debug(TAG, "merchantLogoutTask : ");
-        JSONObject requestJson = parseDtoToJson(dtoMerchantLogoutRequest, DTOMerchantLogoutRequest.class, networkCallBack);
+        JSONObject requestJson = parseDtoToJson(request, DTOMerchantLogoutRequest.class, networkCallBack);
         if (requestJson == null) {
             return;
         }
-        MerchantLogoutTask merchantLogoutTask = new MerchantLogoutTask(context, requestJson, new NetworkCallBack<DTOMerchantLogoutResponse>() {
+        MerchantLogoutTask task = new MerchantLogoutTask(context, requestJson, new NetworkCallBack<DTOMerchantLogoutResponse>() {
 
             @Override
-            public void onSuccess(DTOMerchantLogoutResponse dtoMerchantLogoutResponse) {
-                notifyTaskResponse(networkCallBack, dtoMerchantLogoutResponse);
+            public void onSuccess(DTOMerchantLogoutResponse networkResponse) {
+                notifyTaskResponse(networkCallBack, networkResponse);
             }
 
             @Override
@@ -204,27 +209,27 @@ public class MerchantNetworkTaskProvider extends BaseTaskProvider {
                 notifyTaskResponse(networkCallBack, errorMessage, errorCode);
             }
         });
-        merchantLogoutTask.executeTask();
+        task.executeTask();
     }
 
     /**
      * Method called to get the Mobile Number Status
      *
      * @param context
-     * @param dtoMobileNumberStatusRequest
+     * @param request
      * @param networkCallBack
      */
-    public void mobileNumberStatusTask(Context context, DTOMobileNumberStatusRequest dtoMobileNumberStatusRequest, final NetworkCallBack<DTOMobileNumberStatusResponse> networkCallBack) {
+    public void mobileNumberStatusTask(Context context, DTOMobileNumberStatusRequest request, final NetworkCallBack<DTOMobileNumberStatusResponse> networkCallBack) {
         Tracer.debug(TAG, "mobileNumberStatusTask : ");
-        JSONObject requestJson = parseDtoToJson(dtoMobileNumberStatusRequest, DTOMobileNumberStatusRequest.class, networkCallBack);
+        JSONObject requestJson = parseDtoToJson(request, DTOMobileNumberStatusRequest.class, networkCallBack);
         if (requestJson == null) {
             return;
         }
-        MobileNumberStatusTask mobileNumberStatusTask = new MobileNumberStatusTask(context, requestJson, new NetworkCallBack<DTOMobileNumberStatusResponse>() {
+        MobileNumberStatusTask task = new MobileNumberStatusTask(context, requestJson, new NetworkCallBack<DTOMobileNumberStatusResponse>() {
 
             @Override
-            public void onSuccess(DTOMobileNumberStatusResponse dtoMobileNumberStatusResponse) {
-                notifyTaskResponse(networkCallBack, dtoMobileNumberStatusResponse);
+            public void onSuccess(DTOMobileNumberStatusResponse networkResponse) {
+                notifyTaskResponse(networkCallBack, networkResponse);
             }
 
             @Override
@@ -232,7 +237,63 @@ public class MerchantNetworkTaskProvider extends BaseTaskProvider {
                 notifyTaskResponse(networkCallBack, errorMessage, errorCode);
             }
         });
-        mobileNumberStatusTask.executeTask();
+        task.executeTask();
+    }
+
+    /**
+     * Method called to Send to OTP at the time of forgot password
+     *
+     * @param context
+     * @param request
+     * @param networkCallBack
+     */
+    public void sendForgotPasswordOtpTask(Context context, DTOMerchantSendForgotPasswordOtpRequest request, final NetworkCallBack<DTOMerchantSendForgotPasswordOtpResponse> networkCallBack) {
+        Tracer.debug(TAG, "sendForgotPasswordOtpTask : ");
+        JSONObject requestJson = parseDtoToJson(request, DTOMobileNumberStatusRequest.class, networkCallBack);
+        if (requestJson == null) {
+            return;
+        }
+        MerchantSendForgotPasswordOtpTask task = new MerchantSendForgotPasswordOtpTask(context, requestJson, new NetworkCallBack<DTOMerchantSendForgotPasswordOtpResponse>() {
+
+            @Override
+            public void onSuccess(DTOMerchantSendForgotPasswordOtpResponse networkResponse) {
+                notifyTaskResponse(networkCallBack, networkResponse);
+            }
+
+            @Override
+            public void onError(String errorMessage, int errorCode) {
+                notifyTaskResponse(networkCallBack, errorMessage, errorCode);
+            }
+        });
+        task.executeTask();
+    }
+
+    /**
+     * Method called to change password at the time of forgot password
+     *
+     * @param context
+     * @param request
+     * @param networkCallBack
+     */
+    public void forgotPasswordTask(Context context, DTOMerchantForgotPasswordRequest request, final NetworkCallBack<DTOMerchantForgotPasswordRequest> networkCallBack) {
+        Tracer.debug(TAG, "forgotPasswordTask : ");
+        JSONObject requestJson = parseDtoToJson(request, DTOMobileNumberStatusRequest.class, networkCallBack);
+        if (requestJson == null) {
+            return;
+        }
+        MerchantForgotPasswordTask task = new MerchantForgotPasswordTask(context, requestJson, new NetworkCallBack<DTOMerchantForgotPasswordRequest>() {
+
+            @Override
+            public void onSuccess(DTOMerchantForgotPasswordRequest networkResponse) {
+                notifyTaskResponse(networkCallBack, networkResponse);
+            }
+
+            @Override
+            public void onError(String errorMessage, int errorCode) {
+                notifyTaskResponse(networkCallBack, errorMessage, errorCode);
+            }
+        });
+        task.executeTask();
     }
 
     /**

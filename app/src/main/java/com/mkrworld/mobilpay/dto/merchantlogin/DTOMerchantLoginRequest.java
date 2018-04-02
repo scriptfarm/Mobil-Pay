@@ -1,6 +1,7 @@
 package com.mkrworld.mobilpay.dto.merchantlogin;
 
 import com.google.gson.annotations.SerializedName;
+import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.dto.DTOBaseRequest;
 
@@ -33,6 +34,7 @@ public class DTOMerchantLoginRequest extends DTOBaseRequest {
      */
     public DTOMerchantLoginRequest(String token, String timeStamp, String publicKey, String userId, String password, String pushId, String gcmId) {
         super(token, timeStamp, publicKey);
+        Tracer.debug(TAG, "DTOMerchantLoginRequest : ");
         mUserId = userId;
         mPassword = password;
         mExtra = new Extra(pushId, gcmId);

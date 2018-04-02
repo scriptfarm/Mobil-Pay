@@ -1,17 +1,23 @@
 <resources>
     <string name="url_merchant_logo">admin/merchants_qr/</string>
     <string name="url_merchant_login">merchantLogin</string>
-    <string name="endpoint_merchant_login">merchantLogin</string>
     <string name="url_merchant_logout">logout</string>
-    <string name="endpoint_merchant_logout">logout</string>
     <string name="url_generate_qr_code_token">generateQRCodeToken</string>
-    <string name="endpoint_generate_qr_code_token">generateQRCodeToken</string>
     <string name="url_add_future_bill">addFutureBill</string>
-    <string name="endpoint_add_future_bill">addFutureBill</string>
     <string name="url_mobile_number_status">getmobilenumberstatus</string>
-    <string name="endpoint_mobile_number_status">getmobilenumberstatus</string>
     <string name="url_change_password">changePassword</string>
-    <string name="endpoint_change_password">changePassword</string>
     <string name="url_merchant_details_by_nupay_id">changePassword</string>
+    <string name="url_send_forgot_password_otp">sendForgotPasswordOTP</string>
+    <string name="url_forgot_password">forgotPassword</string>
+
+
+    <string name="endpoint_merchant_login">merchantLogin</string>
+    <string name="endpoint_merchant_logout">logout</string>
+    <string name="endpoint_generate_qr_code_token">generateQRCodeToken</string>
+    <string name="endpoint_add_future_bill">addFutureBill</string>
+    <string name="endpoint_mobile_number_status">getmobilenumberstatus</string>
+    <string name="endpoint_change_password">changePassword</string>
     <string name="endpoint_merchant_details_by_nupay_id">getMerchantDetailsByNuPayId</string>
+    <string name="endpoint_send_forgot_password_otp">sendForgotPasswordOTP</string>
+    <string name="endpoint_forgot_password">forgotPassword</string>
 </resources>
