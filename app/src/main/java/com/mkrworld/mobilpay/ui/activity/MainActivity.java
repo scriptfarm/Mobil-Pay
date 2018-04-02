@@ -1,11 +1,11 @@
 package com.mkrworld.mobilpay.ui.activity;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -57,6 +57,18 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
             case R.id.activity_main_sliding_layout_option_password:
                 Fragment fragment = FragmentProvider.getFragment(FragmentTag.CHANGE_PASSWORD);
                 onBaseActivityAddFragment(fragment, null, true, FragmentTag.CHANGE_PASSWORD);
+                break;
+            case R.id.activity_main_sliding_layout_option_contact_mobil_pay:
+                break;
+            case R.id.activity_main_sliding_layout_option_faq:
+                break;
+            case R.id.activity_main_sliding_layout_option_home:
+                break;
+            case R.id.activity_main_sliding_layout_option_language:
+                break;
+            case R.id.activity_main_sliding_layout_option_logout:
+                break;
+            case R.id.activity_main_sliding_layout_option_term_and_condition:
                 break;
         }
         if (isDrawerVisible()) {
@@ -128,6 +140,12 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
     private void init() {
         Tracer.debug(TAG, "init: ");
         findViewById(R.id.activity_main_sliding_layout_option_password).setOnClickListener(this);
+        findViewById(R.id.activity_main_sliding_layout_option_contact_mobil_pay).setOnClickListener(this);
+        findViewById(R.id.activity_main_sliding_layout_option_faq).setOnClickListener(this);
+        findViewById(R.id.activity_main_sliding_layout_option_home).setOnClickListener(this);
+        findViewById(R.id.activity_main_sliding_layout_option_language).setOnClickListener(this);
+        findViewById(R.id.activity_main_sliding_layout_option_logout).setOnClickListener(this);
+        findViewById(R.id.activity_main_sliding_layout_option_term_and_condition).setOnClickListener(this);
     }
 
     /**

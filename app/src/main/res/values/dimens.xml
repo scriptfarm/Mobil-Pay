@@ -72,9 +72,14 @@
     <dimen name="fragment_forgot_password_content_margin">@dimen/content_margin</dimen>
     <dimen name="fragment_forgot_password_title_text_size">@dimen/title_text_size</dimen>
 
-    <!-- FRAGMENT FORGOT PASSWORD -->
+    <!-- FRAGMENT CHANGE PASSWORD -->
     <dimen name="fragment_change_password_content_margin">@dimen/content_margin</dimen>
     <dimen name="fragment_change_password_title_text_size">@dimen/title_text_size</dimen>
     <dimen name="fragment_change_password_sub_text_size">@dimen/sub_text_size</dimen>
+
+    <!-- FRAGMENT CHANGE PASSWORD OTP -->
+    <dimen name="fragment_change_password_otp_content_margin">@dimen/content_margin</dimen>
+    <dimen name="fragment_change_password_otp_title_text_size">@dimen/title_text_size</dimen>
+    <dimen name="fragment_change_password_otp_sub_text_size">@dimen/sub_text_size</dimen>
 
 </resources>

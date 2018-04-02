@@ -12,7 +12,6 @@ import android.widget.EditText;
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
 import com.mkrworld.androidlib.network.NetworkCallBack;
-import com.mkrworld.androidlib.utils.MKRDialogUtil;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
@@ -45,8 +44,8 @@ public class FragmentMerchantQrCodeGenerator extends Fragment implements OnBaseF
         @Override
         public void onSuccess(DTOMerchantQRCodeGeneratorResponse dtoQRCodeGeneratorResponse) {
             Tracer.debug(TAG, "onSuccess : ");
-            MKRDialogUtil.dismissLoadingDialog();
-            if(dtoQRCodeGeneratorResponse==null || dtoQRCodeGeneratorResponse.getData()==null){
+            Utils.dismissLoadingDialog();
+            if (dtoQRCodeGeneratorResponse == null || dtoQRCodeGeneratorResponse.getData() == null) {
                 Tracer.showSnack(getView(), R.string.no_data_fetch_from_server);
                 return;
             }
@@ -66,7 +65,7 @@ public class FragmentMerchantQrCodeGenerator extends Fragment implements OnBaseF
         @Override
         public void onError(String errorMessage, int errorCode) {
             Tracer.debug(TAG, "onError : ");
-            MKRDialogUtil.dismissLoadingDialog();
+            Utils.dismissLoadingDialog();
             if (getView() == null) {
                 return;
             }

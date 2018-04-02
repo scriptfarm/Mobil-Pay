@@ -124,7 +124,7 @@ public class FragmentForgotPassword extends Fragment implements OnBaseFragmentLi
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                MKRDialogUtil.dismissLoadingDialog();
+                Utils.dismissLoadingDialog();
                 if (getActivity() instanceof OnBaseActivityListener) {
                     Fragment fragment = FragmentProvider.getFragment(FragmentTag.CHANGE_PASSWORD_BY_OTP);
                     ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, null, true, FragmentTag.CHANGE_PASSWORD_BY_OTP);

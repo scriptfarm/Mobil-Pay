@@ -32,7 +32,7 @@ public class DTOMerchantSendForgotPasswordOtpResponse {
      * @return
      */
     public Data getData() {
-        return mData;
+        return mData != null ? mData : new Data();
     }
 
     /**

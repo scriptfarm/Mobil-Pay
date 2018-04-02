@@ -1,7 +1,6 @@
 package com.mkrworld.mobilpay.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -12,14 +11,20 @@ import android.widget.EditText;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
-import com.mkrworld.androidlib.utils.MKRDialogUtil;
+import com.mkrworld.androidlib.network.NetworkCallBack;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
+import com.mkrworld.mobilpay.dto.merchantchangepassword.DTOMerchantChangePasswordRequest;
+import com.mkrworld.mobilpay.dto.merchantchangepassword.DTOMerchantChangePasswordResponse;
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
+import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider;
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener;
+import com.mkrworld.mobilpay.utils.PreferenceData;
 import com.mkrworld.mobilpay.utils.Utils;
+
+import java.util.Date;
 
 /**
  * Created by mkr on 13/3/18.
@@ -33,6 +38,35 @@ public class FragmentChangePassword extends Fragment implements OnBaseFragmentLi
     private EditText mEditTextOldPassword;
     private EditText mEditTextNewPassword;
     private EditText mEditTextConfirmPassword;
+    private MerchantNetworkTaskProvider mMerchantNetworkTaskProvider;
+    private NetworkCallBack<DTOMerchantChangePasswordResponse> mMerchantChangePasswordResponseNetworkCallBack = new NetworkCallBack<DTOMerchantChangePasswordResponse>() {
+        @Override
+        public void onSuccess(DTOMerchantChangePasswordResponse dtoMerchantChangePasswordResponse) {
+            Tracer.debug(TAG, "onSuccess : ");
+            Utils.dismissLoadingDialog();
+            if (getView() == null) {
+                return;
+            }
+            if (dtoMerchantChangePasswordResponse == null || dtoMerchantChangePasswordResponse.getData() == null) {
+                Tracer.showSnack(getView(), R.string.no_data_fetch_from_server);
+            }
+            Tracer.showSnack(getView(), dtoMerchantChangePasswordResponse.getMessage());
+            if (getActivity() instanceof OnBaseActivityListener) {
+                Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
+                ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
+            }
+        }
+
+        @Override
+        public void onError(String errorMessage, int errorCode) {
+            Tracer.debug(TAG, "onError : ");
+            Utils.dismissLoadingDialog();
+            if (getView() == null) {
+                return;
+            }
+            Tracer.showSnack(getView(), errorMessage);
+        }
+    };
 
     @Nullable
     @Override
@@ -47,6 +81,14 @@ public class FragmentChangePassword extends Fragment implements OnBaseFragmentLi
         super.onViewCreated(view, savedInstanceState);
         setTitle();
         init();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mMerchantNetworkTaskProvider != null) {
+            mMerchantNetworkTaskProvider.detachProvider();
+        }
+        super.onDestroyView();
     }
 
     @Override
@@ -100,7 +142,8 @@ public class FragmentChangePassword extends Fragment implements OnBaseFragmentLi
         if (getView() == null) {
             return;
         }
-
+        mMerchantNetworkTaskProvider = new MerchantNetworkTaskProvider();
+        mMerchantNetworkTaskProvider.attachProvider();
         getView().findViewById(R.id.fragment_change_password_textView_forgot_password).setOnClickListener(this);
         getView().findViewById(R.id.fragment_change_password_textView_submit).setOnClickListener(this);
 
@@ -127,21 +170,16 @@ public class FragmentChangePassword extends Fragment implements OnBaseFragmentLi
             return;
         }
 
-        String oldPassword = mEditTextOldPassword.getText().toString();
-        String newPassword = mEditTextNewPassword.getText().toString();
-        String confirmPassword = mEditTextConfirmPassword.getText().toString();
+        String oldPassword = mEditTextOldPassword.getText().toString().trim();
+        String confirmPassword = mEditTextConfirmPassword.getText().toString().trim();
 
+        Date date = new Date();
+        String timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT);
+        String token = Utils.createToken(getActivity(), getString(R.string.endpoint_change_password), date);
+        String publicKey = getString(R.string.public_key);
+        DTOMerchantChangePasswordRequest dtoMerchantChangePasswordRequest = new DTOMerchantChangePasswordRequest(token, timeStamp, publicKey, PreferenceData.getMerchantNupayId(getActivity()), oldPassword, confirmPassword);
         Utils.showLoadingDialog(getActivity());
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                MKRDialogUtil.dismissLoadingDialog();
-                if (getActivity() instanceof OnBaseActivityListener) {
-                    Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
-                    ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
-                }
-            }
-        }, 3000);
+        mMerchantNetworkTaskProvider.merchantChangePasswordTask(getActivity(), dtoMerchantChangePasswordRequest, mMerchantChangePasswordResponseNetworkCallBack);
     }
 
     /**

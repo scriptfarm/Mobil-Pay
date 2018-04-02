@@ -50,7 +50,7 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         @Override
         public void onSuccess(DTOMerchantLoginResponse dtoMerchantLoginResponse) {
             Tracer.debug(TAG, "onSuccess : " + dtoMerchantLoginResponse);
-            MKRDialogUtil.dismissLoadingDialog();
+            Utils.dismissLoadingDialog();
             if (dtoMerchantLoginResponse == null && dtoMerchantLoginResponse.getData() == null) {
                 Tracer.showSnack(getView(), R.string.no_data_fetch_from_server);
                 return;
@@ -75,7 +75,7 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
         @Override
         public void onError(String errorMessage, int errorCode) {
             Tracer.debug(TAG, "onError : " + errorMessage);
-            MKRDialogUtil.dismissLoadingDialog();
+            Utils.dismissLoadingDialog();
             Tracer.showSnack(getView(), errorMessage);
         }
     };
@@ -330,7 +330,9 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
      */
     private void goToSuccessScreen() {
         Tracer.debug(TAG, "goToSuccessScreen : ");
-        Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
-        ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
+        if (getActivity() instanceof OnBaseActivityListener) {
+            Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
+            ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
+        }
     }
 }

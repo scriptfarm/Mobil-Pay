@@ -30,6 +30,9 @@
     <!-- FRAGMENT FORGOT PASSWORD -->
     <color name="fragment_forgot_password_card_title_text">@color/colorAccent</color>
 
-    <!-- FRAGMENT FORGOT PASSWORD -->
+    <!-- FRAGMENT CHANGE PASSWORD -->
     <color name="fragment_change_password_card_title_text">@color/colorAccent</color>
+
+    <!-- FRAGMENT CHANGE PASSWORD OTP -->
+    <color name="fragment_change_password_otp_card_title_text">@color/colorAccent</color>
 </resources>
