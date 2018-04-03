@@ -32,9 +32,9 @@ import java.util.Date;
 public class FragmentForgotPassword extends Fragment implements OnBaseFragmentListener, View.OnClickListener {
     private static final String TAG = BuildConfig.BASE_TAG + ".FragmentForgotPassword";
     private TextInputLayout mTextInputLayoutMobileNumber;
-    private TextInputLayout mTextInputLayoutEmail;
+    private TextInputLayout mTextInputLayoutMerchantId;
     private EditText mEditTextMobileNumber;
-    private EditText mEditTextEmail;
+    private EditText mEditTextMerchantId;
     private MerchantNetworkTaskProvider mMerchantNetworkTaskProvider;
     private NetworkCallBack<DTOMerchantSendForgotPasswordOtpResponse> mMerchantSendForgotPasswordOtpResponseNetworkCallBack = new NetworkCallBack<DTOMerchantSendForgotPasswordOtpResponse>() {
         @Override
@@ -50,8 +50,11 @@ public class FragmentForgotPassword extends Fragment implements OnBaseFragmentLi
             }
             Tracer.showSnack(getView(), dtoMerchantSendForgotPasswordOtpResponse.getMessage());
             if (getActivity() instanceof OnBaseActivityListener) {
+                Bundle bundle = new Bundle();
+                String merchantId = mEditTextMerchantId.getText().toString();
+                bundle.putString(FragmentChangePasswordByOtp.EXTRA_LOGIN_ID, merchantId);
                 Fragment fragment = FragmentProvider.getFragment(FragmentTag.CHANGE_PASSWORD_BY_OTP);
-                ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, null, true, FragmentTag.CHANGE_PASSWORD_BY_OTP);
+                ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, bundle, true, FragmentTag.CHANGE_PASSWORD_BY_OTP);
             }
         }
 
@@ -143,12 +146,12 @@ public class FragmentForgotPassword extends Fragment implements OnBaseFragmentLi
 
         mTextInputLayoutMobileNumber = (TextInputLayout) getView().findViewById(R.id.fragment_forgot_password_textInputLayout_mobile_number);
         mEditTextMobileNumber = (EditText) getView().findViewById(R.id.fragment_forgot_password_editText_mobile_number);
-        mTextInputLayoutEmail = (TextInputLayout) getView().findViewById(R.id.fragment_forgot_password_textInputLayout_email);
-        mEditTextEmail = (EditText) getView().findViewById(R.id.fragment_forgot_password_editText_email);
+        mTextInputLayoutMerchantId = (TextInputLayout) getView().findViewById(R.id.fragment_forgot_password_textInputLayout_merchant_id);
+        mEditTextMerchantId = (EditText) getView().findViewById(R.id.fragment_forgot_password_editText_merchant_id);
 
         // ADD TEXT WATCHER
         mEditTextMobileNumber.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutMobileNumber));
-        mEditTextEmail.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutEmail));
+        mEditTextMerchantId.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutMerchantId));
     }
 
     /**
@@ -161,13 +164,13 @@ public class FragmentForgotPassword extends Fragment implements OnBaseFragmentLi
             return;
         }
         String mobileNumber = mEditTextMobileNumber.getText().toString();
-        String email = mEditTextEmail.getText().toString();
+        String merchantId = mEditTextMerchantId.getText().toString();
         Tracer.debug(TAG, "startSendOtpProcess : ");
         Date date = new Date();
         String timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT);
         String token = Utils.createToken(getActivity(), getString(R.string.endpoint_send_forgot_password_otp), date);
         String publicKey = getString(R.string.public_key);
-        DTOMerchantSendForgotPasswordOtpRequest dtoMerchantSendForgotPasswordOtpRequest = new DTOMerchantSendForgotPasswordOtpRequest(token, timeStamp, publicKey, email);
+        DTOMerchantSendForgotPasswordOtpRequest dtoMerchantSendForgotPasswordOtpRequest = new DTOMerchantSendForgotPasswordOtpRequest(token, timeStamp, publicKey, merchantId);
         Utils.showLoadingDialog(getActivity());
         mMerchantNetworkTaskProvider.merchantSendForgotPasswordOtpTask(getActivity(), dtoMerchantSendForgotPasswordOtpRequest, mMerchantSendForgotPasswordOtpResponseNetworkCallBack);
     }
@@ -184,7 +187,7 @@ public class FragmentForgotPassword extends Fragment implements OnBaseFragmentLi
         }
 
         String mobileNumber = mEditTextMobileNumber.getText().toString();
-        String email = mEditTextEmail.getText().toString();
+        String merchantId = mEditTextMerchantId.getText().toString();
 
         // Validate Mobile Number
         if (Utils.isStringEmpty(mobileNumber)) {
@@ -193,8 +196,8 @@ public class FragmentForgotPassword extends Fragment implements OnBaseFragmentLi
         }
 
         // Validate Email
-        if (Utils.isStringEmpty(email)) {
-            showTextInputError(mTextInputLayoutEmail, getString(R.string.field_should_not_be_empty_caps));
+        if (Utils.isStringEmpty(merchantId)) {
+            showTextInputError(mTextInputLayoutMerchantId, getString(R.string.field_should_not_be_empty_caps));
             return false;
         }
         return true;

@@ -31,6 +31,7 @@ import java.util.Date;
  */
 
 public class FragmentChangePasswordByOtp extends Fragment implements OnBaseFragmentListener, View.OnClickListener {
+    public static final String EXTRA_LOGIN_ID = "EXTRA_LOGIN_ID";
     private static final String TAG = BuildConfig.BASE_TAG + ".FragmentChangePasswordByOtp";
     private TextInputLayout mTextInputLayoutOtp;
     private TextInputLayout mTextInputLayoutNewPassword;
@@ -51,7 +52,10 @@ public class FragmentChangePasswordByOtp extends Fragment implements OnBaseFragm
                 Tracer.showSnack(getView(), R.string.no_data_fetch_from_server);
                 return;
             }
-            PreferenceData.setMerchantLoginPassword(getActivity(), mEditTextConfirmPassword.getText().toString().trim());
+            String prefMerchantId = PreferenceData.getMerchantLoginId(getContext()).trim();
+            if (getArguments() != null && !prefMerchantId.isEmpty() && getArguments().getString(EXTRA_LOGIN_ID, "").trim().equals(prefMerchantId)) {
+                PreferenceData.setMerchantLoginPassword(getActivity(), mEditTextConfirmPassword.getText().toString().trim());
+            }
             Tracer.showSnack(getView(), dtoMerchantForgotPasswordResponse.getMessage());
             if (getActivity() instanceof OnBaseActivityListener) {
                 Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);

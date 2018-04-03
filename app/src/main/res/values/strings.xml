@@ -33,6 +33,7 @@
     <string name="contact_mobil_pay">Contact MobilPay</string>
     <string name="logout">Logout</string>
 
+    <string name="merchant_id_start">Merchant-ID *</string>
     <string name="merchant_id_slash_mobile_number">Merchant-ID/Mobile-Number</string>
     <string name="password">Password</string>
     <string name="login_to_your_account">Login to your account</string>
@@ -66,7 +67,6 @@
 
     <string name="first_name_star">First Name *</string>
     <string name="last_name_star">Last Name *</string>
-    <string name="email_star">Email *</string>
     <string name="enter_your_login_details">Enter Your Login Details</string>
     <string name="submit_caps">SUBMIT</string>
 
