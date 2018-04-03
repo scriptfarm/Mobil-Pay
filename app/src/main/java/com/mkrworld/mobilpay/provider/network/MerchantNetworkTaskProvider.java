@@ -7,8 +7,8 @@ import com.mkrworld.androidlib.network.BaseTaskProvider;
 import com.mkrworld.androidlib.network.NetworkCallBack;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
-import com.mkrworld.mobilpay.dto.merchantaddfuturebill.DTOMerchantAddFutureBillRequest;
-import com.mkrworld.mobilpay.dto.merchantaddfuturebill.DTOMerchantAddFutureBillResponse;
+import com.mkrworld.mobilpay.dto.merchantaddsendbill.DTOMerchantSendBillRequest;
+import com.mkrworld.mobilpay.dto.merchantaddsendbill.DTOMerchantSendBillResponse;
 import com.mkrworld.mobilpay.dto.merchantchangepassword.DTOMerchantChangePasswordRequest;
 import com.mkrworld.mobilpay.dto.merchantchangepassword.DTOMerchantChangePasswordResponse;
 import com.mkrworld.mobilpay.dto.merchantdetails.DTOMerchantDetailByNewpayIdRequest;
@@ -25,7 +25,7 @@ import com.mkrworld.mobilpay.dto.merchantsendforgotpasswordotp.DTOMerchantSendFo
 import com.mkrworld.mobilpay.dto.merchantsendforgotpasswordotp.DTOMerchantSendForgotPasswordOtpResponse;
 import com.mkrworld.mobilpay.dto.mobilenumberstatus.DTOMobileNumberStatusRequest;
 import com.mkrworld.mobilpay.dto.mobilenumberstatus.DTOMobileNumberStatusResponse;
-import com.mkrworld.mobilpay.task.MerchantAddFutureBillTask;
+import com.mkrworld.mobilpay.task.MerchantSendBillTask;
 import com.mkrworld.mobilpay.task.MerchantChangePasswordTask;
 import com.mkrworld.mobilpay.task.MerchantDetailByNupayIdTask;
 import com.mkrworld.mobilpay.task.MerchantForgotPasswordTask;
@@ -108,16 +108,16 @@ public class MerchantNetworkTaskProvider extends BaseTaskProvider {
      * @param request
      * @param networkCallBack
      */
-    public void merchantAddFutureBillTask(Context context, DTOMerchantAddFutureBillRequest request, final NetworkCallBack<DTOMerchantAddFutureBillResponse> networkCallBack) {
-        Tracer.debug(TAG, "merchantAddFutureBillTask : ");
-        JSONObject requestJson = parseDtoToJson(request, DTOMerchantAddFutureBillRequest.class, networkCallBack);
+    public void merchantSendBillTask(Context context, DTOMerchantSendBillRequest request, final NetworkCallBack<DTOMerchantSendBillResponse> networkCallBack) {
+        Tracer.debug(TAG, "merchantSendBillTask : ");
+        JSONObject requestJson = parseDtoToJson(request, DTOMerchantSendBillRequest.class, networkCallBack);
         if (requestJson == null) {
             return;
         }
-        MerchantAddFutureBillTask task = new MerchantAddFutureBillTask(context, requestJson, new NetworkCallBack<DTOMerchantAddFutureBillResponse>() {
+        MerchantSendBillTask task = new MerchantSendBillTask(context, requestJson, new NetworkCallBack<DTOMerchantSendBillResponse>() {
 
             @Override
-            public void onSuccess(DTOMerchantAddFutureBillResponse networkResponse) {
+            public void onSuccess(DTOMerchantSendBillResponse networkResponse) {
                 notifyTaskResponse(networkCallBack, networkResponse);
             }
 

@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.dto.merchantaddfuturebill;
+package com.mkrworld.mobilpay.dto.merchantaddsendbill;
 
 import com.google.gson.annotations.SerializedName;
 import com.mkrworld.androidlib.utils.Tracer;
@@ -8,8 +8,8 @@ import com.mkrworld.mobilpay.BuildConfig;
  * Created by mkr on 27/3/18.
  */
 
-public class DTOMerchantAddFutureBillResponse {
-    private static final String TAG = BuildConfig.BASE_TAG + ".DTOMerchantAddFutureBillResponse";
+public class DTOMerchantSendBillResponse {
+    private static final String TAG = BuildConfig.BASE_TAG + ".DTOMerchantSendBillResponse";
 
     @SerializedName("message")
     private String mMessage;

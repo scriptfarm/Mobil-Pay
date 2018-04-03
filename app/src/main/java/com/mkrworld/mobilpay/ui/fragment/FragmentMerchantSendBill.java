@@ -11,14 +11,19 @@ import android.widget.EditText;
 
 import com.mkrworld.androidlib.callback.OnBaseActivityListener;
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener;
+import com.mkrworld.androidlib.network.NetworkCallBack;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
-import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
-import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
+import com.mkrworld.mobilpay.dto.merchantaddsendbill.DTOMerchantSendBillRequest;
+import com.mkrworld.mobilpay.dto.merchantaddsendbill.DTOMerchantSendBillResponse;
+import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider;
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener;
 import com.mkrworld.mobilpay.utils.Constants;
+import com.mkrworld.mobilpay.utils.PreferenceData;
 import com.mkrworld.mobilpay.utils.Utils;
+
+import java.util.Date;
 
 /**
  * Created by mkr on 13/3/18.
@@ -26,15 +31,41 @@ import com.mkrworld.mobilpay.utils.Utils;
 
 public class FragmentMerchantSendBill extends Fragment implements OnBaseFragmentListener, View.OnClickListener {
     private static final String TAG = BuildConfig.BASE_TAG + ".FragmentMerchantSendBill";
-    private TextInputLayout mTextInputLayoutCustomerId;
+    private TextInputLayout mTextInputLayoutCustomerNumberOrId;
     private TextInputLayout mTextInputLayoutBillNumber;
     private TextInputLayout mTextInputLayoutBillDescription;
     private TextInputLayout mTextInputLayoutBillAmount;
-    private EditText mEditTextCustomerNumber;
+    private EditText mEditTextCustomerNumberOrId;
     private EditText mEditTextBillNumber;
     private EditText mEditTextBillDescription;
     private EditText mEditTextBillAmount;
+    private MerchantNetworkTaskProvider mMerchantNetworkTaskProvider;
+    private NetworkCallBack<DTOMerchantSendBillResponse> mMerchantSendBillResponseNetworkCallBack = new NetworkCallBack<DTOMerchantSendBillResponse>() {
+        @Override
+        public void onSuccess(DTOMerchantSendBillResponse dtoMerchantSendBillResponse) {
+            Tracer.debug(TAG, "onSuccess : ");
+            Utils.dismissLoadingDialog();
+            if (getView() == null) {
+                return;
+            }
+            if (dtoMerchantSendBillResponse == null || dtoMerchantSendBillResponse.getData() == null) {
+                Tracer.showSnack(getView(), R.string.no_data_fetch_from_server);
+                return;
+            }
+            Tracer.showSnack(getView(), dtoMerchantSendBillResponse.getMessage() + "  " + dtoMerchantSendBillResponse.getData().getRefTransactionId());
+            getActivity().onBackPressed();
+        }
 
+        @Override
+        public void onError(String errorMessage, int errorCode) {
+            Utils.dismissLoadingDialog();
+            Tracer.debug(TAG, "onError : ");
+            if (getView() == null) {
+                return;
+            }
+            Tracer.showSnack(getView(), errorMessage);
+        }
+    };
 
     @Nullable
     @Override
@@ -49,6 +80,14 @@ public class FragmentMerchantSendBill extends Fragment implements OnBaseFragment
         super.onViewCreated(view, savedInstanceState);
         setTitle();
         init();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mMerchantNetworkTaskProvider != null) {
+            mMerchantNetworkTaskProvider.detachProvider();
+        }
+        super.onDestroyView();
     }
 
     @Override
@@ -101,11 +140,14 @@ public class FragmentMerchantSendBill extends Fragment implements OnBaseFragment
             return;
         }
 
+        mMerchantNetworkTaskProvider = new MerchantNetworkTaskProvider();
+        mMerchantNetworkTaskProvider.attachProvider();
+
         getView().findViewById(R.id.fragment_merchant_send_bill_textView_send).setOnClickListener(this);
         getView().findViewById(R.id.fragment_merchant_send_bill_textView_cancel).setOnClickListener(this);
 
-        mTextInputLayoutCustomerId = (TextInputLayout) getView().findViewById(R.id.fragment_merchant_send_bill_textInputLayout_customer_id_mobile_number);
-        mEditTextCustomerNumber = (EditText) getView().findViewById(R.id.fragment_merchant_send_bill_editText_customer_id_mobile_number);
+        mTextInputLayoutCustomerNumberOrId = (TextInputLayout) getView().findViewById(R.id.fragment_merchant_send_bill_textInputLayout_customer_id_mobile_number);
+        mEditTextCustomerNumberOrId = (EditText) getView().findViewById(R.id.fragment_merchant_send_bill_editText_customer_id_mobile_number);
         mTextInputLayoutBillNumber = (TextInputLayout) getView().findViewById(R.id.fragment_merchant_send_bill_textInputLayout_bill_number);
         mEditTextBillNumber = (EditText) getView().findViewById(R.id.fragment_merchant_send_bill_editText_bill_number);
         mTextInputLayoutBillDescription = (TextInputLayout) getView().findViewById(R.id.fragment_merchant_send_bill_textInputLayout_bill_description);
@@ -114,7 +156,7 @@ public class FragmentMerchantSendBill extends Fragment implements OnBaseFragment
         mEditTextBillAmount = (EditText) getView().findViewById(R.id.fragment_merchant_send_bill_editText_bill_amount);
 
         // ADD TEXT CHANGE LISTENER
-        mEditTextCustomerNumber.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutCustomerId));
+        mEditTextCustomerNumberOrId.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutCustomerNumberOrId));
         mEditTextBillNumber.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutBillNumber));
         mEditTextBillDescription.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutBillDescription));
         mEditTextBillAmount.addTextChangedListener(new OnTextInputLayoutTextChangeListener(mTextInputLayoutBillAmount));
@@ -130,19 +172,19 @@ public class FragmentMerchantSendBill extends Fragment implements OnBaseFragment
             return;
         }
 
-        String customerNumber = mEditTextCustomerNumber.getText().toString();
+        String customerNumberOrId = mEditTextCustomerNumberOrId.getText().toString();
         String billNumber = mEditTextBillNumber.getText().toString();
         String billDescription = mEditTextBillDescription.getText().toString();
         String billAmount = mEditTextBillAmount.getText().toString();
 
-        if (getActivity() instanceof OnBaseActivityListener) {
-            if (getActivity() instanceof OnBaseActivityListener) {
-                Bundle bundle = new Bundle();
-                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, "THE MKR");
-                Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_QR_CODE);
-                ((OnBaseActivityListener) getActivity()).onBaseActivityAddFragment(fragment, bundle, true, FragmentTag.MERCHANT_QR_CODE);
-            }
-        }
+        Date date = new Date();
+        String timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT);
+        String token = Utils.createToken(getActivity(), getString(R.string.endpoint_send_bill), date);
+        String publicKey = getString(R.string.public_key);
+        String merchantNupayId = PreferenceData.getMerchantNupayId(getActivity());
+        DTOMerchantSendBillRequest dtoMerchantSendBillRequest = new DTOMerchantSendBillRequest(token, timeStamp, publicKey, merchantNupayId, billAmount, billDescription, billNumber, customerNumberOrId, customerNumberOrId);
+        Utils.showLoadingDialog(getActivity());
+        mMerchantNetworkTaskProvider.merchantSendBillTask(getActivity(), dtoMerchantSendBillRequest, mMerchantSendBillResponseNetworkCallBack);
     }
 
     /**
@@ -156,14 +198,14 @@ public class FragmentMerchantSendBill extends Fragment implements OnBaseFragment
             return false;
         }
 
-        String customerNumber = mEditTextCustomerNumber.getText().toString();
+        String customerNumberOrId = mEditTextCustomerNumberOrId.getText().toString();
         String billNumber = mEditTextBillNumber.getText().toString();
         String billDescription = mEditTextBillDescription.getText().toString();
         String billAmount = mEditTextBillAmount.getText().toString();
 
         // Validate Customer Number
-        if (Utils.isStringEmpty(customerNumber)) {
-            showTextInputError(mTextInputLayoutCustomerId, getString(R.string.field_should_not_be_empty_caps));
+        if (Utils.isStringEmpty(customerNumberOrId)) {
+            showTextInputError(mTextInputLayoutCustomerNumberOrId, getString(R.string.field_should_not_be_empty_caps));
             return false;
         }
 

@@ -7,9 +7,7 @@ import com.mkrworld.androidlib.network.NetworkCallBack;
 import com.mkrworld.androidlib.network.NetworkConstants;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
-import com.mkrworld.mobilpay.dto.merchantaddfuturebill.DTOMerchantAddFutureBillRequest;
-import com.mkrworld.mobilpay.dto.merchantaddfuturebill.DTOMerchantAddFutureBillResponse;
-import com.mkrworld.mobilpay.dto.merchantlogin.DTOMerchantLoginResponse;
+import com.mkrworld.mobilpay.dto.merchantaddsendbill.DTOMerchantSendBillResponse;
 import com.mkrworld.mobilpay.utils.UrlUtils;
 
 import org.json.JSONObject;
@@ -19,8 +17,8 @@ import java.util.HashMap;
 /**
  * Created by mkr on 27/3/18.
  */
-public class MerchantAddFutureBillTask extends MobilPayBaseTask<DTOMerchantAddFutureBillResponse> {
-    private static final String TAG = BuildConfig.BASE_TAG + ".MerchantAddFutureBillTask";
+public class MerchantSendBillTask extends MobilPayBaseTask<DTOMerchantSendBillResponse> {
+    private static final String TAG = BuildConfig.BASE_TAG + ".MerchantSendBillTask";
 
     /**
      * Constructor
@@ -29,18 +27,18 @@ public class MerchantAddFutureBillTask extends MobilPayBaseTask<DTOMerchantAddFu
      * @param requestJson
      * @param networkCallBack
      */
-    public MerchantAddFutureBillTask(Context context, JSONObject requestJson, NetworkCallBack networkCallBack) {
+    public MerchantSendBillTask(Context context, JSONObject requestJson, NetworkCallBack networkCallBack) {
         super(context, requestJson, networkCallBack);
     }
 
     @Override
-    public DTOMerchantAddFutureBillResponse parseNetworkResponse(JSONObject jsonObject) {
-        return new Gson().fromJson(jsonObject.toString(), DTOMerchantAddFutureBillResponse.class);
+    public DTOMerchantSendBillResponse parseNetworkResponse(JSONObject jsonObject) {
+        return new Gson().fromJson(jsonObject.toString(), DTOMerchantSendBillResponse.class);
     }
 
     @Override
     public String getUrl() {
-        return UrlUtils.getUrl(getContext(), R.string.url_add_future_bill);
+        return UrlUtils.getUrl(getContext(), R.string.url_send_bill);
     }
 
     @Override

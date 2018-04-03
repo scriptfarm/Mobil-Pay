@@ -41,8 +41,8 @@ public class UrlUtils {
                 return context.getString(R.string.url_merchant_logo);
             case R.string.url_generate_qr_code_token:
                 return context.getString(R.string.url_generate_qr_code_token);
-            case R.string.url_add_future_bill:
-                return context.getString(R.string.url_add_future_bill);
+            case R.string.url_send_bill:
+                return context.getString(R.string.url_send_bill);
             case R.string.url_mobile_number_status:
                 return context.getString(R.string.url_mobile_number_status);
             case R.string.url_merchant_logout:

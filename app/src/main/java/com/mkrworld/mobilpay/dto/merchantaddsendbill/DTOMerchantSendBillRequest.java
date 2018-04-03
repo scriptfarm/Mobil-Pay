@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.dto.merchantaddfuturebill;
+package com.mkrworld.mobilpay.dto.merchantaddsendbill;
 
 import com.google.gson.annotations.SerializedName;
 import com.mkrworld.androidlib.utils.Tracer;
@@ -9,11 +9,11 @@ import com.mkrworld.mobilpay.dto.DTOBaseRequest;
  * Created by mkr on 2/4/18.
  */
 
-public class DTOMerchantAddFutureBillRequest extends DTOBaseRequest {
-    private static final String TAG = BuildConfig.BASE_TAG + ".DTOMerchantAddFutureBillRequest";
+public class DTOMerchantSendBillRequest extends DTOBaseRequest {
+    private static final String TAG = BuildConfig.BASE_TAG + ".DTOMerchantSendBillRequest";
 
-    @SerializedName("Merchant_Id")
-    private String mMerchantId;
+    @SerializedName("merchant_id")
+    private String mMerchantNupayId;
 
     @SerializedName("amount")
     private String mAmount;
@@ -36,17 +36,17 @@ public class DTOMerchantAddFutureBillRequest extends DTOBaseRequest {
      * @param token
      * @param timeStamp
      * @param publicKey
-     * @param merchantId
+     * @param nupayId
      * @param amount
      * @param billDetails
      * @param billNumber
      * @param customerId
      * @param customerMobile
      */
-    public DTOMerchantAddFutureBillRequest(String token, String timeStamp, String publicKey, String merchantId, String amount, String billDetails, String billNumber, String customerId, String customerMobile) {
+    public DTOMerchantSendBillRequest(String token, String timeStamp, String publicKey, String nupayId, String amount, String billDetails, String billNumber, String customerId, String customerMobile) {
         super(token, timeStamp, publicKey);
-        Tracer.debug(TAG, "DTOMerchantAddFutureBillRequest : ");
-        mMerchantId = merchantId;
+        Tracer.debug(TAG, "DTOMerchantSendBillRequest : ");
+        mMerchantNupayId = nupayId;
         mAmount = amount;
         mBillDetails = billDetails;
         mBillNumber = billNumber;
