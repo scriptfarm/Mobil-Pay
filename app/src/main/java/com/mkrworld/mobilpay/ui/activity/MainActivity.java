@@ -15,14 +15,19 @@ import com.mkrworld.androidlib.network.NetworkCallBack;
 import com.mkrworld.androidlib.utils.Tracer;
 import com.mkrworld.mobilpay.BuildConfig;
 import com.mkrworld.mobilpay.R;
+import com.mkrworld.mobilpay.dto.merchantlogout.DTOMerchantLogoutRequest;
 import com.mkrworld.mobilpay.dto.merchantlogout.DTOMerchantLogoutResponse;
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider;
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag;
+import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider;
 import com.mkrworld.mobilpay.utils.PreferenceData;
 import com.mkrworld.mobilpay.utils.Utils;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity implements OnBaseActivityListener, View.OnClickListener {
     private static final String TAG = BuildConfig.BASE_TAG + ".MainActivity";
+    private MerchantNetworkTaskProvider mMerchantNetworkTaskProvider;
     private NetworkCallBack<DTOMerchantLogoutResponse> mMerchantLogoutResponseNetworkCallBack = new NetworkCallBack<DTOMerchantLogoutResponse>() {
         @Override
         public void onSuccess(DTOMerchantLogoutResponse dtoMerchantLogoutResponse) {
@@ -35,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
                 }
                 Tracer.showSnack(findViewById(R.id.activity_main_parent), dtoMerchantLogoutResponse.getMessage());
                 PreferenceData.clearStore(getApplicationContext());
+                // MOVE TO LOGIN FRAGMENT
+                Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN);
+                onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_LOGIN);
             } catch (Exception e) {
                 Tracer.error(TAG, "onSuccess : " + e.getMessage());
             }
@@ -61,6 +69,14 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
         setSupportActionBar(toolbar);
         init();
         onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN), null, false, FragmentTag.MERCHANT_LOGIN);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mMerchantNetworkTaskProvider != null) {
+            mMerchantNetworkTaskProvider.detachProvider();
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -98,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
             case R.id.activity_main_sliding_layout_option_language:
                 break;
             case R.id.activity_main_sliding_layout_option_logout:
+                logoutMerchant();
                 break;
             case R.id.activity_main_sliding_layout_option_term_and_condition:
                 break;
@@ -170,6 +187,8 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
      */
     private void init() {
         Tracer.debug(TAG, "init: ");
+        mMerchantNetworkTaskProvider = new MerchantNetworkTaskProvider();
+        mMerchantNetworkTaskProvider.attachProvider();
         findViewById(R.id.activity_main_sliding_layout_option_password).setOnClickListener(this);
         findViewById(R.id.activity_main_sliding_layout_option_contact_mobil_pay).setOnClickListener(this);
         findViewById(R.id.activity_main_sliding_layout_option_faq).setOnClickListener(this);
@@ -229,5 +248,22 @@ public class MainActivity extends AppCompatActivity implements OnBaseActivityLis
         Tracer.debug(TAG, "unlockDrawerSwipe: ");
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawer_layout);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
+    /**
+     * Method to logout the Merchant
+     */
+    private void logoutMerchant() {
+        Tracer.debug(TAG, "logoutMerchant : ");
+        String merchantNupayId = PreferenceData.getMerchantNupayId(this);
+        Date date = new Date();
+        String timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT);
+        String token = Utils.createToken(this, getString(R.string.endpoint_merchant_logout), date);
+        String publicKey = getString(R.string.public_key);
+        String pushId = "123";
+        String gcmId = "123";
+        DTOMerchantLogoutRequest dtoMerchantLogoutRequest = new DTOMerchantLogoutRequest(token, timeStamp, publicKey, merchantNupayId);
+        Utils.showLoadingDialog(this);
+        mMerchantNetworkTaskProvider.merchantLogoutTask(this, dtoMerchantLogoutRequest, mMerchantLogoutResponseNetworkCallBack);
     }
 }

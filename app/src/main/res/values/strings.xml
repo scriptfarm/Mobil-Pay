@@ -4,6 +4,7 @@
 
     <string name="no_finger_print_device_not_detected">No finger print device detected</string>
     <string name="no_finger_print_register">No finger print register</string>
+    <string name="plz_login_manually">Plz login manually........</string>
     <string name="error_scanning_finger_not_recognized">Error : Scanning finger not recognized</string>
     <string name="unable_to_generate_qr_code">Unable to generate the QR-Code</string>
 

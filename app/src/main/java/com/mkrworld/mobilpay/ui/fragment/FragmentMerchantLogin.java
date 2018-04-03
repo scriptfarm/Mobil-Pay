@@ -165,8 +165,17 @@ public class FragmentMerchantLogin extends Fragment implements OnBaseFragmentLis
     @Override
     public void onFingerPrintAuthSuccess(FingerprintManager.CryptoObject cryptoObject) {
         Tracer.debug(TAG, "onFingerPrintAuthSuccess : ");
-        mEditTextPassword.setText(PreferenceData.getMerchantLoginPassword(getActivity()));
-        mEditTextMerchantIdMobileNumber.setText(PreferenceData.getMerchantLoginId(getActivity()));
+        String merchantLoginPassword = PreferenceData.getMerchantLoginPassword(getActivity());
+        String merchantLoginId = PreferenceData.getMerchantLoginId(getActivity());
+        if (merchantLoginId.trim().isEmpty() || merchantLoginPassword.trim().isEmpty()) {
+            if (getView() == null) {
+                return;
+            }
+            Tracer.showSnack(getView(), R.string.plz_login_manually);
+            return;
+        }
+        mEditTextPassword.setText(merchantLoginPassword);
+        mEditTextMerchantIdMobileNumber.setText(merchantLoginId);
         startSignInProcess();
     }
 

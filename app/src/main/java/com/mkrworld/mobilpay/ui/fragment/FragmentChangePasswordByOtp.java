@@ -58,8 +58,8 @@ public class FragmentChangePasswordByOtp extends Fragment implements OnBaseFragm
             }
             Tracer.showSnack(getView(), dtoMerchantForgotPasswordResponse.getMessage());
             if (getActivity() instanceof OnBaseActivityListener) {
-                Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME);
-                ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME);
+                Fragment fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN);
+                ((OnBaseActivityListener) getActivity()).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_LOGIN);
             }
         }
 
