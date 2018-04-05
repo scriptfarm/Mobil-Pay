@@ -42,13 +42,13 @@ class SummaryUserDataVH : BaseViewHolder<DTOSummaryUserData> {
         mTextViewTxnStatus = itemView.findViewById<View>(R.id.item_summary_user_data_textView_txn_status) as TextView
     }
 
-    override fun bindData(dtoSummaryUserData : DTOSummaryUserData?) {
+    override fun bindData(dtoSummaryUserData : DTOSummaryUserData) {
         Tracer.debug(TAG, "bindData: " + dtoSummaryUserData !!)
         if (dtoSummaryUserData == null) {
             return
         }
         mTextViewNumber!!.text = dtoSummaryUserData.number
-        mTextViewAmount!!.text = context.getString(R.string.symbol_rs) + dtoSummaryUserData.amount
+        mTextViewAmount!!.text = getContext().getString(R.string.symbol_rs) + dtoSummaryUserData.amount
         mTextViewDate!!.text = dtoSummaryUserData.date
         mTextViewTxnNumber!!.text = dtoSummaryUserData.txnNumber
         mTextViewMode!!.text = dtoSummaryUserData.mode

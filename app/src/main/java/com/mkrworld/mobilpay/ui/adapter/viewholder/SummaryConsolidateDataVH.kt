@@ -32,13 +32,13 @@ class SummaryConsolidateDataVH : BaseViewHolder<DTOSummaryConsolidateData> {
      */
     constructor(itemView : View) : super(itemView) {
         Tracer.debug(TAG, "MerchantHomeTabVH: ")
-        parent.setOnClickListener(this)
+        getParent().setOnClickListener(this)
         mTextViewMode = itemView.findViewById(R.id.item_collection_summary_consolidate_data_textView_mode)
         mTextViewCount = itemView.findViewById(R.id.item_collection_summary_consolidate_data_textView_count)
         mTextViewAmount = itemView.findViewById(R.id.item_collection_summary_consolidate_data_textView_amount)
     }
 
-    override fun bindData(dtoSummaryConsolidateData : DTOSummaryConsolidateData?) {
+    override fun bindData(dtoSummaryConsolidateData : DTOSummaryConsolidateData) {
         Tracer.debug(TAG, "bindData: " + dtoSummaryConsolidateData !!)
         if (dtoSummaryConsolidateData == null) {
             return

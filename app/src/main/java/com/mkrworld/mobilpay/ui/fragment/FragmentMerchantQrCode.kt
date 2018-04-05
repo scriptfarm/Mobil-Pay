@@ -120,7 +120,7 @@ class FragmentMerchantQrCode : Fragment(), OnBaseFragmentListener {
                 (view !!.findViewById<View>(R.id.fragment_merchant_qrcode_imageView_qrcode) as ImageView).setImageBitmap(bitmapQRCode)
             }
         } catch (e : WriterException) {
-            Tracer.showSnack(view, R.string.unable_to_generate_qr_code)
+            Tracer.showSnack(view!!, R.string.unable_to_generate_qr_code)
             e.printStackTrace()
         }
 

@@ -45,11 +45,11 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
     private var mEditTextBillAmount : EditText? = null
     private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
     private val mQRCodeGeneratorResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantQRCodeGeneratorResponse> {
-        override fun onSuccess(dtoQRCodeGeneratorResponse : DTOMerchantQRCodeGeneratorResponse?) {
+        override fun onSuccess(dtoQRCodeGeneratorResponse : DTOMerchantQRCodeGeneratorResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             if (dtoQRCodeGeneratorResponse == null || dtoQRCodeGeneratorResponse.getData() == null) {
-                Tracer.showSnack(view, R.string.no_data_fetch_from_server)
+                Tracer.showSnack(view!!, R.string.no_data_fetch_from_server)
                 return
             }
             val data = dtoQRCodeGeneratorResponse.getData()
@@ -61,7 +61,7 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
                 bundle.putString(FragmentMerchantQrCode.EXTRA_BILL_AMOUNT, data.amount)
                 bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TOKEN, data.qrCodeToken)
                 val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_QR_CODE)
-                (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment, bundle, true, FragmentTag.MERCHANT_QR_CODE)
+                (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, bundle, true, FragmentTag.MERCHANT_QR_CODE)
             }
         }
 
@@ -71,7 +71,7 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
             if (view == null) {
                 return
             }
-            Tracer.showSnack(view, errorMessage)
+            Tracer.showSnack(view!!, errorMessage)
         }
     }
 

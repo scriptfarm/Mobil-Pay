@@ -41,23 +41,23 @@ class FragmentForgotPassword : Fragment(), OnBaseFragmentListener, View.OnClickL
     private var mEditTextMerchantId : EditText? = null
     private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
     private val mMerchantSendForgotPasswordOtpResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantSendForgotPasswordOtpResponse> {
-        override fun onSuccess(dtoMerchantSendForgotPasswordOtpResponse : DTOMerchantSendForgotPasswordOtpResponse?) {
+        override fun onSuccess(dtoMerchantSendForgotPasswordOtpResponse : DTOMerchantSendForgotPasswordOtpResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
             if (dtoMerchantSendForgotPasswordOtpResponse == null || dtoMerchantSendForgotPasswordOtpResponse.getData() == null) {
-                Tracer.showSnack(view, R.string.no_data_fetch_from_server)
+                Tracer.showSnack(view!!, R.string.no_data_fetch_from_server)
                 return
             }
-            Tracer.showSnack(view, dtoMerchantSendForgotPasswordOtpResponse.getMessage())
+            Tracer.showSnack(view!!, dtoMerchantSendForgotPasswordOtpResponse.getMessage())
             if (activity is OnBaseActivityListener) {
                 val bundle = Bundle()
                 val merchantId = mEditTextMerchantId !!.text.toString()
                 bundle.putString(FragmentChangePasswordByOtp.EXTRA_LOGIN_ID, merchantId)
                 val fragment = FragmentProvider.getFragment(FragmentTag.CHANGE_PASSWORD_BY_OTP)
-                (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment, bundle, true, FragmentTag.CHANGE_PASSWORD_BY_OTP)
+                (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, bundle, true, FragmentTag.CHANGE_PASSWORD_BY_OTP)
             }
         }
 
@@ -67,7 +67,7 @@ class FragmentForgotPassword : Fragment(), OnBaseFragmentListener, View.OnClickL
             if (view == null) {
                 return
             }
-            Tracer.showSnack(view, errorMessage)
+            Tracer.showSnack(view!!, errorMessage)
         }
     }
 

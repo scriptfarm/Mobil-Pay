@@ -26,7 +26,7 @@ interface OnBaseActivityListener {
      * @param bundle   Bundle sat as argument
      * @param tag      Fragment Tag
      */
-    fun onBaseActivityReplaceFragment(fragment : Fragment, bundle : Bundle, tag : String)
+    fun onBaseActivityReplaceFragment(fragment : Fragment, bundle : Bundle?, tag : String)
 
     /**
      * Method to replace fragment
@@ -36,7 +36,7 @@ interface OnBaseActivityListener {
      * @param bundle      Bundle sat as argument
      * @param tag         Fragment Tag
      */
-    fun onBaseActivityReplaceFragment(containerId : Int, fragment : Fragment, bundle : Bundle, tag : String)
+    fun onBaseActivityReplaceFragment(containerId : Int, fragment : Fragment, bundle : Bundle?, tag : String)
 
     /**
      * Method to add fragment
@@ -46,7 +46,7 @@ interface OnBaseActivityListener {
      * @param isAddToBackStack TRUE if need to save fragment in back stack
      * @param tag              Fragment Tag
      */
-    fun onBaseActivityAddFragment(fragment : Fragment, bundle : Bundle, isAddToBackStack : Boolean, tag : String)
+    fun onBaseActivityAddFragment(fragment : Fragment, bundle : Bundle?, isAddToBackStack : Boolean, tag : String)
 
     /**
      * Method to add fragment
@@ -57,6 +57,11 @@ interface OnBaseActivityListener {
      * @param isAddToBackStack TRUE if need to save fragment in back stack
      * @param tag              Fragment Tag
      */
-    fun onBaseActivityAddFragment(containerId : Int, fragment : Fragment, bundle : Bundle, isAddToBackStack : Boolean, tag : String)
+    fun onBaseActivityAddFragment(containerId : Int, fragment : Fragment, bundle : Bundle?, isAddToBackStack : Boolean, tag : String)
+
+    /**
+     * Method to set the Title of the Screen
+     */
+    fun onBaseActivitySetScreenTitle(title : String)
 
 }

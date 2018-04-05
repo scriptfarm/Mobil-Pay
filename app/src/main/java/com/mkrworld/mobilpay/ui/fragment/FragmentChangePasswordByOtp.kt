@@ -45,24 +45,24 @@ class FragmentChangePasswordByOtp : Fragment(), OnBaseFragmentListener, View.OnC
     private var mEditTextConfirmPassword : EditText? = null
     private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
     private val mMerchantForgotPasswordResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantForgotPasswordResponse> {
-        override fun onSuccess(dtoMerchantForgotPasswordResponse : DTOMerchantForgotPasswordResponse?) {
+        override fun onSuccess(dtoMerchantForgotPasswordResponse : DTOMerchantForgotPasswordResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
             if (dtoMerchantForgotPasswordResponse == null || dtoMerchantForgotPasswordResponse.getData() == null) {
-                Tracer.showSnack(view, R.string.no_data_fetch_from_server)
+                Tracer.showSnack(view!!, R.string.no_data_fetch_from_server)
                 return
             }
             val prefMerchantId = PreferenceData.getMerchantLoginId(context).trim { it <= ' ' }
             if (arguments != null && ! prefMerchantId.isEmpty() && arguments.getString(EXTRA_LOGIN_ID, "").trim { it <= ' ' } == prefMerchantId) {
                 PreferenceData.setMerchantLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim { it <= ' ' })
             }
-            Tracer.showSnack(view, dtoMerchantForgotPasswordResponse.getMessage())
+            Tracer.showSnack(view!!, dtoMerchantForgotPasswordResponse.getMessage())
             if (activity is OnBaseActivityListener) {
                 val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN)
-                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_LOGIN)
+                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment!!, null, FragmentTag.MERCHANT_LOGIN)
             }
         }
 
@@ -72,7 +72,7 @@ class FragmentChangePasswordByOtp : Fragment(), OnBaseFragmentListener, View.OnC
             if (view == null) {
                 return
             }
-            Tracer.showSnack(view, errorMessage)
+            Tracer.showSnack(view!!, errorMessage)
         }
     }
 

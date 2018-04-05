@@ -51,14 +51,14 @@ class FragmentMerchantLogin : Fragment(), OnBaseFragmentListener, View.OnClickLi
     private var mFingerPrintAuthHelper : FingerPrintAuthHelper? = null
     private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
     private val mMerchantLoginResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantLoginResponse> {
-        override fun onSuccess(dtoMerchantLoginResponse : DTOMerchantLoginResponse?) {
+        override fun onSuccess(dtoMerchantLoginResponse : DTOMerchantLoginResponse) {
             Tracer.debug(TAG, "onSuccess : " + dtoMerchantLoginResponse !!)
             Utils.dismissLoadingDialog()
             if (dtoMerchantLoginResponse == null || dtoMerchantLoginResponse.getData() == null) {
-                Tracer.showSnack(view, R.string.no_data_fetch_from_server)
+                Tracer.showSnack(view!!, R.string.no_data_fetch_from_server)
                 return
             }
-            Tracer.showSnack(view, dtoMerchantLoginResponse.getMessage())
+            Tracer.showSnack(view!!, dtoMerchantLoginResponse.getMessage())
             PreferenceData.setMerchantNupayId(activity, dtoMerchantLoginResponse.getData() !!.nupayId)
             PreferenceData.setMerchantId(activity, dtoMerchantLoginResponse.getData() !!.userId)
             val userId = mEditTextMerchantIdMobileNumber !!.text.toString()
@@ -78,7 +78,7 @@ class FragmentMerchantLogin : Fragment(), OnBaseFragmentListener, View.OnClickLi
         override fun onError(errorMessage : String, errorCode : Int) {
             Tracer.debug(TAG, "onError : $errorMessage")
             Utils.dismissLoadingDialog()
-            Tracer.showSnack(view, errorMessage)
+            Tracer.showSnack(view!!, errorMessage)
         }
     }
 
@@ -148,7 +148,7 @@ class FragmentMerchantLogin : Fragment(), OnBaseFragmentListener, View.OnClickLi
             R.id.fragment_merchant_login_textView_sign_in -> startSignInProcess()
             R.id.fragment_merchant_login_textView_forgot_password -> if (activity is OnBaseActivityListener) {
                 val fragment = FragmentProvider.getFragment(FragmentTag.FORGOT_PASSWORD)
-                (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment, null, true, FragmentTag.FORGOT_PASSWORD)
+                (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, null, true, FragmentTag.FORGOT_PASSWORD)
             }
         }
     }
@@ -159,7 +159,7 @@ class FragmentMerchantLogin : Fragment(), OnBaseFragmentListener, View.OnClickLi
         if (view == null) {
             return
         }
-        Tracer.showSnack(view, R.string.no_finger_print_device_not_detected)
+        Tracer.showSnack(view!!, R.string.no_finger_print_device_not_detected)
     }
 
     override fun onFingerPrintAuthNoFingerPrintRegistered() {
@@ -168,7 +168,7 @@ class FragmentMerchantLogin : Fragment(), OnBaseFragmentListener, View.OnClickLi
         if (view == null) {
             return
         }
-        Tracer.showSnack(view, R.string.no_finger_print_register)
+        Tracer.showSnack(view!!, R.string.no_finger_print_register)
     }
 
     override fun onFingerPrintAuthBelowMarshmallow() {
@@ -183,7 +183,7 @@ class FragmentMerchantLogin : Fragment(), OnBaseFragmentListener, View.OnClickLi
             if (view == null) {
                 return
             }
-            Tracer.showSnack(view, R.string.plz_login_manually)
+            Tracer.showSnack(view!!, R.string.plz_login_manually)
             return
         }
         mEditTextPassword !!.setText(merchantLoginPassword)
@@ -196,7 +196,7 @@ class FragmentMerchantLogin : Fragment(), OnBaseFragmentListener, View.OnClickLi
         if (view == null) {
             return
         }
-        Tracer.showSnack(view, R.string.error_scanning_finger_not_recognized)
+        Tracer.showSnack(view!!, R.string.error_scanning_finger_not_recognized)
     }
 
     /**
@@ -320,7 +320,7 @@ class FragmentMerchantLogin : Fragment(), OnBaseFragmentListener, View.OnClickLi
         Tracer.debug(TAG, "goToSuccessScreen : ")
         if (activity is OnBaseActivityListener) {
             val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME)
-            (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME)
+            (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment!!, null, FragmentTag.MERCHANT_HOME)
         }
     }
 }

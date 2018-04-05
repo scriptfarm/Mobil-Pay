@@ -39,16 +39,16 @@ class SummaryConsolidateDataListVH : BaseViewHolder<DTOSummaryConsolidateDataLis
      */
     constructor(itemView : View) : super(itemView) {
         Tracer.debug(TAG, "SummaryConsolidateDataListVH: ")
-        val colorDivider = ContextCompat.getColor(context, R.color.divider_color)
-        val dividerHeight = context.resources.getDimensionPixelOffset(R.dimen.divider_size)
+        val colorDivider = ContextCompat.getColor(getContext(), R.color.divider_color)
+        val dividerHeight = getContext().resources.getDimensionPixelOffset(R.dimen.divider_size)
         mRecyclerView = itemView.findViewById<View>(R.id.item_card_recycler_view) as RecyclerView
         mBaseAdapter = BaseAdapter(AdapterItemHandler())
         mRecyclerView!!.adapter = mBaseAdapter
-        mRecyclerView!!.layoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
+        mRecyclerView!!.layoutManager = GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false)
         mRecyclerView!!.addItemDecoration(GridSpacingItemDecoration(1, dividerHeight, colorDivider, false))
     }
 
-    override fun bindData(dtoSummaryConsolidateDataList : DTOSummaryConsolidateDataList?) {
+    override fun bindData(dtoSummaryConsolidateDataList : DTOSummaryConsolidateDataList) {
         Tracer.debug(TAG, "bindData: " + dtoSummaryConsolidateDataList !!)
         if (dtoSummaryConsolidateDataList == null) {
             return

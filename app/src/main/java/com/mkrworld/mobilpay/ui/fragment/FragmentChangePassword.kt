@@ -44,21 +44,21 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
     private var mEditTextConfirmPassword : EditText? = null
     private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
     private val mMerchantChangePasswordResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantChangePasswordResponse> {
-        override fun onSuccess(dtoMerchantChangePasswordResponse : DTOMerchantChangePasswordResponse?) {
+        override fun onSuccess(dtoMerchantChangePasswordResponse : DTOMerchantChangePasswordResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
             if (dtoMerchantChangePasswordResponse == null || dtoMerchantChangePasswordResponse.getData() == null) {
-                Tracer.showSnack(view, R.string.no_data_fetch_from_server)
+                Tracer.showSnack(view!!, R.string.no_data_fetch_from_server)
                 return
             }
             PreferenceData.setMerchantLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim { it <= ' ' })
-            Tracer.showSnack(view, dtoMerchantChangePasswordResponse.getMessage())
+            Tracer.showSnack(view!!, dtoMerchantChangePasswordResponse.getMessage())
             if (activity is OnBaseActivityListener) {
                 val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME)
-                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_HOME)
+                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment!!, null, FragmentTag.MERCHANT_HOME)
             }
         }
 
@@ -68,7 +68,7 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
             if (view == null) {
                 return
             }
-            Tracer.showSnack(view, errorMessage)
+            Tracer.showSnack(view!!, errorMessage)
         }
     }
 
@@ -149,7 +149,7 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         when (view.id) {
             R.id.fragment_change_password_textView_forgot_password -> if (activity is OnBaseActivityListener) {
                 val fragment = FragmentProvider.getFragment(FragmentTag.FORGOT_PASSWORD)
-                (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment, null, true, FragmentTag.FORGOT_PASSWORD)
+                (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, null, true, FragmentTag.FORGOT_PASSWORD)
             }
             R.id.fragment_change_password_textView_submit -> startSendOtpProcess()
         }

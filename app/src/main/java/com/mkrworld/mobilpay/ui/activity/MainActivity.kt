@@ -3,12 +3,10 @@ package com.mkrworld.mobilpay.ui.activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
-
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
 import com.mkrworld.androidlib.network.NetworkCallBack
@@ -22,13 +20,12 @@ import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
-
-import java.util.Date
+import java.util.*
 
 class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickListener {
     private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
     private val mMerchantLogoutResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantLogoutResponse> {
-        override fun onSuccess(dtoMerchantLogoutResponse : DTOMerchantLogoutResponse?) {
+        override fun onSuccess(dtoMerchantLogoutResponse : DTOMerchantLogoutResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             try {
@@ -40,7 +37,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
                 PreferenceData.clearStore(applicationContext)
                 // MOVE TO LOGIN FRAGMENT
                 val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN)
-                onBaseActivityReplaceFragment(fragment, null, FragmentTag.MERCHANT_LOGIN)
+                onBaseActivityReplaceFragment(fragment!!, null, FragmentTag.MERCHANT_LOGIN)
             } catch (e : Exception) {
                 Tracer.error(TAG, "onSuccess : " + e.message)
             }
@@ -78,7 +75,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         val toolbar = findViewById<View>(R.id.activity_main_toolbar) as Toolbar
         setSupportActionBar(toolbar)
         init()
-        onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN), null, false, FragmentTag.MERCHANT_LOGIN)
+        onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN)!!, null, false, FragmentTag.MERCHANT_LOGIN)
     }
 
     override fun onDestroy() {
@@ -110,7 +107,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         when (view.id) {
             R.id.activity_main_sliding_layout_option_password -> {
                 val fragment = FragmentProvider.getFragment(FragmentTag.CHANGE_PASSWORD)
-                onBaseActivityAddFragment(fragment, null, true, FragmentTag.CHANGE_PASSWORD)
+                onBaseActivityAddFragment(fragment!!, null, true, FragmentTag.CHANGE_PASSWORD)
             }
             R.id.activity_main_sliding_layout_option_contact_mobil_pay -> {
             }
@@ -142,12 +139,12 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         Tracer.debug(TAG, "onBaseActivityShowBannerAd: ")
     }
 
-    override fun onBaseActivityReplaceFragment(fragment : Fragment?, bundle : Bundle?, tag : String) {
+    override fun onBaseActivityReplaceFragment(fragment : Fragment, bundle : Bundle?, tag : String) {
         Tracer.debug(TAG, "onBaseActivityReplaceFragment: ")
         onBaseActivityReplaceFragment(R.id.activity_main_fragment_container, fragment, bundle, tag)
     }
 
-    override fun onBaseActivityReplaceFragment(containerId : Int, fragment : Fragment?, bundle : Bundle?, tag : String) {
+    override fun onBaseActivityReplaceFragment(containerId : Int, fragment : Fragment, bundle : Bundle?, tag : String) {
         Tracer.debug(TAG, "onBaseActivityReplaceFragment: ")
         Utils.hideKeyboard(this)
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
@@ -160,12 +157,12 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         setNavigationDrawerSwipeState(tag)
     }
 
-    override fun onBaseActivityAddFragment(fragment : Fragment?, bundle : Bundle?, isAddToBackStack : Boolean, tag : String) {
+    override fun onBaseActivityAddFragment(fragment : Fragment, bundle : Bundle?, isAddToBackStack : Boolean, tag : String) {
         Tracer.debug(TAG, "onBaseActivityAddFragment: ")
         onBaseActivityAddFragment(R.id.activity_main_fragment_container, fragment, bundle, isAddToBackStack, tag)
     }
 
-    override fun onBaseActivityAddFragment(containerId : Int, fragment : Fragment?, bundle : Bundle?, isAddToBackStack : Boolean, tag : String) {
+    override fun onBaseActivityAddFragment(containerId : Int, fragment : Fragment, bundle : Bundle?, isAddToBackStack : Boolean, tag : String) {
         Tracer.debug(TAG, "onBaseActivityAddFragment: ")
         Utils.hideKeyboard(this)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -249,7 +246,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         val publicKey = getString(R.string.public_key)
         val pushId = "123"
         val gcmId = "123"
-        val dtoMerchantLogoutRequest = DTOMerchantLogoutRequest(token!!, timeStamp, publicKey, merchantNupayId)
+        val dtoMerchantLogoutRequest = DTOMerchantLogoutRequest(token !!, timeStamp, publicKey, merchantNupayId)
         Utils.showLoadingDialog(this)
         mMerchantNetworkTaskProvider !!.merchantLogoutTask(this, dtoMerchantLogoutRequest, mMerchantLogoutResponseNetworkCallBack)
     }

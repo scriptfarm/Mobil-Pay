@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.RelativeLayout
@@ -157,6 +158,27 @@ class MKRDialogUtil {
             relativeLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL)
             relativeLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
             relativeLayout.addView(progressView, relativeLayoutParams)
+            alertDialog !!.setContentView(relativeLayout)
+            alertDialog !!.setCanceledOnTouchOutside(false)
+            alertDialog !!.setCancelable(false)
+            alertDialog !!.window !!.setBackgroundDrawable(ColorDrawable(0))
+            alertDialog !!.show()
+        }
+
+        fun showLoadingDialog(context : Context, view : View) {
+            if (alertDialog != null && alertDialog !!.isShowing) {
+                return
+            }
+            alertDialog = Dialog(context)
+            alertDialog !!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val relativeLayout = RelativeLayout(context)
+            val paddingBottom = (context.resources.displayMetrics.heightPixels.toFloat() * 0.2f).toInt()
+            relativeLayout.setPadding(0, 0, 0, paddingBottom)
+            val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            relativeLayout.layoutParams = layoutParams
+            val relativeLayoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
+            relativeLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
+            relativeLayout.addView(view, relativeLayoutParams)
             alertDialog !!.setContentView(relativeLayout)
             alertDialog !!.setCanceledOnTouchOutside(false)
             alertDialog !!.setCancelable(false)

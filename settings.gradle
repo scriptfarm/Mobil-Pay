@@ -1,1 +1,1 @@
-include ':app', ':mkr-android-lib'
+include ':app', ':mkr-android-lib', ':biometric'

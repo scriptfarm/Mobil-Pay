@@ -45,17 +45,17 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
     private var mEditTextBillAmount : EditText? = null
     private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
     private val mMerchantSendBillResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantSendBillResponse> {
-        override fun onSuccess(dtoMerchantSendBillResponse : DTOMerchantSendBillResponse?) {
+        override fun onSuccess(dtoMerchantSendBillResponse : DTOMerchantSendBillResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
             if (dtoMerchantSendBillResponse == null || dtoMerchantSendBillResponse.getData() == null) {
-                Tracer.showSnack(view, R.string.no_data_fetch_from_server)
+                Tracer.showSnack(view!!, R.string.no_data_fetch_from_server)
                 return
             }
-            Tracer.showSnack(view, dtoMerchantSendBillResponse.getMessage() + "  " + dtoMerchantSendBillResponse.getData() !!.refTransactionId)
+            Tracer.showSnack(view!!, dtoMerchantSendBillResponse.getMessage() + "  " + dtoMerchantSendBillResponse.getData() !!.refTransactionId)
             activity.onBackPressed()
         }
 
@@ -65,7 +65,7 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
             if (view == null) {
                 return
             }
-            Tracer.showSnack(view, errorMessage)
+            Tracer.showSnack(view!!, errorMessage)
         }
     }
 

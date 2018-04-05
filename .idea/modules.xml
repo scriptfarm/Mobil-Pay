@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MobilPay.iml" filepath="$PROJECT_DIR$/MobilPay.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/biometric/biometric.iml" filepath="$PROJECT_DIR$/biometric/biometric.iml" />
       <module fileurl="file://$PROJECT_DIR$/mkr-android-lib/mkr-android-lib.iml" filepath="$PROJECT_DIR$/mkr-android-lib/mkr-android-lib.iml" />
     </modules>
   </component>

@@ -31,17 +31,17 @@ class MerchantHomeTabVH : BaseViewHolder<DTOMerchantHomeTab> {
      */
     constructor(itemView : View) : super(itemView) {
         Tracer.debug(TAG, "MerchantHomeTabVH: ")
-        parent.setOnClickListener(this)
+        getParent().setOnClickListener(this)
         mImageViewIcon = itemView.findViewById(R.id.item_merchant_home_imageView_icon)
         mTextViewLabel = itemView.findViewById(R.id.item_merchant_home_textView_label)
     }
 
-    override fun bindData(dtoMerchantHomeTab : DTOMerchantHomeTab?) {
+    override fun bindData(dtoMerchantHomeTab : DTOMerchantHomeTab) {
         Tracer.debug(TAG, "bindData: " + dtoMerchantHomeTab !!)
         if (dtoMerchantHomeTab == null) {
             return
         }
-        parent.tag = dtoMerchantHomeTab
+        getParent().tag = dtoMerchantHomeTab
         mImageViewIcon?.setImageResource(dtoMerchantHomeTab.iconResId)
         mTextViewLabel?.text = dtoMerchantHomeTab.label
     }

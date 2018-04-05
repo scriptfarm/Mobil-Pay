@@ -138,7 +138,9 @@ class Utils {
          */
         fun showLoadingDialog(context : Context) {
             Tracer.debug(TAG, "showLoadingDialog : ")
-            MKRDialogUtil.showLoadingDialog(context, (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.dialog_progress, null))
+            var layoutInflater : LayoutInflater = (context.getSystemService(Context.LAUNCHER_APPS_SERVICE)!! as LayoutInflater);
+            var view : View = layoutInflater!!.inflate(R.layout.dialog_progress, null)
+            MKRDialogUtil.showLoadingDialog(context,view!!)
         }
 
         /**
