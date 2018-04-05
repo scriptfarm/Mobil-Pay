@@ -2,9 +2,6 @@ package com.mkrworld.androidlib.network;
 
 import android.os.AsyncTask;
 
-import com.mkrworld.androidlib.BuildConfig;
-import com.mkrworld.androidlib.utils.Tracer;
-
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -28,7 +25,6 @@ import java.util.Vector;
  */
 
 public class NetworkRequest {
-    private static final String TAG = BuildConfig.BASE_TAG + ".NetworkRequest";
     private static final int MAX_THREAD_COUNT = 4;
     private static Vector<NetworkRequest> mNetworkRequestList = new Vector<>();
     private static int mThreadCount = 0;
@@ -77,7 +73,6 @@ public class NetworkRequest {
      * @param retryCount
      */
     public static void addToRequestQueue(final NetworkConstants.RequestType requestType, final String URL, final JSONObject jsonObject, final Map<String, String> headers, final OnNetworkRequestListener onNetworkRequestListener, final long timeOut, final int retryCount) {
-        Tracer.debug(TAG, "NetworkRequest.addToRequestQueue() RequestType: " + requestType.name() + " URL: " + URL);
         NetworkRequest networkRequest = new NetworkRequest(requestType, URL, jsonObject, headers, onNetworkRequestListener, timeOut, retryCount);
         mNetworkRequestList.add(networkRequest);
         initiateWatcher();
@@ -87,7 +82,6 @@ public class NetworkRequest {
      * Method to initiate the Request Queue Watcher
      */
     private static void initiateWatcher() {
-        Tracer.debug(TAG, "initiateWatcher : ");
         if (mNetworkRequestList.size() > 0 && (mWatcher == null || !mWatcher.isWatching())) {
             mWatcher = new Watcher();
             mWatcher.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -105,7 +99,6 @@ public class NetworkRequest {
      * @return
      */
     private static Object executeRequest(NetworkConstants.RequestType requestType, String strURL, JSONObject jsonObject, Map<String, String> headers, long timeOut) {
-        Tracer.debug(TAG, "executeRequest: " + strURL);
         HttpURLConnection urlConnection = null;
         try {
             URL url = null;
@@ -153,7 +146,6 @@ public class NetworkRequest {
                         return new JSONObject(resp);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Tracer.error(TAG, "excutePost(Parse Json) " + e.getMessage());
                         return new Error(2, "JSON Parsing Error");
                     }
             }
@@ -181,7 +173,6 @@ public class NetworkRequest {
      * @return
      */
     private static String getRequestType(NetworkConstants.RequestType requestType) {
-        Tracer.debug(TAG, "getRequestType: " + requestType.name());
         switch (requestType) {
             case DELETE:
                 return "DELETE";
@@ -202,7 +193,6 @@ public class NetworkRequest {
      * @return
      */
     private static String getGETUrlWithParam(String url, JSONObject jsonObject) {
-        Tracer.debug(TAG, "getGETUrlWithParam: " + url);
         if (jsonObject == null) {
             return url;
         }
@@ -315,7 +305,6 @@ public class NetworkRequest {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                Tracer.error(TAG, "sendAsyncRequest(...).new AsyncTask() {...}.doInBackground() " + e.getMessage());
             }
             return null;
         }
@@ -325,13 +314,10 @@ public class NetworkRequest {
             mThreadCount--;
             if (mNetworkRequest.mOnNetworkRequestListener != null) {
                 if (result instanceof JSONObject) {
-                    Tracer.debug(TAG, "onPostExecute(...).new AsyncTask() {...}.onPostExecute(JSON)");
                     mNetworkRequest.mOnNetworkRequestListener.onNetworkRequestCompleted((JSONObject) result);
                 } else if (result instanceof Error) {
-                    Tracer.debug(TAG, ".onPostExecute(...).new AsyncTask() {...}.onPostExecute(ERROR)");
                     mNetworkRequest.mOnNetworkRequestListener.onNetworkRequestFailed((Error) result);
                 } else {
-                    Tracer.debug(TAG, ".onPostExecute(...).new AsyncTask() {...}.onPostExecute(UNKNOWN)");
                     mNetworkRequest.mOnNetworkRequestListener.onNetworkRequestFailed(new Error(-1, "Unknown Error"));
                 }
             }
