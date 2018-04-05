@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 def STRING = "String"
 def BASE_TAG = "BASE_TAG"
@@ -36,6 +38,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     compile 'com.android.support:appcompat-v7:26.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.github.kenglxn.QRGen:android:2.2.0'
