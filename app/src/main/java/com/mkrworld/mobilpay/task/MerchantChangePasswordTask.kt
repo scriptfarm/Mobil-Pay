@@ -19,6 +19,10 @@ import java.util.HashMap
  */
 class MerchantChangePasswordTask : MobilPayBaseTask<DTOMerchantChangePasswordResponse> {
 
+    companion object {
+        private val TAG = BuildConfig.BASE_TAG + ".MerchantChangePasswordTask"
+    }
+
     /**
      * Constructor
      *
@@ -26,29 +30,21 @@ class MerchantChangePasswordTask : MobilPayBaseTask<DTOMerchantChangePasswordRes
      * @param requestJson
      * @param networkCallBack
      */
-    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<*>) : super(context, requestJson, networkCallBack) {}
+    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOMerchantChangePasswordResponse>) : super(context, requestJson, networkCallBack) {}
 
     public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOMerchantChangePasswordResponse {
         return Gson().fromJson(jsonObject.toString(), DTOMerchantChangePasswordResponse::class.java !!)
     }
 
     override fun getUrl() : String {
-        return UrlUtils.getUrl(context, R.string.url_change_password)
+        return UrlUtils.getUrl(getContext(), R.string.url_change_password)
     }
 
     public override fun getLocalResponseJsonPath() : String? {
         return null
     }
 
-    public override fun getCustomHeader() : HashMap<String, String>? {
-        return null
-    }
-
     public override fun getRequestType() : NetworkConstants.RequestType {
         return NetworkConstants.RequestType.POST
-    }
-
-    companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".MerchantChangePasswordTask"
     }
 }

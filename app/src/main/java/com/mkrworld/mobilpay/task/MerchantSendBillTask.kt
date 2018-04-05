@@ -19,6 +19,10 @@ import java.util.HashMap
  */
 class MerchantSendBillTask : MobilPayBaseTask<DTOMerchantSendBillResponse> {
 
+    companion object {
+        private val TAG = BuildConfig.BASE_TAG + ".MerchantSendBillTask"
+    }
+
     /**
      * Constructor
      *
@@ -26,29 +30,17 @@ class MerchantSendBillTask : MobilPayBaseTask<DTOMerchantSendBillResponse> {
      * @param requestJson
      * @param networkCallBack
      */
-    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<*>) : super(context, requestJson, networkCallBack) {}
+    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOMerchantSendBillResponse>) : super(context, requestJson, networkCallBack) {}
 
     public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOMerchantSendBillResponse {
         return Gson().fromJson(jsonObject.toString(), DTOMerchantSendBillResponse::class.java !!)
     }
 
     override fun getUrl() : String {
-        return UrlUtils.getUrl(context, R.string.url_send_bill)
-    }
-
-    public override fun getLocalResponseJsonPath() : String? {
-        return null
-    }
-
-    public override fun getCustomHeader() : HashMap<String, String>? {
-        return null
+        return UrlUtils.getUrl(getContext(), R.string.url_send_bill)
     }
 
     public override fun getRequestType() : NetworkConstants.RequestType {
         return NetworkConstants.RequestType.POST
-    }
-
-    companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".MerchantSendBillTask"
     }
 }

@@ -1,30 +1,23 @@
-package com.mkrworld.androidlib.callback;
+package com.mkrworld.androidlib.callback
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.os.Bundle
+import android.support.v4.app.Fragment
 
 /**
  * Created by a1zfkxa3 on 11/28/2017.
  */
 
-public interface OnBaseActivityListener {
-
-    /**
-     * Method to set the Title of the Screen
-     *
-     * @param title Title to set at the top of the Screen
-     */
-    public void onBaseActivitySetScreenTitle(String title);
+interface OnBaseActivityListener {
 
     /**
      * Method to notifyTaskResponse that there is need to show the Ad
      */
-    public void onBaseActivityShowInterstitialAd();
+    fun onBaseActivityShowInterstitialAd()
 
     /**
      * Method to notifyTaskResponse that there is need to show the Ad
      */
-    public void onBaseActivityShowBannerAd();
+    fun onBaseActivityShowBannerAd()
 
     /**
      * Method to replace fragment
@@ -33,7 +26,7 @@ public interface OnBaseActivityListener {
      * @param bundle   Bundle sat as argument
      * @param tag      Fragment Tag
      */
-    public void onBaseActivityReplaceFragment(Fragment fragment, Bundle bundle, String tag);
+    fun onBaseActivityReplaceFragment(fragment : Fragment, bundle : Bundle, tag : String)
 
     /**
      * Method to replace fragment
@@ -43,7 +36,7 @@ public interface OnBaseActivityListener {
      * @param bundle      Bundle sat as argument
      * @param tag         Fragment Tag
      */
-    public void onBaseActivityReplaceFragment(int containerId, Fragment fragment, Bundle bundle, String tag);
+    fun onBaseActivityReplaceFragment(containerId : Int, fragment : Fragment, bundle : Bundle, tag : String)
 
     /**
      * Method to add fragment
@@ -53,7 +46,7 @@ public interface OnBaseActivityListener {
      * @param isAddToBackStack TRUE if need to save fragment in back stack
      * @param tag              Fragment Tag
      */
-    public void onBaseActivityAddFragment(Fragment fragment, Bundle bundle, boolean isAddToBackStack, String tag);
+    fun onBaseActivityAddFragment(fragment : Fragment, bundle : Bundle, isAddToBackStack : Boolean, tag : String)
 
     /**
      * Method to add fragment
@@ -64,6 +57,6 @@ public interface OnBaseActivityListener {
      * @param isAddToBackStack TRUE if need to save fragment in back stack
      * @param tag              Fragment Tag
      */
-    public void onBaseActivityAddFragment(int containerId, Fragment fragment, Bundle bundle, boolean isAddToBackStack, String tag);
+    fun onBaseActivityAddFragment(containerId : Int, fragment : Fragment, bundle : Bundle, isAddToBackStack : Boolean, tag : String)
 
 }

@@ -21,6 +21,10 @@ import java.util.HashMap
  */
 class MerchantLogoutTask : MobilPayBaseTask<DTOMerchantLogoutResponse> {
 
+    companion object {
+        private val TAG = BuildConfig.BASE_TAG + ".MerchantLogoutTask"
+    }
+
     /**
      * Constructor
      *
@@ -28,29 +32,17 @@ class MerchantLogoutTask : MobilPayBaseTask<DTOMerchantLogoutResponse> {
      * @param requestJson
      * @param networkCallBack
      */
-    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<*>) : super(context, requestJson, networkCallBack) {}
+    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOMerchantLogoutResponse>) : super(context, requestJson, networkCallBack) {}
 
     public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOMerchantLogoutResponse {
         return Gson().fromJson(jsonObject.toString(), DTOMerchantLogoutResponse::class.java !!)
     }
 
     override fun getUrl() : String {
-        return UrlUtils.getUrl(context, R.string.url_merchant_logout)
-    }
-
-    public override fun getLocalResponseJsonPath() : String? {
-        return null
-    }
-
-    public override fun getCustomHeader() : HashMap<String, String>? {
-        return null
+        return UrlUtils.getUrl(getContext(), R.string.url_merchant_logout)
     }
 
     public override fun getRequestType() : NetworkConstants.RequestType {
         return NetworkConstants.RequestType.POST
-    }
-
-    companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".MerchantLogoutTask"
     }
 }

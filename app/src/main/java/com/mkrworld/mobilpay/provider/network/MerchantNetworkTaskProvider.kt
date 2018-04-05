@@ -58,11 +58,11 @@ class MerchantNetworkTaskProvider : BaseTaskProvider() {
         val task = MerchantLoginTask(context, requestJson, object : NetworkCallBack<DTOMerchantLoginResponse> {
 
             override fun onSuccess(networkResponse : DTOMerchantLoginResponse) {
-                notifyTaskResponse(networkCallBack, networkResponse)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, networkResponse)
             }
 
             override fun onError(errorMessage : String, errorCode : Int) {
-                notifyTaskResponse(networkCallBack, errorMessage, errorCode)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
         task.executeTask()
@@ -82,11 +82,11 @@ class MerchantNetworkTaskProvider : BaseTaskProvider() {
         val task = MerchantQRCodeGeneratorTask(context, requestJson, object : NetworkCallBack<DTOMerchantQRCodeGeneratorResponse> {
 
             override fun onSuccess(networkResponse : DTOMerchantQRCodeGeneratorResponse) {
-                notifyTaskResponse(networkCallBack, networkResponse)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, networkResponse)
             }
 
             override fun onError(errorMessage : String, errorCode : Int) {
-                notifyTaskResponse(networkCallBack, errorMessage, errorCode)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
         task.executeTask()
@@ -106,11 +106,11 @@ class MerchantNetworkTaskProvider : BaseTaskProvider() {
         val task = MerchantSendBillTask(context, requestJson, object : NetworkCallBack<DTOMerchantSendBillResponse> {
 
             override fun onSuccess(networkResponse : DTOMerchantSendBillResponse) {
-                notifyTaskResponse(networkCallBack, networkResponse)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, networkResponse)
             }
 
             override fun onError(errorMessage : String, errorCode : Int) {
-                notifyTaskResponse(networkCallBack, errorMessage, errorCode)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
         task.executeTask()
@@ -130,11 +130,11 @@ class MerchantNetworkTaskProvider : BaseTaskProvider() {
         val task = MerchantChangePasswordTask(context, requestJson, object : NetworkCallBack<DTOMerchantChangePasswordResponse> {
 
             override fun onSuccess(networkResponse : DTOMerchantChangePasswordResponse) {
-                notifyTaskResponse(networkCallBack, networkResponse)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, networkResponse)
             }
 
             override fun onError(errorMessage : String, errorCode : Int) {
-                notifyTaskResponse(networkCallBack, errorMessage, errorCode)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
         task.executeTask()
@@ -154,11 +154,11 @@ class MerchantNetworkTaskProvider : BaseTaskProvider() {
         val task = MerchantDetailByNupayIdTask(context, requestJson, object : NetworkCallBack<DTOMerchantDetailByNupayIdResponse> {
 
             override fun onSuccess(networkResponse : DTOMerchantDetailByNupayIdResponse) {
-                notifyTaskResponse(networkCallBack, networkResponse)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, networkResponse)
             }
 
             override fun onError(errorMessage : String, errorCode : Int) {
-                notifyTaskResponse(networkCallBack, errorMessage, errorCode)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
         task.executeTask()
@@ -178,11 +178,11 @@ class MerchantNetworkTaskProvider : BaseTaskProvider() {
         val task = MerchantLogoutTask(context, requestJson, object : NetworkCallBack<DTOMerchantLogoutResponse> {
 
             override fun onSuccess(networkResponse : DTOMerchantLogoutResponse) {
-                notifyTaskResponse(networkCallBack, networkResponse)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, networkResponse)
             }
 
             override fun onError(errorMessage : String, errorCode : Int) {
-                notifyTaskResponse(networkCallBack, errorMessage, errorCode)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
         task.executeTask()
@@ -202,11 +202,11 @@ class MerchantNetworkTaskProvider : BaseTaskProvider() {
         val task = MobileNumberStatusTask(context, requestJson, object : NetworkCallBack<DTOMobileNumberStatusResponse> {
 
             override fun onSuccess(networkResponse : DTOMobileNumberStatusResponse) {
-                notifyTaskResponse(networkCallBack, networkResponse)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, networkResponse)
             }
 
             override fun onError(errorMessage : String, errorCode : Int) {
-                notifyTaskResponse(networkCallBack, errorMessage, errorCode)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
         task.executeTask()
@@ -226,11 +226,11 @@ class MerchantNetworkTaskProvider : BaseTaskProvider() {
         val task = MerchantSendForgotPasswordOtpTask(context, requestJson, object : NetworkCallBack<DTOMerchantSendForgotPasswordOtpResponse> {
 
             override fun onSuccess(networkResponse : DTOMerchantSendForgotPasswordOtpResponse) {
-                notifyTaskResponse(networkCallBack, networkResponse)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, networkResponse)
             }
 
             override fun onError(errorMessage : String, errorCode : Int) {
-                notifyTaskResponse(networkCallBack, errorMessage, errorCode)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
         task.executeTask()
@@ -250,11 +250,11 @@ class MerchantNetworkTaskProvider : BaseTaskProvider() {
         val task = MerchantForgotPasswordTask(context, requestJson, object : NetworkCallBack<DTOMerchantForgotPasswordResponse> {
 
             override fun onSuccess(networkResponse : DTOMerchantForgotPasswordResponse) {
-                notifyTaskResponse(networkCallBack, networkResponse)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, networkResponse)
             }
 
             override fun onError(errorMessage : String, errorCode : Int) {
-                notifyTaskResponse(networkCallBack, errorMessage, errorCode)
+                notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
         task.executeTask()
@@ -273,7 +273,7 @@ class MerchantNetworkTaskProvider : BaseTaskProvider() {
             return JSONObject(Gson().toJson(`object`, refClass))
         } catch (e : JSONException) {
             e.printStackTrace()
-            notifyTaskResponse(networkCallBack, "Request JSON : " + e.message, - 1)
+            notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, "Request JSON : " + e.message, - 1)
         }
 
         return null

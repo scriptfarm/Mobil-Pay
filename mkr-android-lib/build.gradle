@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 def STRING = "String"
 def BOOLEAN = "boolean"
@@ -42,4 +44,5 @@ dependencies {
     compile 'com.android.support:customtabs:26.0.2'
     compile 'com.android.support:recyclerview-v7:26.0.2'
     compile 'com.android.support:cardview-v7:26.0.2'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
