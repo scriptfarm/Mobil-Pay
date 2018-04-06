@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <!--Mantra Device -->
+    <usb-device
+        product-id="4101"
+        vendor-id="11279" />
+    <!-- Startek-->
+    <usb-device
+        product-id="0x8220"
+        vendor-id="0x0bca" />
+    <usb-device
+        product-id="0x8225"
+        vendor-id="0x0bca" />
+
+    <!-- Morpho-->
+    <usb-device vendor-id="8797" />
+    <usb-device vendor-id="1947" />
+    <!-- COGENT-->
+
+    <usb-device
+        product-id="8512"
+        vendor-id="7717" />
+    <!-- Secugen-->
+
+    <usb-device vendor-id="4450" />
+
+    <usb-device
+        product-id="8209"
+        vendor-id="8210" />
+
+    <!-- Precision Locking -->
+
+    <usb-device vendor-id="8457" />
+    <usb-device vendor-id="11576" />
+</resources>

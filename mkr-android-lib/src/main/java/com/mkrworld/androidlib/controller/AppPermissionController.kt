@@ -51,7 +51,7 @@ class AppPermissionController {
      * @param permissions
      * @param grantResults
      */
-    fun onRequestPermissionsResult(requestCode : Int, permissions : Array<String>, grantResults : IntArray) {
+    fun onRequestPermissionsResult(requestCode : Int, permissions : Array<String>?, grantResults : IntArray) {
         Tracer.error(TAG, "onRequestPermissionsResult: ")
         when (requestCode) {
             REQUEST_PERMISSION -> {

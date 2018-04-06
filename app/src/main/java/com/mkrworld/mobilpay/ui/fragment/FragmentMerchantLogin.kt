@@ -18,6 +18,7 @@ import com.mkrworld.androidlib.callback.OnBaseFragmentListener
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.MKRDialogUtil
 import com.mkrworld.androidlib.utils.Tracer
+import com.mkrworld.biometric.controller.FingerCapture
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
 import com.mkrworld.mobilpay.dto.merchantlogin.DTOMerchantLoginRequest
@@ -145,7 +146,7 @@ class FragmentMerchantLogin : Fragment(), OnBaseFragmentListener, View.OnClickLi
     override fun onClick(view : View) {
         Tracer.debug(TAG, "onClick: ")
         when (view.id) {
-            R.id.fragment_merchant_login_textView_sign_in -> startSignInProcess()
+            R.id.fragment_merchant_login_textView_sign_in -> startSignInProcess()//FingerCapture.getInstance().capture(activity, null, "P", true)
             R.id.fragment_merchant_login_textView_forgot_password -> if (activity is OnBaseActivityListener) {
                 val fragment = FragmentProvider.getFragment(FragmentTag.FORGOT_PASSWORD)
                 (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, null, true, FragmentTag.FORGOT_PASSWORD)

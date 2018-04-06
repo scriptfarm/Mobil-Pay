@@ -1,5 +1,6 @@
 package com.mkrworld.mobilpay.ui.activity
 
+import android.Manifest
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
+import com.mkrworld.androidlib.controller.AppPermissionController
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
@@ -22,7 +24,13 @@ import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
 import java.util.*
 
-class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickListener {
+class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickListener, AppPermissionController.OnAppPermissionControllerListener {
+
+    companion object {
+        private val TAG = BuildConfig.BASE_TAG + ".MainActivity"
+    }
+
+    private var mAppPermissionController : AppPermissionController? = null
     private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
     private val mMerchantLogoutResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantLogoutResponse> {
         override fun onSuccess(dtoMerchantLogoutResponse : DTOMerchantLogoutResponse) {
@@ -37,7 +45,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
                 PreferenceData.clearStore(applicationContext)
                 // MOVE TO LOGIN FRAGMENT
                 val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN)
-                onBaseActivityReplaceFragment(fragment!!, null, FragmentTag.MERCHANT_LOGIN)
+                onBaseActivityReplaceFragment(fragment !!, null, FragmentTag.MERCHANT_LOGIN)
             } catch (e : Exception) {
                 Tracer.error(TAG, "onSuccess : " + e.message)
             }
@@ -56,18 +64,6 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         }
     }
 
-    /**
-     * Method to check weather the drawer View is visible or not
-     *
-     * @return TRUE if drawer is visible, else FALSE
-     */
-    private val isDrawerVisible : Boolean
-        get() {
-            Tracer.debug(TAG, "isDrawerVisible: ")
-            val drawerLayout = findViewById<View>(R.id.activity_main_drawer_layout) as DrawerLayout
-            return drawerLayout != null && drawerLayout.isDrawerVisible(findViewById<View>(R.id.activity_main_hide_layout))
-        }
-
     override fun onCreate(savedInstanceState : Bundle?) {
         Tracer.debug(TAG, "onCreate: ")
         super.onCreate(savedInstanceState)
@@ -75,7 +71,6 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         val toolbar = findViewById<View>(R.id.activity_main_toolbar) as Toolbar
         setSupportActionBar(toolbar)
         init()
-        onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN)!!, null, false, FragmentTag.MERCHANT_LOGIN)
     }
 
     override fun onDestroy() {
@@ -87,7 +82,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
 
     override fun onBackPressed() {
         Tracer.debug(TAG, "onBackPressed: ")
-        if (isDrawerVisible) {
+        if (isDrawerVisible()) {
             hideDrawer()
             return
         }
@@ -102,12 +97,17 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         }
     }
 
+    override fun onAppPermissionControllerListenerHaveAllRequiredPermission() {
+        Tracer.debug(TAG, "onAppPermissionControllerListenerHaveAllRequiredPermission : ")
+        onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN) !!, null, false, FragmentTag.MERCHANT_LOGIN)
+    }
+
     override fun onClick(view : View) {
         Tracer.debug(TAG, "onClick: ")
         when (view.id) {
             R.id.activity_main_sliding_layout_option_password -> {
                 val fragment = FragmentProvider.getFragment(FragmentTag.CHANGE_PASSWORD)
-                onBaseActivityAddFragment(fragment!!, null, true, FragmentTag.CHANGE_PASSWORD)
+                onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.CHANGE_PASSWORD)
             }
             R.id.activity_main_sliding_layout_option_contact_mobil_pay -> {
             }
@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
             R.id.activity_main_sliding_layout_option_term_and_condition -> {
             }
         }
-        if (isDrawerVisible) {
+        if (isDrawerVisible()) {
             hideDrawer()
         }
     }
@@ -182,6 +182,9 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
      */
     private fun init() {
         Tracer.debug(TAG, "init: ")
+        var permissions : Array<String> = arrayOf(Manifest.permission.INTERNET,Manifest.permission.ACCESS_NETWORK_STATE,Manifest.permission.USE_FINGERPRINT)
+        mAppPermissionController = AppPermissionController(this, permissions, this)
+        mAppPermissionController?.initializedAppPermission()
         mMerchantNetworkTaskProvider = MerchantNetworkTaskProvider()
         mMerchantNetworkTaskProvider !!.attachProvider()
         findViewById<View>(R.id.activity_main_sliding_layout_option_password).setOnClickListener(this)
@@ -193,13 +196,9 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         findViewById<View>(R.id.activity_main_sliding_layout_option_term_and_condition).setOnClickListener(this)
     }
 
-    /**
-     * Method to hide the Drawer
-     */
-    private fun hideDrawer() {
-        Tracer.debug(TAG, "hideDrawer: ")
-        val drawerLayout = findViewById<View>(R.id.activity_main_drawer_layout) as DrawerLayout
-        drawerLayout.closeDrawer(findViewById<View>(R.id.activity_main_hide_layout))
+    override fun onRequestPermissionsResult(requestCode : Int, permissions : Array<String>, grantResults : IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        mAppPermissionController?.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     /**
@@ -213,6 +212,26 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         } else {
             unlockDrawerSwipe()
         }
+    }
+
+    /**
+     * Method to hide the Drawer
+     */
+    private fun hideDrawer() {
+        Tracer.debug(TAG, "hideDrawer: ")
+        val drawerLayout = findViewById<View>(R.id.activity_main_drawer_layout) as DrawerLayout
+        drawerLayout.closeDrawer(findViewById<View>(R.id.activity_main_hide_layout))
+    }
+
+    /**
+     * Method to check weather the drawer View is visible or not
+     *
+     * @return TRUE if drawer is visible, else FALSE
+     */
+    fun isDrawerVisible() : Boolean {
+        Tracer.debug(TAG, "isDrawerVisible: ")
+        val drawerLayout = findViewById<View>(R.id.activity_main_drawer_layout) as DrawerLayout
+        return drawerLayout != null && drawerLayout.isDrawerVisible(findViewById<View>(R.id.activity_main_hide_layout))
     }
 
     /**
@@ -249,9 +268,5 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         val dtoMerchantLogoutRequest = DTOMerchantLogoutRequest(token !!, timeStamp, publicKey, merchantNupayId)
         Utils.showLoadingDialog(this)
         mMerchantNetworkTaskProvider !!.merchantLogoutTask(this, dtoMerchantLogoutRequest, mMerchantLogoutResponseNetworkCallBack)
-    }
-
-    companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".MainActivity"
     }
 }
