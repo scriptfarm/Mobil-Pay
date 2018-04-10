@@ -56,7 +56,7 @@ class AppPermissionController {
         when (requestCode) {
             REQUEST_PERMISSION -> {
                 if (! (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    Toast.makeText(mActivity, "App was unable to work properly. If required permission not granted", Toast.LENGTH_LONG)
+                    Toast.makeText(mActivity, "App was unable to work properly. If required permission not granted", Toast.LENGTH_LONG).show()
                 }
                 initializedAppPermission()
             }
