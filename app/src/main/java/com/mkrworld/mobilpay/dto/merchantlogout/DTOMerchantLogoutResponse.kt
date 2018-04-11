@@ -16,7 +16,7 @@ class DTOMerchantLogoutResponse {
     @SerializedName("message")
     private var mMessage : String? = null
 
-    @SerializedName("mData")
+    @SerializedName("data")
     private var mData : Boolean? = null
 
     /**

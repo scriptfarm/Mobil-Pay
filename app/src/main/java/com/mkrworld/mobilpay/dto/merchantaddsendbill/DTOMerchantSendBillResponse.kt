@@ -18,7 +18,7 @@ class DTOMerchantSendBillResponse {
     @SerializedName("message")
     private var mMessage : String? = null
 
-    @SerializedName("mData")
+    @SerializedName("data")
     private var mData : DTOMerchantSendBillResponse.Data? = null
 
     /**
