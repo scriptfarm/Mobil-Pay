@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.dto.merchantforgotpassword
+package com.mkrworld.mobilpay.dto.agentforgotpassword
 
 import com.google.gson.annotations.SerializedName
 import com.mkrworld.androidlib.utils.Tracer
@@ -9,14 +9,14 @@ import com.mkrworld.mobilpay.dto.DTOBaseRequest
  * Created by mkr on 2/4/18.
  */
 
-class DTOMerchantForgotPasswordRequest : DTOBaseRequest {
+class DTOAgentForgotPasswordRequest : DTOBaseRequest {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOMerchantForgotPasswordRequest"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentForgotPasswordRequest"
     }
 
-    @SerializedName("nupay_id")
-    private var mNupayId : String? = null
+    @SerializedName("agent_id")
+    private var mAgentId : String? = null
 
     @SerializedName("otp")
     private var mOTP : String? = null
@@ -33,14 +33,14 @@ class DTOMerchantForgotPasswordRequest : DTOBaseRequest {
      * @param token
      * @param timeStamp
      * @param publicKey
-     * @param nupayId
+     * @param agentId
      * @param password
      * @param otp
      * @param imei
      */
-    constructor(token : String, timeStamp : String, publicKey : String, nupayId : String, password : String, otp : String, imei : String) : super(token, timeStamp, publicKey) {
-        Tracer.debug(TAG, "DTOMerchantForgotPasswordRequest : ")
-        mNupayId = nupayId
+    constructor(token : String, timeStamp : String, publicKey : String, agentId : String, password : String, otp : String, imei : String) : super(token, timeStamp, publicKey) {
+        Tracer.debug(TAG, "DTOAgentForgotPasswordRequest : ")
+        mAgentId = agentId
         mPassword = password
         mOTP = otp
         mExtra = Extra(imei)

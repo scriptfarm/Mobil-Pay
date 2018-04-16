@@ -7,23 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.merchantforgotpassword.DTOMerchantForgotPasswordRequest
-import com.mkrworld.mobilpay.dto.merchantforgotpassword.DTOMerchantForgotPasswordResponse
+import com.mkrworld.mobilpay.dto.agentforgotpassword.DTOAgentForgotPasswordRequest
+import com.mkrworld.mobilpay.dto.agentforgotpassword.DTOAgentForgotPasswordResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
-
-import java.util.Date
+import java.util.*
 
 /**
  * Created by mkr on 15/3/18.
@@ -43,25 +41,25 @@ class FragmentChangePasswordByOtp : Fragment(), OnBaseFragmentListener, View.OnC
     private var mEditTextNewPassword : EditText? = null
     private var mEditTextConfirmPassword : EditText? = null
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
-    private val mMerchantForgotPasswordResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantForgotPasswordResponse> {
-        override fun onSuccess(dtoMerchantForgotPasswordResponse : DTOMerchantForgotPasswordResponse) {
+    private val mAgentForgotPasswordResponseNetworkCallBack = object : NetworkCallBack<DTOAgentForgotPasswordResponse> {
+        override fun onSuccess(dtoAgentForgotPasswordResponse : DTOAgentForgotPasswordResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
-            if (dtoMerchantForgotPasswordResponse == null || dtoMerchantForgotPasswordResponse.getData() == null) {
-                Tracer.showSnack(view!!, R.string.no_data_fetch_from_server)
+            if (dtoAgentForgotPasswordResponse == null || dtoAgentForgotPasswordResponse.getData() == null) {
+                Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
             val prefMerchantId = PreferenceData.getAgentId(context).trim { it <= ' ' }
             if (arguments != null && ! prefMerchantId.isEmpty() && arguments.getString(EXTRA_LOGIN_ID, "").trim { it <= ' ' } == prefMerchantId) {
                 PreferenceData.setAgentLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim { it <= ' ' })
             }
-            Tracer.showSnack(view!!, dtoMerchantForgotPasswordResponse.getMessage())
+            Tracer.showSnack(view !!, dtoAgentForgotPasswordResponse.getMessage())
             if (activity is OnBaseActivityListener) {
                 val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN)
-                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment!!, null, FragmentTag.MERCHANT_LOGIN)
+                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment !!, null, FragmentTag.MERCHANT_LOGIN)
             }
         }
 
@@ -71,7 +69,7 @@ class FragmentChangePasswordByOtp : Fragment(), OnBaseFragmentListener, View.OnC
             if (view == null) {
                 return
             }
-            Tracer.showSnack(view!!, errorMessage)
+            Tracer.showSnack(view !!, errorMessage)
         }
     }
 
@@ -80,11 +78,7 @@ class FragmentChangePasswordByOtp : Fragment(), OnBaseFragmentListener, View.OnC
      *
      * @return
      */
-    private // Validate old password
-    // Validate New password
-    // Validate confirm password
-    // Validate confirm password
-    val isUserDetailValid : Boolean
+    private val isUserDetailValid : Boolean
         get() {
             Tracer.debug(TAG, "isUserDetailValid: ")
             if (view == null) {
@@ -184,9 +178,9 @@ class FragmentChangePasswordByOtp : Fragment(), OnBaseFragmentListener, View.OnC
         mEditTextConfirmPassword = view !!.findViewById<View>(R.id.fragment_change_password_otp_editText_confirm_password) as EditText
 
         // ADD TEXT CHANGE LISTENER
-        mEditTextOtp !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutOtp!!))
-        mEditTextNewPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutNewPassword!!))
-        mEditTextConfirmPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutConfirmPassword!!))
+        mEditTextOtp !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutOtp !!))
+        mEditTextNewPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutNewPassword !!))
+        mEditTextConfirmPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutConfirmPassword !!))
     }
 
     /**
@@ -204,9 +198,9 @@ class FragmentChangePasswordByOtp : Fragment(), OnBaseFragmentListener, View.OnC
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_forgot_password), date)
         val publicKey = getString(R.string.public_key)
-        val dtoMerchantForgotPasswordRequest = DTOMerchantForgotPasswordRequest(token!!, timeStamp, publicKey, PreferenceData.getAgentId(activity), confirmPassword, otp, "123")
+        val dtoAgentForgotPasswordRequest = DTOAgentForgotPasswordRequest(token !!, timeStamp, publicKey, PreferenceData.getAgentId(activity), confirmPassword, otp, "123")
         Utils.showLoadingDialog(activity)
-        mAgentNetworkTaskProvider !!.merchantForgotPasswordTask(activity, dtoMerchantForgotPasswordRequest, mMerchantForgotPasswordResponseNetworkCallBack)
+        mAgentNetworkTaskProvider !!.agentForgotPasswordTask(activity, dtoAgentForgotPasswordRequest, mAgentForgotPasswordResponseNetworkCallBack)
     }
 
     /**

@@ -7,23 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.merchantchangepassword.DTOMerchantChangePasswordRequest
-import com.mkrworld.mobilpay.dto.merchantchangepassword.DTOMerchantChangePasswordResponse
+import com.mkrworld.mobilpay.dto.agentchangepassword.DTOAgentChangePasswordRequest
+import com.mkrworld.mobilpay.dto.agentchangepassword.DTOAgentChangePasswordResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
-
-import java.util.Date
+import java.util.*
 
 /**
  * Created by mkr on 13/3/18.
@@ -42,22 +40,22 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
     private var mEditTextNewPassword : EditText? = null
     private var mEditTextConfirmPassword : EditText? = null
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
-    private val mMerchantChangePasswordResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantChangePasswordResponse> {
-        override fun onSuccess(dtoMerchantChangePasswordResponse : DTOMerchantChangePasswordResponse) {
+    private val mAgentChangePasswordResponseNetworkCallBack = object : NetworkCallBack<DTOAgentChangePasswordResponse> {
+        override fun onSuccess(dtoAgentChangePasswordResponse : DTOAgentChangePasswordResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
-            if (dtoMerchantChangePasswordResponse == null || dtoMerchantChangePasswordResponse.getData() == null) {
-                Tracer.showSnack(view!!, R.string.no_data_fetch_from_server)
+            if (dtoAgentChangePasswordResponse == null || dtoAgentChangePasswordResponse.getData() == null) {
+                Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
             PreferenceData.setAgentLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim { it <= ' ' })
-            Tracer.showSnack(view!!, dtoMerchantChangePasswordResponse.getMessage())
+            Tracer.showSnack(view !!, dtoAgentChangePasswordResponse.getMessage())
             if (activity is OnBaseActivityListener) {
                 val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME)
-                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment!!, null, FragmentTag.MERCHANT_HOME)
+                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment !!, null, FragmentTag.MERCHANT_HOME)
             }
         }
 
@@ -67,7 +65,7 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
             if (view == null) {
                 return
             }
-            Tracer.showSnack(view!!, errorMessage)
+            Tracer.showSnack(view !!, errorMessage)
         }
     }
 
@@ -76,11 +74,7 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
      *
      * @return
      */
-    private // Validate old password
-    // Validate New password
-    // Validate confirm password
-    // Validate confirm password
-    val isUserDetailValid : Boolean
+    private val isUserDetailValid : Boolean
         get() {
             Tracer.debug(TAG, "isUserDetailValid: ")
             if (view == null) {
@@ -148,9 +142,9 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         when (view.id) {
             R.id.fragment_change_password_textView_forgot_password -> if (activity is OnBaseActivityListener) {
                 val fragment = FragmentProvider.getFragment(FragmentTag.FORGOT_PASSWORD)
-                (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, null, true, FragmentTag.FORGOT_PASSWORD)
+                (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.FORGOT_PASSWORD)
             }
-            R.id.fragment_change_password_textView_submit -> startSendOtpProcess()
+            R.id.fragment_change_password_textView_submit -> startChangeProcess()
         }
     }
 
@@ -185,16 +179,16 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         mEditTextConfirmPassword = view !!.findViewById<View>(R.id.fragment_change_password_editText_confirm_password) as EditText
 
         // ADD TEXT CHANGE LISTENER
-        mEditTextOldPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutOldPassword!!))
-        mEditTextNewPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutNewPassword!!))
-        mEditTextConfirmPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutConfirmPassword!!))
+        mEditTextOldPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutOldPassword !!))
+        mEditTextNewPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutNewPassword !!))
+        mEditTextConfirmPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutConfirmPassword !!))
     }
 
     /**
      * Method to initiate the Send OTP Process
      */
-    private fun startSendOtpProcess() {
-        Tracer.debug(TAG, "startSendOtpProcess: ")
+    private fun startChangeProcess() {
+        Tracer.debug(TAG, "startChangeProcess: ")
         Utils.hideKeyboard(activity, view)
         if (! isUserDetailValid) {
             return
@@ -207,9 +201,9 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_change_password), date)
         val publicKey = getString(R.string.public_key)
-        val dtoMerchantChangePasswordRequest = DTOMerchantChangePasswordRequest(token!!, timeStamp, publicKey, PreferenceData.getAgentId(activity), oldPassword, confirmPassword)
+        val dtoAgentChangePasswordRequest = DTOAgentChangePasswordRequest(token !!, timeStamp, publicKey, PreferenceData.getAgentId(activity), oldPassword, confirmPassword)
         Utils.showLoadingDialog(activity)
-        mAgentNetworkTaskProvider !!.merchantChangePasswordTask(activity, dtoMerchantChangePasswordRequest, mMerchantChangePasswordResponseNetworkCallBack)
+        mAgentNetworkTaskProvider !!.agentChangePasswordTask(activity, dtoAgentChangePasswordRequest, mAgentChangePasswordResponseNetworkCallBack)
     }
 
     /**

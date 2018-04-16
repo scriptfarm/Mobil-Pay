@@ -7,14 +7,10 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.network.NetworkConstants
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.merchantchangepassword.DTOMerchantChangePasswordResponse
 import com.mkrworld.mobilpay.dto.merchantdetails.DTOMerchantDetailByNupayIdResponse
 import com.mkrworld.mobilpay.utils.UrlUtils
 
 import org.json.JSONObject
-
-import java.lang.reflect.Constructor
-import java.util.HashMap
 
 /**
  * Created by mkr on 27/3/18.

@@ -34,7 +34,7 @@
     <string name="contact_mobil_pay">Contact MobilPay</string>
     <string name="logout">Logout</string>
 
-    <string name="merchant_id_start">Merchant-ID *</string>
+    <string name="agent_id_start">Agent-ID *</string>
     <string name="agent_id">Agent-IDr</string>
     <string name="password">Password</string>
     <string name="login_to_your_account">Login to your account</string>

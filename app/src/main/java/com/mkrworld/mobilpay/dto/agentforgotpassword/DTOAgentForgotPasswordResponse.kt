@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.dto.merchantforgotpassword
+package com.mkrworld.mobilpay.dto.agentforgotpassword
 
 import com.google.gson.annotations.SerializedName
 import com.mkrworld.mobilpay.BuildConfig
@@ -7,7 +7,7 @@ import com.mkrworld.mobilpay.BuildConfig
  * Created by mkr on 27/3/18.
  */
 
-class DTOMerchantForgotPasswordResponse {
+class DTOAgentForgotPasswordResponse {
 
 
     @SerializedName("message")
@@ -22,7 +22,7 @@ class DTOMerchantForgotPasswordResponse {
      * @return
      */
     fun getData() : Data {
-        return mData!!
+        return mData ?: Data()
     }
 
     /**
@@ -37,9 +37,11 @@ class DTOMerchantForgotPasswordResponse {
     /**
      * Class to hold the Response Data
      */
-    inner class Data // NO DATA
+    inner class Data {
+        // NO DATA
+    }
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOMerchantForgotPasswordResponse"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentForgotPasswordResponse"
     }
 }

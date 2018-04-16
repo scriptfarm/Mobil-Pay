@@ -7,7 +7,7 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.network.NetworkConstants
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.merchantforgotpassword.DTOMerchantForgotPasswordResponse
+import com.mkrworld.mobilpay.dto.agentforgotpassword.DTOAgentForgotPasswordResponse
 import com.mkrworld.mobilpay.utils.UrlUtils
 
 import org.json.JSONObject
@@ -15,10 +15,10 @@ import org.json.JSONObject
 /**
  * Created by mkr on 27/3/18.
  */
-class MerchantForgotPasswordTask : MobilPayBaseTask<DTOMerchantForgotPasswordResponse> {
+class AgentForgotPasswordTask : MobilPayBaseTask<DTOAgentForgotPasswordResponse> {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".MerchantForgotPasswordTask"
+        private val TAG = BuildConfig.BASE_TAG + ".AgentForgotPasswordTask"
     }
 
     /**
@@ -28,10 +28,10 @@ class MerchantForgotPasswordTask : MobilPayBaseTask<DTOMerchantForgotPasswordRes
      * @param requestJson
      * @param networkCallBack
      */
-    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOMerchantForgotPasswordResponse>) : super(context, requestJson, networkCallBack) {}
+    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOAgentForgotPasswordResponse>) : super(context, requestJson, networkCallBack) {}
 
-    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOMerchantForgotPasswordResponse {
-        return Gson().fromJson(jsonObject.toString(), DTOMerchantForgotPasswordResponse::class.java !!)
+    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOAgentForgotPasswordResponse {
+        return Gson().fromJson(jsonObject.toString(), DTOAgentForgotPasswordResponse::class.java !!)
     }
 
     override fun getUrl() : String {
