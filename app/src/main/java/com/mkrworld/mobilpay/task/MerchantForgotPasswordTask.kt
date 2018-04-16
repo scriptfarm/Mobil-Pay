@@ -8,13 +8,9 @@ import com.mkrworld.androidlib.network.NetworkConstants
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
 import com.mkrworld.mobilpay.dto.merchantforgotpassword.DTOMerchantForgotPasswordResponse
-import com.mkrworld.mobilpay.dto.merchantsendforgotpasswordotp.DTOMerchantSendForgotPasswordOtpResponse
 import com.mkrworld.mobilpay.utils.UrlUtils
 
 import org.json.JSONObject
-
-import java.lang.reflect.Constructor
-import java.util.HashMap
 
 /**
  * Created by mkr on 27/3/18.

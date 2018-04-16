@@ -7,21 +7,18 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.network.NetworkConstants
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.merchantsendforgotpasswordotp.DTOMerchantSendForgotPasswordOtpResponse
+import com.mkrworld.mobilpay.dto.agentsendforgotpasswordotp.DTOAgentSendForgotPasswordOtpResponse
 import com.mkrworld.mobilpay.utils.UrlUtils
 
 import org.json.JSONObject
 
-import java.lang.reflect.Constructor
-import java.util.HashMap
-
 /**
  * Created by mkr on 27/3/18.
  */
-class MerchantSendForgotPasswordOtpTask : MobilPayBaseTask<DTOMerchantSendForgotPasswordOtpResponse> {
+class AgentSendForgotPasswordOtpTask : MobilPayBaseTask<DTOAgentSendForgotPasswordOtpResponse> {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".MerchantSendForgotPasswordOtpTask"
+        private val TAG = BuildConfig.BASE_TAG + ".AgentSendForgotPasswordOtpTask"
     }
 
     /**
@@ -31,10 +28,10 @@ class MerchantSendForgotPasswordOtpTask : MobilPayBaseTask<DTOMerchantSendForgot
      * @param requestJson
      * @param networkCallBack
      */
-    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOMerchantSendForgotPasswordOtpResponse>) : super(context, requestJson, networkCallBack) {}
+    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOAgentSendForgotPasswordOtpResponse>) : super(context, requestJson, networkCallBack) {}
 
-    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOMerchantSendForgotPasswordOtpResponse {
-        return Gson().fromJson(jsonObject.toString(), DTOMerchantSendForgotPasswordOtpResponse::class.java !!)
+    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOAgentSendForgotPasswordOtpResponse {
+        return Gson().fromJson(jsonObject.toString(), DTOAgentSendForgotPasswordOtpResponse::class.java !!)
     }
 
     override fun getUrl() : String {

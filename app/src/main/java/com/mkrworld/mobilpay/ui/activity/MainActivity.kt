@@ -263,8 +263,8 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(this, getString(R.string.endpoint_merchant_logout), date)
         val publicKey = getString(R.string.public_key)
-        val dtoMerchantLogoutRequest = DTOAgentLogoutRequest(token !!, timeStamp, publicKey, agentId)
+        val dtoAgentLogoutRequest = DTOAgentLogoutRequest(token !!, timeStamp, publicKey, agentId)
         Utils.showLoadingDialog(this)
-        mAgentNetworkTaskProvider !!.agentLogoutTask(this, dtoMerchantLogoutRequest, mAgentLogoutResponseNetworkCallBack)
+        mAgentNetworkTaskProvider !!.agentLogoutTask(this, dtoAgentLogoutRequest, mAgentLogoutResponseNetworkCallBack)
     }
 }

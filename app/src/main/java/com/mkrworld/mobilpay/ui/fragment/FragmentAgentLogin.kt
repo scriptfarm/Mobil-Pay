@@ -242,9 +242,9 @@ class FragmentAgentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListe
         val publicKey = getString(R.string.public_key)
         val pushId = "123"
         val gcmId = "123"
-        val dtoMerchantLoginRequest = DTOAgentLoginRequest(token !!, timeStamp, publicKey, userId, password, pushId, gcmId)
+        val dtoAgentLoginRequest = DTOAgentLoginRequest(token !!, timeStamp, publicKey, userId, password, pushId, gcmId)
         Utils.showLoadingDialog(activity)
-        mAgentNetworkTaskProvider !!.agentLoginTask(activity, dtoMerchantLoginRequest, mAgentLoginResponseNetworkCallBack)
+        mAgentNetworkTaskProvider !!.agentLoginTask(activity, dtoAgentLoginRequest, mAgentLoginResponseNetworkCallBack)
     }
 
     /**

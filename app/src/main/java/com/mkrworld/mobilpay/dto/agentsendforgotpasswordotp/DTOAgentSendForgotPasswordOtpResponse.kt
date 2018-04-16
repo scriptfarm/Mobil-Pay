@@ -1,6 +1,5 @@
-package com.mkrworld.mobilpay.dto.merchantsendforgotpasswordotp
+package com.mkrworld.mobilpay.dto.agentsendforgotpasswordotp
 
-import android.content.ContentValues.TAG
 import com.google.gson.annotations.SerializedName
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
@@ -9,10 +8,10 @@ import com.mkrworld.mobilpay.BuildConfig
  * Created by mkr on 27/3/18.
  */
 
-class DTOMerchantSendForgotPasswordOtpResponse {
+class DTOAgentSendForgotPasswordOtpResponse {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOMerchantSendForgotPasswordOtpResponse"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentSendForgotPasswordOtpResponse"
     }
 
     @SerializedName("message")
@@ -27,7 +26,7 @@ class DTOMerchantSendForgotPasswordOtpResponse {
      * @return
      */
     fun getData() : Data {
-        return mData!!
+        return mData !!
     }
 
     /**
@@ -44,18 +43,16 @@ class DTOMerchantSendForgotPasswordOtpResponse {
      */
     inner class Data {
 
-        @SerializedName("nupay_id")
-        private val mNupayId : String? = null
-
         /**
-         * Method to get the Nupay Id
+         * Method to get the Agent Id
          *
          * @return
          */
-        val nupayId : String
+        @SerializedName("agent_id")
+        var agentId : String? = null
             get() {
-                Tracer.debug(TAG, "getNupayId : ")
-                return mNupayId ?: "0"
+                Tracer.debug(TAG, "getAgentId : ")
+                return agentId ?: "0"
             }
     }
 }
