@@ -1,6 +1,5 @@
 package com.mkrworld.mobilpay.ui.fragment
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
 import android.support.v4.app.Fragment
@@ -19,7 +18,7 @@ import com.mkrworld.mobilpay.dto.merchantqrcodegenarator.DTOMerchantQRCodeGenera
 import com.mkrworld.mobilpay.dto.merchantqrcodegenarator.DTOMerchantQRCodeGeneratorResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
-import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider
+import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
 import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.PreferenceData
@@ -43,7 +42,7 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
     private var mEditTextBillNumber : EditText? = null
     private var mEditTextBillDescription : EditText? = null
     private var mEditTextBillAmount : EditText? = null
-    private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
+    private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
     private val mQRCodeGeneratorResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantQRCodeGeneratorResponse> {
         override fun onSuccess(dtoQRCodeGeneratorResponse : DTOMerchantQRCodeGeneratorResponse) {
             Tracer.debug(TAG, "onSuccess : ")
@@ -55,7 +54,7 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
             val data = dtoQRCodeGeneratorResponse.getData()
             if (activity is OnBaseActivityListener) {
                 val bundle = Bundle()
-                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, PreferenceData.getMerchantLoginId(activity))
+                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, PreferenceData.getAgentId(activity))
                 bundle.putBoolean(FragmentMerchantQrCode.EXTRA_IS_DYNAMIC_QR_CODE, true)
                 bundle.putString(FragmentMerchantQrCode.EXTRA_BILL_NUMBER, data !!.billNumber)
                 bundle.putString(FragmentMerchantQrCode.EXTRA_BILL_AMOUNT, data.amount)
@@ -132,8 +131,8 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
     }
 
     override fun onDestroyView() {
-        if (mMerchantNetworkTaskProvider != null) {
-            mMerchantNetworkTaskProvider !!.detachProvider()
+        if (mAgentNetworkTaskProvider != null) {
+            mAgentNetworkTaskProvider !!.detachProvider()
         }
         super.onDestroyView()
     }
@@ -181,8 +180,8 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
         if (view == null) {
             return
         }
-        mMerchantNetworkTaskProvider = MerchantNetworkTaskProvider()
-        mMerchantNetworkTaskProvider !!.attachProvider()
+        mAgentNetworkTaskProvider = AgentNetworkTaskProvider()
+        mAgentNetworkTaskProvider !!.attachProvider()
         view !!.findViewById<View>(R.id.fragment_merchant_qrcode_generator_textView_generate).setOnClickListener(this)
         view !!.findViewById<View>(R.id.fragment_merchant_qrcode_generator_textView_cancel).setOnClickListener(this)
         mTextInputLayoutBillNumber = view !!.findViewById<View>(R.id.fragment_merchant_qrcode_generator_textInputLayout_bill_number) as TextInputLayout
@@ -214,10 +213,10 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_generate_qr_code_token), date)
         val publicKey = getString(R.string.public_key)
-        val nupayId = PreferenceData.getMerchantNupayId(activity)
+        val nupayId = PreferenceData.getAgentId(activity)
         val dtoQRCodeGeneratorRequest = DTOMerchantQRCodeGeneratorRequest(token!!, timeStamp, publicKey, billAmount, billNumber, billDescription, nupayId)
         Utils.showLoadingDialog(activity)
-        mMerchantNetworkTaskProvider !!.merchantQRCodeGeneratorTask(activity, dtoQRCodeGeneratorRequest, mQRCodeGeneratorResponseNetworkCallBack)
+        mAgentNetworkTaskProvider !!.merchantQRCodeGeneratorTask(activity, dtoQRCodeGeneratorRequest, mQRCodeGeneratorResponseNetworkCallBack)
     }
 
     /**

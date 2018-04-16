@@ -1,7 +1,5 @@
 package com.mkrworld.mobilpay.ui.fragment
 
-import android.content.ContentValues.TAG
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -99,7 +97,7 @@ class FragmentMerchantQrCode : Fragment(), OnBaseFragmentListener {
      */
     private fun generateStaticQRCode(bundle : Bundle) {
         Tracer.debug(TAG, "generateStaticQRCode : ")
-        val url = UrlUtils.getUrl(activity, R.string.url_merchant_logo) + PreferenceData.getMerchantId(activity) + ".png"
+        val url = UrlUtils.getUrl(activity, R.string.url_merchant_logo) + PreferenceData.getAgentId(activity) + ".png"
         // System.out.println("======url=========="+url);
         Picasso.with(activity).load(url).placeholder(R.mipmap.ic_launcher).into(view !!.findViewById<View>(R.id.fragment_merchant_qrcode_imageView_qrcode) as ImageView)
     }

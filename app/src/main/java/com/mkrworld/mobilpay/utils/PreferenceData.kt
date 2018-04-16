@@ -17,10 +17,8 @@ class PreferenceData {
         private val TAG = BuildConfig.BASE_TAG + ".PreferenceData"
         private val STORE = "STORE_8"
         private val FINGER_PRINT_CONSENT = "FINGER_PRINT_CONSENT"
-        private val MERCHANT_ID = "MERCHANT_ID"
-        private val MERCHANT_NUPAY_ID = "MERCHANT_NUPAY_ID"
-        private val MERCHANT_LOGIN_ID = "MERCHANT_LOGIN_ID"
-        private val MERCHANT_LOGIN_PASSWORD = "MERCHANT_LOGIN_PASSWORD"
+        private val AGENT_ID = "AGENT_ID"
+        private val AGENT_PASSWORD = "AGENT_PASSWORD"
 
         //==================================================================================================================
         //==================================================================================================================
@@ -49,91 +47,47 @@ class PreferenceData {
         }
 
         /**
-         * Method to get the Merchant Id
+         * Method to get the agent Id
          *
          * @param context
-         * @return id of the Merchant
+         * @return id of the agent
          */
-        fun getMerchantId(context : Context) : String {
-            Tracer.debug(TAG, "getMerchantId : ")
-            return getShearedPreference(context).getString(MERCHANT_ID, "") !!.trim { it <= ' ' }
+        fun getAgentId(context : Context) : String {
+            Tracer.debug(TAG, "getAgentId : ")
+            return getShearedPreference(context).getString(AGENT_ID, "") !!.trim { it <= ' ' }
         }
 
         /**
-         * Method to set the Merchant Id
+         * Method to set the agent Id
          *
          * @param context
          * @param id
          */
-        fun setMerchantId(context : Context, id : String) {
-            Tracer.debug(TAG, "setMerchantId : ")
-            getShearedPreferenceEditor(context).putString(MERCHANT_ID, id).commit()
+        fun setAgentId(context : Context, id : String) {
+            Tracer.debug(TAG, "setAgentId : ")
+            getShearedPreferenceEditor(context).putString(AGENT_ID, id).commit()
         }
 
         /**
-         * Method to get the Merchant Nupay Id
+         * Method to get the agent Login Password
          *
          * @param context
-         * @return Nupay id of the Merchant
+         * @return Login Password of the agent
          */
-        fun getMerchantNupayId(context : Context) : String {
-            Tracer.debug(TAG, "getMerchantNupayId : ")
-            return getShearedPreference(context).getString(MERCHANT_NUPAY_ID, "") !!.trim { it <= ' ' }
+        fun getAgentLoginPassword(context : Context) : String {
+            Tracer.debug(TAG, "getAgentLoginPassword : ")
+            return getShearedPreference(context).getString(AGENT_PASSWORD, "") !!.trim { it <= ' ' }
         }
 
         /**
-         * Method to set the Merchant Nupay Id
-         *
-         * @param context
-         * @param nupayId
-         */
-        fun setMerchantNupayId(context : Context, nupayId : String) {
-            Tracer.debug(TAG, "setMerchantNupayId : ")
-            getShearedPreferenceEditor(context).putString(MERCHANT_NUPAY_ID, nupayId).commit()
-        }
-
-        /**
-         * Method to get the Merchant Login Id
-         *
-         * @param context
-         * @return Login id of the Merchant
-         */
-        fun getMerchantLoginId(context : Context) : String {
-            Tracer.debug(TAG, "getMerchantLoginId : ")
-            return getShearedPreference(context).getString(MERCHANT_LOGIN_ID, "") !!.trim { it <= ' ' }
-        }
-
-        /**
-         * Method to set the Merchant Login Id
-         *
-         * @param context
-         * @param loginId
-         */
-        fun setMerchantLoginId(context : Context, loginId : String) {
-            Tracer.debug(TAG, "setMerchantLoginId : ")
-            getShearedPreferenceEditor(context).putString(MERCHANT_LOGIN_ID, loginId).commit()
-        }
-
-        /**
-         * Method to get the Merchant Login Password
-         *
-         * @param context
-         * @return Login Password of the Merchant
-         */
-        fun getMerchantLoginPassword(context : Context) : String {
-            Tracer.debug(TAG, "getMerchantLoginPassword : ")
-            return getShearedPreference(context).getString(MERCHANT_LOGIN_PASSWORD, "") !!.trim { it <= ' ' }
-        }
-
-        /**
-         * Method to set the Merchant Login Password
+         * Method to set the agent Login Password
          *
          * @param context
          * @param loginPassword
          */
-        fun setMerchantLoginPassword(context : Context, loginPassword : String) {
-            Tracer.debug(TAG, "setMerchantLoginPassword : ")
-            getShearedPreferenceEditor(context).putString(MERCHANT_LOGIN_PASSWORD, loginPassword).commit()
+        fun setAgentLoginPassword(context : Context, loginPassword : String) {
+            Tracer.debug(TAG, "setAgentLoginPassword : ")
+            getShearedPreferenceEditor(context).putString(AGENT_PASSWORD, loginPassword).commit()
         }
 
         //==================================================================================================================

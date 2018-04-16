@@ -8,7 +8,7 @@ import com.mkrworld.mobilpay.ui.fragment.FragmentForgotPassword
  */
 interface FragmentTag {
     companion object {
-        val MERCHANT_LOGIN = "FragmentMerchantLogin"
+        val MERCHANT_LOGIN = "FragmentAgentLogin"
         val MERCHANT_HOME = "FragmentMerchantHome"
         val MERCHANT_QR_CODE = "FragmentMerchantQrCode"
         val MERCHANT_QR_CODE_GENERATOR = "FragmentMerchantQrCodeGenerator"

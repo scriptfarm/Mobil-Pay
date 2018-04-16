@@ -1,6 +1,5 @@
 package com.mkrworld.mobilpay.ui.fragment
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
 import android.support.v4.app.Fragment
@@ -19,7 +18,7 @@ import com.mkrworld.mobilpay.dto.merchantchangepassword.DTOMerchantChangePasswor
 import com.mkrworld.mobilpay.dto.merchantchangepassword.DTOMerchantChangePasswordResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
-import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider
+import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
@@ -42,7 +41,7 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
     private var mEditTextOldPassword : EditText? = null
     private var mEditTextNewPassword : EditText? = null
     private var mEditTextConfirmPassword : EditText? = null
-    private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
+    private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
     private val mMerchantChangePasswordResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantChangePasswordResponse> {
         override fun onSuccess(dtoMerchantChangePasswordResponse : DTOMerchantChangePasswordResponse) {
             Tracer.debug(TAG, "onSuccess : ")
@@ -54,7 +53,7 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
                 Tracer.showSnack(view!!, R.string.no_data_fetch_from_server)
                 return
             }
-            PreferenceData.setMerchantLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim { it <= ' ' })
+            PreferenceData.setAgentLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim { it <= ' ' })
             Tracer.showSnack(view!!, dtoMerchantChangePasswordResponse.getMessage())
             if (activity is OnBaseActivityListener) {
                 val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME)
@@ -124,8 +123,8 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
     }
 
     override fun onDestroyView() {
-        if (mMerchantNetworkTaskProvider != null) {
-            mMerchantNetworkTaskProvider !!.detachProvider()
+        if (mAgentNetworkTaskProvider != null) {
+            mAgentNetworkTaskProvider !!.detachProvider()
         }
         super.onDestroyView()
     }
@@ -173,8 +172,8 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         if (view == null) {
             return
         }
-        mMerchantNetworkTaskProvider = MerchantNetworkTaskProvider()
-        mMerchantNetworkTaskProvider !!.attachProvider()
+        mAgentNetworkTaskProvider = AgentNetworkTaskProvider()
+        mAgentNetworkTaskProvider !!.attachProvider()
         view !!.findViewById<View>(R.id.fragment_change_password_textView_forgot_password).setOnClickListener(this)
         view !!.findViewById<View>(R.id.fragment_change_password_textView_submit).setOnClickListener(this)
 
@@ -208,9 +207,9 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_change_password), date)
         val publicKey = getString(R.string.public_key)
-        val dtoMerchantChangePasswordRequest = DTOMerchantChangePasswordRequest(token!!, timeStamp, publicKey, PreferenceData.getMerchantNupayId(activity), oldPassword, confirmPassword)
+        val dtoMerchantChangePasswordRequest = DTOMerchantChangePasswordRequest(token!!, timeStamp, publicKey, PreferenceData.getAgentId(activity), oldPassword, confirmPassword)
         Utils.showLoadingDialog(activity)
-        mMerchantNetworkTaskProvider !!.merchantChangePasswordTask(activity, dtoMerchantChangePasswordRequest, mMerchantChangePasswordResponseNetworkCallBack)
+        mAgentNetworkTaskProvider !!.merchantChangePasswordTask(activity, dtoMerchantChangePasswordRequest, mMerchantChangePasswordResponseNetworkCallBack)
     }
 
     /**

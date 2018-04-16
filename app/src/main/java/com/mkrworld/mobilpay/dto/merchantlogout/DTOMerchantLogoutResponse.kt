@@ -10,7 +10,7 @@ import com.mkrworld.mobilpay.BuildConfig
 class DTOMerchantLogoutResponse {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOMerchantLoginResponse"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentLoginResponse"
     }
 
     @SerializedName("message")

@@ -90,7 +90,7 @@ class FragmentMerchantHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.
                 when (dtoMerchantHomeTab.tabType) {
                     DTOMerchantHomeTab.TabType.STATIC_QR_CODE -> if (activity is OnBaseActivityListener) {
                         val bundle = Bundle()
-                        bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, PreferenceData.getMerchantLoginId(activity))
+                        bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, PreferenceData.getAgentId(activity))
                         val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_QR_CODE)
                         (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, bundle, true, FragmentTag.MERCHANT_QR_CODE)
                     }

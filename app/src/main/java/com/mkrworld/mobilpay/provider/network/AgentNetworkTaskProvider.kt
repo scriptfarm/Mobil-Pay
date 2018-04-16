@@ -15,8 +15,8 @@ import com.mkrworld.mobilpay.dto.merchantdetails.DTOMerchantDetailByNewpayIdRequ
 import com.mkrworld.mobilpay.dto.merchantdetails.DTOMerchantDetailByNupayIdResponse
 import com.mkrworld.mobilpay.dto.merchantforgotpassword.DTOMerchantForgotPasswordRequest
 import com.mkrworld.mobilpay.dto.merchantforgotpassword.DTOMerchantForgotPasswordResponse
-import com.mkrworld.mobilpay.dto.merchantlogin.DTOMerchantLoginRequest
-import com.mkrworld.mobilpay.dto.merchantlogin.DTOMerchantLoginResponse
+import com.mkrworld.mobilpay.dto.agentlogin.DTOAgentLoginRequest
+import com.mkrworld.mobilpay.dto.agentlogin.DTOAgentLoginResponse
 import com.mkrworld.mobilpay.dto.merchantlogout.DTOMerchantLogoutRequest
 import com.mkrworld.mobilpay.dto.merchantlogout.DTOMerchantLogoutResponse
 import com.mkrworld.mobilpay.dto.merchantqrcodegenarator.DTOMerchantQRCodeGeneratorRequest
@@ -29,7 +29,7 @@ import com.mkrworld.mobilpay.task.MerchantSendBillTask
 import com.mkrworld.mobilpay.task.MerchantChangePasswordTask
 import com.mkrworld.mobilpay.task.MerchantDetailByNupayIdTask
 import com.mkrworld.mobilpay.task.MerchantForgotPasswordTask
-import com.mkrworld.mobilpay.task.MerchantLoginTask
+import com.mkrworld.mobilpay.task.AgentLoginTask
 import com.mkrworld.mobilpay.task.MerchantLogoutTask
 import com.mkrworld.mobilpay.task.MerchantQRCodeGeneratorTask
 import com.mkrworld.mobilpay.task.MerchantSendForgotPasswordOtpTask
@@ -42,22 +42,22 @@ import org.json.JSONObject
  * Created by mkr on 27/3/18.
  */
 
-class MerchantNetworkTaskProvider : BaseTaskProvider() {
+class AgentNetworkTaskProvider : BaseTaskProvider() {
 
     /**
-     * Method called to login the merchant
+     * Method called to login the agent
      *
      * @param context
      * @param request
      * @param networkCallBack
      */
-    fun merchantLoginTask(context : Context, request : DTOMerchantLoginRequest, networkCallBack : NetworkCallBack<DTOMerchantLoginResponse>) {
-        Tracer.debug(TAG, "merchantLoginTask : ")
-        val requestJson = parseDtoToJson(request, DTOMerchantLoginRequest::class.java, networkCallBack)
+    fun agentLoginTask(context : Context, request : DTOAgentLoginRequest, networkCallBack : NetworkCallBack<DTOAgentLoginResponse>) {
+        Tracer.debug(TAG, "agentLoginTask : ")
+        val requestJson = parseDtoToJson(request, DTOAgentLoginRequest::class.java, networkCallBack)
                 ?: return
-        val task = MerchantLoginTask(context, requestJson, object : NetworkCallBack<DTOMerchantLoginResponse> {
+        val task = AgentLoginTask(context, requestJson, object : NetworkCallBack<DTOAgentLoginResponse> {
 
-            override fun onSuccess(networkResponse : DTOMerchantLoginResponse) {
+            override fun onSuccess(networkResponse : DTOAgentLoginResponse) {
                 notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, networkResponse)
             }
 
@@ -280,6 +280,6 @@ class MerchantNetworkTaskProvider : BaseTaskProvider() {
     }
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".MerchantNetworkTaskProvider"
+        private val TAG = BuildConfig.BASE_TAG + ".AgentNetworkTaskProvider"
     }
 }

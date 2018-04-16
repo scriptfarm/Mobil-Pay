@@ -41,9 +41,9 @@
     <dimen name="activity_main_sliding_content_margin_ver">@dimen/mkrdp_1</dimen>
 
     <!-- FRAGMENT MERCHANT LOGIN -->
-    <dimen name="fragment_merchant_login_card_title_text_size">@dimen/title_text_size</dimen>
-    <dimen name="fragment_merchant_login_content_margin">@dimen/content_margin</dimen>
-    <dimen name="fragment_merchant_thumb_icon_dimen">@dimen/mkrdp_30</dimen>
+    <dimen name="fragment_agent_login_card_title_text_size">@dimen/title_text_size</dimen>
+    <dimen name="fragment_agent_login_content_margin">@dimen/content_margin</dimen>
+    <dimen name="fragment_agent_thumb_icon_dimen">@dimen/mkrdp_30</dimen>
 
     <!-- ITEM MERCHANT HOME -->
     <dimen name="item_merchant_home_icon_dim">@dimen/mkrdp_25</dimen>

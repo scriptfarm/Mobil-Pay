@@ -19,7 +19,7 @@ import com.mkrworld.mobilpay.dto.merchantlogout.DTOMerchantLogoutRequest
 import com.mkrworld.mobilpay.dto.merchantlogout.DTOMerchantLogoutResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
-import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider
+import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
 import java.util.*
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
     }
 
     private var mAppPermissionController : AppPermissionController? = null
-    private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
+    private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
     private val mMerchantLogoutResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantLogoutResponse> {
         override fun onSuccess(dtoMerchantLogoutResponse : DTOMerchantLogoutResponse) {
             Tracer.debug(TAG, "onSuccess : ")
@@ -74,8 +74,8 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
     }
 
     override fun onDestroy() {
-        if (mMerchantNetworkTaskProvider != null) {
-            mMerchantNetworkTaskProvider !!.detachProvider()
+        if (mAgentNetworkTaskProvider != null) {
+            mAgentNetworkTaskProvider !!.detachProvider()
         }
         super.onDestroy()
     }
@@ -185,8 +185,8 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         var permissions : Array<String> = arrayOf(Manifest.permission.INTERNET,Manifest.permission.ACCESS_NETWORK_STATE,Manifest.permission.USE_FINGERPRINT)
         mAppPermissionController = AppPermissionController(this, permissions, this)
         mAppPermissionController?.initializedAppPermission()
-        mMerchantNetworkTaskProvider = MerchantNetworkTaskProvider()
-        mMerchantNetworkTaskProvider !!.attachProvider()
+        mAgentNetworkTaskProvider = AgentNetworkTaskProvider()
+        mAgentNetworkTaskProvider !!.attachProvider()
         findViewById<View>(R.id.activity_main_sliding_layout_option_password).setOnClickListener(this)
         findViewById<View>(R.id.activity_main_sliding_layout_option_contact_mobil_pay).setOnClickListener(this)
         findViewById<View>(R.id.activity_main_sliding_layout_option_faq).setOnClickListener(this)
@@ -258,7 +258,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
      */
     private fun logoutMerchant() {
         Tracer.debug(TAG, "logoutMerchant : ")
-        val merchantNupayId = PreferenceData.getMerchantNupayId(this)
+        val merchantNupayId = PreferenceData.getAgentId(this)
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(this, getString(R.string.endpoint_merchant_logout), date)
@@ -267,6 +267,6 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         val gcmId = "123"
         val dtoMerchantLogoutRequest = DTOMerchantLogoutRequest(token !!, timeStamp, publicKey, merchantNupayId)
         Utils.showLoadingDialog(this)
-        mMerchantNetworkTaskProvider !!.merchantLogoutTask(this, dtoMerchantLogoutRequest, mMerchantLogoutResponseNetworkCallBack)
+        mAgentNetworkTaskProvider !!.merchantLogoutTask(this, dtoMerchantLogoutRequest, mMerchantLogoutResponseNetworkCallBack)
     }
 }
