@@ -7,7 +7,7 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.network.NetworkConstants
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.merchantlogout.DTOMerchantLogoutResponse
+import com.mkrworld.mobilpay.dto.agentlogout.DTOAgentLogoutResponse
 import com.mkrworld.mobilpay.utils.UrlUtils
 
 import org.json.JSONObject
@@ -15,10 +15,10 @@ import org.json.JSONObject
 /**
  * Created by mkr on 27/3/18.
  */
-class MerchantLogoutTask : MobilPayBaseTask<DTOMerchantLogoutResponse> {
+class AgentLogoutTask : MobilPayBaseTask<DTOAgentLogoutResponse> {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".MerchantLogoutTask"
+        private val TAG = BuildConfig.BASE_TAG + ".AgentLogoutTask"
     }
 
     /**
@@ -28,10 +28,10 @@ class MerchantLogoutTask : MobilPayBaseTask<DTOMerchantLogoutResponse> {
      * @param requestJson
      * @param networkCallBack
      */
-    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOMerchantLogoutResponse>) : super(context, requestJson, networkCallBack) {}
+    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOAgentLogoutResponse>) : super(context, requestJson, networkCallBack) {}
 
-    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOMerchantLogoutResponse {
-        return Gson().fromJson(jsonObject.toString(), DTOMerchantLogoutResponse::class.java !!)
+    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOAgentLogoutResponse {
+        return Gson().fromJson(jsonObject.toString(), DTOAgentLogoutResponse::class.java !!)
     }
 
     override fun getUrl() : String {

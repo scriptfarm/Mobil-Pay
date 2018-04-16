@@ -16,7 +16,7 @@ class DTOAgentLoginRequest : DTOBaseRequest {
     }
 
     @SerializedName("agent_id")
-    private var mUserId : String?=null
+    private var mAgentId : String?=null
 
     @SerializedName("password")
     private var mPassword : String?=null
@@ -30,14 +30,14 @@ class DTOAgentLoginRequest : DTOBaseRequest {
      * @param token
      * @param timeStamp
      * @param publicKey
-     * @param userId
+     * @param agentId
      * @param password
      * @param pushId
      * @param gcmId
      */
-    constructor(token : String, timeStamp : String, publicKey : String, userId : String, password : String, pushId : String, gcmId : String) : super(token, timeStamp, publicKey) {
+    constructor(token : String, timeStamp : String, publicKey : String, agentId : String, password : String, pushId : String, gcmId : String) : super(token, timeStamp, publicKey) {
         Tracer.debug(TAG, "DTOAgentLoginRequest : ")
-        mUserId = userId
+        mAgentId = agentId
         mPassword = password
         mExtra = Extra(pushId, gcmId)
     }

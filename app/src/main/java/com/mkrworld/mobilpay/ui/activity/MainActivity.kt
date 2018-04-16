@@ -15,8 +15,8 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.merchantlogout.DTOMerchantLogoutRequest
-import com.mkrworld.mobilpay.dto.merchantlogout.DTOMerchantLogoutResponse
+import com.mkrworld.mobilpay.dto.agentlogout.DTOAgentLogoutRequest
+import com.mkrworld.mobilpay.dto.agentlogout.DTOAgentLogoutResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
@@ -32,16 +32,16 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
 
     private var mAppPermissionController : AppPermissionController? = null
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
-    private val mMerchantLogoutResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantLogoutResponse> {
-        override fun onSuccess(dtoMerchantLogoutResponse : DTOMerchantLogoutResponse) {
+    private val mAgentLogoutResponseNetworkCallBack = object : NetworkCallBack<DTOAgentLogoutResponse> {
+        override fun onSuccess(dtoAgentLogoutResponse : DTOAgentLogoutResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             try {
-                if (dtoMerchantLogoutResponse == null) {
+                if (dtoAgentLogoutResponse == null) {
                     Tracer.showSnack(findViewById(R.id.activity_main_parent), R.string.no_data_fetch_from_server)
                     return
                 }
-                Tracer.showSnack(findViewById(R.id.activity_main_parent), dtoMerchantLogoutResponse.getMessage())
+                Tracer.showSnack(findViewById(R.id.activity_main_parent), dtoAgentLogoutResponse.getMessage())
                 PreferenceData.clearStore(applicationContext)
                 // MOVE TO LOGIN FRAGMENT
                 val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN)
@@ -258,15 +258,13 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
      */
     private fun logoutMerchant() {
         Tracer.debug(TAG, "logoutMerchant : ")
-        val merchantNupayId = PreferenceData.getAgentId(this)
+        val agentId = PreferenceData.getAgentId(this)
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(this, getString(R.string.endpoint_merchant_logout), date)
         val publicKey = getString(R.string.public_key)
-        val pushId = "123"
-        val gcmId = "123"
-        val dtoMerchantLogoutRequest = DTOMerchantLogoutRequest(token !!, timeStamp, publicKey, merchantNupayId)
+        val dtoMerchantLogoutRequest = DTOAgentLogoutRequest(token !!, timeStamp, publicKey, agentId)
         Utils.showLoadingDialog(this)
-        mAgentNetworkTaskProvider !!.merchantLogoutTask(this, dtoMerchantLogoutRequest, mMerchantLogoutResponseNetworkCallBack)
+        mAgentNetworkTaskProvider !!.agentLogoutTask(this, dtoMerchantLogoutRequest, mAgentLogoutResponseNetworkCallBack)
     }
 }

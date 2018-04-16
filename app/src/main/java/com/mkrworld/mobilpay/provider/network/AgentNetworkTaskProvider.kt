@@ -17,8 +17,8 @@ import com.mkrworld.mobilpay.dto.merchantforgotpassword.DTOMerchantForgotPasswor
 import com.mkrworld.mobilpay.dto.merchantforgotpassword.DTOMerchantForgotPasswordResponse
 import com.mkrworld.mobilpay.dto.agentlogin.DTOAgentLoginRequest
 import com.mkrworld.mobilpay.dto.agentlogin.DTOAgentLoginResponse
-import com.mkrworld.mobilpay.dto.merchantlogout.DTOMerchantLogoutRequest
-import com.mkrworld.mobilpay.dto.merchantlogout.DTOMerchantLogoutResponse
+import com.mkrworld.mobilpay.dto.agentlogout.DTOAgentLogoutRequest
+import com.mkrworld.mobilpay.dto.agentlogout.DTOAgentLogoutResponse
 import com.mkrworld.mobilpay.dto.merchantqrcodegenarator.DTOMerchantQRCodeGeneratorRequest
 import com.mkrworld.mobilpay.dto.merchantqrcodegenarator.DTOMerchantQRCodeGeneratorResponse
 import com.mkrworld.mobilpay.dto.merchantsendforgotpasswordotp.DTOMerchantSendForgotPasswordOtpRequest
@@ -30,7 +30,7 @@ import com.mkrworld.mobilpay.task.MerchantChangePasswordTask
 import com.mkrworld.mobilpay.task.MerchantDetailByNupayIdTask
 import com.mkrworld.mobilpay.task.MerchantForgotPasswordTask
 import com.mkrworld.mobilpay.task.AgentLoginTask
-import com.mkrworld.mobilpay.task.MerchantLogoutTask
+import com.mkrworld.mobilpay.task.AgentLogoutTask
 import com.mkrworld.mobilpay.task.MerchantQRCodeGeneratorTask
 import com.mkrworld.mobilpay.task.MerchantSendForgotPasswordOtpTask
 import com.mkrworld.mobilpay.task.MobileNumberStatusTask
@@ -165,19 +165,19 @@ class AgentNetworkTaskProvider : BaseTaskProvider() {
     }
 
     /**
-     * Method called to Logout Merchant
+     * Method called to Logout Agent
      *
      * @param context
      * @param request
      * @param networkCallBack
      */
-    fun merchantLogoutTask(context : Context, request : DTOMerchantLogoutRequest, networkCallBack : NetworkCallBack<DTOMerchantLogoutResponse>) {
-        Tracer.debug(TAG, "merchantLogoutTask : ")
-        val requestJson = parseDtoToJson(request, DTOMerchantLogoutRequest::class.java, networkCallBack)
+    fun agentLogoutTask(context : Context, request : DTOAgentLogoutRequest, networkCallBack : NetworkCallBack<DTOAgentLogoutResponse>) {
+        Tracer.debug(TAG, "agentLogoutTask : ")
+        val requestJson = parseDtoToJson(request, DTOAgentLogoutRequest::class.java, networkCallBack)
                 ?: return
-        val task = MerchantLogoutTask(context, requestJson, object : NetworkCallBack<DTOMerchantLogoutResponse> {
+        val task = AgentLogoutTask(context, requestJson, object : NetworkCallBack<DTOAgentLogoutResponse> {
 
-            override fun onSuccess(networkResponse : DTOMerchantLogoutResponse) {
+            override fun onSuccess(networkResponse : DTOAgentLogoutResponse) {
                 notifyTaskResponse(networkCallBack as  NetworkCallBack<Any>, networkResponse)
             }
 
