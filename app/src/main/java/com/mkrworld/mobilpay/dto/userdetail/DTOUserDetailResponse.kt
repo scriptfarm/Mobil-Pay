@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.dto.agentlogin
+package com.mkrworld.mobilpay.dto.userdetail
 
 import com.google.gson.annotations.SerializedName
 import com.mkrworld.mobilpay.BuildConfig
@@ -7,25 +7,25 @@ import com.mkrworld.mobilpay.BuildConfig
  * Created by mkr on 27/3/18.
  */
 
-class DTOAgentLoginResponse {
+class DTOUserDetailResponse {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentLoginResponse"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentDetailResponse"
     }
 
     @SerializedName("message")
     private var mMessage : String? = null
 
     @SerializedName("data")
-    private var mData : Data? = null
+    private var mDataList : ArrayList<Data>? = null
 
     /**
      * Method to get the API Data
      *
      * @return
      */
-    fun getData() : Data? {
-        return mData
+    fun getData() : ArrayList<Data>? {
+        return mDataList
     }
 
     /**
@@ -43,49 +43,41 @@ class DTOAgentLoginResponse {
     inner class Data {
 
         /**
-         * Method to get the Agent Id
+         * Method to get the User Id
          *
          * @return
          */
-        @SerializedName("username")
-        var agentId : String? = null
-            get() = agentId ?: ""
+        @SerializedName("user_id")
+        var userId : String? = null
+            get() = userId ?: ""
 
         /**
-         * Method to get the Email Id
+         * Method to get the First Name
          *
          * @return
          */
-        @SerializedName("email")
-        var email : String? = null
-            get() = email ?: ""
+        @SerializedName("first_name")
+        var firstName : String? = null
+            get() = firstName ?: ""
 
         /**
-         * Method to get the Name
+         * Method to get the Middle Name
          *
          * @return
          */
-        @SerializedName("name")
-        var name : String? = null
-            get() = name ?: ""
+        @SerializedName("middle_name")
+        var middleName : String? = null
+            get() = middleName ?: ""
 
         /**
-         * Method to get the Mobile Number
+         * Method to get the Last Name
          *
          * @return
          */
-        @SerializedName("mobile_number")
-        var mobileNumber : String? = null
-            get() = mobileNumber ?: ""
+        @SerializedName("last_name")
+        var lastName : String? = null
+            get() = lastName ?: ""
 
-        /**
-         * Method to get the Agent Designation
-         *
-         * @return
-         */
-        @SerializedName("merchantId")
-        var designation : String? = null
-            get() = designation ?: ""
 
         /**
          * Method to get the Gender
@@ -95,15 +87,6 @@ class DTOAgentLoginResponse {
         @SerializedName("gender")
         var gender : String? = null
             get() = gender ?: ""
-
-        /**
-         * Method to get the Agent planType
-         *
-         * @return
-         */
-        @SerializedName("planType")
-        var logo : String? = null
-            get() = logo ?: ""
 
         /**
          * Method to get the Agent Address line 1
@@ -159,14 +142,71 @@ class DTOAgentLoginResponse {
         var correspondanceAddress : String? = null
             get() = correspondanceAddress ?: ""
 
+
         /**
-         * Method to get the Agent Status
+         * Method to get the Email Id
          *
          * @return
          */
-        @SerializedName("status")
-        var status : String? = null
-            get() = status ?: ""
+        @SerializedName("email")
+        var email : String? = null
+            get() = email ?: ""
+
+        /**
+         * Method to get the Mobile Number
+         *
+         * @return
+         */
+        @SerializedName("mobile_number")
+        var mobileNumber : String? = null
+            get() = mobileNumber ?: ""
+
+        /**
+         * Method to get the Merchant Id
+         *
+         * @return
+         */
+        @SerializedName("merchant_id")
+        var merchantId : String? = null
+            get() = merchantId ?: ""
+
+        /**
+         * Method to get the Plan Type
+         *
+         * @return
+         */
+        @SerializedName("plan_type")
+        var planType : String? = null
+            get() = planType ?: ""
+
+
+        /**
+         * Method to get the Plan Name
+         *
+         * @return
+         */
+        @SerializedName("plan_type")
+        var planName : String? = null
+            get() = planName ?: ""
+
+
+        /**
+         * Method to get the Plan Id
+         *
+         * @return
+         */
+        @SerializedName("plan_id")
+        var planId : String? = null
+            get() = planId ?: ""
+
+        /**
+         * Method to get the Bill Id
+         *
+         * @return
+         */
+        @SerializedName("bill_id")
+        var billId : String? = null
+            get() = billId ?: ""
 
     }
 }

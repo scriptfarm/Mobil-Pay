@@ -55,7 +55,7 @@
     <string name="generate_caps">GENERATE</string>
     <string name="cancel_caps">CANCEL</string>
 
-    <string name="customer_id_slash_mobile_number">Customer-ID/Mobile-Number</string>
+    <string name="customer_id">Customer-ID</string>
     <string name="bill_number">Bill Number</string>
     <string name="send_caps">SEND</string>
 

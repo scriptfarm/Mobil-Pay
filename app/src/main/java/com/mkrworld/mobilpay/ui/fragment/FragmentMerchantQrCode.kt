@@ -97,7 +97,7 @@ class FragmentMerchantQrCode : Fragment(), OnBaseFragmentListener {
      */
     private fun generateStaticQRCode(bundle : Bundle) {
         Tracer.debug(TAG, "generateStaticQRCode : ")
-        val url = UrlUtils.getUrl(activity, R.string.url_merchant_logo) + PreferenceData.getAgentId(activity) + ".png"
+        val url = UrlUtils.getUrl(activity, R.string.url_agent_logo) + PreferenceData.getAgentId(activity) + ".png"
         // System.out.println("======url=========="+url);
         Picasso.with(activity).load(url).placeholder(R.mipmap.ic_launcher).into(view !!.findViewById<View>(R.id.fragment_merchant_qrcode_imageView_qrcode) as ImageView)
     }
@@ -110,7 +110,7 @@ class FragmentMerchantQrCode : Fragment(), OnBaseFragmentListener {
     private fun generateDynamicQRCode(bundle : Bundle) {
         Tracer.debug(TAG, "generateDynamicQRCode : ")
         val qrCodeToken = bundle.getString(EXTRA_QR_CODE_TOKEN, "")
-        val qrCodeSize = resources.getDimensionPixelSize(R.dimen.fragment_merchant_qrcode_qrcode_dimen)
+        val qrCodeSize = resources.getDimensionPixelSize(R.dimen.fragment_agent_qrcode_qrcode_dimen)
         val qrCodeEncoder = QRCodeEncoder(qrCodeToken, null!!, Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeSize)
         try {
             val bitmapQRCode = qrCodeEncoder.encodeAsBitmap()

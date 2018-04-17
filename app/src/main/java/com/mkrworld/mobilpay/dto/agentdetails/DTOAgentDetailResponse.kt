@@ -1,16 +1,17 @@
-package com.mkrworld.mobilpay.dto.agentlogin
+package com.mkrworld.mobilpay.dto.agentdetails
 
 import com.google.gson.annotations.SerializedName
+import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 
 /**
  * Created by mkr on 27/3/18.
  */
 
-class DTOAgentLoginResponse {
+class DTOAgentDetailResponse {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentLoginResponse"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentDetailResponse"
     }
 
     @SerializedName("message")
@@ -24,8 +25,8 @@ class DTOAgentLoginResponse {
      *
      * @return
      */
-    fun getData() : Data? {
-        return mData
+    fun getData() : Data {
+        return mData !!
     }
 
     /**

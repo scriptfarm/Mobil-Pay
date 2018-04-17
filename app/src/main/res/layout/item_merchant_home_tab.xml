@@ -8,14 +8,14 @@
     android:background="@color/transparent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="@dimen/item_merchant_home_content_padding">
+    android:padding="@dimen/item_agent_home_content_padding">
 
     <ImageView
         android:id="@+id/item_merchant_home_imageView_icon"
-        android:layout_width="@dimen/item_merchant_home_icon_dim"
-        android:layout_height="@dimen/item_merchant_home_icon_dim"
+        android:layout_width="@dimen/item_agent_home_icon_dim"
+        android:layout_height="@dimen/item_agent_home_icon_dim"
         android:clickable="false"
-        android:padding="@dimen/item_merchant_home_icon_padding"
+        android:padding="@dimen/item_agent_home_icon_padding"
         android:src="@drawable/ic_thumb" />
 
     <LinearLayout

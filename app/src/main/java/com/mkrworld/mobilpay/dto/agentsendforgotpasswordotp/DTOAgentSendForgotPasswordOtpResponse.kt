@@ -51,7 +51,7 @@ class DTOAgentSendForgotPasswordOtpResponse {
         @SerializedName("agent_id")
         var agentId : String? = null
             get() {
-                Tracer.debug(TAG, "getAgentId : ")
+                Tracer.debug(TAG, "getUserId : ")
                 return agentId ?: "0"
             }
     }

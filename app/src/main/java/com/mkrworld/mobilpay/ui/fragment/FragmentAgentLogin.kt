@@ -238,7 +238,7 @@ class FragmentAgentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListe
         val password = mEditTextPassword !!.text.toString()
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
-        val token = Utils.createToken(activity, getString(R.string.endpoint_merchant_login), date)
+        val token = Utils.createToken(activity, getString(R.string.endpoint_agent_login), date)
         val publicKey = getString(R.string.public_key)
         val pushId = "123"
         val gcmId = "123"

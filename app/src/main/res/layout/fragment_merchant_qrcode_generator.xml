@@ -20,12 +20,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/fragment_merchant_qrcode_generator_content_margin"
-                android:layout_marginTop="@dimen/fragment_merchant_qrcode_generator_content_margin"
+                android:layout_marginBottom="@dimen/fragment_agent_qrcode_generator_content_margin"
+                android:layout_marginTop="@dimen/fragment_agent_qrcode_generator_content_margin"
                 android:gravity="center"
                 android:text="@string/merchant_qrcode_generator"
                 android:textColor="@color/fragment_merchant_qrcode_generator_card_title_text"
-                android:textSize="@dimen/fragment_merchant_qrcode_generator_card_title_text_size" />
+                android:textSize="@dimen/fragment_agent_qrcode_generator_card_title_text_size" />
 
             <!-- BILL NUMBER -->
             <android.support.design.widget.TextInputLayout
@@ -69,8 +69,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/fragment_merchant_qrcode_generator_content_margin"
-                android:layout_marginTop="@dimen/fragment_merchant_qrcode_generator_content_margin"
+                android:layout_marginBottom="@dimen/fragment_agent_qrcode_generator_content_margin"
+                android:layout_marginTop="@dimen/fragment_agent_qrcode_generator_content_margin"
                 android:orientation="horizontal">
 
                 <TextView
@@ -81,7 +81,7 @@
                 <TextView
                     android:id="@+id/fragment_merchant_qrcode_generator_textView_cancel"
                     style="@style/style_button_width_weight"
-                    android:layout_marginLeft="@dimen/fragment_merchant_qrcode_generator_content_margin"
+                    android:layout_marginLeft="@dimen/fragment_agent_qrcode_generator_content_margin"
                     android:text="@string/cancel_caps" />
             </LinearLayout>
 

@@ -261,7 +261,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         val agentId = PreferenceData.getAgentId(this)
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
-        val token = Utils.createToken(this, getString(R.string.endpoint_merchant_logout), date)
+        val token = Utils.createToken(this, getString(R.string.endpoint_agent_logout), date)
         val publicKey = getString(R.string.public_key)
         val dtoAgentLogoutRequest = DTOAgentLogoutRequest(token !!, timeStamp, publicKey, agentId)
         Utils.showLoadingDialog(this)

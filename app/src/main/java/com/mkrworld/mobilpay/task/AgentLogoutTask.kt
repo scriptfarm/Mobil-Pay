@@ -35,7 +35,7 @@ class AgentLogoutTask : MobilPayBaseTask<DTOAgentLogoutResponse> {
     }
 
     override fun getUrl() : String {
-        return UrlUtils.getUrl(getContext(), R.string.url_merchant_logout)
+        return UrlUtils.getUrl(getContext(), R.string.url_agent_logout)
     }
 
     public override fun getRequestType() : NetworkConstants.RequestType {

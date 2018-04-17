@@ -53,7 +53,7 @@ class PreferenceData {
          * @return id of the agent
          */
         fun getAgentId(context : Context) : String {
-            Tracer.debug(TAG, "getAgentId : ")
+            Tracer.debug(TAG, "getUserId : ")
             return getShearedPreference(context).getString(AGENT_ID, "") !!.trim { it <= ' ' }
         }
 
@@ -64,7 +64,7 @@ class PreferenceData {
          * @param id
          */
         fun setAgentId(context : Context, id : String) {
-            Tracer.debug(TAG, "setAgentId : ")
+            Tracer.debug(TAG, "setUserId : ")
             getShearedPreferenceEditor(context).putString(AGENT_ID, id).commit()
         }
 
