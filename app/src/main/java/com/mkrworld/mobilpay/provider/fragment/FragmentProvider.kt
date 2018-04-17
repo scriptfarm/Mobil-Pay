@@ -12,7 +12,7 @@ import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantCollectionSummary
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantHome
 import com.mkrworld.mobilpay.ui.fragment.FragmentAgentLogin
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantQrCode
-import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantQrCodeGenerator
+import com.mkrworld.mobilpay.ui.fragment.FragmentAgentQrCodeGenerator
 import com.mkrworld.mobilpay.ui.fragment.FragmentAgentSendBill
 
 /**
@@ -35,7 +35,7 @@ class FragmentProvider {
                 FragmentTag.MERCHANT_LOGIN -> return FragmentAgentLogin()
                 FragmentTag.MERCHANT_HOME -> return FragmentMerchantHome()
                 FragmentTag.MERCHANT_QR_CODE -> return FragmentMerchantQrCode()
-                FragmentTag.MERCHANT_QR_CODE_GENERATOR -> return FragmentMerchantQrCodeGenerator()
+                FragmentTag.MERCHANT_QR_CODE_GENERATOR -> return FragmentAgentQrCodeGenerator()
                 FragmentTag.MERCHANT_AEPS_COLLECT -> return FragmentMerchantAEPSCollect()
                 FragmentTag.MERCHANT_SEND_BILL -> return FragmentAgentSendBill()
                 FragmentTag.FORGOT_PASSWORD -> return FragmentForgotPassword()

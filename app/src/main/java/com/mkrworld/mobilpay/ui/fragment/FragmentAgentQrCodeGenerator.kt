@@ -7,15 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.merchantqrcodegenarator.DTOMerchantQRCodeGeneratorRequest
-import com.mkrworld.mobilpay.dto.merchantqrcodegenarator.DTOMerchantQRCodeGeneratorResponse
+import com.mkrworld.mobilpay.dto.agentqrcodegenarator.DTOAgentQRCodeGeneratorRequest
+import com.mkrworld.mobilpay.dto.agentqrcodegenarator.DTOAgentQRCodeGeneratorResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
@@ -23,17 +22,16 @@ import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
 import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
-
-import java.util.Date
+import java.util.*
 
 /**
  * Created by mkr on 13/3/18.
  */
 
-class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View.OnClickListener {
+class FragmentAgentQrCodeGenerator : Fragment(), OnBaseFragmentListener, View.OnClickListener {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".FragmentMerchantQrCodeGenerator"
+        private val TAG = BuildConfig.BASE_TAG + ".FragmentAgentQrCodeGenerator"
     }
 
     private var mTextInputLayoutBillNumber : TextInputLayout? = null
@@ -43,12 +41,12 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
     private var mEditTextBillDescription : EditText? = null
     private var mEditTextBillAmount : EditText? = null
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
-    private val mQRCodeGeneratorResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantQRCodeGeneratorResponse> {
-        override fun onSuccess(dtoQRCodeGeneratorResponse : DTOMerchantQRCodeGeneratorResponse) {
+    private val mQRCodeGeneratorResponseNetworkCallBack = object : NetworkCallBack<DTOAgentQRCodeGeneratorResponse> {
+        override fun onSuccess(dtoQRCodeGeneratorResponse : DTOAgentQRCodeGeneratorResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             if (dtoQRCodeGeneratorResponse == null || dtoQRCodeGeneratorResponse.getData() == null) {
-                Tracer.showSnack(view!!, R.string.no_data_fetch_from_server)
+                Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
             val data = dtoQRCodeGeneratorResponse.getData()
@@ -60,7 +58,7 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
                 bundle.putString(FragmentMerchantQrCode.EXTRA_BILL_AMOUNT, data.amount)
                 bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TOKEN, data.qrCodeToken)
                 val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_QR_CODE)
-                (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, bundle, true, FragmentTag.MERCHANT_QR_CODE)
+                (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, bundle, true, FragmentTag.MERCHANT_QR_CODE)
             }
         }
 
@@ -70,20 +68,16 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
             if (view == null) {
                 return
             }
-            Tracer.showSnack(view!!, errorMessage)
+            Tracer.showSnack(view !!, errorMessage)
         }
     }
 
     /**
-     * Method to check weather the QR-Code generation detail insert by merchant is valid or not
+     * Method to check weather the QR-Code generation detail insert by agent is valid or not
      *
      * @return
      */
-    private // Validate Bill Number
-    // Validate Bill Description
-    // Validate Bill Amount
-    // VALIDATE MIN AMOUNT
-    val isQrCodeDetailValid : Boolean
+    private val isQrCodeDetailValid : Boolean
         get() {
             Tracer.debug(TAG, "isQrCodeDetailValid: ")
             if (view == null) {
@@ -120,7 +114,7 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
 
     override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
         Tracer.debug(TAG, "onCreateView: ")
-        return inflater !!.inflate(R.layout.fragment_merchant_qrcode_generator, container, false)
+        return inflater !!.inflate(R.layout.fragment_agent_qrcode_generator, container, false)
     }
 
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
@@ -157,8 +151,8 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
     override fun onClick(view : View) {
         Tracer.debug(TAG, "onClick: ")
         when (view.id) {
-            R.id.fragment_merchant_qrcode_generator_textView_cancel -> activity.onBackPressed()
-            R.id.fragment_merchant_qrcode_generator_textView_generate -> startQRCodeGeneratingProcess()
+            R.id.fragment_agent_qrcode_generator_textView_cancel -> activity.onBackPressed()
+            R.id.fragment_agent_qrcode_generator_textView_generate -> startQRCodeGeneratingProcess()
         }
     }
 
@@ -182,19 +176,19 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
         }
         mAgentNetworkTaskProvider = AgentNetworkTaskProvider()
         mAgentNetworkTaskProvider !!.attachProvider()
-        view !!.findViewById<View>(R.id.fragment_merchant_qrcode_generator_textView_generate).setOnClickListener(this)
-        view !!.findViewById<View>(R.id.fragment_merchant_qrcode_generator_textView_cancel).setOnClickListener(this)
-        mTextInputLayoutBillNumber = view !!.findViewById<View>(R.id.fragment_merchant_qrcode_generator_textInputLayout_bill_number) as TextInputLayout
-        mEditTextBillNumber = view !!.findViewById<View>(R.id.fragment_merchant_qrcode_generator_editText_bill_number) as EditText
-        mTextInputLayoutBillDescription = view !!.findViewById<View>(R.id.fragment_merchant_qrcode_generator_textInputLayout_bill_description) as TextInputLayout
-        mEditTextBillDescription = view !!.findViewById<View>(R.id.fragment_merchant_qrcode_generator_editText_bill_description) as EditText
-        mTextInputLayoutBillAmount = view !!.findViewById<View>(R.id.fragment_merchant_qrcode_generator_textInputLayout_bill_amount) as TextInputLayout
-        mEditTextBillAmount = view !!.findViewById<View>(R.id.fragment_merchant_qrcode_generator_editText_bill_amount) as EditText
+        view !!.findViewById<View>(R.id.fragment_agent_qrcode_generator_textView_generate).setOnClickListener(this)
+        view !!.findViewById<View>(R.id.fragment_agent_qrcode_generator_textView_cancel).setOnClickListener(this)
+        mTextInputLayoutBillNumber = view !!.findViewById<View>(R.id.fragment_agent_qrcode_generator_textInputLayout_bill_number) as TextInputLayout
+        mEditTextBillNumber = view !!.findViewById<View>(R.id.fragment_agent_qrcode_generator_editText_bill_number) as EditText
+        mTextInputLayoutBillDescription = view !!.findViewById<View>(R.id.fragment_agent_qrcode_generator_textInputLayout_bill_description) as TextInputLayout
+        mEditTextBillDescription = view !!.findViewById<View>(R.id.fragment_agent_qrcode_generator_editText_bill_description) as EditText
+        mTextInputLayoutBillAmount = view !!.findViewById<View>(R.id.fragment_agent_qrcode_generator_textInputLayout_bill_amount) as TextInputLayout
+        mEditTextBillAmount = view !!.findViewById<View>(R.id.fragment_agent_qrcode_generator_editText_bill_amount) as EditText
 
         // ADD TEXT CHANGE LISTENER
-        mEditTextBillNumber !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutBillNumber!!))
-        mEditTextBillDescription !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutBillDescription!!))
-        mEditTextBillAmount !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutBillAmount!!))
+        mEditTextBillNumber !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutBillNumber !!))
+        mEditTextBillDescription !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutBillDescription !!))
+        mEditTextBillAmount !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutBillAmount !!))
     }
 
     /**
@@ -213,10 +207,10 @@ class FragmentMerchantQrCodeGenerator : Fragment(), OnBaseFragmentListener, View
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_generate_qr_code_token), date)
         val publicKey = getString(R.string.public_key)
-        val nupayId = PreferenceData.getAgentId(activity)
-        val dtoQRCodeGeneratorRequest = DTOMerchantQRCodeGeneratorRequest(token!!, timeStamp, publicKey, billAmount, billNumber, billDescription, nupayId)
+        val agentId = PreferenceData.getAgentId(activity)
+        val dtoQRCodeGeneratorRequest = DTOAgentQRCodeGeneratorRequest(token !!, timeStamp, publicKey, billAmount, billNumber, billDescription, agentId)
         Utils.showLoadingDialog(activity)
-        mAgentNetworkTaskProvider !!.merchantQRCodeGeneratorTask(activity, dtoQRCodeGeneratorRequest, mQRCodeGeneratorResponseNetworkCallBack)
+        mAgentNetworkTaskProvider !!.agentQRCodeGeneratorTask(activity, dtoQRCodeGeneratorRequest, mQRCodeGeneratorResponseNetworkCallBack)
     }
 
     /**

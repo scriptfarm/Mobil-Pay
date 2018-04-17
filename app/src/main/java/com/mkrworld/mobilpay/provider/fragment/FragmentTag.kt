@@ -11,7 +11,7 @@ interface FragmentTag {
         val MERCHANT_LOGIN = "FragmentAgentLogin"
         val MERCHANT_HOME = "FragmentMerchantHome"
         val MERCHANT_QR_CODE = "FragmentMerchantQrCode"
-        val MERCHANT_QR_CODE_GENERATOR = "FragmentMerchantQrCodeGenerator"
+        val MERCHANT_QR_CODE_GENERATOR = "FragmentAgentQrCodeGenerator"
         val MERCHANT_AEPS_COLLECT = "FragmentMerchantAEPSCollect"
         val MERCHANT_SEND_BILL = "FragmentAgentSendBill"
         val MERCHANT_COLLECTION_SUMMARY = "FragmentMerchantCollectionSummary"

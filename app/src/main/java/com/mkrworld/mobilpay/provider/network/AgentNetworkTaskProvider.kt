@@ -20,8 +20,8 @@ import com.mkrworld.mobilpay.dto.agentsendforgotpasswordotp.DTOAgentSendForgotPa
 import com.mkrworld.mobilpay.dto.agentsendforgotpasswordotp.DTOAgentSendForgotPasswordOtpResponse
 import com.mkrworld.mobilpay.dto.agentdetails.DTOAgentDetailRequest
 import com.mkrworld.mobilpay.dto.agentdetails.DTOAgentDetailResponse
-import com.mkrworld.mobilpay.dto.merchantqrcodegenarator.DTOMerchantQRCodeGeneratorRequest
-import com.mkrworld.mobilpay.dto.merchantqrcodegenarator.DTOMerchantQRCodeGeneratorResponse
+import com.mkrworld.mobilpay.dto.agentqrcodegenarator.DTOAgentQRCodeGeneratorRequest
+import com.mkrworld.mobilpay.dto.agentqrcodegenarator.DTOAgentQRCodeGeneratorResponse
 import com.mkrworld.mobilpay.dto.mobilenumberstatus.DTOMobileNumberStatusRequest
 import com.mkrworld.mobilpay.dto.mobilenumberstatus.DTOMobileNumberStatusResponse
 import com.mkrworld.mobilpay.task.*
@@ -59,19 +59,19 @@ class AgentNetworkTaskProvider : BaseTaskProvider() {
     }
 
     /**
-     * Method called to generate merchant qr code
+     * Method called to generate Agent qr code
      *
      * @param context
      * @param request
      * @param networkCallBack
      */
-    fun merchantQRCodeGeneratorTask(context : Context, request : DTOMerchantQRCodeGeneratorRequest, networkCallBack : NetworkCallBack<DTOMerchantQRCodeGeneratorResponse>) {
-        Tracer.debug(TAG, "merchantQrCodeGeneratorTask : ")
-        val requestJson = parseDtoToJson(request, DTOMerchantQRCodeGeneratorRequest::class.java, networkCallBack)
+    fun agentQRCodeGeneratorTask(context : Context, request : DTOAgentQRCodeGeneratorRequest, networkCallBack : NetworkCallBack<DTOAgentQRCodeGeneratorResponse>) {
+        Tracer.debug(TAG, "agentQRCodeGeneratorTask : ")
+        val requestJson = parseDtoToJson(request, DTOAgentQRCodeGeneratorRequest::class.java, networkCallBack)
                 ?: return
-        val task = MerchantQRCodeGeneratorTask(context, requestJson, object : NetworkCallBack<DTOMerchantQRCodeGeneratorResponse> {
+        val task = AgentQRCodeGeneratorTask(context, requestJson, object : NetworkCallBack<DTOAgentQRCodeGeneratorResponse> {
 
-            override fun onSuccess(networkResponse : DTOMerchantQRCodeGeneratorResponse) {
+            override fun onSuccess(networkResponse : DTOAgentQRCodeGeneratorResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 

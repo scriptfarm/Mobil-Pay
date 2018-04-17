@@ -22,10 +22,10 @@
     <color name="fragment_login_card_title_text">@color/colorAccent</color>
 
     <!-- FRAGMENT MERCHANT QR-CODE -->
-    <color name="fragment_merchant_qrcode_card_title_text">@color/colorAccent</color>
+    <color name="fragment_agent_qrcode_card_title_text">@color/colorAccent</color>
 
     <!-- FRAGMENT MERCHANT QR-CODE GENERATOR -->
-    <color name="fragment_merchant_qrcode_generator_card_title_text">@color/colorAccent</color>
+    <color name="fragment_agent_qrcode_generator_card_title_text">@color/colorAccent</color>
 
     <!-- FRAGMENT FORGOT PASSWORD -->
     <color name="fragment_forgot_password_card_title_text">@color/colorAccent</color>

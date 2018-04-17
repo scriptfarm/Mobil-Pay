@@ -7,20 +7,18 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.network.NetworkConstants
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.merchantqrcodegenarator.DTOMerchantQRCodeGeneratorResponse
+import com.mkrworld.mobilpay.dto.agentqrcodegenarator.DTOAgentQRCodeGeneratorResponse
 import com.mkrworld.mobilpay.utils.UrlUtils
 
 import org.json.JSONObject
 
-import java.util.HashMap
-
 /**
  * Created by mkr on 27/3/18.
  */
-class MerchantQRCodeGeneratorTask : MobilPayBaseTask<DTOMerchantQRCodeGeneratorResponse> {
+class AgentQRCodeGeneratorTask : MobilPayBaseTask<DTOAgentQRCodeGeneratorResponse> {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".MerchantQRCodeGeneratorTask"
+        private val TAG = BuildConfig.BASE_TAG + ".AgentQRCodeGeneratorTask"
     }
 
     /**
@@ -30,10 +28,10 @@ class MerchantQRCodeGeneratorTask : MobilPayBaseTask<DTOMerchantQRCodeGeneratorR
      * @param requestJson
      * @param networkCallBack
      */
-    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOMerchantQRCodeGeneratorResponse>) : super(context, requestJson, networkCallBack) {}
+    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOAgentQRCodeGeneratorResponse>) : super(context, requestJson, networkCallBack) {}
 
-    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOMerchantQRCodeGeneratorResponse {
-        return Gson().fromJson(jsonObject.toString(), DTOMerchantQRCodeGeneratorResponse::class.java !!)
+    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOAgentQRCodeGeneratorResponse {
+        return Gson().fromJson(jsonObject.toString(), DTOAgentQRCodeGeneratorResponse::class.java !!)
     }
 
     override fun getUrl() : String {

@@ -1,6 +1,5 @@
-package com.mkrworld.mobilpay.dto.merchantqrcodegenarator
+package com.mkrworld.mobilpay.dto.agentqrcodegenarator
 
-import android.content.ContentValues.TAG
 import com.google.gson.annotations.SerializedName
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
@@ -9,10 +8,10 @@ import com.mkrworld.mobilpay.BuildConfig
  * Created by mkr on 27/3/18.
  */
 
-class DTOMerchantQRCodeGeneratorResponse {
+class DTOAgentQRCodeGeneratorResponse {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOMerchantQRCodeGeneratorResponse"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentQRCodeGeneratorResponse"
     }
 
     @SerializedName("message")

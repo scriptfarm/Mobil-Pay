@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.dto.merchantqrcodegenarator
+package com.mkrworld.mobilpay.dto.agentqrcodegenarator
 
 import com.google.gson.annotations.SerializedName
 import com.mkrworld.androidlib.utils.Tracer
@@ -9,10 +9,10 @@ import com.mkrworld.mobilpay.dto.DTOBaseRequest
  * Created by mkr on 27/3/18.
  */
 
-class DTOMerchantQRCodeGeneratorRequest : DTOBaseRequest {
+class DTOAgentQRCodeGeneratorRequest : DTOBaseRequest {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOMerchantQRCodeGeneratorRequest"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentQRCodeGeneratorRequest"
     }
 
     @SerializedName("amount")
@@ -24,8 +24,8 @@ class DTOMerchantQRCodeGeneratorRequest : DTOBaseRequest {
     @SerializedName("details")
     private var mDetails : String?=null
 
-    @SerializedName("nupay_id")
-    private var mNupayId : String?=null
+    @SerializedName("agent_id")
+    private var mAgentId : String?=null
 
     /**
      * Constructor
@@ -36,13 +36,13 @@ class DTOMerchantQRCodeGeneratorRequest : DTOBaseRequest {
      * @param amount
      * @param billNumber
      * @param details
-     * @param nupayId
+     * @param agentId
      */
-    constructor(token : String, timeStamp : String, publicKey : String, amount : String, billNumber : String, details : String, nupayId : String) : super(token, timeStamp, publicKey) {
-        Tracer.debug(TAG, "DTOMerchantQRCodeGeneratorRequest : ")
+    constructor(token : String, timeStamp : String, publicKey : String, amount : String, billNumber : String, details : String, agentId : String) : super(token, timeStamp, publicKey) {
+        Tracer.debug(TAG, "DTOAgentQRCodeGeneratorRequest : ")
         mAmount = amount
         mBillNumber = billNumber
         mDetails = details
-        mNupayId = nupayId
+        mAgentId = agentId
     }
 }
