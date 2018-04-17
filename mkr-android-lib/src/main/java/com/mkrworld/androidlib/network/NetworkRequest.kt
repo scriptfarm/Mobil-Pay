@@ -268,7 +268,7 @@ class NetworkRequest {
                 return null
             }
 
-            override fun onPostExecute(result : Any) {
+            override fun onPostExecute(result : Any?) {
                 super.onPostExecute(result)
                 mThreadCount --
                 if (result is JSONObject) {

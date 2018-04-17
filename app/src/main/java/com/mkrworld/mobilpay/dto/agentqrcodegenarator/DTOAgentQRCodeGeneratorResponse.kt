@@ -26,7 +26,7 @@ class DTOAgentQRCodeGeneratorResponse {
      * @return
      */
     fun getData() : Data {
-        return mData!!
+        return mData !!
     }
 
     /**
@@ -43,27 +43,16 @@ class DTOAgentQRCodeGeneratorResponse {
      */
     inner class Data {
 
-        @SerializedName("amount")
-        private val mAmount : String? = null
-
-        @SerializedName("details")
-        private val mDetails : String? = null
-
-        @SerializedName("bill_number")
-        private val mBillNumber : String? = null
-
-        @SerializedName("qr_code_token")
-        private val mQrCodeToken : String? = null
-
         /**
          * Method to get the Bill Amount
          *
          * @return
          */
-        val amount : String
+        @SerializedName("amount")
+        var amount : String? = null
             get() {
                 Tracer.debug(TAG, "getAmount : ")
-                return mAmount ?: "0"
+                return field ?: "0"
             }
 
         /**
@@ -71,10 +60,11 @@ class DTOAgentQRCodeGeneratorResponse {
          *
          * @return
          */
-        val billNumber : String
+        @SerializedName("bill_number")
+        var billNumber : String? = null
             get() {
                 Tracer.debug(TAG, "getBillNumber : ")
-                return mBillNumber ?: ""
+                return field ?: ""
             }
 
         /**
@@ -82,10 +72,11 @@ class DTOAgentQRCodeGeneratorResponse {
          *
          * @return
          */
-        val details : String
+        @SerializedName("details")
+        var details : String? = null
             get() {
                 Tracer.debug(TAG, "getDetails : ")
-                return mDetails ?: ""
+                return field ?: ""
             }
 
         /**
@@ -93,10 +84,11 @@ class DTOAgentQRCodeGeneratorResponse {
          *
          * @return
          */
-        val qrCodeToken : String
+        @SerializedName("qr_code_token")
+        var qrCodeToken : String? = null
             get() {
                 Tracer.debug(TAG, "getQrCodeToken : ")
-                return mQrCodeToken ?: ""
+                return field ?: ""
             }
     }
 }

@@ -22,6 +22,8 @@ import com.mkrworld.mobilpay.dto.agentdetails.DTOAgentDetailRequest
 import com.mkrworld.mobilpay.dto.agentdetails.DTOAgentDetailResponse
 import com.mkrworld.mobilpay.dto.agentqrcodegenarator.DTOAgentQRCodeGeneratorRequest
 import com.mkrworld.mobilpay.dto.agentqrcodegenarator.DTOAgentQRCodeGeneratorResponse
+import com.mkrworld.mobilpay.dto.agentsendbill.DTOAgentSendBillRequest
+import com.mkrworld.mobilpay.dto.agentsendbill.DTOAgentSendBillResponse
 import com.mkrworld.mobilpay.dto.mobilenumberstatus.DTOMobileNumberStatusRequest
 import com.mkrworld.mobilpay.dto.mobilenumberstatus.DTOMobileNumberStatusResponse
 import com.mkrworld.mobilpay.task.*
@@ -96,6 +98,30 @@ class AgentNetworkTaskProvider : BaseTaskProvider() {
         val task = AgentFetchBillTask(context, requestJson, object : NetworkCallBack<DTOAgentFetchBillResponse> {
 
             override fun onSuccess(networkResponse : DTOAgentFetchBillResponse) {
+                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
+            }
+
+            override fun onError(errorMessage : String, errorCode : Int) {
+                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
+            }
+        })
+        task.executeTask()
+    }
+
+    /**
+     * Method called when agent send the bill of a user
+     *
+     * @param context
+     * @param request
+     * @param networkCallBack
+     */
+    fun agentSendBillTask(context : Context, request : DTOAgentSendBillRequest, networkCallBack : NetworkCallBack<DTOAgentSendBillResponse>) {
+        Tracer.debug(TAG, "agentSendBillTask : ")
+        val requestJson = parseDtoToJson(request, DTOAgentSendBillRequest::class.java, networkCallBack)
+                ?: return
+        val task = AgentSendBillTask(context, requestJson, object : NetworkCallBack<DTOAgentSendBillResponse> {
+
+            override fun onSuccess(networkResponse : DTOAgentSendBillResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 

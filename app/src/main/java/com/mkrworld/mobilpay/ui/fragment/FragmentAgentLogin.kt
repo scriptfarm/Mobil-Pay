@@ -55,15 +55,14 @@ class FragmentAgentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListe
                 return
             }
             Tracer.showSnack(view !!, dtoAgentLoginResponse.getMessage())
-            PreferenceData.setAgentId(activity, dtoAgentLoginResponse.getData() !!.agentId !!)
             val userId = mEditTextId !!.text.toString()
             val password = mEditTextPassword !!.text.toString()
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (! PreferenceData.isHaveFingerPrintConsent(activity) && mIsFingerPrintDeviceWorkingFine) {
                     showEnableFingerPrintDialog(userId, password)
                     return
-                } else if (PreferenceData.isHaveFingerPrintConsent(activity) && (! PreferenceData.getAgentId(activity).equals(userId.trim { it <= ' ' }, ignoreCase = true) || ! PreferenceData.getAgentLoginPassword(activity).equals(password.trim(), true))) {
-                    showUpdateFingerLoginDetailDialog(userId, password)
+                } else if (PreferenceData.isHaveFingerPrintConsent(activity) && PreferenceData.getAgentId(activity).equals(userId.trim(), true) && (! PreferenceData.getAgentLoginPassword(activity).equals(password.trim(), true))) {
+                    showUpdateFingerLoginDetailDialog(password)
                     return
                 }
             }
@@ -198,7 +197,7 @@ class FragmentAgentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListe
     private fun setTitle() {
         Tracer.debug(TAG, "setTitle: ")
         if (activity is OnBaseActivityListener) {
-            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_merchant_login))
+            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_login))
         }
     }
 
@@ -286,7 +285,7 @@ class FragmentAgentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListe
     /**
      * Method to show dialog to update fingerprint login detail
      */
-    private fun showUpdateFingerLoginDetailDialog(loginId : String, loginPassword : String) {
+    private fun showUpdateFingerLoginDetailDialog(loginPassword : String) {
         Tracer.debug(TAG, "showUpdateFingerLoginDetailDialog : ")
         val context = activity
         val iconId = R.drawable.ic_fingerprint_normal
@@ -294,7 +293,6 @@ class FragmentAgentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListe
         val message = getString(R.string.are_you_sure_to_update_the_login_detail)
         val onOkClickListener = DialogInterface.OnClickListener { dialogInterface, i ->
             dialogInterface.dismiss()
-            PreferenceData.setAgentId(activity, loginId)
             PreferenceData.setAgentLoginPassword(activity, loginPassword)
             goToSuccessScreen()
         }

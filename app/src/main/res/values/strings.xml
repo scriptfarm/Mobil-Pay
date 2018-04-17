@@ -17,9 +17,9 @@
     <string name="amount_should_be_greater_then_caps">AMOUNT SHOULD BE GREATER THEN </string>
     <string name="password_does_not_match_with_new_password">PASSWORD DOESN\'T MATCH WITH NEW PASSWORD</string>
 
-    <string name="screen_title_merchant_login">Merchant Login</string>
-    <string name="screen_title_merchant_home">Merchant Home</string>
-    <string name="screen_title_merchant_qrcode">Merchant Code</string>
+    <string name="screen_title_login">Login</string>
+    <string name="screen_title_agent_home">Agent Home</string>
+    <string name="screen_title_agent_qrcode">Agent Qr-Code</string>
     <string name="screen_title_aeps_collect">AEPS Collect</string>
     <string name="screen_title_send_bill">Send Bill</string>
     <string name="screen_title_forgot_password">Forgot Password</string>
@@ -48,7 +48,7 @@
     <string name="send_bill">Send Bill</string>
     <string name="collection_summary">Collection Summary</string>
 
-    <string name="merchant_qrcode_generator">Merchant QR-Code Generator</string>
+    <string name="agent_qrcode_generator">Agent QR-Code Generator</string>
     <string name="bill_number_star">Bill Number *</string>
     <string name="bill_description_star">Bill Description *</string>
     <string name="bill_amount_star">Bill Amount ₹ *</string>

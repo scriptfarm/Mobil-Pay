@@ -52,7 +52,7 @@ class DTOAgentSendForgotPasswordOtpResponse {
         var agentId : String? = null
             get() {
                 Tracer.debug(TAG, "getUserId : ")
-                return agentId ?: "0"
+                return field ?: "0"
             }
     }
 }

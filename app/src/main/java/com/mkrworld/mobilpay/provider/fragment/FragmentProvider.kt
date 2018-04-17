@@ -9,7 +9,7 @@ import com.mkrworld.mobilpay.ui.fragment.FragmentChangePasswordByOtp
 import com.mkrworld.mobilpay.ui.fragment.FragmentForgotPassword
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantAEPSCollect
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantCollectionSummary
-import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantHome
+import com.mkrworld.mobilpay.ui.fragment.FragmentAgentHome
 import com.mkrworld.mobilpay.ui.fragment.FragmentAgentLogin
 import com.mkrworld.mobilpay.ui.fragment.FragmentMerchantQrCode
 import com.mkrworld.mobilpay.ui.fragment.FragmentAgentQrCodeGenerator
@@ -33,7 +33,7 @@ class FragmentProvider {
             Tracer.debug(TAG, "getFragment: $fragmentTag")
             when (fragmentTag) {
                 FragmentTag.MERCHANT_LOGIN -> return FragmentAgentLogin()
-                FragmentTag.MERCHANT_HOME -> return FragmentMerchantHome()
+                FragmentTag.MERCHANT_HOME -> return FragmentAgentHome()
                 FragmentTag.MERCHANT_QR_CODE -> return FragmentMerchantQrCode()
                 FragmentTag.MERCHANT_QR_CODE_GENERATOR -> return FragmentAgentQrCodeGenerator()
                 FragmentTag.MERCHANT_AEPS_COLLECT -> return FragmentMerchantAEPSCollect()

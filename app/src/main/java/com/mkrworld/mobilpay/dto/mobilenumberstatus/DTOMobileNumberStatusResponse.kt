@@ -1,6 +1,5 @@
 package com.mkrworld.mobilpay.dto.mobilenumberstatus
 
-import android.content.ContentValues.TAG
 import com.google.gson.annotations.SerializedName
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
@@ -27,7 +26,7 @@ class DTOMobileNumberStatusResponse {
      * @return
      */
     fun getData() : Data {
-        return mData!!
+        return mData !!
     }
 
     /**
@@ -44,18 +43,16 @@ class DTOMobileNumberStatusResponse {
      */
     inner class Data {
 
-        @SerializedName("status")
-        private val mStatus : String? = null
-
         /**
          * Method to get Status
          *
          * @return
          */
-        val status : String
+        @SerializedName("status")
+        var status : String? = null
             get() {
                 Tracer.debug(TAG, "getStatus : ")
-                return mStatus ?: "0"
+                return field ?: "0"
             }
     }
 }

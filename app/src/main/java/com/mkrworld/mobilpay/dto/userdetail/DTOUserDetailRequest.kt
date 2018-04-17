@@ -12,7 +12,7 @@ import com.mkrworld.mobilpay.dto.DTOBaseRequest
 class DTOUserDetailRequest : DTOBaseRequest {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentDetailRequest"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOUserDetailRequest"
     }
 
     @SerializedName("agent_id")

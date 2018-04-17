@@ -162,7 +162,7 @@ class FragmentAgentQrCodeGenerator : Fragment(), OnBaseFragmentListener, View.On
     private fun setTitle() {
         Tracer.debug(TAG, "setTitle: ")
         if (activity is OnBaseActivityListener) {
-            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_merchant_qrcode))
+            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_agent_qrcode))
         }
     }
 

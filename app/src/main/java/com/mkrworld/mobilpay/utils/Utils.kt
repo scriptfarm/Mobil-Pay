@@ -2,6 +2,7 @@ package com.mkrworld.mobilpay.utils
 
 import android.app.Activity
 import android.content.Context
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -11,8 +12,6 @@ import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.experimental.and
-import kotlin.experimental.or
 
 /**
  * Created by mkr on 14/3/18.
@@ -138,9 +137,9 @@ class Utils {
          */
         fun showLoadingDialog(context : Context) {
             Tracer.debug(TAG, "showLoadingDialog : ")
-            var layoutInflater : LayoutInflater = (context.getSystemService(Context.LAUNCHER_APPS_SERVICE)!! as LayoutInflater);
-            var view : View = layoutInflater!!.inflate(R.layout.dialog_progress, null)
-            MKRDialogUtil.showLoadingDialog(context,view!!)
+            var layoutInflater : LayoutInflater = (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) !! as LayoutInflater);
+            var view : View = layoutInflater !!.inflate(R.layout.dialog_progress, null)
+            MKRDialogUtil.showLoadingDialog(context, view !!)
         }
 
         /**
@@ -149,6 +148,13 @@ class Utils {
         fun dismissLoadingDialog() {
             Tracer.debug(TAG, "dismissLoadingDialog : ")
             MKRDialogUtil.dismissLoadingDialog()
+        }
+
+        /**
+         * Method to convert String into Editable
+         */
+        fun getEditable(text : String) : Editable {
+            return Editable.Factory.getInstance().newEditable(text)
         }
     }
 }

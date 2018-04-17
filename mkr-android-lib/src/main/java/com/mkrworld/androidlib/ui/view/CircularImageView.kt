@@ -54,7 +54,7 @@ class CircularImageView : View {
         if (View.MeasureSpec.getSize(widthMeasureSpec) > View.MeasureSpec.getSize(heightMeasureSpec)) {
             super.onMeasure(heightMeasureSpec, heightMeasureSpec)
         } else {
-            super.onMeasure(heightMeasureSpec, widthMeasureSpec)
+            super.onMeasure(widthMeasureSpec, widthMeasureSpec)
         }
     }
 

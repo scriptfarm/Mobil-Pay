@@ -1,6 +1,5 @@
 package com.mkrworld.mobilpay.ui.fragment
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -31,10 +30,10 @@ import java.util.ArrayList
  * Created by mkr on 13/3/18.
  */
 
-class FragmentMerchantHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHClickable {
+class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHClickable {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".FragmentMerchantHome"
+        private val TAG = BuildConfig.BASE_TAG + ".FragmentAgentHome"
     }
 
     /**
@@ -58,7 +57,7 @@ class FragmentMerchantHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.
 
     override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
         Tracer.debug(TAG, "onCreateView: ")
-        return inflater !!.inflate(R.layout.fragment_merchant_home, container, false)
+        return inflater !!.inflate(R.layout.fragment_agent_home, container, false)
     }
 
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
@@ -123,7 +122,7 @@ class FragmentMerchantHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.
     private fun setTitle() {
         Tracer.debug(TAG, "setTitle: ")
         if (activity is OnBaseActivityListener) {
-            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_merchant_home))
+            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_agent_home))
         }
     }
 
@@ -136,7 +135,7 @@ class FragmentMerchantHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.
             return
         }
         // INIT the RecyclerView
-        val recyclerView = view !!.findViewById<View>(R.id.fragment_merchant_home_recycler_view) as RecyclerView
+        val recyclerView = view !!.findViewById<View>(R.id.fragment_agent_home_recycler_view) as RecyclerView
         val baseAdapter = BaseAdapter(AdapterItemHandler())
         recyclerView.adapter = baseAdapter
         val gridLayoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)

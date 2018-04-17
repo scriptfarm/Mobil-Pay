@@ -10,7 +10,7 @@ import com.mkrworld.mobilpay.BuildConfig
 class DTOUserDetailResponse {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentDetailResponse"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOUserDetailResponse"
     }
 
     @SerializedName("message")
@@ -49,7 +49,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("user_id")
         var userId : String? = null
-            get() = userId ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the First Name
@@ -58,7 +60,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("first_name")
         var firstName : String? = null
-            get() = firstName ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Middle Name
@@ -67,7 +71,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("middle_name")
         var middleName : String? = null
-            get() = middleName ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Last Name
@@ -76,7 +82,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("last_name")
         var lastName : String? = null
-            get() = lastName ?: ""
+            get() {
+                return field ?: ""
+            }
 
 
         /**
@@ -86,7 +94,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("gender")
         var gender : String? = null
-            get() = gender ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent Address line 1
@@ -95,7 +105,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("address_line_1")
         var addressLine1 : String? = null
-            get() = addressLine1 ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent Address line 2
@@ -104,7 +116,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("address_line_2")
         var addressLine2 : String? = null
-            get() = addressLine2 ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent City
@@ -113,7 +127,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("city")
         var city : String? = null
-            get() = city ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent State
@@ -122,7 +138,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("state")
         var state : String? = null
-            get() = state ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent pincode
@@ -131,7 +149,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("pincode")
         var pincode : String? = null
-            get() = pincode ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent Correspondance Address
@@ -140,7 +160,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("correspondance_address")
         var correspondanceAddress : String? = null
-            get() = correspondanceAddress ?: ""
+            get() {
+                return field ?: ""
+            }
 
 
         /**
@@ -150,7 +172,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("email")
         var email : String? = null
-            get() = email ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Mobile Number
@@ -159,7 +183,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("mobile_number")
         var mobileNumber : String? = null
-            get() = mobileNumber ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Merchant Id
@@ -168,7 +194,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("merchant_id")
         var merchantId : String? = null
-            get() = merchantId ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Plan Type
@@ -177,7 +205,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("plan_type")
         var planType : String? = null
-            get() = planType ?: ""
+            get() {
+                return field ?: ""
+            }
 
 
         /**
@@ -185,9 +215,11 @@ class DTOUserDetailResponse {
          *
          * @return
          */
-        @SerializedName("plan_type")
+        @SerializedName("plan_name")
         var planName : String? = null
-            get() = planName ?: ""
+            get() {
+                return field ?: ""
+            }
 
 
         /**
@@ -197,7 +229,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("plan_id")
         var planId : String? = null
-            get() = planId ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Bill Id
@@ -206,7 +240,9 @@ class DTOUserDetailResponse {
          */
         @SerializedName("bill_id")
         var billId : String? = null
-            get() = billId ?: ""
+            get() {
+                return field ?: ""
+            }
 
     }
 }

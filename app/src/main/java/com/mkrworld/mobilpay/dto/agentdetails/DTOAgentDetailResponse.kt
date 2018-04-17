@@ -1,7 +1,6 @@
 package com.mkrworld.mobilpay.dto.agentdetails
 
 import com.google.gson.annotations.SerializedName
-import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 
 /**
@@ -50,7 +49,9 @@ class DTOAgentDetailResponse {
          */
         @SerializedName("username")
         var agentId : String? = null
-            get() = agentId ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Email Id
@@ -59,7 +60,9 @@ class DTOAgentDetailResponse {
          */
         @SerializedName("email")
         var email : String? = null
-            get() = email ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Name
@@ -68,7 +71,9 @@ class DTOAgentDetailResponse {
          */
         @SerializedName("name")
         var name : String? = null
-            get() = name ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Mobile Number
@@ -77,7 +82,9 @@ class DTOAgentDetailResponse {
          */
         @SerializedName("mobile_number")
         var mobileNumber : String? = null
-            get() = mobileNumber ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent Designation
@@ -86,7 +93,9 @@ class DTOAgentDetailResponse {
          */
         @SerializedName("merchantId")
         var designation : String? = null
-            get() = designation ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Gender
@@ -95,7 +104,9 @@ class DTOAgentDetailResponse {
          */
         @SerializedName("gender")
         var gender : String? = null
-            get() = gender ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent planType
@@ -104,7 +115,9 @@ class DTOAgentDetailResponse {
          */
         @SerializedName("planType")
         var logo : String? = null
-            get() = logo ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent Address line 1
@@ -113,7 +126,9 @@ class DTOAgentDetailResponse {
          */
         @SerializedName("address_line_1")
         var addressLine1 : String? = null
-            get() = addressLine1 ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent Address line 2
@@ -122,7 +137,9 @@ class DTOAgentDetailResponse {
          */
         @SerializedName("address_line_2")
         var addressLine2 : String? = null
-            get() = addressLine2 ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent City
@@ -131,7 +148,9 @@ class DTOAgentDetailResponse {
          */
         @SerializedName("city")
         var city : String? = null
-            get() = city ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent State
@@ -140,7 +159,9 @@ class DTOAgentDetailResponse {
          */
         @SerializedName("state")
         var state : String? = null
-            get() = state ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent pincode
@@ -149,7 +170,9 @@ class DTOAgentDetailResponse {
          */
         @SerializedName("pincode")
         var pincode : String? = null
-            get() = pincode ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent Correspondance Address
@@ -158,7 +181,9 @@ class DTOAgentDetailResponse {
          */
         @SerializedName("correspondance_address")
         var correspondanceAddress : String? = null
-            get() = correspondanceAddress ?: ""
+            get() {
+                return field ?: ""
+            }
 
         /**
          * Method to get the Agent Status
@@ -167,7 +192,9 @@ class DTOAgentDetailResponse {
          */
         @SerializedName("status")
         var status : String? = null
-            get() = status ?: ""
+            get() {
+                return field ?: ""
+            }
 
     }
 }

@@ -52,7 +52,7 @@ class DTOAgentFetchBillResponse {
         var agentId : String? = null
             get() {
                 Tracer.debug(TAG, "getUserId : ")
-                return agentId ?: ""
+                return field ?: ""
             }
 
         /**
@@ -64,7 +64,7 @@ class DTOAgentFetchBillResponse {
         var userId : String? = null
             get() {
                 Tracer.debug(TAG, "getUserId : ")
-                return userId ?: ""
+                return field ?: ""
             }
 
         /**
@@ -76,7 +76,31 @@ class DTOAgentFetchBillResponse {
         var billAmount : String? = null
             get() {
                 Tracer.debug(TAG, "getBillAmount : ")
-                return billAmount ?: "0"
+                return field ?: "0"
+            }
+
+        /**
+         * Method to get the Bill Number
+         *
+         * @return
+         */
+        @SerializedName("bill_no")
+        var billNumber : String? = null
+            get() {
+                Tracer.debug(TAG, "getBillNumber : ")
+                return field ?: "0"
+            }
+
+        /**
+         * Method to get the Bill Number
+         *
+         * @return
+         */
+        @SerializedName("bill_detail")
+        var billDetail : String? = null
+            get() {
+                Tracer.debug(TAG, "getBillNumber : ")
+                return field ?: ""
             }
 
         /**
@@ -88,7 +112,7 @@ class DTOAgentFetchBillResponse {
         var billCreationDate : String? = null
             get() {
                 Tracer.debug(TAG, "getBillCreationDate : ")
-                return billCreationDate ?: ""
+                return field ?: ""
             }
 
         /**
@@ -100,7 +124,7 @@ class DTOAgentFetchBillResponse {
         var billDueDate : String? = null
             get() {
                 Tracer.debug(TAG, "getBillDueDate : ")
-                return billDueDate ?: ""
+                return field ?: ""
             }
 
         /**
@@ -112,7 +136,7 @@ class DTOAgentFetchBillResponse {
         var paymentType : String? = null
             get() {
                 Tracer.debug(TAG, "getPaymentType : ")
-                return paymentType ?: ""
+                return field ?: "FULL"
             }
 
         /**
@@ -124,7 +148,7 @@ class DTOAgentFetchBillResponse {
         var minPayment : String? = null
             get() {
                 Tracer.debug(TAG, "getMinPayment : ")
-                return minPayment ?: ""
+                return field ?: billAmount
             }
     }
 }

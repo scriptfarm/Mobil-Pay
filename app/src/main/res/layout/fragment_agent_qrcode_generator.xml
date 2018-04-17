@@ -23,7 +23,7 @@
                 android:layout_marginBottom="@dimen/fragment_agent_qrcode_generator_content_margin"
                 android:layout_marginTop="@dimen/fragment_agent_qrcode_generator_content_margin"
                 android:gravity="center"
-                android:text="@string/merchant_qrcode_generator"
+                android:text="@string/agent_qrcode_generator"
                 android:textColor="@color/fragment_agent_qrcode_generator_card_title_text"
                 android:textSize="@dimen/fragment_agent_qrcode_generator_card_title_text_size" />
 
