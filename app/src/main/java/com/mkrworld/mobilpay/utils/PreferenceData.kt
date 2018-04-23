@@ -17,8 +17,9 @@ class PreferenceData {
         private val TAG = BuildConfig.BASE_TAG + ".PreferenceData"
         private val STORE = "STORE_8"
         private val FINGER_PRINT_CONSENT = "FINGER_PRINT_CONSENT"
-        private val AGENT_ID = "AGENT_ID"
-        private val AGENT_PASSWORD = "AGENT_PASSWORD"
+        private val LOGIN_ID = "LOGIN_ID"
+        private val LOGIN_PASSWORD = "LOGIN_PASSWORD"
+        private val USER_TYPE = "USER_TYPE"
 
         //==================================================================================================================
         //==================================================================================================================
@@ -52,9 +53,9 @@ class PreferenceData {
          * @param context
          * @return id of the agent
          */
-        fun getAgentId(context : Context) : String {
-            Tracer.debug(TAG, "getUserId : ")
-            return getShearedPreference(context).getString(AGENT_ID, "") !!.trim { it <= ' ' }
+        fun getLoginId(context : Context) : String {
+            Tracer.debug(TAG, "getLoginId : ")
+            return getShearedPreference(context).getString(LOGIN_ID, "") !!.trim { it <= ' ' }
         }
 
         /**
@@ -63,31 +64,53 @@ class PreferenceData {
          * @param context
          * @param id
          */
-        fun setAgentId(context : Context, id : String) {
-            Tracer.debug(TAG, "setUserId : ")
-            getShearedPreferenceEditor(context).putString(AGENT_ID, id).commit()
+        fun setLoginId(context : Context, id : String) {
+            Tracer.debug(TAG, "setLoginId : ")
+            getShearedPreferenceEditor(context).putString(LOGIN_ID, id).commit()
         }
 
         /**
-         * Method to get the agent Login Password
+         * Method to get the Login Password
          *
          * @param context
          * @return Login Password of the agent
          */
-        fun getAgentLoginPassword(context : Context) : String {
-            Tracer.debug(TAG, "getAgentLoginPassword : ")
-            return getShearedPreference(context).getString(AGENT_PASSWORD, "") !!.trim { it <= ' ' }
+        fun getLoginPassword(context : Context) : String {
+            Tracer.debug(TAG, "getLoginPassword : ")
+            return getShearedPreference(context).getString(LOGIN_PASSWORD, "") !!.trim { it <= ' ' }
         }
 
         /**
-         * Method to set the agent Login Password
+         * Method to set the Login Password
          *
          * @param context
          * @param loginPassword
          */
-        fun setAgentLoginPassword(context : Context, loginPassword : String) {
-            Tracer.debug(TAG, "setAgentLoginPassword : ")
-            getShearedPreferenceEditor(context).putString(AGENT_PASSWORD, loginPassword).commit()
+        fun setLoginPassword(context : Context, loginPassword : String) {
+            Tracer.debug(TAG, "setLoginPassword : ")
+            getShearedPreferenceEditor(context).putString(LOGIN_PASSWORD, loginPassword).commit()
+        }
+
+        /**
+         * Method to get the user type
+         *
+         * @param context
+         * @return User Type
+         */
+        fun getUserType(context : Context) : String {
+            Tracer.debug(TAG, "getUserType : ")
+            return getShearedPreference(context).getString(USER_TYPE, "") !!.trim { it <= ' ' }
+        }
+
+        /**
+         * Method to set the user type
+         *
+         * @param context
+         * @param userType
+         */
+        fun setUserType(context : Context, userType : String) {
+            Tracer.debug(TAG, "setUserType : ")
+            getShearedPreferenceEditor(context).putString(USER_TYPE, userType).commit()
         }
 
         //==================================================================================================================

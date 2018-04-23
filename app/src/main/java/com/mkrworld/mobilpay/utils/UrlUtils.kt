@@ -37,7 +37,7 @@ class UrlUtils {
         private fun getStringUrl(context : Context, urlResId : Int) : String {
             Tracer.debug(TAG, "getStringUrl : $urlResId")
             when (urlResId) {
-                R.string.url_agent_login -> return context.getString(R.string.url_agent_login)
+                R.string.url_login -> return context.getString(R.string.url_login)
                 R.string.url_agent_logo -> return context.getString(R.string.url_agent_logo)
                 R.string.url_generate_qr_code_token -> return context.getString(R.string.url_generate_qr_code_token)
                 R.string.url_send_bill -> return context.getString(R.string.url_send_bill)

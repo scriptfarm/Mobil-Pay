@@ -18,7 +18,7 @@ import com.mkrworld.mobilpay.dto.appdata.DTOSummaryConsolidateData
 class SummaryConsolidateDataVH : BaseViewHolder<DTOSummaryConsolidateData> {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".MerchantHomeTabVH"
+        private val TAG = BuildConfig.BASE_TAG + ".AgentHomeTabVH"
     }
 
     private var mTextViewMode : TextView?=null
@@ -31,7 +31,7 @@ class SummaryConsolidateDataVH : BaseViewHolder<DTOSummaryConsolidateData> {
      * @param itemView
      */
     constructor(itemView : View) : super(itemView) {
-        Tracer.debug(TAG, "MerchantHomeTabVH: ")
+        Tracer.debug(TAG, "AgentHomeTabVH: ")
         getParent().setOnClickListener(this)
         mTextViewMode = itemView.findViewById(R.id.item_collection_summary_consolidate_data_textView_mode)
         mTextViewCount = itemView.findViewById(R.id.item_collection_summary_consolidate_data_textView_count)

@@ -22,8 +22,8 @@ class DropdownArrayAdapter : ArrayAdapter<DTODropdownArrayAdapter> {
     }
 
     private var mListFilter = ListFilter()
-    private var mDataListAllItems : ArrayList<DTODropdownArrayAdapter>? = null
-    private var mDataList : ArrayList<DTODropdownArrayAdapter>? = null
+    private var mDataList : ArrayList<DTODropdownArrayAdapter>
+    private var mDataListFiltered : ArrayList<DTODropdownArrayAdapter>
     private var mResId : Int? = null
     private var mTextViewResId : Int? = null
 
@@ -32,9 +32,22 @@ class DropdownArrayAdapter : ArrayAdapter<DTODropdownArrayAdapter> {
      */
     constructor(context : Context?, resource : Int, textViesResourceId : Int, objects : ArrayList<DTODropdownArrayAdapter>?) : super(context, resource, textViesResourceId, objects) {
         Tracer.debug(TAG, "Constructor : ")
-        mDataList = objects
+        mDataList = ArrayList<DTODropdownArrayAdapter>()
+        mDataListFiltered = ArrayList<DTODropdownArrayAdapter>()
+        if (objects != null) {
+            mDataList !!.addAll(objects)
+        }
+        mDataListFiltered !!.addAll(mDataList !!)
         mResId = resource
         mTextViewResId = textViesResourceId
+    }
+
+    override fun getCount() : Int {
+        return mDataListFiltered !!.size
+    }
+
+    override fun getItem(position : Int) : DTODropdownArrayAdapter {
+        return mDataListFiltered !![position]
     }
 
     override fun getView(position : Int, convertView : View?, parent : ViewGroup?) : View {
@@ -59,42 +72,33 @@ class DropdownArrayAdapter : ArrayAdapter<DTODropdownArrayAdapter> {
 
         override fun performFiltering(prefix : CharSequence?) : FilterResults {
             val results = Filter.FilterResults()
-            if (mDataListAllItems == null) {
+            if (prefix == null || prefix.trim().length == 0) {
                 synchronized(lock) {
-                    mDataListAllItems = ArrayList<DTODropdownArrayAdapter>(mDataList)
-                }
-            }
-
-            if (prefix == null || prefix.trim().length === 0) {
-                synchronized(lock) {
-                    results.values = mDataListAllItems
-                    results.count = mDataListAllItems !!.size
+                    results.values = mDataList
+                    results.count = mDataList !!.size
                 }
             } else {
-                val searchStrLowerCase = prefix.toString().toLowerCase()
-
+                val searchStrLowerCase = prefix.toString().trim().toLowerCase()
                 val matchValues = ArrayList<DTODropdownArrayAdapter>()
-
-                for (dataItem in mDataListAllItems !!) {
-                    if (dataItem.name !!.toLowerCase().startsWith(searchStrLowerCase)) {
+                for (dataItem in mDataList !!) {
+                    if (dataItem.name !!.trim().toLowerCase().startsWith(searchStrLowerCase)) {
                         matchValues.add(dataItem)
                     }
                 }
-
                 results.values = matchValues
                 results.count = matchValues.size
             }
-
             return results
         }
 
         override fun publishResults(constraint : CharSequence?, results : FilterResults?) {
+            mDataListFiltered.clear()
             if (results !!.values != null) {
-                mDataList = results !!.values as ArrayList<DTODropdownArrayAdapter>
+                mDataListFiltered.addAll(results !!.values as ArrayList<DTODropdownArrayAdapter>)
             } else {
-                mDataList = null
+                mDataListFiltered.addAll(mDataList)
             }
-            if (results.count > 0) {
+            if (mDataListFiltered.size > 0) {
                 notifyDataSetChanged()
             } else {
                 notifyDataSetInvalidated()

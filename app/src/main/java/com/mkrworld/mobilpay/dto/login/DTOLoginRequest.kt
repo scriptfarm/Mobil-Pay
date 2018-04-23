@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.dto.agentlogin
+package com.mkrworld.mobilpay.dto.login
 
 import com.google.gson.annotations.SerializedName
 import com.mkrworld.androidlib.utils.Tracer
@@ -9,14 +9,14 @@ import com.mkrworld.mobilpay.dto.DTOBaseRequest
  * Created by mkr on 27/3/18.
  */
 
-class DTOAgentLoginRequest : DTOBaseRequest {
+class DTOLoginRequest : DTOBaseRequest {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentLoginRequest"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOLoginRequest"
     }
 
-    @SerializedName("agent_id")
-    private var mAgentId : String?=null
+    @SerializedName("id")
+    private var mId : String?=null
 
     @SerializedName("password")
     private var mPassword : String?=null
@@ -30,14 +30,14 @@ class DTOAgentLoginRequest : DTOBaseRequest {
      * @param token
      * @param timeStamp
      * @param publicKey
-     * @param agentId
+     * @param id
      * @param password
      * @param pushId
      * @param gcmId
      */
-    constructor(token : String, timeStamp : String, publicKey : String, agentId : String, password : String, pushId : String, gcmId : String) : super(token, timeStamp, publicKey) {
-        Tracer.debug(TAG, "DTOAgentLoginRequest : ")
-        mAgentId = agentId
+    constructor(token : String, timeStamp : String, publicKey : String, id : String, password : String, pushId : String, gcmId : String) : super(token, timeStamp, publicKey) {
+        Tracer.debug(TAG, "DTOLoginRequest : ")
+        mId = id
         mPassword = password
         mExtra = Extra(pushId, gcmId)
     }

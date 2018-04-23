@@ -15,7 +15,7 @@ class DTOAgentFetchBillRequest : DTOBaseRequest {
         private val TAG = BuildConfig.BASE_TAG + ".DTOAgentFetchBillRequest"
     }
 
-    @SerializedName("agent_id")
+    @SerializedName("id")
     private var mAgentId : String? = null
 
     @SerializedName("user_id")

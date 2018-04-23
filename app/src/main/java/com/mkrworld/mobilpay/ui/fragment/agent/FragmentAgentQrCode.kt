@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.ui.fragment
+package com.mkrworld.mobilpay.ui.fragment.agent
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -25,7 +25,7 @@ import com.squareup.picasso.Picasso
  * Created by mkr on 13/3/18.
  */
 
-class FragmentMerchantQrCode : Fragment(), OnBaseFragmentListener {
+class FragmentAgentQrCode : Fragment(), OnBaseFragmentListener {
 
     companion object {
         val EXTRA_QR_CODE_TITLE = "EXTRA_QR_CODE_TITLE"
@@ -33,12 +33,12 @@ class FragmentMerchantQrCode : Fragment(), OnBaseFragmentListener {
         val EXTRA_BILL_AMOUNT = "EXTRA_BILL_AMOUNT"
         val EXTRA_BILL_NUMBER = "EXTRA_BILL_NUMBER"
         val EXTRA_QR_CODE_TOKEN = "EXTRA_QR_CODE_TOKEN"
-        private val TAG = BuildConfig.BASE_TAG + ".FragmentMerchantQrCode"
+        private val TAG = BuildConfig.BASE_TAG + ".FragmentAgentQrCode"
     }
 
     override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
         Tracer.debug(TAG, "onCreateView: ")
-        return inflater !!.inflate(R.layout.fragment_merchant_qrcode, container, false)
+        return inflater !!.inflate(R.layout.fragment_agent_qrcode, container, false)
     }
 
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
@@ -82,7 +82,7 @@ class FragmentMerchantQrCode : Fragment(), OnBaseFragmentListener {
             return
         }
         val qrCodeTitle = bundle.getString(EXTRA_QR_CODE_TITLE, "")
-        (view !!.findViewById<View>(R.id.fragment_merchant_qrcode_textView_name) as TextView).text = qrCodeTitle
+        (view !!.findViewById<View>(R.id.fragment_agent_qrcode_textView_name) as TextView).text = qrCodeTitle
         if (bundle.getBoolean(EXTRA_IS_DYNAMIC_QR_CODE, false)) {
             generateDynamicQRCode(bundle)
         } else {
@@ -97,9 +97,9 @@ class FragmentMerchantQrCode : Fragment(), OnBaseFragmentListener {
      */
     private fun generateStaticQRCode(bundle : Bundle) {
         Tracer.debug(TAG, "generateStaticQRCode : ")
-        val url = UrlUtils.getUrl(activity, R.string.url_agent_logo) + PreferenceData.getAgentId(activity) + ".png"
+        val url = UrlUtils.getUrl(activity, R.string.url_agent_logo) + PreferenceData.getLoginId(activity) + ".png"
         // System.out.println("======url=========="+url);
-        Picasso.with(activity).load(url).placeholder(R.mipmap.ic_launcher).into(view !!.findViewById<View>(R.id.fragment_merchant_qrcode_imageView_qrcode) as ImageView)
+        Picasso.with(activity).load(url).placeholder(R.mipmap.ic_launcher).into(view !!.findViewById<View>(R.id.fragment_agent_qrcode_imageView_qrcode) as ImageView)
     }
 
     /**
@@ -115,7 +115,7 @@ class FragmentMerchantQrCode : Fragment(), OnBaseFragmentListener {
         try {
             val bitmapQRCode = qrCodeEncoder.encodeAsBitmap()
             if (bitmapQRCode != null && ! bitmapQRCode.isRecycled) {
-                (view !!.findViewById<View>(R.id.fragment_merchant_qrcode_imageView_qrcode) as ImageView).setImageBitmap(bitmapQRCode)
+                (view !!.findViewById<View>(R.id.fragment_agent_qrcode_imageView_qrcode) as ImageView).setImageBitmap(bitmapQRCode)
             }
         } catch (e : WriterException) {
             Tracer.showSnack(view!!, R.string.unable_to_generate_qr_code)

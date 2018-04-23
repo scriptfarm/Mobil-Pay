@@ -3,6 +3,7 @@ package com.mkrworld.mobilpay.utils
 import android.app.Activity
 import android.content.Context
 import android.text.Editable
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -12,6 +13,7 @@ import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  * Created by mkr on 14/3/18.
@@ -155,6 +157,11 @@ class Utils {
          */
         fun getEditable(text : String) : Editable {
             return Editable.Factory.getInstance().newEditable(text)
+        }
+
+        fun isValidPhone(phone : String) : Boolean {
+            val pattern = Patterns.PHONE
+            return pattern.matcher(phone).matches()
         }
     }
 }

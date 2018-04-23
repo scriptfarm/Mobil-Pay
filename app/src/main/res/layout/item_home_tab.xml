@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_merchant_home_parent"
+    android:id="@+id/item_home_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/transparent"
@@ -11,7 +11,7 @@
     android:padding="@dimen/item_agent_home_content_padding">
 
     <ImageView
-        android:id="@+id/item_merchant_home_imageView_icon"
+        android:id="@+id/item_home_imageView_icon"
         android:layout_width="@dimen/item_agent_home_icon_dim"
         android:layout_height="@dimen/item_agent_home_icon_dim"
         android:clickable="false"
@@ -24,7 +24,7 @@
         android:layout_weight="1" />
 
     <TextView
-        android:id="@+id/item_merchant_home_textView_label"
+        android:id="@+id/item_home_textView_label"
         style="@style/style_text_view_default"
         android:clickable="false"
         android:gravity="center"

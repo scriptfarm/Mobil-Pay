@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.ui.fragment
+package com.mkrworld.mobilpay.ui.fragment.merchant
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
 import com.mkrworld.androidlib.ui.adapter.BaseAdapter
@@ -22,15 +21,13 @@ import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler
 import com.mkrworld.mobilpay.ui.adapter.GridSpacingItemDecoration
-import com.mkrworld.mobilpay.utils.PreferenceData
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by mkr on 13/3/18.
  */
 
-class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHClickable {
+class FragmentMerchantHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHClickable {
 
     companion object {
         private val TAG = BuildConfig.BASE_TAG + ".FragmentAgentHome"
@@ -57,7 +54,7 @@ class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHC
 
     override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
         Tracer.debug(TAG, "onCreateView: ")
-        return inflater !!.inflate(R.layout.fragment_agent_home, container, false)
+        return inflater !!.inflate(R.layout.fragment_merchant_home, container, false)
     }
 
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
@@ -84,32 +81,32 @@ class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHC
     override fun onViewHolderClicked(holder : BaseViewHolder<*>, view : View) {
         Tracer.debug(TAG, "onViewHolderClicked: ")
         when (view.id) {
-            R.id.item_merchant_home_parent -> if (view.tag != null && view.tag is DTOMerchantHomeTab) {
+            R.id.item_home_parent -> if (view.tag != null && view.tag is DTOMerchantHomeTab) {
                 val dtoMerchantHomeTab = view.tag as DTOMerchantHomeTab
                 when (dtoMerchantHomeTab.tabType) {
                     DTOMerchantHomeTab.TabType.STATIC_QR_CODE -> if (activity is OnBaseActivityListener) {
-                        val bundle = Bundle()
-                        bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, PreferenceData.getAgentId(activity))
-                        val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_QR_CODE)
-                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, bundle, true, FragmentTag.MERCHANT_QR_CODE)
+                        //                        val bundle = Bundle()
+                        //                        bundle.putString(FragmentAgentQrCode.EXTRA_QR_CODE_TITLE, PreferenceData.getUserType(activity))
+                        //                        val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_QR_CODE)
+                        //                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, bundle, true, FragmentTag.AGENT_QR_CODE)
                     }
                     DTOMerchantHomeTab.TabType.DYNAMIC_QR_CODE -> if (activity is OnBaseActivityListener) {
-                        val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_QR_CODE_GENERATOR)
-                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, null, true, FragmentTag.MERCHANT_QR_CODE_GENERATOR)
+                        //                        val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_QR_CODE_GENERATOR)
+                        //                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_QR_CODE_GENERATOR)
                     }
                     DTOMerchantHomeTab.TabType.SEND_BILL -> if (activity is OnBaseActivityListener) {
                         val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_SEND_BILL)
-                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, null, true, FragmentTag.MERCHANT_SEND_BILL)
+                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.MERCHANT_SEND_BILL)
                     }
                     DTOMerchantHomeTab.TabType.UPI_COLLECT -> {
                     }
                     DTOMerchantHomeTab.TabType.AEPS_COLLECT -> if (activity is OnBaseActivityListener) {
-                        val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_AEPS_COLLECT)
-                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, null, true, FragmentTag.MERCHANT_AEPS_COLLECT)
+                        //                        val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_AEPS_COLLECT)
+                        //                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_AEPS_COLLECT)
                     }
                     DTOMerchantHomeTab.TabType.COLLECTION_SUMMARY -> if (activity is OnBaseActivityListener) {
-                        val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_COLLECTION_SUMMARY)
-                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, null, true, FragmentTag.MERCHANT_COLLECTION_SUMMARY)
+                        //                        val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_COLLECTION_SUMMARY)
+                        //                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_COLLECTION_SUMMARY)
                     }
                 }
             }
@@ -122,7 +119,7 @@ class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHC
     private fun setTitle() {
         Tracer.debug(TAG, "setTitle: ")
         if (activity is OnBaseActivityListener) {
-            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_agent_home))
+            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_merchant_home))
         }
     }
 
@@ -135,7 +132,7 @@ class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHC
             return
         }
         // INIT the RecyclerView
-        val recyclerView = view !!.findViewById<View>(R.id.fragment_agent_home_recycler_view) as RecyclerView
+        val recyclerView = view !!.findViewById<View>(R.id.fragment_merchant_home_recycler_view) as RecyclerView
         val baseAdapter = BaseAdapter(AdapterItemHandler())
         recyclerView.adapter = baseAdapter
         val gridLayoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)

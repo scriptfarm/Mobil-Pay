@@ -12,8 +12,8 @@ import com.mkrworld.mobilpay.dto.agentfetchbill.DTOAgentFetchBillRequest
 import com.mkrworld.mobilpay.dto.agentfetchbill.DTOAgentFetchBillResponse
 import com.mkrworld.mobilpay.dto.agentforgotpassword.DTOAgentForgotPasswordRequest
 import com.mkrworld.mobilpay.dto.agentforgotpassword.DTOAgentForgotPasswordResponse
-import com.mkrworld.mobilpay.dto.agentlogin.DTOAgentLoginRequest
-import com.mkrworld.mobilpay.dto.agentlogin.DTOAgentLoginResponse
+import com.mkrworld.mobilpay.dto.login.DTOLoginRequest
+import com.mkrworld.mobilpay.dto.login.DTOLoginResponse
 import com.mkrworld.mobilpay.dto.agentlogout.DTOAgentLogoutRequest
 import com.mkrworld.mobilpay.dto.agentlogout.DTOAgentLogoutResponse
 import com.mkrworld.mobilpay.dto.agentsendforgotpasswordotp.DTOAgentSendForgotPasswordOtpRequest
@@ -37,19 +37,19 @@ import org.json.JSONObject
 class AgentNetworkTaskProvider : BaseTaskProvider() {
 
     /**
-     * Method called to login the agent
+     * Method called to login
      *
      * @param context
      * @param request
      * @param networkCallBack
      */
-    fun agentLoginTask(context : Context, request : DTOAgentLoginRequest, networkCallBack : NetworkCallBack<DTOAgentLoginResponse>) {
-        Tracer.debug(TAG, "userDetailTask : ")
-        val requestJson = parseDtoToJson(request, DTOAgentLoginRequest::class.java, networkCallBack)
+    fun loginTask(context : Context, request : DTOLoginRequest, networkCallBack : NetworkCallBack<DTOLoginResponse>) {
+        Tracer.debug(TAG, "loginTask : ")
+        val requestJson = parseDtoToJson(request, DTOLoginRequest::class.java, networkCallBack)
                 ?: return
-        val task = AgentLoginTask(context, requestJson, object : NetworkCallBack<DTOAgentLoginResponse> {
+        val task = LoginTask(context, requestJson, object : NetworkCallBack<DTOLoginResponse> {
 
-            override fun onSuccess(networkResponse : DTOAgentLoginResponse) {
+            override fun onSuccess(networkResponse : DTOLoginResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 

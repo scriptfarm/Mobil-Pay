@@ -8,7 +8,7 @@ import com.mkrworld.mobilpay.R
  * Created by mkr on 14/3/18.
  * Class to hold the mData of the Merchant Home Tab
  */
-class DTOMerchantHomeTab {
+class DTOAgentHomeTab {
 
     companion object {
         private val TAG = BuildConfig.BASE_TAG + ".DTOAgentHomeTab"
@@ -64,8 +64,8 @@ class DTOMerchantHomeTab {
     }
 
     override fun equals(obj : Any?) : Boolean {
-        if (obj is DTOMerchantHomeTab) {
-            val dtoMerchantHomeTab = obj as DTOMerchantHomeTab?
+        if (obj is DTOAgentHomeTab) {
+            val dtoMerchantHomeTab = obj as DTOAgentHomeTab?
             if (dtoMerchantHomeTab !!.mTabType == mTabType && dtoMerchantHomeTab.mLabel !!.equals(mLabel !!, ignoreCase = true) && dtoMerchantHomeTab.mIconResId == mIconResId) {
                 return true
             }

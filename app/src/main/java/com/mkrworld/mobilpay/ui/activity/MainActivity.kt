@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
                 Tracer.showSnack(findViewById(R.id.activity_main_parent), dtoAgentLogoutResponse.getMessage())
                 PreferenceData.clearStore(applicationContext)
                 // MOVE TO LOGIN FRAGMENT
-                val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN)
-                onBaseActivityReplaceFragment(fragment !!, null, FragmentTag.MERCHANT_LOGIN)
+                val fragment = FragmentProvider.getFragment(FragmentTag.LOGIN)
+                onBaseActivityReplaceFragment(fragment !!, null, FragmentTag.LOGIN)
             } catch (e : Exception) {
                 Tracer.error(TAG, "onSuccess : " + e.message)
             }
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
 
     override fun onAppPermissionControllerListenerHaveAllRequiredPermission() {
         Tracer.debug(TAG, "onAppPermissionControllerListenerHaveAllRequiredPermission : ")
-        onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN) !!, null, false, FragmentTag.MERCHANT_LOGIN)
+        onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.LOGIN) !!, null, false, FragmentTag.LOGIN)
     }
 
     override fun onClick(view : View) {
@@ -207,7 +207,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
      * @param currentFragmentTag
      */
     private fun setNavigationDrawerSwipeState(currentFragmentTag : String?) {
-        if (currentFragmentTag != null && currentFragmentTag.trim { it <= ' ' }.equals(FragmentTag.MERCHANT_LOGIN, ignoreCase = true)) {
+        if (currentFragmentTag != null && currentFragmentTag.trim { it <= ' ' }.equals(FragmentTag.LOGIN, ignoreCase = true)) {
             lockDrawerSwipe()
         } else {
             unlockDrawerSwipe()
@@ -258,7 +258,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
      */
     private fun logoutMerchant() {
         Tracer.debug(TAG, "logoutMerchant : ")
-        val agentId = PreferenceData.getAgentId(this)
+        val agentId = PreferenceData.getLoginId(this)
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(this, getString(R.string.endpoint_agent_logout), date)

@@ -51,12 +51,9 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            PreferenceData.setAgentLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim { it <= ' ' })
+            PreferenceData.setLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim { it <= ' ' })
             Tracer.showSnack(view !!, dtoAgentChangePasswordResponse.getMessage())
-            if (activity is OnBaseActivityListener) {
-                val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME)
-                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment !!, null, FragmentTag.MERCHANT_HOME)
-            }
+            activity.onBackPressed()
         }
 
         override fun onError(errorMessage : String, errorCode : Int) {
@@ -201,7 +198,7 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_change_password), date)
         val publicKey = getString(R.string.public_key)
-        val dtoAgentChangePasswordRequest = DTOAgentChangePasswordRequest(token !!, timeStamp, publicKey, PreferenceData.getAgentId(activity), oldPassword, confirmPassword)
+        val dtoAgentChangePasswordRequest = DTOAgentChangePasswordRequest(token !!, timeStamp, publicKey, PreferenceData.getLoginId(activity), oldPassword, confirmPassword)
         Utils.showLoadingDialog(activity)
         mAgentNetworkTaskProvider !!.agentChangePasswordTask(activity, dtoAgentChangePasswordRequest, mAgentChangePasswordResponseNetworkCallBack)
     }

@@ -52,14 +52,14 @@ class FragmentChangePasswordByOtp : Fragment(), OnBaseFragmentListener, View.OnC
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            val prefMerchantId = PreferenceData.getAgentId(context).trim { it <= ' ' }
+            val prefMerchantId = PreferenceData.getLoginId(context).trim { it <= ' ' }
             if (arguments != null && ! prefMerchantId.isEmpty() && arguments.getString(EXTRA_LOGIN_ID, "").trim { it <= ' ' } == prefMerchantId) {
-                PreferenceData.setAgentLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim { it <= ' ' })
+                PreferenceData.setLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim { it <= ' ' })
             }
             Tracer.showSnack(view !!, dtoAgentForgotPasswordResponse.getMessage())
             if (activity is OnBaseActivityListener) {
-                val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_LOGIN)
-                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment !!, null, FragmentTag.MERCHANT_LOGIN)
+                val fragment = FragmentProvider.getFragment(FragmentTag.LOGIN)
+                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment !!, null, FragmentTag.LOGIN)
             }
         }
 
@@ -198,7 +198,7 @@ class FragmentChangePasswordByOtp : Fragment(), OnBaseFragmentListener, View.OnC
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_forgot_password), date)
         val publicKey = getString(R.string.public_key)
-        val dtoAgentForgotPasswordRequest = DTOAgentForgotPasswordRequest(token !!, timeStamp, publicKey, PreferenceData.getAgentId(activity), confirmPassword, otp, "123")
+        val dtoAgentForgotPasswordRequest = DTOAgentForgotPasswordRequest(token !!, timeStamp, publicKey, PreferenceData.getLoginId(activity), confirmPassword, otp, "123")
         Utils.showLoadingDialog(activity)
         mAgentNetworkTaskProvider !!.agentForgotPasswordTask(activity, dtoAgentForgotPasswordRequest, mAgentForgotPasswordResponseNetworkCallBack)
     }

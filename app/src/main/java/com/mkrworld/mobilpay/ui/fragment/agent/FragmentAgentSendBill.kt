@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.ui.fragment
+package com.mkrworld.mobilpay.ui.fragment.agent
 
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
@@ -156,7 +156,7 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
                         return false
                     }
                 } catch (e : Exception) {
-                    Tracer.error(TAG, "isQrCodeDetailValid: " + e.message + "  " + e.message)
+                    Tracer.error(TAG, "isBillDetailValid: " + e.message + "  " + e.message)
                     return false
                 }
 
@@ -277,7 +277,7 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_get_user_details), date)
         val publicKey = getString(R.string.public_key)
-        val AgentId = PreferenceData.getAgentId(activity)
+        val AgentId = PreferenceData.getLoginId(activity)
         val dtoUserDetailRequest = DTOUserDetailRequest(token !!, timeStamp, publicKey, AgentId)
         Utils.showLoadingDialog(activity)
         mUserNetworkTaskProvider !!.userDetailTask(activity, dtoUserDetailRequest, mUserDetailResponseNetworkCallBack)
@@ -294,7 +294,7 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_fetch_bill), date)
         val publicKey = getString(R.string.public_key)
-        val AgentId = PreferenceData.getAgentId(activity)
+        val AgentId = PreferenceData.getLoginId(activity)
         val dtoFetchBillRequest = DTOAgentFetchBillRequest(token !!, timeStamp, publicKey, AgentId, userId)
         Utils.showLoadingDialog(activity)
         mAgentNetworkTaskProvider !!.agentFetchBillTask(activity, dtoFetchBillRequest, mAgentFetchBillResponseNetworkCallBack)
@@ -313,7 +313,7 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_send_bill), date)
         val publicKey = getString(R.string.public_key)
-        val AgentId = PreferenceData.getAgentId(activity)
+        val AgentId = PreferenceData.getLoginId(activity)
         val dtoAgentSendBillRequest = DTOAgentSendBillRequest(token !!, timeStamp, publicKey, AgentId, mDTOSelectedUserBillData !!.userId !!, mDTOSelectedUserBillData !!.billNumber !!)
         Utils.showLoadingDialog(activity)
         mAgentNetworkTaskProvider !!.agentSendBillTask(activity, dtoAgentSendBillRequest, mAgentSendBillResponseNetworkCallBack)

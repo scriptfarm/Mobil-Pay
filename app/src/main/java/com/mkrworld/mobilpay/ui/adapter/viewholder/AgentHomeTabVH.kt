@@ -8,13 +8,13 @@ import com.mkrworld.androidlib.ui.adapter.BaseViewHolder
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.appdata.DTOMerchantHomeTab
+import com.mkrworld.mobilpay.dto.appdata.DTOAgentHomeTab
 
 /**
  * Created by mkr on 14/3/18.
  */
 
-class MerchantHomeTabVH : BaseViewHolder<DTOMerchantHomeTab> {
+class AgentHomeTabVH : BaseViewHolder<DTOAgentHomeTab> {
 
     companion object {
         private val TAG = BuildConfig.BASE_TAG + ".AgentHomeTabVH"
@@ -35,13 +35,13 @@ class MerchantHomeTabVH : BaseViewHolder<DTOMerchantHomeTab> {
         mTextViewLabel = itemView.findViewById(R.id.item_home_textView_label)
     }
 
-    override fun bindData(dtoMerchantHomeTab : DTOMerchantHomeTab) {
-        Tracer.debug(TAG, "bindData: " + dtoMerchantHomeTab !!)
-        if (dtoMerchantHomeTab == null) {
+    override fun bindData(dtoAgentHomeTab : DTOAgentHomeTab) {
+        Tracer.debug(TAG, "bindData: " + dtoAgentHomeTab !!)
+        if (dtoAgentHomeTab == null) {
             return
         }
-        getParent().tag = dtoMerchantHomeTab
-        mImageViewIcon?.setImageResource(dtoMerchantHomeTab.iconResId)
-        mTextViewLabel?.text = dtoMerchantHomeTab.label
+        getParent().tag = dtoAgentHomeTab
+        mImageViewIcon?.setImageResource(dtoAgentHomeTab.iconResId)
+        mTextViewLabel?.text = dtoAgentHomeTab.label
     }
 }

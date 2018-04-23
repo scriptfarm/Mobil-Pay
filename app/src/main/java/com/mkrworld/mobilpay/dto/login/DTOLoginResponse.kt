@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.dto.agentlogout
+package com.mkrworld.mobilpay.dto.login
 
 import com.google.gson.annotations.SerializedName
 import com.mkrworld.mobilpay.BuildConfig
@@ -7,7 +7,7 @@ import com.mkrworld.mobilpay.BuildConfig
  * Created by mkr on 27/3/18.
  */
 
-class DTOAgentLogoutResponse {
+class DTOLoginResponse {
 
     companion object {
         private val TAG = BuildConfig.BASE_TAG + ".DTOLoginResponse"
@@ -17,15 +17,15 @@ class DTOAgentLogoutResponse {
     private var mMessage : String? = null
 
     @SerializedName("data")
-    private var mData : Boolean? = null
+    private var mData : Data? = null
 
     /**
      * Method to get the API Data
      *
      * @return
      */
-    fun getData() : Boolean {
-        return mData ?: false
+    fun getData() : Data? {
+        return mData
     }
 
     /**
@@ -35,5 +35,22 @@ class DTOAgentLogoutResponse {
      */
     fun getMessage() : String {
         return mMessage ?: ""
+    }
+
+    /**
+     * Class to hold the Response Data
+     */
+    inner class Data {
+
+        /**
+         * Method to get the Agent Id
+         *
+         * @return
+         */
+        @SerializedName("user_type")
+        var userType : String? = null
+            get() {
+                return field ?: ""
+            }
     }
 }

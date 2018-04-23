@@ -68,6 +68,9 @@
     <!-- FRAGMENT AGENT SEND BILL -->
     <dimen name="fragment_agent_send_bill_content_margin">@dimen/content_margin</dimen>
 
+    <!-- FRAGMENT MERCHANT SEND BILL -->
+    <dimen name="fragment_merchant_send_bill_content_margin">@dimen/content_margin</dimen>
+
     <!-- FRAGMENT FORGOT PASSWORD -->
     <dimen name="fragment_forgot_password_content_margin">@dimen/content_margin</dimen>
     <dimen name="fragment_forgot_password_title_text_size">@dimen/title_text_size</dimen>

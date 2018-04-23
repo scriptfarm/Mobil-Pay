@@ -7,7 +7,7 @@ def BASE_TAG = "BASE_TAG"
 def BASE_TAG_VALUE = "\"MKRWorld.MobilPay\""
 def BASE_URL = "BASE_URL"
 //def BASE_URL_VALUE = "\"https://merchants.nupayonline.com/api/\""
-def BASE_URL_VALUE = "\"http://192.168.43.129/nupay_dev/\""
+def BASE_URL_VALUE = "\"http://52.74.241.49/mobilpay/mobilpay/\""
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"

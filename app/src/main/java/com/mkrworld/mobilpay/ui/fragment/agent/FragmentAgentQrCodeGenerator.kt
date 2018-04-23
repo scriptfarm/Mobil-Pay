@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.ui.fragment
+package com.mkrworld.mobilpay.ui.fragment.agent
 
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
@@ -52,13 +52,13 @@ class FragmentAgentQrCodeGenerator : Fragment(), OnBaseFragmentListener, View.On
             val data = dtoQRCodeGeneratorResponse.getData()
             if (activity is OnBaseActivityListener) {
                 val bundle = Bundle()
-                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TITLE, PreferenceData.getAgentId(activity))
-                bundle.putBoolean(FragmentMerchantQrCode.EXTRA_IS_DYNAMIC_QR_CODE, true)
-                bundle.putString(FragmentMerchantQrCode.EXTRA_BILL_NUMBER, data !!.billNumber)
-                bundle.putString(FragmentMerchantQrCode.EXTRA_BILL_AMOUNT, data.amount)
-                bundle.putString(FragmentMerchantQrCode.EXTRA_QR_CODE_TOKEN, data.qrCodeToken)
-                val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_QR_CODE)
-                (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, bundle, true, FragmentTag.MERCHANT_QR_CODE)
+                bundle.putString(FragmentAgentQrCode.EXTRA_QR_CODE_TITLE, PreferenceData.getLoginId(activity))
+                bundle.putBoolean(FragmentAgentQrCode.EXTRA_IS_DYNAMIC_QR_CODE, true)
+                bundle.putString(FragmentAgentQrCode.EXTRA_BILL_NUMBER, data !!.billNumber)
+                bundle.putString(FragmentAgentQrCode.EXTRA_BILL_AMOUNT, data.amount)
+                bundle.putString(FragmentAgentQrCode.EXTRA_QR_CODE_TOKEN, data.qrCodeToken)
+                val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_QR_CODE)
+                (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, bundle, true, FragmentTag.AGENT_QR_CODE)
             }
         }
 
@@ -207,7 +207,7 @@ class FragmentAgentQrCodeGenerator : Fragment(), OnBaseFragmentListener, View.On
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_generate_qr_code_token), date)
         val publicKey = getString(R.string.public_key)
-        val agentId = PreferenceData.getAgentId(activity)
+        val agentId = PreferenceData.getLoginId(activity)
         val dtoQRCodeGeneratorRequest = DTOAgentQRCodeGeneratorRequest(token !!, timeStamp, publicKey, billAmount, billNumber, billDescription, agentId)
         Utils.showLoadingDialog(activity)
         mAgentNetworkTaskProvider !!.agentQRCodeGeneratorTask(activity, dtoQRCodeGeneratorRequest, mQRCodeGeneratorResponseNetworkCallBack)

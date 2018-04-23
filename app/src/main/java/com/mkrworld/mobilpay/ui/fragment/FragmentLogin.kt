@@ -17,14 +17,15 @@ import com.mkrworld.androidlib.utils.MKRDialogUtil
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.agentlogin.DTOAgentLoginRequest
-import com.mkrworld.mobilpay.dto.agentlogin.DTOAgentLoginResponse
+import com.mkrworld.mobilpay.dto.login.DTOLoginRequest
+import com.mkrworld.mobilpay.dto.login.DTOLoginResponse
 import com.mkrworld.mobilpay.fingerprintauth.FingerPrintAuthHelper
 import com.mkrworld.mobilpay.fingerprintauth.OnFingerPrintAuthCallback
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
+import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
 import java.util.*
@@ -33,10 +34,10 @@ import java.util.*
  * Created by mkr on 13/3/18.
  */
 
-class FragmentAgentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, OnFingerPrintAuthCallback {
+class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, OnFingerPrintAuthCallback {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".FragmentAgentLogin"
+        private val TAG = BuildConfig.BASE_TAG + ".FragmentLogin"
     }
 
     private var mTextInputLayoutId : TextInputLayout? = null
@@ -46,22 +47,24 @@ class FragmentAgentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListe
     private var mIsFingerPrintDeviceWorkingFine : Boolean = false
     private var mFingerPrintAuthHelper : FingerPrintAuthHelper? = null
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
-    private val mAgentLoginResponseNetworkCallBack = object : NetworkCallBack<DTOAgentLoginResponse> {
-        override fun onSuccess(dtoAgentLoginResponse : DTOAgentLoginResponse) {
-            Tracer.debug(TAG, "onSuccess : " + dtoAgentLoginResponse !!)
+    private val mLoginResponseNetworkCallBack = object : NetworkCallBack<DTOLoginResponse> {
+        override fun onSuccess(dtoLoginResponse : DTOLoginResponse) {
+            Tracer.debug(TAG, "onSuccess : " + dtoLoginResponse !!)
             Utils.dismissLoadingDialog()
-            if (dtoAgentLoginResponse == null || dtoAgentLoginResponse.getData() == null) {
+            if (dtoLoginResponse == null || dtoLoginResponse.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            Tracer.showSnack(view !!, dtoAgentLoginResponse.getMessage())
+            Tracer.showSnack(view !!, dtoLoginResponse.getMessage())
             val userId = mEditTextId !!.text.toString()
             val password = mEditTextPassword !!.text.toString()
+            PreferenceData.setUserType(activity, dtoLoginResponse.getData() !!.userType !!)
+            PreferenceData.setLoginId(activity, userId)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (! PreferenceData.isHaveFingerPrintConsent(activity) && mIsFingerPrintDeviceWorkingFine) {
                     showEnableFingerPrintDialog(userId, password)
                     return
-                } else if (PreferenceData.isHaveFingerPrintConsent(activity) && PreferenceData.getAgentId(activity).equals(userId.trim(), true) && (! PreferenceData.getAgentLoginPassword(activity).equals(password.trim(), true))) {
+                } else if (PreferenceData.isHaveFingerPrintConsent(activity) && PreferenceData.getLoginId(activity).equals(userId.trim(), true) && (! PreferenceData.getLoginPassword(activity).equals(password.trim(), true))) {
                     showUpdateFingerLoginDetailDialog(password)
                     return
                 }
@@ -169,8 +172,8 @@ class FragmentAgentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListe
 
     override fun onFingerPrintAuthSuccess(cryptoObject : FingerprintManager.CryptoObject) {
         Tracer.debug(TAG, "onFingerPrintAuthSuccess : ")
-        val agentLoginPassword = PreferenceData.getAgentLoginPassword(activity)
-        val agentId = PreferenceData.getAgentId(activity)
+        val agentLoginPassword = PreferenceData.getLoginPassword(activity)
+        val agentId = PreferenceData.getLoginId(activity)
         if (agentId.trim().isEmpty() || agentLoginPassword.trim().isEmpty()) {
             if (view == null) {
                 return
@@ -237,13 +240,13 @@ class FragmentAgentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListe
         val password = mEditTextPassword !!.text.toString()
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
-        val token = Utils.createToken(activity, getString(R.string.endpoint_agent_login), date)
+        val token = Utils.createToken(activity, getString(R.string.endpoint_login), date)
         val publicKey = getString(R.string.public_key)
         val pushId = "123"
         val gcmId = "123"
-        val dtoAgentLoginRequest = DTOAgentLoginRequest(token !!, timeStamp, publicKey, userId, password, pushId, gcmId)
+        val dtoAgentLoginRequest = DTOLoginRequest(token !!, timeStamp, publicKey, userId, password, pushId, gcmId)
         Utils.showLoadingDialog(activity)
-        mAgentNetworkTaskProvider !!.agentLoginTask(activity, dtoAgentLoginRequest, mAgentLoginResponseNetworkCallBack)
+        mAgentNetworkTaskProvider !!.loginTask(activity, dtoAgentLoginRequest, mLoginResponseNetworkCallBack)
     }
 
     /**
@@ -270,8 +273,8 @@ class FragmentAgentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListe
         val onOkClickListener = DialogInterface.OnClickListener { dialogInterface, i ->
             dialogInterface.dismiss()
             PreferenceData.setHaveFingerPrintConsent(activity)
-            PreferenceData.setAgentId(activity, loginId)
-            PreferenceData.setAgentLoginPassword(activity, loginPassword)
+            PreferenceData.setLoginId(activity, loginId)
+            PreferenceData.setLoginPassword(activity, loginPassword)
             goToSuccessScreen()
         }
         val onCancelClickListener = DialogInterface.OnClickListener { dialogInterface, i ->
@@ -293,7 +296,7 @@ class FragmentAgentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListe
         val message = getString(R.string.are_you_sure_to_update_the_login_detail)
         val onOkClickListener = DialogInterface.OnClickListener { dialogInterface, i ->
             dialogInterface.dismiss()
-            PreferenceData.setAgentLoginPassword(activity, loginPassword)
+            PreferenceData.setLoginPassword(activity, loginPassword)
             goToSuccessScreen()
         }
         val onCancelClickListener = DialogInterface.OnClickListener { dialogInterface, i ->
@@ -310,8 +313,13 @@ class FragmentAgentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListe
     private fun goToSuccessScreen() {
         Tracer.debug(TAG, "goToSuccessScreen : ")
         if (activity is OnBaseActivityListener) {
-            val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME)
-            (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment !!, null, FragmentTag.MERCHANT_HOME)
+            if (PreferenceData.getUserType(activity).equals(Constants.USER_TYPE_MERCHANT)) {
+                val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME)
+                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment !!, null, FragmentTag.MERCHANT_HOME)
+            } else {
+                val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_HOME)
+                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment !!, null, FragmentTag.AGENT_HOME)
+            }
         }
     }
 }

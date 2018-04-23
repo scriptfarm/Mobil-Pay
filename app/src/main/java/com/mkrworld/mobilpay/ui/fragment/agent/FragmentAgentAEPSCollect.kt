@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.ui.fragment
+package com.mkrworld.mobilpay.ui.fragment.agent
 
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
@@ -20,10 +20,10 @@ import com.mkrworld.mobilpay.utils.Utils
  * Created by mkr on 13/3/18.
  */
 
-class FragmentMerchantAEPSCollect : Fragment(), OnBaseFragmentListener, View.OnClickListener {
+class FragmentAgentAEPSCollect : Fragment(), OnBaseFragmentListener, View.OnClickListener {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".FragmentMerchantAEPSCollect"
+        private val TAG = BuildConfig.BASE_TAG + ".FragmentAgentAEPSCollect"
     }
 
     private var mTextInputLayoutCustomerName : TextInputLayout? = null
@@ -95,7 +95,7 @@ class FragmentMerchantAEPSCollect : Fragment(), OnBaseFragmentListener, View.OnC
 
     override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
         Tracer.debug(TAG, "onCreateView: ")
-        return inflater !!.inflate(R.layout.fragment_aeps_collect, container, false)
+        return inflater !!.inflate(R.layout.fragment_agent_aeps_collect, container, false)
     }
 
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
@@ -132,7 +132,7 @@ class FragmentMerchantAEPSCollect : Fragment(), OnBaseFragmentListener, View.OnC
     override fun onClick(view : View) {
         Tracer.debug(TAG, "onClick: $view")
         when (view.id) {
-            R.id.fragment_aeps_collect_textView_aeps -> startAEPSTransactionProcess()
+            R.id.fragment_agent_aeps_collect_textView_aeps -> startAEPSTransactionProcess()
         }
     }
 
@@ -144,18 +144,18 @@ class FragmentMerchantAEPSCollect : Fragment(), OnBaseFragmentListener, View.OnC
         if (view == null) {
             return
         }
-        view !!.findViewById<View>(R.id.fragment_aeps_collect_textView_aeps).setOnClickListener(this)
+        view !!.findViewById<View>(R.id.fragment_agent_aeps_collect_textView_aeps).setOnClickListener(this)
 
-        mTextInputLayoutCustomerName = view !!.findViewById<View>(R.id.fragment_aeps_collect_textInputLayout_customer_name) as TextInputLayout
-        mEditTextCustomerName = view !!.findViewById<View>(R.id.fragment_aeps_collect_editText_customer_name) as EditText
-        mTextInputLayoutBankName = view !!.findViewById<View>(R.id.fragment_aeps_collect_textInputLayout_bank_name) as TextInputLayout
-        mEditTextBankName = view !!.findViewById<View>(R.id.fragment_aeps_collect_editText_bank_name) as EditText
-        mTextInputLayoutTransactionAmount = view !!.findViewById<View>(R.id.fragment_aeps_collect_textInputLayout_transaction_amount) as TextInputLayout
-        mEditTextTransactionAmount = view !!.findViewById<View>(R.id.fragment_aeps_collect_editText_transaction_amount) as EditText
-        mTextInputLayoutMobileNumber = view !!.findViewById<View>(R.id.fragment_aeps_collect_textInputLayout_mobile_number) as TextInputLayout
-        mEditTextMobileNumber = view !!.findViewById<View>(R.id.fragment_aeps_collect_editText_mobile_number) as EditText
-        mTextInputLayoutAadharNumber = view !!.findViewById<View>(R.id.fragment_aeps_collect_textInputLayout_aadhar_number) as TextInputLayout
-        mEditTextAadharNumber = view !!.findViewById<View>(R.id.fragment_aeps_collect_editText_aadhar_number) as EditText
+        mTextInputLayoutCustomerName = view !!.findViewById<View>(R.id.fragment_agent_aeps_collect_textInputLayout_customer_name) as TextInputLayout
+        mEditTextCustomerName = view !!.findViewById<View>(R.id.fragment_agent_aeps_collect_editText_customer_name) as EditText
+        mTextInputLayoutBankName = view !!.findViewById<View>(R.id.fragment_agent_aeps_collect_textInputLayout_bank_name) as TextInputLayout
+        mEditTextBankName = view !!.findViewById<View>(R.id.fragment_agent_aeps_collect_editText_bank_name) as EditText
+        mTextInputLayoutTransactionAmount = view !!.findViewById<View>(R.id.fragment_agent_aeps_collect_textInputLayout_transaction_amount) as TextInputLayout
+        mEditTextTransactionAmount = view !!.findViewById<View>(R.id.fragment_agent_aeps_collect_editText_transaction_amount) as EditText
+        mTextInputLayoutMobileNumber = view !!.findViewById<View>(R.id.fragment_agent_aeps_collect_textInputLayout_mobile_number) as TextInputLayout
+        mEditTextMobileNumber = view !!.findViewById<View>(R.id.fragment_agent_aeps_collect_editText_mobile_number) as EditText
+        mTextInputLayoutAadharNumber = view !!.findViewById<View>(R.id.fragment_agent_aeps_collect_textInputLayout_aadhar_number) as TextInputLayout
+        mEditTextAadharNumber = view !!.findViewById<View>(R.id.fragment_agent_aeps_collect_editText_aadhar_number) as EditText
 
         // ADD TEXT CHANGE LISTENER
         mEditTextCustomerName !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutCustomerName !!))

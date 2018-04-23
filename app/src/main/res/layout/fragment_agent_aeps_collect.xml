@@ -19,11 +19,11 @@
 
             <!-- CUSTOMER NAME -->
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/fragment_aeps_collect_textInputLayout_customer_name"
+                android:id="@+id/fragment_agent_aeps_collect_textInputLayout_customer_name"
                 style="@style/style_text_input_layout_hint">
 
                 <com.mkrworld.mobilpay.ui.custom.EditTextDropDown
-                    android:id="@+id/fragment_aeps_collect_editText_customer_name"
+                    android:id="@+id/fragment_agent_aeps_collect_editText_customer_name"
                     style="@style/style_text_input_layout_inputText"
                     android:hint="@string/customer_name"
                     android:inputType="textNoSuggestions" />
@@ -32,11 +32,11 @@
 
             <!-- BANK NAME -->
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/fragment_aeps_collect_textInputLayout_bank_name"
+                android:id="@+id/fragment_agent_aeps_collect_textInputLayout_bank_name"
                 style="@style/style_text_input_layout_hint">
 
                 <EditText
-                    android:id="@+id/fragment_aeps_collect_editText_bank_name"
+                    android:id="@+id/fragment_agent_aeps_collect_editText_bank_name"
                     style="@style/style_text_input_layout_inputText"
                     android:hint="@string/bank_name"
                     android:inputType="textNoSuggestions" />
@@ -45,11 +45,11 @@
 
             <!-- TRANSACTION AMOUNT -->
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/fragment_aeps_collect_textInputLayout_transaction_amount"
+                android:id="@+id/fragment_agent_aeps_collect_textInputLayout_transaction_amount"
                 style="@style/style_text_input_layout_hint">
 
                 <EditText
-                    android:id="@+id/fragment_aeps_collect_editText_transaction_amount"
+                    android:id="@+id/fragment_agent_aeps_collect_editText_transaction_amount"
                     style="@style/style_text_input_layout_inputText"
                     android:hint="@string/Transaction_amount_star"
                     android:inputType="number" />
@@ -58,11 +58,11 @@
 
             <!-- MOBILE NUMBER -->
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/fragment_aeps_collect_textInputLayout_mobile_number"
+                android:id="@+id/fragment_agent_aeps_collect_textInputLayout_mobile_number"
                 style="@style/style_text_input_layout_hint">
 
                 <EditText
-                    android:id="@+id/fragment_aeps_collect_editText_mobile_number"
+                    android:id="@+id/fragment_agent_aeps_collect_editText_mobile_number"
                     style="@style/style_text_input_layout_inputText"
                     android:hint="@string/mobile_number_star"
                     android:inputType="number"
@@ -72,11 +72,11 @@
 
             <!-- AADHAR NUMBER -->
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/fragment_aeps_collect_textInputLayout_aadhar_number"
+                android:id="@+id/fragment_agent_aeps_collect_textInputLayout_aadhar_number"
                 style="@style/style_text_input_layout_hint">
 
                 <EditText
-                    android:id="@+id/fragment_aeps_collect_editText_aadhar_number"
+                    android:id="@+id/fragment_agent_aeps_collect_editText_aadhar_number"
                     style="@style/style_text_input_layout_inputText"
                     android:hint="@string/enter_last_4_digit_aadhar_number"
                     android:inputType="number"
@@ -85,7 +85,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <TextView
-                android:id="@+id/fragment_aeps_collect_textView_aeps"
+                android:id="@+id/fragment_agent_aeps_collect_textView_aeps"
                 style="@style/style_button"
                 android:layout_marginBottom="@dimen/fragment_apes_collect_content_margin"
                 android:layout_marginTop="@dimen/fragment_apes_collect_content_margin"

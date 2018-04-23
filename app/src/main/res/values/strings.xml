@@ -14,10 +14,12 @@
     <string name="no_data_fetch_from_server">No Data Fetch From Server</string>
 
     <string name="field_should_not_be_empty_caps">FIELD SHOULD NOT BE EMPTY</string>
+    <string name="enter_valid_mobile_number">ENTER A VALID 10 DIGIT MOBILE NUMBER</string>
     <string name="amount_should_be_greater_then_caps">AMOUNT SHOULD BE GREATER THEN </string>
     <string name="password_does_not_match_with_new_password">PASSWORD DOESN\'T MATCH WITH NEW PASSWORD</string>
 
     <string name="screen_title_login">Login</string>
+    <string name="screen_title_merchant_home">Merchant Home</string>
     <string name="screen_title_agent_home">Agent Home</string>
     <string name="screen_title_agent_qrcode">Agent Qr-Code</string>
     <string name="screen_title_aeps_collect">AEPS Collect</string>
@@ -88,6 +90,6 @@
     <string name="enable_finger_print">Enable Finger Print</string>
     <string name="are_you_sure_enable_finger_print_login">Are you sure to enable finger print login ??</string>
     <string name="update_finger_print">Update Finger Print</string>
-    <string name="are_you_sure_to_update_the_login_detail">Are you sure to update the login detail used at the time of login via finger print</string>
+    <string name="are_you_sure_to_update_the_login_detail">Are you sure to update the login detail used at the time of login</string>
 
 </resources>

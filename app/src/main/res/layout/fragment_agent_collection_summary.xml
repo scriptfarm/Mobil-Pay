@@ -9,7 +9,7 @@
 
     <!-- CARD TO HAVE THE USER DATA LIST -->
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/fragment_merchant_collection_summary_recycler_view"
+        android:id="@+id/fragment_agent_collection_summary_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

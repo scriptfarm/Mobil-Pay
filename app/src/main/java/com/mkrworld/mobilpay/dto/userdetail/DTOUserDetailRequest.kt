@@ -15,7 +15,7 @@ class DTOUserDetailRequest : DTOBaseRequest {
         private val TAG = BuildConfig.BASE_TAG + ".DTOUserDetailRequest"
     }
 
-    @SerializedName("agent_id")
+    @SerializedName("id")
     private var mAgentId : String? = null
 
     /**
