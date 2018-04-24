@@ -13,8 +13,8 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.merchantsendbill.DTOMerchantSendBillRequest
-import com.mkrworld.mobilpay.dto.merchantsendbill.DTOMerchantSendBillResponse
+import com.mkrworld.mobilpay.dto.merchant.merchantsendbill.DTOMerchantSendBillRequest
+import com.mkrworld.mobilpay.dto.merchant.merchantsendbill.DTOMerchantSendBillResponse
 import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
 import com.mkrworld.mobilpay.utils.Constants

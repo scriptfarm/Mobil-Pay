@@ -6,12 +6,9 @@ import com.mkrworld.androidlib.network.BaseTaskProvider
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
-import com.mkrworld.mobilpay.dto.agentsendbill.DTOAgentSendBillRequest
-import com.mkrworld.mobilpay.dto.agentsendbill.DTOAgentSendBillResponse
-import com.mkrworld.mobilpay.dto.merchantsendbill.DTOMerchantSendBillRequest
-import com.mkrworld.mobilpay.dto.merchantsendbill.DTOMerchantSendBillResponse
-import com.mkrworld.mobilpay.task.AgentSendBillTask
-import com.mkrworld.mobilpay.task.MerchantSendBillTask
+import com.mkrworld.mobilpay.dto.merchant.merchantsendbill.DTOMerchantSendBillRequest
+import com.mkrworld.mobilpay.dto.merchant.merchantsendbill.DTOMerchantSendBillResponse
+import com.mkrworld.mobilpay.task.merchant.MerchantSendBillTask
 import org.json.JSONException
 import org.json.JSONObject
 

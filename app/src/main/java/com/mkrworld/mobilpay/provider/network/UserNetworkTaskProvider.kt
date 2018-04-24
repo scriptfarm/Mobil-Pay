@@ -6,9 +6,9 @@ import com.mkrworld.androidlib.network.BaseTaskProvider
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
-import com.mkrworld.mobilpay.dto.userdetail.DTOUserDetailRequest
-import com.mkrworld.mobilpay.dto.userdetail.DTOUserDetailResponse
-import com.mkrworld.mobilpay.task.UserListTask
+import com.mkrworld.mobilpay.dto.user.userdetail.DTOUserDetailRequest
+import com.mkrworld.mobilpay.dto.user.userdetail.DTOUserDetailResponse
+import com.mkrworld.mobilpay.task.user.UserListTask
 import org.json.JSONException
 import org.json.JSONObject
 
