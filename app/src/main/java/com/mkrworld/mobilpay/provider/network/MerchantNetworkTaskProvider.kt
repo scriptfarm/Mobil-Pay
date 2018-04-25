@@ -16,7 +16,7 @@ import org.json.JSONObject
  * Created by mkr on 27/3/18.
  */
 
-class MerchantNetworkTaskProvider : BaseTaskProvider() {
+class MerchantNetworkTaskProvider : AppNetworkTaskProvider() {
 
     companion object {
         val TAG : String = BuildConfig.BASE_TAG + ".MerchantNetworkTaskProvider"
@@ -44,25 +44,5 @@ class MerchantNetworkTaskProvider : BaseTaskProvider() {
             }
         })
         task.executeTask()
-    }
-
-
-    /**
-     * Method to parse the POJO into JSONObject
-     *
-     * @param object
-     * @param refClass
-     * @param networkCallBack
-     * @return
-     */
-    private fun parseDtoToJson(`object` : Any, refClass : Class<*>, networkCallBack : NetworkCallBack<*>) : JSONObject? {
-        try {
-            return JSONObject(Gson().toJson(`object`, refClass))
-        } catch (e : JSONException) {
-            e.printStackTrace()
-            notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, "Request JSON : " + e.message, - 1)
-        }
-
-        return null
     }
 }

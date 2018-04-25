@@ -105,8 +105,8 @@ class FragmentMerchantHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.
                         //                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_AEPS_COLLECT)
                     }
                     DTOMerchantHomeTab.TabType.COLLECTION_SUMMARY -> if (activity is OnBaseActivityListener) {
-                        //                        val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_COLLECTION_SUMMARY)
-                        //                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_COLLECTION_SUMMARY)
+                        val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_COLLECTION_SUMMARY)
+                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_COLLECTION_SUMMARY)
                     }
                 }
             }

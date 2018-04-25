@@ -4,7 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/transparent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/item_dropdown_array_adapter_padding_ver"
+    android:paddingLeft="@dimen/item_dropdown_array_adapter_padding_hor"
+    android:paddingRight="@dimen/item_dropdown_array_adapter_padding_hor"
+    android:paddingTop="@dimen/item_dropdown_array_adapter_padding_ver">
 
     <TextView
         android:id="@+id/item_dropdown_array_adapter_textView"

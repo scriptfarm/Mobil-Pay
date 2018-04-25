@@ -64,7 +64,7 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
             }
             var dropDownOptionList : ArrayList<DTODropdownArrayAdapter> = ArrayList<DTODropdownArrayAdapter>()
             for (data in dtoAgentFetchBillResponse.getData() !!) {
-                dropDownOptionList.add(DTODropdownArrayAdapter(data.userId !!, data.firstName + "(" + data.userId + ")"))
+                dropDownOptionList.add(DTODropdownArrayAdapter(data.userId !!, data.firstName + "-" + data.mobileNumber))
             }
             var adapter : DropdownArrayAdapter = DropdownArrayAdapter(activity, R.layout.item_dropdown_array_adapter, R.id.item_dropdown_array_adapter_textView, dropDownOptionList)
             mEditTextDropDownUserName !!.setAdapter(adapter)

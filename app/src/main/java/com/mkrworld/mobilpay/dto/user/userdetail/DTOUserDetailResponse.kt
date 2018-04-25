@@ -181,7 +181,7 @@ class DTOUserDetailResponse {
          *
          * @return
          */
-        @SerializedName("mobile_number")
+        @SerializedName("mobile")
         var mobileNumber : String? = null
             get() {
                 return field ?: ""

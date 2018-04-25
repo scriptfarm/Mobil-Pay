@@ -36,31 +36,7 @@ import org.json.JSONObject
  * Created by mkr on 27/3/18.
  */
 
-class AgentNetworkTaskProvider : BaseTaskProvider() {
-
-    /**
-     * Method called to login
-     *
-     * @param context
-     * @param request
-     * @param networkCallBack
-     */
-    fun loginTask(context : Context, request : DTOLoginRequest, networkCallBack : NetworkCallBack<DTOLoginResponse>) {
-        Tracer.debug(TAG, "loginTask : ")
-        val requestJson = parseDtoToJson(request, DTOLoginRequest::class.java, networkCallBack)
-                ?: return
-        val task = LoginTask(context, requestJson, object : NetworkCallBack<DTOLoginResponse> {
-
-            override fun onSuccess(networkResponse : DTOLoginResponse) {
-                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
-            }
-
-            override fun onError(errorMessage : String, errorCode : Int) {
-                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
-            }
-        })
-        task.executeTask()
-    }
+class AgentNetworkTaskProvider : AppNetworkTaskProvider() {
 
     /**
      * Method called to generate Agent qr code
@@ -276,25 +252,6 @@ class AgentNetworkTaskProvider : BaseTaskProvider() {
             }
         })
         task.executeTask()
-    }
-
-    /**
-     * Method to parse the POJO into JSONObject
-     *
-     * @param object
-     * @param refClass
-     * @param networkCallBack
-     * @return
-     */
-    private fun parseDtoToJson(`object` : Any, refClass : Class<*>, networkCallBack : NetworkCallBack<*>) : JSONObject? {
-        try {
-            return JSONObject(Gson().toJson(`object`, refClass))
-        } catch (e : JSONException) {
-            e.printStackTrace()
-            notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, "Request JSON : " + e.message, - 1)
-        }
-
-        return null
     }
 
     companion object {

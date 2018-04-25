@@ -15,6 +15,10 @@
     <!-- TOOL BAR DIMENSION -->
     <dimen name="toolbar_height">@dimen/mkrdp_15</dimen>
 
+    <!-- POPUP LIST ITEM PADDING -->
+    <dimen name="item_dropdown_array_adapter_padding_ver">@dimen/mkrdp_1.49</dimen>
+    <dimen name="item_dropdown_array_adapter_padding_hor">@dimen/mkrdp_3</dimen>
+
     <!-- CARD PROPERTY -->
     <dimen name="card_corner">@dimen/mkrdp_0.50</dimen>
     <dimen name="card_content_padding_ver">@dimen/mkrdp_2</dimen>

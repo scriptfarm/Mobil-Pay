@@ -43,7 +43,7 @@ class DTOLoginResponse {
     inner class Data {
 
         /**
-         * Method to get the Agent Id
+         * Method to get the user type
          *
          * @return
          */

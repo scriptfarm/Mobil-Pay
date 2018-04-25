@@ -105,7 +105,7 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
 
     override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
         Tracer.debug(TAG, "onCreateView: ")
-        return inflater !!.inflate(R.layout.fragment_agent_login, container, false)
+        return inflater !!.inflate(R.layout.fragment_login, container, false)
     }
 
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
@@ -140,8 +140,8 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
     override fun onClick(view : View) {
         Tracer.debug(TAG, "onClick: ")
         when (view.id) {
-            R.id.fragment_agent_login_textView_sign_in -> startSignInProcess() //FingerCapture.getInstance().capture(activity, null, "P", true)
-            R.id.fragment_agent_login_textView_forgot_password -> if (activity is OnBaseActivityListener) {
+            R.id.fragment_login_textView_sign_in -> startSignInProcess() //FingerCapture.getInstance().capture(activity, null, "P", true)
+            R.id.fragment_login_textView_forgot_password -> if (activity is OnBaseActivityListener) {
                 val fragment = FragmentProvider.getFragment(FragmentTag.FORGOT_PASSWORD)
                 (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.FORGOT_PASSWORD)
             }
@@ -215,12 +215,12 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
         mIsFingerPrintDeviceWorkingFine = true
         mFingerPrintAuthHelper = FingerPrintAuthHelper.getHelper(activity, this)
         mFingerPrintAuthHelper !!.startAuth()
-        view !!.findViewById<View>(R.id.fragment_agent_login_textView_sign_in).setOnClickListener(this)
-        view !!.findViewById<View>(R.id.fragment_agent_login_textView_forgot_password).setOnClickListener(this)
-        mTextInputLayoutId = view !!.findViewById<View>(R.id.fragment_agent_login_textInputLayout_merchant_id_mobile_number) as TextInputLayout
-        mEditTextId = view !!.findViewById<View>(R.id.fragment_agent_login_editText_merchant_id_mobile_number) as EditText
-        mTextInputLayoutPassword = view !!.findViewById<View>(R.id.fragment_agent_login_textInputLayout_password) as TextInputLayout
-        mEditTextPassword = view !!.findViewById<View>(R.id.fragment_agent_login_editText_password) as EditText
+        view !!.findViewById<View>(R.id.fragment_login_textView_sign_in).setOnClickListener(this)
+        view !!.findViewById<View>(R.id.fragment_login_textView_forgot_password).setOnClickListener(this)
+        mTextInputLayoutId = view !!.findViewById<View>(R.id.fragment_login_textInputLayout_merchant_id_mobile_number) as TextInputLayout
+        mEditTextId = view !!.findViewById<View>(R.id.fragment_login_editText_merchant_id_mobile_number) as EditText
+        mTextInputLayoutPassword = view !!.findViewById<View>(R.id.fragment_login_textInputLayout_password) as TextInputLayout
+        mEditTextPassword = view !!.findViewById<View>(R.id.fragment_login_editText_password) as EditText
 
         // ADD TEXT CHANGE LISTENER
         mEditTextId !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutId !!))

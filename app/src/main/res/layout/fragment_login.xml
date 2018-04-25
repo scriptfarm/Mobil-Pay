@@ -28,24 +28,24 @@
 
             <!-- MERCHANT-ID / MOBILE-NUMBER -->
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/fragment_agent_login_textInputLayout_merchant_id_mobile_number"
+                android:id="@+id/fragment_login_textInputLayout_merchant_id_mobile_number"
                 style="@style/style_text_input_layout_hint">
 
                 <EditText
-                    android:id="@+id/fragment_agent_login_editText_merchant_id_mobile_number"
+                    android:id="@+id/fragment_login_editText_merchant_id_mobile_number"
                     style="@style/style_text_input_layout_inputText"
-                    android:hint="@string/agent_id"
+                    android:hint="@string/username"
                     android:inputType="textNoSuggestions" />
 
             </android.support.design.widget.TextInputLayout>
 
             <!-- PASSWORD -->
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/fragment_agent_login_textInputLayout_password"
+                android:id="@+id/fragment_login_textInputLayout_password"
                 style="@style/style_text_input_layout_hint">
 
                 <EditText
-                    android:id="@+id/fragment_agent_login_editText_password"
+                    android:id="@+id/fragment_login_editText_password"
                     style="@style/style_text_input_layout_inputText"
                     android:hint="@string/password"
                     android:inputType="textPassword" />
@@ -53,13 +53,13 @@
             </android.support.design.widget.TextInputLayout>
 
             <TextView
-                android:id="@+id/fragment_agent_login_textView_sign_in"
+                android:id="@+id/fragment_login_textView_sign_in"
                 style="@style/style_button"
                 android:layout_marginTop="@dimen/fragment_agent_login_content_margin"
                 android:text="@string/sign_in_caps" />
 
             <TextView
-                android:id="@+id/fragment_agent_login_textView_forgot_password"
+                android:id="@+id/fragment_login_textView_forgot_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fragment_change_password_content_margin"
