@@ -51,7 +51,7 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            if (PreferenceData.isHaveFingerPrintConsent(activity) && PreferenceData.getThumbLoginUserType(activity).equals(PreferenceData.getUserType(activity)) && PreferenceData.getThumbLoginMerchantId(activity).equals(PreferenceData.getLoginMerchantId(activity)) && PreferenceData.getThumbLoginAgentId(activity).equals(PreferenceData.getLoginAgentId(activity))) {
+            if (PreferenceData.isHaveFingerPrintConsent(activity) && PreferenceData.getThumbLoginUserType(activity).equals(PreferenceData.getUserType(activity)) && PreferenceData.getThumbLoginMerchantId(activity).equals(PreferenceData.getLoginMerchantId(activity)) && PreferenceData.getThumbLoginAgentId(activity).equals(PreferenceData.getLoginAgentId(activity)) && ! PreferenceData.getThumbLoginPassword(activity).equals(mEditTextConfirmPassword !!.text.toString().trim())) {
                 PreferenceData.setThumbLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim { it <= ' ' })
             }
             Tracer.showSnack(view !!, dtoChangePasswordResponse.getMessage())

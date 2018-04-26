@@ -82,10 +82,10 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (! PreferenceData.isHaveFingerPrintConsent(activity) && mIsFingerPrintDeviceWorkingFine) {
-                    showEnableFingerPrintDialog(PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), mEditTextPassword !!.text.toString())
+                    showEnableFingerPrintDialog(PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), mEditTextPassword !!.text.toString().trim())
                     return
-                } else if (PreferenceData.isHaveFingerPrintConsent(activity) && PreferenceData.getThumbLoginUserType(activity).equals(PreferenceData.getUserType(activity)) && PreferenceData.getThumbLoginMerchantId(activity).equals(PreferenceData.getLoginMerchantId(activity)) && PreferenceData.getThumbLoginAgentId(activity).equals(PreferenceData.getLoginAgentId(activity))) {
-                    showUpdateFingerLoginDetailDialog(mEditTextPassword !!.text.toString())
+                } else if (PreferenceData.isHaveFingerPrintConsent(activity) && PreferenceData.getThumbLoginUserType(activity).equals(PreferenceData.getUserType(activity)) && PreferenceData.getThumbLoginMerchantId(activity).equals(PreferenceData.getLoginMerchantId(activity)) && PreferenceData.getThumbLoginAgentId(activity).equals(PreferenceData.getLoginAgentId(activity)) && ! PreferenceData.getThumbLoginPassword(activity).equals(mEditTextPassword !!.text.toString().trim())) {
+                    showUpdateFingerLoginDetailDialog(mEditTextPassword !!.text.toString().trim())
                     return
                 }
             }
@@ -223,6 +223,9 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
 
     override fun onFingerPrintAuthSuccess(cryptoObject : FingerprintManager.CryptoObject) {
         Tracer.debug(TAG, "onFingerPrintAuthSuccess : ")
+        if (! PreferenceData.isHaveFingerPrintConsent(activity)) {
+            return
+        }
         mEditTextPassword !!.setText(PreferenceData.getThumbLoginPassword(activity))
         mIsMerchant = PreferenceData.getThumbLoginUserType(activity).equals(Constants.USER_TYPE_MERCHANT)
         if (mIsMerchant) {
@@ -365,14 +368,20 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
             mLoginMerchantId = dataList[0].merchantId !!
             startSignInProcess()
         } else {
-            val mBuilder = AlertDialog.Builder(activity)
+            var mBuilder : AlertDialog.Builder? = null
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mBuilder = AlertDialog.Builder(context, android.R.style.Theme_Material_Light_Dialog_Alert)
+            } else {
+                mBuilder = AlertDialog.Builder(context)
+            }
             mBuilder.setTitle(getString(R.string.choose_merchant))
             var nameList : Array<String?> = arrayOfNulls<String>(dataList.size)
-            for (index : Int in 0 .. dataList.size) {
-                nameList[index] = dataList[index].merchantName
+            for (index : Int in 0 .. dataList.size - 1) {
+                nameList.set(index, dataList[index].merchantName)
             }
             mBuilder.setSingleChoiceItems(nameList, 1, object : DialogInterface.OnClickListener {
                 override fun onClick(dialogInterface : DialogInterface?, which : Int) {
+                    dialogInterface !!.dismiss()
                     mLoginMerchantId = dataList[which].merchantId !!
                     startSignInProcess()
                 }

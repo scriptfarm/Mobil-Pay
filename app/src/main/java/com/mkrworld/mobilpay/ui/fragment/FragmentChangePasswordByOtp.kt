@@ -59,7 +59,7 @@ class FragmentChangePasswordByOtp : Fragment(), OnBaseFragmentListener, View.OnC
                 var userType = arguments.getString(EXTRA_USER_TYPE, "")
                 var merchantId = arguments.getString(EXTRA_LOGIN_MERCHANT_ID, "")
                 var agentId = arguments.getString(EXTRA_LOGIN_AGENT_ID, "")
-                if (PreferenceData.isHaveFingerPrintConsent(activity) && PreferenceData.getThumbLoginUserType(activity).equals(userType) && PreferenceData.getThumbLoginMerchantId(activity).equals(merchantId) && PreferenceData.getThumbLoginAgentId(activity).equals(agentId)) {
+                if (PreferenceData.isHaveFingerPrintConsent(activity) && PreferenceData.getThumbLoginUserType(activity).equals(userType) && PreferenceData.getThumbLoginMerchantId(activity).equals(merchantId) && PreferenceData.getThumbLoginAgentId(activity).equals(agentId) && ! PreferenceData.getThumbLoginPassword(activity).equals(mEditTextConfirmPassword !!.text.toString().trim())) {
                     PreferenceData.setThumbLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim())
                 }
             }

@@ -25,49 +25,6 @@
                 android:textColor="@color/fragment_login_card_title_text"
                 android:textSize="@dimen/fragment_login_card_title_text_size" />
 
-            <!-- RADIO GROUP -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fragment_login_content_margin"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/fragment_login_content_margin"
-                android:paddingRight="@dimen/fragment_login_content_margin">
-
-                <RadioButton
-                    android:id="@+id/fragment_login_radio_merchant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/merchant"
-                    android:textColor="@color/fragment_login_card_title_text"
-                    android:textSize="@dimen/fragment_login_card_title_text_size" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1px"
-                    android:layout_weight="1" />
-
-                <RadioButton
-                    android:id="@+id/fragment_login_radio_agent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/agent"
-                    android:textColor="@color/fragment_login_card_title_text"
-                    android:textSize="@dimen/fragment_login_card_title_text_size" />
-
-            </LinearLayout>
-
-
             <!-- MERCHANT-ID / MOBILE-NUMBER -->
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/fragment_login_textInputLayout_merchant_id_mobile_number"
@@ -76,7 +33,7 @@
                 <EditText
                     android:id="@+id/fragment_login_editText_merchant_id_mobile_number"
                     style="@style/style_text_input_layout_inputText"
-                    android:hint="@string/username"
+                    android:hint="@string/mobile_number"
                     android:inputType="textNoSuggestions" />
 
             </android.support.design.widget.TextInputLayout>
@@ -93,6 +50,52 @@
                     android:inputType="textPassword" />
 
             </android.support.design.widget.TextInputLayout>
+
+            <!-- RADIO GROUP -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/fragment_login_content_margin">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_weight="0.2" />
+
+                <RadioButton
+                    android:id="@+id/fragment_login_radio_merchant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    style="@style/style_text_view_default"
+                    android:text="@string/merchant"
+                    android:textColor="@color/fragment_login_card_title_text" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_weight="0.6" />
+
+                <RadioButton
+                    android:id="@+id/fragment_login_radio_agent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+                    style="@style/style_text_view_default"
+                    android:text="@string/agent"
+                    android:textColor="@color/fragment_login_card_title_text" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_weight="0.2" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/fragment_login_textView_sign_in"
