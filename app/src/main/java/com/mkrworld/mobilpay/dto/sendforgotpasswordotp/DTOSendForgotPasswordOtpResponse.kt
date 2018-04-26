@@ -26,7 +26,7 @@ class DTOSendForgotPasswordOtpResponse {
      * @return
      */
     fun getData() : Data {
-        return mData !!
+        return mData?:Data()
     }
 
     /**

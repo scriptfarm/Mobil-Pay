@@ -58,8 +58,9 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
     private var mIsFingerPrintDeviceWorkingFine : Boolean = false
     private var mFingerPrintAuthHelper : FingerPrintAuthHelper? = null
 
-    private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
     private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null
+    private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
+
     private val mLoginResponseNetworkCallBack = object : NetworkCallBack<DTOLoginResponse> {
         override fun onSuccess(dtoLoginResponse : DTOLoginResponse) {
             Tracer.debug(TAG, "onSuccess : " + dtoLoginResponse !!)

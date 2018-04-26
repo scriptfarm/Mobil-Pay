@@ -34,7 +34,8 @@
                     android:id="@+id/fragment_login_editText_merchant_id_mobile_number"
                     style="@style/style_text_input_layout_inputText"
                     android:hint="@string/mobile_number"
-                    android:inputType="textNoSuggestions" />
+                    android:inputType="number"
+                    android:maxLength="10" />
 
             </android.support.design.widget.TextInputLayout>
 
