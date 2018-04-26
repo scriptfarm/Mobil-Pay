@@ -43,7 +43,8 @@ class FragmentMerchantHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.
             Tracer.debug(TAG, "getHomeTabList: ")
             val baseAdapterItemList = ArrayList<BaseAdapterItem<*>>()
             val adapterViewType = AdapterItemHandler.AdapterItemViewType.MERCHANT_HOME_TAB.ordinal
-            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.STATIC_QR_CODE, R.drawable.ic_static_qr_code, getString(R.string.static_qr_code))))
+            //            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.STATIC_QR_CODE, R.drawable.ic_static_qr_code, getString(R.string.static_qr_code))))
+            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.SEND_NOTIFICATION, R.drawable.ic_qr_code, getString(R.string.send_notification))))
             baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.DYNAMIC_QR_CODE, R.drawable.ic_qr_code, getString(R.string.dynamic_qr_code))))
             baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.UPI_COLLECT, R.drawable.ic_upi_collect, getString(R.string.upi_collect))))
             baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOMerchantHomeTab(DTOMerchantHomeTab.TabType.AEPS_COLLECT, R.drawable.ic_aeps_collect, getString(R.string.aeps_collect))))
@@ -93,6 +94,10 @@ class FragmentMerchantHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.
                     DTOMerchantHomeTab.TabType.DYNAMIC_QR_CODE -> if (activity is OnBaseActivityListener) {
                         //                        val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_QR_CODE_GENERATOR)
                         //                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_QR_CODE_GENERATOR)
+                    }
+                    DTOMerchantHomeTab.TabType.SEND_NOTIFICATION -> if (activity is OnBaseActivityListener) {
+                        val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_SEND_NOTIFICATION)
+                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.MERCHANT_SEND_NOTIFICATION)
                     }
                     DTOMerchantHomeTab.TabType.SEND_BILL -> if (activity is OnBaseActivityListener) {
                         val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_SEND_BILL)

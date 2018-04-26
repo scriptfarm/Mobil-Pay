@@ -18,6 +18,8 @@ import com.mkrworld.mobilpay.dto.login.DTOLoginRequest
 import com.mkrworld.mobilpay.dto.login.DTOLoginResponse
 import com.mkrworld.mobilpay.dto.sendforgotpasswordotp.DTOSendForgotPasswordOtpRequest
 import com.mkrworld.mobilpay.dto.sendforgotpasswordotp.DTOSendForgotPasswordOtpResponse
+import com.mkrworld.mobilpay.dto.sendnotification.DTOSendNotificationRequest
+import com.mkrworld.mobilpay.dto.sendnotification.DTOSendNotificationResponse
 import com.mkrworld.mobilpay.task.*
 import com.mkrworld.mobilpay.task.CollectionStatusTask
 import org.json.JSONException
@@ -163,6 +165,31 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
         val task = CollectionStatusTask(context, requestJson, object : NetworkCallBack<DTOCollectionStatusResponse> {
 
             override fun onSuccess(networkResponse : DTOCollectionStatusResponse) {
+                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
+            }
+
+            override fun onError(errorMessage : String, errorCode : Int) {
+                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
+            }
+        })
+        task.executeTask()
+    }
+
+
+    /**
+     * Method called to when agent send notification to the User
+     *
+     * @param context
+     * @param request
+     * @param networkCallBack
+     */
+    fun sendNotificationTaskTask(context : Context, request : DTOSendNotificationRequest, networkCallBack : NetworkCallBack<DTOSendNotificationResponse>) {
+        Tracer.debug(TAG, "sendNotificationTaskTask : ")
+        val requestJson = parseDtoToJson(request, DTOSendNotificationRequest::class.java, networkCallBack)
+                ?: return
+        val task = SendNotificationTask(context, requestJson, object : NetworkCallBack<DTOSendNotificationResponse> {
+
+            override fun onSuccess(networkResponse : DTOSendNotificationResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 

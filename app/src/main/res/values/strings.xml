@@ -12,6 +12,7 @@
     <string name="private_key">15080811-E0DC-4F3E-B826-C799D3477967</string>
     <string name="salt">Nupaysvi6uEWaiqjHvx8B3lhnLuZBaDyEEAO1QEo4UboTRam4y0LPfdGk0oHjatgjKed9oxgrROXq03RaKs9WNoExVcrM5aXvnMwBaroQ7acCLGyPbfrfOJnnmhxwjrCplMtTXMZ2v6XAh2gZqligqM16wMpJQ7t0QxemsQIqs9OUvAdza7hMMfjwjwjXPjpuA55sbzsUdldWPI5hBxFUyGoRDTDEnOqhvJhMaKOIjq2X1SpuQ7Fxslj3ZuPfGgSNupay</string>
     <string name="no_data_fetch_from_server">No Data Fetch From Server</string>
+    <string name="nothing_selected">Nothing selected</string>
 
     <string name="field_should_not_be_empty_caps">FIELD SHOULD NOT BE EMPTY</string>
     <string name="enter_valid_mobile_number">ENTER A VALID 10 DIGIT MOBILE NUMBER</string>
@@ -27,6 +28,7 @@
     <string name="screen_title_forgot_password">Forgot Password</string>
     <string name="screen_title_change_password">Change Password</string>
     <string name="screen_title_collection_summary">Collection Summary</string>
+    <string name="screen_title_send_notification">Send Notification</string>
 
     <string name="home">Home</string>
     <string name="change_password">Change Password</string>
@@ -48,6 +50,7 @@
     <string name="use_finger_print_question">Use Fingerprint?</string>
 
     <string name="static_qr_code">Static QR Code</string>
+    <string name="send_notification">Send Notification</string>
     <string name="dynamic_qr_code">Dynamic QR Code</string>
     <string name="upi_collect">UPI Collect</string>
     <string name="aeps_collect">AEPS Collect</string>
@@ -60,6 +63,9 @@
     <string name="bill_amount_star">Bill Amount ₹ *</string>
     <string name="generate_caps">GENERATE</string>
     <string name="cancel_caps">CANCEL</string>
+
+    <string name="agent_send_notification">Agent Send Notification</string>
+    <string name="merchant_send_notification">Merchant Send Notification</string>
 
     <string name="customer_id">Customer-ID</string>
     <string name="bill_number">Bill Number</string>

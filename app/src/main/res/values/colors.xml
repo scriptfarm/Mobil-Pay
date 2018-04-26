@@ -14,23 +14,21 @@
     <color name="button_background">@color/colorPrimary</color>
     <color name="button_background_f">@color/colorPrimaryDark</color>
 
-    <!-- ACTIVITY MAIN SLIDING -->
     <color name="activity_main_sliding_title_text_color">@color/text_color_white</color>
     <color name="activity_main_sliding_text_color">#555555</color>
 
-    <!-- FRAGMENT MERCHANT LOGIN -->
     <color name="fragment_login_card_title_text">@color/colorAccent</color>
 
-    <!-- FRAGMENT MERCHANT QR-CODE -->
     <color name="fragment_agent_qrcode_card_title_text">@color/colorAccent</color>
 
-    <!-- FRAGMENT MERCHANT QR-CODE GENERATOR -->
     <color name="fragment_agent_qrcode_generator_card_title_text">@color/colorAccent</color>
 
-    <!-- FRAGMENT FORGOT PASSWORD -->
+    <color name="fragment_agent_send_notification_card_title_text">@color/colorAccent</color>
+
+    <color name="fragment_merchant_send_notification_card_title_text">@color/colorAccent</color>
+
     <color name="fragment_forgot_password_card_title_text">@color/colorAccent</color>
 
-    <!-- FRAGMENT CHANGE PASSWORD -->
     <color name="fragment_change_password_card_title_text">@color/colorAccent</color>
 
     <!-- FRAGMENT CHANGE PASSWORD OTP -->

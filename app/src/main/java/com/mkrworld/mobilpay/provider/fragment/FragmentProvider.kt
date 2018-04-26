@@ -10,11 +10,8 @@ import com.mkrworld.mobilpay.ui.fragment.FragmentLogin
 import com.mkrworld.mobilpay.ui.fragment.agent.*
 import com.mkrworld.mobilpay.ui.fragment.agent.FragmentAgentAEPSCollect
 import com.mkrworld.mobilpay.ui.fragment.agent.FragmentAgentCollectionSummary
-import com.mkrworld.mobilpay.ui.fragment.merchant.FragmentMerchantHome
 import com.mkrworld.mobilpay.ui.fragment.agent.FragmentAgentQrCode
-import com.mkrworld.mobilpay.ui.fragment.merchant.FragmentMerchantCollectionStatus
-import com.mkrworld.mobilpay.ui.fragment.merchant.FragmentMerchantCollectionSummary
-import com.mkrworld.mobilpay.ui.fragment.merchant.FragmentMerchantSendBill
+import com.mkrworld.mobilpay.ui.fragment.merchant.*
 
 /**
  * Created by mkr on 13/3/18.
@@ -38,9 +35,11 @@ class FragmentProvider {
                 FragmentTag.MERCHANT_SEND_BILL -> return FragmentMerchantSendBill()
                 FragmentTag.MERCHANT_COLLECTION_SUMMARY -> return FragmentMerchantCollectionSummary()
                 FragmentTag.MERCHANT_COLLECTION_STATUS -> return FragmentMerchantCollectionStatus()
+                FragmentTag.MERCHANT_SEND_NOTIFICATION -> return FragmentMerchantSendNotification()
                 FragmentTag.AGENT_HOME -> return FragmentAgentHome()
                 FragmentTag.AGENT_QR_CODE -> return FragmentAgentQrCode()
                 FragmentTag.AGENT_QR_CODE_GENERATOR -> return FragmentAgentQrCodeGenerator()
+                FragmentTag.AGENT_SEND_NOTIFICATION -> return FragmentAgentSendNotification()
                 FragmentTag.AGENT_AEPS_COLLECT -> return FragmentAgentAEPSCollect()
                 FragmentTag.AGENT_SEND_BILL -> return FragmentAgentSendBill()
                 FragmentTag.FORGOT_PASSWORD -> return FragmentForgotPassword()

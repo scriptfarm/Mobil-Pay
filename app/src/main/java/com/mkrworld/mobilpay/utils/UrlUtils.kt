@@ -40,6 +40,7 @@ class UrlUtils {
                 R.string.url_login -> return context.getString(R.string.url_login)
                 R.string.url_collection_summary -> return context.getString(R.string.url_collection_summary)
                 R.string.url_agent_merchant_list -> return context.getString(R.string.url_agent_merchant_list)
+                R.string.url_send_notification -> return context.getString(R.string.url_send_notification)
                 R.string.url_agent_logo -> return context.getString(R.string.url_agent_logo)
                 R.string.url_generate_qr_code_token -> return context.getString(R.string.url_generate_qr_code_token)
                 R.string.url_send_bill -> return context.getString(R.string.url_send_bill)

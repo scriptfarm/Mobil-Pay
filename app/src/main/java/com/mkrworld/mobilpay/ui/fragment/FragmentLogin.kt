@@ -108,7 +108,12 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            showSelectionDialog(dtoAgentMerchantListResponse.getData())
+            if (dtoAgentMerchantListResponse.getData().size == 1) {
+                mLoginMerchantId = dtoAgentMerchantListResponse.getData()[0].merchantId !!
+                startSignInProcess()
+            } else {
+                showSelectionDialog(dtoAgentMerchantListResponse.getData())
+            }
         }
 
         override fun onError(errorMessage : String, errorCode : Int) {
@@ -150,6 +155,9 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
         Tracer.debug(TAG, "onViewCreated: ")
         super.onViewCreated(view, savedInstanceState)
+        PreferenceData.setUserType(activity, "")
+        PreferenceData.setLoginMerchantId(activity, "")
+        PreferenceData.setLoginAgentId(activity, "")
         mAppNetworkTaskProvider = AppNetworkTaskProvider()
         mAppNetworkTaskProvider?.attachProvider()
         mAgentNetworkTaskProvider = AgentNetworkTaskProvider()
@@ -365,31 +373,26 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
      */
     private fun showSelectionDialog(dataList : ArrayList<DTOAgentMerchantListResponse.Data>) {
         Tracer.debug(TAG, "showSelectionDialog : ")
-        if (dataList.size == 1) {
-            mLoginMerchantId = dataList[0].merchantId !!
-            startSignInProcess()
+        var mBuilder : AlertDialog.Builder? = null
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mBuilder = AlertDialog.Builder(context, android.R.style.Theme_Material_Light_Dialog_Alert)
         } else {
-            var mBuilder : AlertDialog.Builder? = null
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mBuilder = AlertDialog.Builder(context, android.R.style.Theme_Material_Light_Dialog_Alert)
-            } else {
-                mBuilder = AlertDialog.Builder(context)
-            }
-            mBuilder.setTitle(getString(R.string.choose_merchant))
-            var nameList : Array<String?> = arrayOfNulls<String>(dataList.size)
-            for (index : Int in 0 .. dataList.size - 1) {
-                nameList.set(index, dataList[index].merchantName)
-            }
-            mBuilder.setSingleChoiceItems(nameList, 1, object : DialogInterface.OnClickListener {
-                override fun onClick(dialogInterface : DialogInterface?, which : Int) {
-                    dialogInterface !!.dismiss()
-                    mLoginMerchantId = dataList[which].merchantId !!
-                    startSignInProcess()
-                }
-            })
-            val mDialog = mBuilder.create()
-            mDialog.show()
+            mBuilder = AlertDialog.Builder(context)
         }
+        mBuilder.setTitle(getString(R.string.choose_merchant))
+        var nameList : Array<String?> = arrayOfNulls<String>(dataList.size)
+        for (index : Int in 0 .. dataList.size - 1) {
+            nameList.set(index, dataList[index].merchantName)
+        }
+        mBuilder.setSingleChoiceItems(nameList, 1, object : DialogInterface.OnClickListener {
+            override fun onClick(dialogInterface : DialogInterface?, which : Int) {
+                dialogInterface !!.dismiss()
+                mLoginMerchantId = dataList[which].merchantId !!
+                startSignInProcess()
+            }
+        })
+        val mDialog = mBuilder.create()
+        mDialog.show()
     }
 
     /**
