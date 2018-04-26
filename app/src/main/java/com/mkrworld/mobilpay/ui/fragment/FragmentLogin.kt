@@ -1,5 +1,6 @@
 package com.mkrworld.mobilpay.ui.fragment
 
+import android.app.AlertDialog
 import android.content.DialogInterface
 import android.hardware.fingerprint.FingerprintManager
 import android.os.Build
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.RadioButton
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
 import com.mkrworld.androidlib.network.NetworkCallBack
@@ -17,6 +19,8 @@ import com.mkrworld.androidlib.utils.MKRDialogUtil
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
+import com.mkrworld.mobilpay.dto.agent.agentmerchantlist.DTOAgentMerchantListRequest
+import com.mkrworld.mobilpay.dto.agent.agentmerchantlist.DTOAgentMerchantListResponse
 import com.mkrworld.mobilpay.dto.login.DTOLoginRequest
 import com.mkrworld.mobilpay.dto.login.DTOLoginResponse
 import com.mkrworld.mobilpay.fingerprintauth.FingerPrintAuthHelper
@@ -24,11 +28,13 @@ import com.mkrworld.mobilpay.fingerprintauth.OnFingerPrintAuthCallback
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
+import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
 import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
 import java.util.*
+
 
 /**
  * Created by mkr on 13/3/18.
@@ -41,12 +47,19 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
     }
 
     private var mTextInputLayoutId : TextInputLayout? = null
-    private var mTextInputLayoutPassword : TextInputLayout? = null
     private var mEditTextId : EditText? = null
+    private var mTextInputLayoutPassword : TextInputLayout? = null
     private var mEditTextPassword : EditText? = null
+    private var mRadioButtonMerchant : RadioButton? = null
+    private var mRadioButtonAgent : RadioButton? = null
+    private var mIsMerchant : Boolean = true
+    private var mLoginMerchantId : String = ""
+
     private var mIsFingerPrintDeviceWorkingFine : Boolean = false
     private var mFingerPrintAuthHelper : FingerPrintAuthHelper? = null
+
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
+    private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null
     private val mLoginResponseNetworkCallBack = object : NetworkCallBack<DTOLoginResponse> {
         override fun onSuccess(dtoLoginResponse : DTOLoginResponse) {
             Tracer.debug(TAG, "onSuccess : " + dtoLoginResponse !!)
@@ -56,20 +69,45 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
                 return
             }
             Tracer.showSnack(view !!, dtoLoginResponse.getMessage())
-            val userId = mEditTextId !!.text.toString()
-            val password = mEditTextPassword !!.text.toString()
-            PreferenceData.setUserType(activity, dtoLoginResponse.getData() !!.userType !!)
-            PreferenceData.setLoginId(activity, userId)
+
+            // TEMP SAVE LOGIN DATA
+            if (mIsMerchant) {
+                PreferenceData.setUserType(activity, Constants.USER_TYPE_MERCHANT)
+                PreferenceData.setLoginMerchantId(activity, mEditTextId !!.text.toString())
+            } else {
+                PreferenceData.setUserType(activity, Constants.USER_TYPE_AGENT)
+                PreferenceData.setLoginMerchantId(activity, mLoginMerchantId)
+                PreferenceData.setLoginAgentId(activity, mEditTextId !!.text.toString())
+            }
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (! PreferenceData.isHaveFingerPrintConsent(activity) && mIsFingerPrintDeviceWorkingFine) {
-                    showEnableFingerPrintDialog(userId, password)
+                    showEnableFingerPrintDialog(PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), mEditTextPassword !!.text.toString())
                     return
-                } else if (PreferenceData.isHaveFingerPrintConsent(activity) && PreferenceData.getLoginId(activity).equals(userId.trim(), true) && (! PreferenceData.getLoginPassword(activity).equals(password.trim(), true))) {
-                    showUpdateFingerLoginDetailDialog(password)
+                } else if (PreferenceData.isHaveFingerPrintConsent(activity) && PreferenceData.getThumbLoginUserType(activity).equals(PreferenceData.getUserType(activity)) && PreferenceData.getThumbLoginMerchantId(activity).equals(PreferenceData.getLoginMerchantId(activity)) && PreferenceData.getThumbLoginAgentId(activity).equals(PreferenceData.getLoginAgentId(activity))) {
+                    showUpdateFingerLoginDetailDialog(mEditTextPassword !!.text.toString())
                     return
                 }
             }
             goToSuccessScreen()
+        }
+
+        override fun onError(errorMessage : String, errorCode : Int) {
+            Tracer.debug(TAG, "onError : $errorMessage")
+            Utils.dismissLoadingDialog()
+            Tracer.showSnack(view !!, errorMessage)
+        }
+    }
+
+    private val mAgentMerchantListNetworkCallBack = object : NetworkCallBack<DTOAgentMerchantListResponse> {
+        override fun onSuccess(dtoAgentMerchantListResponse : DTOAgentMerchantListResponse) {
+            Tracer.debug(TAG, "onSuccess : " + dtoAgentMerchantListResponse !!)
+            Utils.dismissLoadingDialog()
+            if (dtoAgentMerchantListResponse == null || dtoAgentMerchantListResponse.getData().size <= 0) {
+                Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
+                return
+            }
+            showSelectionDialog(dtoAgentMerchantListResponse.getData())
         }
 
         override fun onError(errorMessage : String, errorCode : Int) {
@@ -90,9 +128,9 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
             if (view == null) {
                 return false
             }
-            val agentId = mEditTextId !!.text.toString()
+            val id = mEditTextId !!.text.toString()
             val password = mEditTextPassword !!.text.toString()
-            if (Utils.isStringEmpty(agentId)) {
+            if (Utils.isStringEmpty(id)) {
                 showTextInputError(mTextInputLayoutId, getString(R.string.field_should_not_be_empty_caps))
                 return false
             }
@@ -111,15 +149,18 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
         Tracer.debug(TAG, "onViewCreated: ")
         super.onViewCreated(view, savedInstanceState)
+        mAppNetworkTaskProvider = AppNetworkTaskProvider()
+        mAppNetworkTaskProvider?.attachProvider()
         mAgentNetworkTaskProvider = AgentNetworkTaskProvider()
-        mAgentNetworkTaskProvider !!.attachProvider()
+        mAgentNetworkTaskProvider?.attachProvider()
         setTitle()
         init()
     }
 
     override fun onDestroyView() {
-        mFingerPrintAuthHelper !!.stopAuth()
-        mAgentNetworkTaskProvider !!.detachProvider()
+        mFingerPrintAuthHelper?.stopAuth()
+        mAppNetworkTaskProvider?.detachProvider()
+        mAgentNetworkTaskProvider?.detachProvider()
         super.onDestroyView()
     }
 
@@ -140,10 +181,20 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
     override fun onClick(view : View) {
         Tracer.debug(TAG, "onClick: ")
         when (view.id) {
-            R.id.fragment_login_textView_sign_in -> startSignInProcess() //FingerCapture.getInstance().capture(activity, null, "P", true)
+            R.id.fragment_login_textView_sign_in -> loginButtonClicked()
             R.id.fragment_login_textView_forgot_password -> if (activity is OnBaseActivityListener) {
                 val fragment = FragmentProvider.getFragment(FragmentTag.FORGOT_PASSWORD)
                 (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.FORGOT_PASSWORD)
+            }
+            R.id.fragment_login_radio_agent -> {
+                mRadioButtonAgent !!.isChecked = true
+                mRadioButtonMerchant !!.isChecked = false
+                mIsMerchant = false
+            }
+            R.id.fragment_login_radio_merchant -> {
+                mRadioButtonAgent !!.isChecked = false
+                mRadioButtonMerchant !!.isChecked = true
+                mIsMerchant = true
             }
         }
     }
@@ -172,17 +223,18 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
 
     override fun onFingerPrintAuthSuccess(cryptoObject : FingerprintManager.CryptoObject) {
         Tracer.debug(TAG, "onFingerPrintAuthSuccess : ")
-        val agentLoginPassword = PreferenceData.getLoginPassword(activity)
-        val agentId = PreferenceData.getLoginId(activity)
-        if (agentId.trim().isEmpty() || agentLoginPassword.trim().isEmpty()) {
-            if (view == null) {
-                return
-            }
-            Tracer.showSnack(view !!, R.string.plz_login_manually)
-            return
+        mEditTextPassword !!.setText(PreferenceData.getThumbLoginPassword(activity))
+        mIsMerchant = PreferenceData.getThumbLoginUserType(activity).equals(Constants.USER_TYPE_MERCHANT)
+        if (mIsMerchant) {
+            mRadioButtonMerchant !!.isChecked = true
+            mRadioButtonAgent !!.isChecked = false
+            mEditTextId !!.setText(PreferenceData.getThumbLoginMerchantId(activity))
+        } else {
+            mRadioButtonMerchant !!.isChecked = false
+            mRadioButtonAgent !!.isChecked = true
+            mLoginMerchantId = PreferenceData.getThumbLoginMerchantId(activity)
+            mEditTextId !!.setText(PreferenceData.getThumbLoginAgentId(activity))
         }
-        mEditTextPassword !!.setText(agentLoginPassword)
-        mEditTextId !!.setText(agentId)
         startSignInProcess()
     }
 
@@ -215,16 +267,43 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
         mIsFingerPrintDeviceWorkingFine = true
         mFingerPrintAuthHelper = FingerPrintAuthHelper.getHelper(activity, this)
         mFingerPrintAuthHelper !!.startAuth()
-        view !!.findViewById<View>(R.id.fragment_login_textView_sign_in).setOnClickListener(this)
-        view !!.findViewById<View>(R.id.fragment_login_textView_forgot_password).setOnClickListener(this)
         mTextInputLayoutId = view !!.findViewById<View>(R.id.fragment_login_textInputLayout_merchant_id_mobile_number) as TextInputLayout
         mEditTextId = view !!.findViewById<View>(R.id.fragment_login_editText_merchant_id_mobile_number) as EditText
         mTextInputLayoutPassword = view !!.findViewById<View>(R.id.fragment_login_textInputLayout_password) as TextInputLayout
         mEditTextPassword = view !!.findViewById<View>(R.id.fragment_login_editText_password) as EditText
-
+        mRadioButtonAgent = view !!.findViewById<View>(R.id.fragment_login_radio_agent) as RadioButton
+        mRadioButtonMerchant = view !!.findViewById<View>(R.id.fragment_login_radio_merchant) as RadioButton
+        // ADD CLICK LISTENER
+        mRadioButtonAgent !!.setOnClickListener(this)
+        mRadioButtonMerchant !!.setOnClickListener(this)
+        view !!.findViewById<View>(R.id.fragment_login_textView_sign_in).setOnClickListener(this)
+        view !!.findViewById<View>(R.id.fragment_login_textView_forgot_password).setOnClickListener(this)
         // ADD TEXT CHANGE LISTENER
         mEditTextId !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutId !!))
         mEditTextPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutPassword !!))
+        // INIT UI
+        if (mIsMerchant) {
+            mRadioButtonMerchant !!.isChecked = true
+            mRadioButtonAgent !!.isChecked = false
+        } else {
+            mRadioButtonMerchant !!.isChecked = false
+            mRadioButtonAgent !!.isChecked = true
+        }
+    }
+
+    /**
+     * Method called when user clicked the login button
+     */
+    private fun loginButtonClicked() {
+        Utils.hideKeyboard(activity, view)
+        if (! isLoginDetailValid) {
+            return
+        }
+        if (mIsMerchant) {
+            startSignInProcess()
+        } else {
+            fetchMerchantList()
+        }
     }
 
     /**
@@ -233,10 +312,17 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
     private fun startSignInProcess() {
         Tracer.debug(TAG, "startSignInProcess: ")
         Utils.hideKeyboard(activity, view)
-        if (! isLoginDetailValid) {
-            return
+        var userType = ""
+        var agentId = ""
+        var merchantId = ""
+        if (mIsMerchant) {
+            merchantId = mEditTextId !!.text.toString()
+            userType = Constants.USER_TYPE_MERCHANT
+        } else {
+            merchantId = mLoginMerchantId
+            agentId = mEditTextId !!.text.toString()
+            userType = Constants.USER_TYPE_AGENT
         }
-        val userId = mEditTextId !!.text.toString()
         val password = mEditTextPassword !!.text.toString()
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
@@ -244,9 +330,56 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
         val publicKey = getString(R.string.public_key)
         val pushId = "123"
         val gcmId = "123"
-        val dtoAgentLoginRequest = DTOLoginRequest(token !!, timeStamp, publicKey, userId, password, pushId, gcmId)
+        val dtoAgentLoginRequest = DTOLoginRequest(token !!, timeStamp, publicKey, userType, merchantId, agentId, password, pushId, gcmId)
         Utils.showLoadingDialog(activity)
-        mAgentNetworkTaskProvider !!.loginTask(activity, dtoAgentLoginRequest, mLoginResponseNetworkCallBack)
+        mAppNetworkTaskProvider !!.loginTask(activity, dtoAgentLoginRequest, mLoginResponseNetworkCallBack)
+    }
+
+    /**
+     * Method to fetch the Merchant list
+     */
+    private fun fetchMerchantList() {
+        Tracer.debug(TAG, "startSignInProcess: ")
+        Utils.hideKeyboard(activity, view)
+        if (! isLoginDetailValid) {
+            return
+        }
+        var userType = Constants.USER_TYPE_AGENT
+        var agentId = mEditTextId !!.text.toString()
+        var merchantId = ""
+        val date = Date()
+        val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
+        val token = Utils.createToken(activity, getString(R.string.endpoint_agent_merchant_list), date)
+        val publicKey = getString(R.string.public_key)
+        val dtoAgentMerchantListRequest = DTOAgentMerchantListRequest(token !!, timeStamp, publicKey, userType, merchantId, agentId)
+        Utils.showLoadingDialog(activity)
+        mAgentNetworkTaskProvider !!.agentMerchantsList(activity, dtoAgentMerchantListRequest, mAgentMerchantListNetworkCallBack)
+    }
+
+    /**
+     * Method to show the Selction dialog
+     */
+    private fun showSelectionDialog(dataList : ArrayList<DTOAgentMerchantListResponse.Data>) {
+        Tracer.debug(TAG, "showSelectionDialog : ")
+        if (dataList.size == 1) {
+            mLoginMerchantId = dataList[0].merchantId !!
+            startSignInProcess()
+        } else {
+            val mBuilder = AlertDialog.Builder(activity)
+            mBuilder.setTitle(getString(R.string.choose_merchant))
+            var nameList : Array<String?> = arrayOfNulls<String>(dataList.size)
+            for (index : Int in 0 .. dataList.size) {
+                nameList[index] = dataList[index].merchantName
+            }
+            mBuilder.setSingleChoiceItems(nameList, 1, object : DialogInterface.OnClickListener {
+                override fun onClick(dialogInterface : DialogInterface?, which : Int) {
+                    mLoginMerchantId = dataList[which].merchantId !!
+                    startSignInProcess()
+                }
+            })
+            val mDialog = mBuilder.create()
+            mDialog.show()
+        }
     }
 
     /**
@@ -263,8 +396,12 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
 
     /**
      * Method to show dialog to enable the finger print
+     * @param userType
+     * @param merchantId
+     * @param agentId
+     * @param password
      */
-    private fun showEnableFingerPrintDialog(loginId : String, loginPassword : String) {
+    private fun showEnableFingerPrintDialog(userType : String, merchantId : String, agentId : String, password : String) {
         Tracer.debug(TAG, "showEnableFingerPrintDialog : ")
         val context = activity
         val iconId = R.drawable.ic_fingerprint_normal
@@ -273,8 +410,10 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
         val onOkClickListener = DialogInterface.OnClickListener { dialogInterface, i ->
             dialogInterface.dismiss()
             PreferenceData.setHaveFingerPrintConsent(activity)
-            PreferenceData.setLoginId(activity, loginId)
-            PreferenceData.setLoginPassword(activity, loginPassword)
+            PreferenceData.setThumbLoginUserType(context, userType)
+            PreferenceData.setThumbLoginMerchantId(context, merchantId)
+            PreferenceData.setThumbLoginAgentId(context, agentId)
+            PreferenceData.setThumbLoginPassword(context, password)
             goToSuccessScreen()
         }
         val onCancelClickListener = DialogInterface.OnClickListener { dialogInterface, i ->
@@ -296,7 +435,7 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
         val message = getString(R.string.are_you_sure_to_update_the_login_detail)
         val onOkClickListener = DialogInterface.OnClickListener { dialogInterface, i ->
             dialogInterface.dismiss()
-            PreferenceData.setLoginPassword(activity, loginPassword)
+            PreferenceData.setThumbLoginPassword(activity, loginPassword)
             goToSuccessScreen()
         }
         val onCancelClickListener = DialogInterface.OnClickListener { dialogInterface, i ->

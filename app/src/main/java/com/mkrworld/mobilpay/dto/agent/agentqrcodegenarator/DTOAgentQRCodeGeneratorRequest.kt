@@ -16,16 +16,13 @@ class DTOAgentQRCodeGeneratorRequest : DTOBaseRequest {
     }
 
     @SerializedName("amount")
-    private var mAmount : String?=null
+    private var mAmount : String? = null
 
     @SerializedName("bill_number")
-    private var mBillNumber : String?=null
+    private var mBillNumber : String? = null
 
     @SerializedName("details")
-    private var mDetails : String?=null
-
-    @SerializedName("agent_id")
-    private var mAgentId : String?=null
+    private var mDetails : String? = null
 
     /**
      * Constructor
@@ -33,16 +30,17 @@ class DTOAgentQRCodeGeneratorRequest : DTOBaseRequest {
      * @param token
      * @param timeStamp
      * @param publicKey
+     * @param userType
+     * @param merchantId
+     * @param agentId
      * @param amount
      * @param billNumber
      * @param details
-     * @param agentId
      */
-    constructor(token : String, timeStamp : String, publicKey : String, amount : String, billNumber : String, details : String, agentId : String) : super(token, timeStamp, publicKey) {
+    constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String, amount : String, billNumber : String, details : String) : super(token, timeStamp, publicKey, userType, merchantId, agentId) {
         Tracer.debug(TAG, "DTOAgentQRCodeGeneratorRequest : ")
         mAmount = amount
         mBillNumber = billNumber
         mDetails = details
-        mAgentId = agentId
     }
 }

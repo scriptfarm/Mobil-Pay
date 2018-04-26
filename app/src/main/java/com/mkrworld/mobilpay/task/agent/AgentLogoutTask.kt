@@ -18,10 +18,6 @@ import org.json.JSONObject
  */
 class AgentLogoutTask : MobilPayBaseTask<DTOAgentLogoutResponse> {
 
-    companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".AgentLogoutTask"
-    }
-
     /**
      * Constructor
      *
@@ -36,7 +32,7 @@ class AgentLogoutTask : MobilPayBaseTask<DTOAgentLogoutResponse> {
     }
 
     override fun getUrl() : String {
-        return UrlUtils.getUrl(getContext(), R.string.url_agent_logout)
+        return UrlUtils.getUrl(getContext(), R.string.url_logout)
     }
 
     public override fun getRequestType() : NetworkConstants.RequestType {

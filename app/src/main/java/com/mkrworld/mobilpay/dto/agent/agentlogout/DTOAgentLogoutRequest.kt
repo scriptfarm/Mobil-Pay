@@ -1,6 +1,5 @@
 package com.mkrworld.mobilpay.dto.agent.agentlogout
 
-import com.google.gson.annotations.SerializedName
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.dto.DTOBaseRequest
@@ -15,19 +14,14 @@ class DTOAgentLogoutRequest : DTOBaseRequest {
         private val TAG = BuildConfig.BASE_TAG + ".DTOAgentLogoutRequest"
     }
 
-    @SerializedName("agent_id")
-    private var mAagentId : String?=null
-
     /**
      * Constructor
      *
      * @param token
      * @param timeStamp
      * @param publicKey
-     * @param agentId
      */
-    constructor(token : String, timeStamp : String, publicKey : String, agentId : String) : super(token, timeStamp, publicKey) {
+    constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String) : super(token, timeStamp, publicKey, userType, merchantId, agentId) {
         Tracer.debug(TAG, "DTOAgentLogoutRequest : ")
-        mAagentId = agentId
     }
 }

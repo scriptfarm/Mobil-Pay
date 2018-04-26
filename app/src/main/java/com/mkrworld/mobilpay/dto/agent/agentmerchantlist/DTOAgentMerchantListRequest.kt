@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.dto.agent.agentdetails
+package com.mkrworld.mobilpay.dto.agent.agentmerchantlist
 
 import com.google.gson.annotations.SerializedName
 import com.mkrworld.androidlib.utils.Tracer
@@ -9,7 +9,7 @@ import com.mkrworld.mobilpay.dto.DTOBaseRequest
  * Created by mkr on 27/3/18.
  */
 
-class DTOAgentDetailRequest : DTOBaseRequest {
+class DTOAgentMerchantListRequest : DTOBaseRequest {
 
     companion object {
         private val TAG = BuildConfig.BASE_TAG + ".DTOAgentDetailRequest"

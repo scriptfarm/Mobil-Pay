@@ -17,6 +17,8 @@ import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.R
 import com.mkrworld.mobilpay.dto.appdata.DTOSummaryConsolidateData
 import com.mkrworld.mobilpay.dto.appdata.DTOSummaryConsolidateDataList
+import com.mkrworld.mobilpay.dto.collectionstatus.DTOCollectionStatusRequest
+import com.mkrworld.mobilpay.dto.collectionstatus.DTOCollectionStatusResponse
 import com.mkrworld.mobilpay.dto.collectionsummary.DTOCollectionSummaryRequest
 import com.mkrworld.mobilpay.dto.collectionsummary.DTOCollectionSummaryResponse
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
@@ -30,30 +32,30 @@ import kotlin.collections.ArrayList
  * Created by mkr on 15/3/18.
  */
 
-class FragmentAgentCollectionSummary : Fragment(), OnBaseFragmentListener, View.OnClickListener {
+class FragmentAgentCollectionStatus : Fragment(), OnBaseFragmentListener, View.OnClickListener {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".FragmentAgentCollectionSummary"
+        private val TAG = BuildConfig.BASE_TAG + ".FragmentAgentCollectionStatus"
     }
 
     private var mBaseAdapter : BaseAdapter? = null
     private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null
-    private val mCollectionSummaryNetworkCallBack = object : NetworkCallBack<DTOCollectionSummaryResponse> {
-        override fun onSuccess(dtoCollectionSummaryResponse : DTOCollectionSummaryResponse) {
+    private val mCollectionSummaryNetworkCallBack = object : NetworkCallBack<DTOCollectionStatusResponse> {
+        override fun onSuccess(dtoCollectionStatusResponse : DTOCollectionStatusResponse) {
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
-            if (dtoCollectionSummaryResponse == null || dtoCollectionSummaryResponse.getData() == null || dtoCollectionSummaryResponse.getData() !!.size <= 0) {
+            if (dtoCollectionStatusResponse == null || dtoCollectionStatusResponse.getData() == null || dtoCollectionStatusResponse.getData() !!.size <= 0) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
             // RECYCLER VIEW DATA
             val baseAdapterItemArrayList = ArrayList<BaseAdapterItem<*>>()
             val dtoSummaryConsolidateDataList = DTOSummaryConsolidateDataList()
-            val dataList : ArrayList<DTOCollectionSummaryResponse.Data> = dtoCollectionSummaryResponse.getData()
+            val dataList : ArrayList<DTOCollectionStatusResponse.Data> = dtoCollectionStatusResponse.getData()
             dtoSummaryConsolidateDataList.addConsolidateData(DTOSummaryConsolidateData(DTOSummaryConsolidateData.RowType.TITLE, getString(R.string.mode_caps), getString(R.string.txns_caps), getString(R.string.amount_caps)))
-            for (data : DTOCollectionSummaryResponse.Data in dataList) {
+            for (data : DTOCollectionStatusResponse.Data in dataList) {
                 dtoSummaryConsolidateDataList.addConsolidateData(DTOSummaryConsolidateData(DTOSummaryConsolidateData.RowType.TEXT, data.label !!, data.count !!, data.amount !!))
             }
             baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.SUMMARY_CONSOLIDATE_DATA_LIST.ordinal, dtoSummaryConsolidateDataList))
@@ -108,7 +110,7 @@ class FragmentAgentCollectionSummary : Fragment(), OnBaseFragmentListener, View.
     //        }
 
     override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
-        return inflater !!.inflate(R.layout.fragment_agent_collection_summary, container, false)
+        return inflater !!.inflate(R.layout.fragment_agent_collection_status, container, false)
     }
 
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
@@ -170,7 +172,7 @@ class FragmentAgentCollectionSummary : Fragment(), OnBaseFragmentListener, View.
         if (view == null) {
             return
         }
-        val recyclerViewUserData = view !!.findViewById<View>(R.id.fragment_agent_collection_summary_recycler_view) as RecyclerView
+        val recyclerViewUserData = view !!.findViewById<View>(R.id.fragment_agent_collection_status_recycler_view) as RecyclerView
         mBaseAdapter = BaseAdapter(AdapterItemHandler())
         recyclerViewUserData.adapter = mBaseAdapter
         recyclerViewUserData.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -183,10 +185,10 @@ class FragmentAgentCollectionSummary : Fragment(), OnBaseFragmentListener, View.
     private fun fetchCollectionSummary() {
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
-        val token = Utils.createToken(activity, getString(R.string.endpoint_collection_summary), date)
+        val token = Utils.createToken(activity, getString(R.string.endpoint_collection_status), date)
         val publicKey = getString(R.string.public_key)
-        val dtoCollectionSummaryRequest = DTOCollectionSummaryRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity))
+        val dtoCollectionStatusRequest = DTOCollectionStatusRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity))
         Utils.showLoadingDialog(activity)
-        mAppNetworkTaskProvider !!.collectionSummaryTask(activity, dtoCollectionSummaryRequest, mCollectionSummaryNetworkCallBack)
+        mAppNetworkTaskProvider !!.collectionStatusTask(activity, dtoCollectionStatusRequest, mCollectionSummaryNetworkCallBack)
     }
 }

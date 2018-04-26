@@ -18,10 +18,6 @@ import org.json.JSONObject
  */
 class MobileNumberStatusTask : MobilPayBaseTask<DTOMobileNumberStatusResponse> {
 
-    companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".MobileNumberStatusTask"
-    }
-
     /**
      * Constructor
      *

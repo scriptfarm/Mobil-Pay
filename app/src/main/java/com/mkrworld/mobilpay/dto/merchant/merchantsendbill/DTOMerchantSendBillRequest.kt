@@ -15,9 +15,6 @@ class DTOMerchantSendBillRequest : DTOBaseRequest {
         private val TAG = BuildConfig.BASE_TAG + ".DTOMerchantSendBillRequest"
     }
 
-    @SerializedName("id")
-    private var mId : String? = null
-
     @SerializedName("user_id")
     private var mUserId : String? = null
 
@@ -33,25 +30,23 @@ class DTOMerchantSendBillRequest : DTOBaseRequest {
     @SerializedName("mobile_no")
     private var mMobileNumber : String? = null
 
-    @SerializedName("sender_type")
-    private var mSenderType : String = "M"
-
     /**
      * Constructor
      *
      * @param token
      * @param timeStamp
      * @param publicKey
-     * @param id
+     * @param userType
+     * @param merchantId
+     * @param agentId
      * @param userId
      * @param mobileNumber
      * @param billNo
      * @param description
      * @param billAmount
      */
-    constructor(token : String, timeStamp : String, publicKey : String, id : String, userId : String, mobileNumber : String, billNo : String, description : String, billAmount : String) : super(token, timeStamp, publicKey) {
+    constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String, userId : String, mobileNumber : String, billNo : String, description : String, billAmount : String) : super(token, timeStamp, publicKey, userType, merchantId, agentId) {
         Tracer.debug(TAG, "DTOMerchantSendBillRequest : ")
-        mId = id
         mUserId = userId
         mMobileNumber = mobileNumber
         mBillNo = billNo

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
@@ -17,6 +16,7 @@ import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
 import com.mkrworld.mobilpay.qrcodehelper.Contents
 import com.mkrworld.mobilpay.qrcodehelper.QRCodeEncoder
+import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.UrlUtils
 import com.squareup.picasso.Picasso
@@ -97,8 +97,11 @@ class FragmentAgentQrCode : Fragment(), OnBaseFragmentListener {
      */
     private fun generateStaticQRCode(bundle : Bundle) {
         Tracer.debug(TAG, "generateStaticQRCode : ")
-        val url = UrlUtils.getUrl(activity, R.string.url_agent_logo) + PreferenceData.getLoginId(activity) + ".png"
-        // System.out.println("======url=========="+url);
+        val url = UrlUtils.getUrl(activity, R.string.url_agent_logo) + if (PreferenceData.getUserType(activity).equals(Constants.USER_TYPE_MERCHANT)) {
+            PreferenceData.getLoginMerchantId(activity)
+        } else {
+            PreferenceData.getLoginAgentId(activity)
+        } + ".png"
         Picasso.with(activity).load(url).placeholder(R.mipmap.ic_launcher).into(view !!.findViewById<View>(R.id.fragment_agent_qrcode_imageView_qrcode) as ImageView)
     }
 
@@ -111,14 +114,14 @@ class FragmentAgentQrCode : Fragment(), OnBaseFragmentListener {
         Tracer.debug(TAG, "generateDynamicQRCode : ")
         val qrCodeToken = bundle.getString(EXTRA_QR_CODE_TOKEN, "")
         val qrCodeSize = resources.getDimensionPixelSize(R.dimen.fragment_agent_qrcode_qrcode_dimen)
-        val qrCodeEncoder = QRCodeEncoder(qrCodeToken, null!!, Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeSize)
+        val qrCodeEncoder = QRCodeEncoder(qrCodeToken, null !!, Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeSize)
         try {
             val bitmapQRCode = qrCodeEncoder.encodeAsBitmap()
             if (bitmapQRCode != null && ! bitmapQRCode.isRecycled) {
                 (view !!.findViewById<View>(R.id.fragment_agent_qrcode_imageView_qrcode) as ImageView).setImageBitmap(bitmapQRCode)
             }
         } catch (e : WriterException) {
-            Tracer.showSnack(view!!, R.string.unable_to_generate_qr_code)
+            Tracer.showSnack(view !!, R.string.unable_to_generate_qr_code)
             e.printStackTrace()
         }
 

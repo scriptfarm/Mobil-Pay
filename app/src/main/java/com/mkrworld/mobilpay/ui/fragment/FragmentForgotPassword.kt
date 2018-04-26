@@ -7,18 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.RadioButton
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.agent.agentsendforgotpasswordotp.DTOAgentSendForgotPasswordOtpRequest
-import com.mkrworld.mobilpay.dto.agent.agentsendforgotpasswordotp.DTOAgentSendForgotPasswordOtpResponse
+import com.mkrworld.mobilpay.dto.sendforgotpasswordotp.DTOSendForgotPasswordOtpRequest
+import com.mkrworld.mobilpay.dto.sendforgotpasswordotp.DTOSendForgotPasswordOtpResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
+import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.Utils
 import java.util.*
 
@@ -33,26 +35,41 @@ class FragmentForgotPassword : Fragment(), OnBaseFragmentListener, View.OnClickL
     }
 
     private var mTextInputLayoutMobileNumber : TextInputLayout? = null
-    private var mTextInputLayoutAgentId : TextInputLayout? = null
     private var mEditTextMobileNumber : EditText? = null
-    private var mEditTextAgentId : EditText? = null
+    private var mRadioButtonMerchant : RadioButton? = null
+    private var mRadioButtonAgent : RadioButton? = null
+    private var mIsMerchant : Boolean = true
+    private var mLoginMerchantId : String = ""
+
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
-    private val mAgentSendForgotPasswordOtpResponseNetworkCallBack = object : NetworkCallBack<DTOAgentSendForgotPasswordOtpResponse> {
-        override fun onSuccess(dtoAgentSendForgotPasswordOtpResponse : DTOAgentSendForgotPasswordOtpResponse) {
+    private val mAgentSendForgotPasswordOtpResponseNetworkCallBack = object : NetworkCallBack<DTOSendForgotPasswordOtpResponse> {
+        override fun onSuccess(dtoSendForgotPasswordOtpResponse : DTOSendForgotPasswordOtpResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
-            if (dtoAgentSendForgotPasswordOtpResponse == null || dtoAgentSendForgotPasswordOtpResponse.getData() == null) {
+            if (dtoSendForgotPasswordOtpResponse == null || dtoSendForgotPasswordOtpResponse.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            Tracer.showSnack(view !!, dtoAgentSendForgotPasswordOtpResponse.getMessage())
+            Tracer.showSnack(view !!, dtoSendForgotPasswordOtpResponse.getMessage())
             if (activity is OnBaseActivityListener) {
                 val bundle = Bundle()
-                val agentId = mEditTextAgentId !!.text.toString()
-                bundle.putString(FragmentChangePasswordByOtp.EXTRA_LOGIN_ID, agentId)
+                var userType = ""
+                var agentId = ""
+                var merchantId = ""
+                if (mIsMerchant) {
+                    merchantId = mEditTextMobileNumber !!.text.toString()
+                    userType = Constants.USER_TYPE_MERCHANT
+                } else {
+                    merchantId = mLoginMerchantId
+                    agentId = mEditTextMobileNumber !!.text.toString()
+                    userType = Constants.USER_TYPE_MERCHANT
+                }
+                bundle.putString(FragmentChangePasswordByOtp.EXTRA_USER_TYPE, userType)
+                bundle.putString(FragmentChangePasswordByOtp.EXTRA_LOGIN_MERCHANT_ID, merchantId)
+                bundle.putString(FragmentChangePasswordByOtp.EXTRA_LOGIN_AGENT_ID, agentId)
                 val fragment = FragmentProvider.getFragment(FragmentTag.CHANGE_PASSWORD_BY_OTP)
                 (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, bundle, true, FragmentTag.CHANGE_PASSWORD_BY_OTP)
             }
@@ -81,13 +98,8 @@ class FragmentForgotPassword : Fragment(), OnBaseFragmentListener, View.OnClickL
             }
 
             val mobileNumber = mEditTextMobileNumber !!.text.toString()
-            val agentId = mEditTextAgentId !!.text.toString()
             if (Utils.isStringEmpty(mobileNumber)) {
                 showTextInputError(mTextInputLayoutMobileNumber, getString(R.string.field_should_not_be_empty_caps))
-                return false
-            }
-            if (Utils.isStringEmpty(agentId)) {
-                showTextInputError(mTextInputLayoutAgentId, getString(R.string.field_should_not_be_empty_caps))
                 return false
             }
             return true
@@ -133,6 +145,16 @@ class FragmentForgotPassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         Tracer.debug(TAG, "onClick: ")
         when (view.id) {
             R.id.fragment_forgot_password_textView_submit -> startSendOtpProcess()
+            R.id.fragment_forgot_password_radio_agent -> {
+                mRadioButtonAgent !!.isChecked = true
+                mRadioButtonMerchant !!.isChecked = false
+                mIsMerchant = false
+            }
+            R.id.fragment_forgot_password_radio_merchant -> {
+                mRadioButtonAgent !!.isChecked = false
+                mRadioButtonMerchant !!.isChecked = true
+                mIsMerchant = true
+            }
         }
     }
 
@@ -156,16 +178,26 @@ class FragmentForgotPassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         }
         mAgentNetworkTaskProvider = AgentNetworkTaskProvider()
         mAgentNetworkTaskProvider !!.attachProvider()
-        view !!.findViewById<View>(R.id.fragment_forgot_password_textView_submit).setOnClickListener(this)
 
         mTextInputLayoutMobileNumber = view !!.findViewById<View>(R.id.fragment_forgot_password_textInputLayout_mobile_number) as TextInputLayout
         mEditTextMobileNumber = view !!.findViewById<View>(R.id.fragment_forgot_password_editText_mobile_number) as EditText
-        mTextInputLayoutAgentId = view !!.findViewById<View>(R.id.fragment_forgot_password_textInputLayout_agent_id) as TextInputLayout
-        mEditTextAgentId = view !!.findViewById<View>(R.id.fragment_forgot_password_editText_agent_id) as EditText
-
+        mRadioButtonAgent = view !!.findViewById<View>(R.id.fragment_forgot_password_radio_agent) as RadioButton
+        mRadioButtonMerchant = view !!.findViewById<View>(R.id.fragment_forgot_password_radio_merchant) as RadioButton
+        // ADD CLICK LISTENER
+        mRadioButtonAgent !!.setOnClickListener(this)
+        mRadioButtonMerchant !!.setOnClickListener(this)
+        view !!.findViewById<View>(R.id.fragment_forgot_password_textView_submit).setOnClickListener(this)
         // ADD TEXT WATCHER
         mEditTextMobileNumber !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutMobileNumber !!))
-        mEditTextAgentId !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutAgentId !!))
+
+        // INIT UI
+        if (mIsMerchant) {
+            mRadioButtonMerchant !!.isChecked = true
+            mRadioButtonAgent !!.isChecked = false
+        } else {
+            mRadioButtonMerchant !!.isChecked = false
+            mRadioButtonAgent !!.isChecked = true
+        }
     }
 
     /**
@@ -177,16 +209,25 @@ class FragmentForgotPassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         if (! isGenerateOtpDetailValid) {
             return
         }
-        val mobileNumber = mEditTextMobileNumber !!.text.toString()
-        val agentId = mEditTextAgentId !!.text.toString()
+        var userType = ""
+        var agentId = ""
+        var merchantId = ""
+        if (mIsMerchant) {
+            merchantId = mEditTextMobileNumber !!.text.toString()
+            userType = Constants.USER_TYPE_MERCHANT
+        } else {
+            merchantId = mLoginMerchantId
+            agentId = mEditTextMobileNumber !!.text.toString()
+            userType = Constants.USER_TYPE_MERCHANT
+        }
         Tracer.debug(TAG, "startSendOtpProcess : ")
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_send_forgot_password_otp), date)
         val publicKey = getString(R.string.public_key)
-        val dtoAgentSendForgotPasswordOtpRequest = DTOAgentSendForgotPasswordOtpRequest(token !!, timeStamp, publicKey, agentId)
+        val dtoAgentSendForgotPasswordOtpRequest = DTOSendForgotPasswordOtpRequest(token !!, timeStamp, publicKey, userType, merchantId, agentId)
         Utils.showLoadingDialog(activity)
-        mAgentNetworkTaskProvider !!.agentSendForgotPasswordOtpTask(activity, dtoAgentSendForgotPasswordOtpRequest, mAgentSendForgotPasswordOtpResponseNetworkCallBack)
+        mAgentNetworkTaskProvider !!.sendForgotPasswordOtpTask(activity, dtoAgentSendForgotPasswordOtpRequest, mAgentSendForgotPasswordOtpResponseNetworkCallBack)
     }
 
     /**

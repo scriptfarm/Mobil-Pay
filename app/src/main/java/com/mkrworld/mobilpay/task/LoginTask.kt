@@ -17,10 +17,6 @@ import org.json.JSONObject
  */
 class LoginTask : MobilPayBaseTask<DTOLoginResponse> {
 
-    companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".LoginTask"
-    }
-
     /**
      * Constructor
      *

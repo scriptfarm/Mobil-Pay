@@ -1,6 +1,5 @@
 package com.mkrworld.mobilpay.dto.user.userdetail
 
-import com.google.gson.annotations.SerializedName
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.dto.DTOBaseRequest
@@ -15,19 +14,17 @@ class DTOUserDetailRequest : DTOBaseRequest {
         private val TAG = BuildConfig.BASE_TAG + ".DTOUserDetailRequest"
     }
 
-    @SerializedName("id")
-    private var mAgentId : String? = null
-
     /**
      * Constructor
      *
      * @param token
      * @param timeStamp
      * @param publicKey
+     * @param userType
+     * @param merchantId
      * @param agentId
      */
-    constructor(token : String, timeStamp : String, publicKey : String, agentId : String) : super(token, timeStamp, publicKey) {
+    constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String) : super(token, timeStamp, publicKey, userType, merchantId, agentId) {
         Tracer.debug(TAG, "DTOAgentDetailRequest : ")
-        mAgentId = agentId
     }
 }

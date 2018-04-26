@@ -7,7 +7,8 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.network.NetworkConstants
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.agent.agentqrcodegenarator.DTOAgentQRCodeGeneratorResponse
+import com.mkrworld.mobilpay.dto.agent.agentdetails.DTOAgentDetailResponse
+import com.mkrworld.mobilpay.dto.agent.agentmerchantlist.DTOAgentMerchantListResponse
 import com.mkrworld.mobilpay.task.MobilPayBaseTask
 import com.mkrworld.mobilpay.utils.UrlUtils
 
@@ -16,7 +17,7 @@ import org.json.JSONObject
 /**
  * Created by mkr on 27/3/18.
  */
-class AgentQRCodeGeneratorTask : MobilPayBaseTask<DTOAgentQRCodeGeneratorResponse> {
+class AgentMerchantsListTask : MobilPayBaseTask<DTOAgentMerchantListResponse> {
 
     /**
      * Constructor
@@ -25,14 +26,14 @@ class AgentQRCodeGeneratorTask : MobilPayBaseTask<DTOAgentQRCodeGeneratorRespons
      * @param requestJson
      * @param networkCallBack
      */
-    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOAgentQRCodeGeneratorResponse>) : super(context, requestJson, networkCallBack) {}
+    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOAgentMerchantListResponse>) : super(context, requestJson, networkCallBack) {}
 
-    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOAgentQRCodeGeneratorResponse {
-        return Gson().fromJson(jsonObject.toString(), DTOAgentQRCodeGeneratorResponse::class.java !!)
+    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOAgentMerchantListResponse {
+        return Gson().fromJson(jsonObject.toString(), DTOAgentMerchantListResponse::class.java !!)
     }
 
     override fun getUrl() : String {
-        return UrlUtils.getUrl(getContext(), R.string.url_generate_qr_code_token)
+        return UrlUtils.getUrl(getContext(), R.string.url_agent_merchant_list)
     }
 
     public override fun getRequestType() : NetworkConstants.RequestType {

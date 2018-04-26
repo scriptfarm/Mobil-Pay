@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.task.agent
+package com.mkrworld.mobilpay.task
 
 import android.content.Context
 
@@ -7,8 +7,7 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.network.NetworkConstants
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.agent.agentchangepassword.DTOAgentChangePasswordResponse
-import com.mkrworld.mobilpay.task.MobilPayBaseTask
+import com.mkrworld.mobilpay.dto.changepassword.DTOChangePasswordResponse
 import com.mkrworld.mobilpay.utils.UrlUtils
 
 import org.json.JSONObject
@@ -16,11 +15,7 @@ import org.json.JSONObject
 /**
  * Created by mkr on 27/3/18.
  */
-class AgentChangePasswordTask : MobilPayBaseTask<DTOAgentChangePasswordResponse> {
-
-    companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".AgentChangePasswordTask"
-    }
+class ChangePasswordTask : MobilPayBaseTask<DTOChangePasswordResponse> {
 
     /**
      * Constructor
@@ -29,10 +24,10 @@ class AgentChangePasswordTask : MobilPayBaseTask<DTOAgentChangePasswordResponse>
      * @param requestJson
      * @param networkCallBack
      */
-    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOAgentChangePasswordResponse>) : super(context, requestJson, networkCallBack) {}
+    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOChangePasswordResponse>) : super(context, requestJson, networkCallBack) {}
 
-    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOAgentChangePasswordResponse {
-        return Gson().fromJson(jsonObject.toString(), DTOAgentChangePasswordResponse::class.java !!)
+    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOChangePasswordResponse {
+        return Gson().fromJson(jsonObject.toString(), DTOChangePasswordResponse::class.java !!)
     }
 
     override fun getUrl() : String {

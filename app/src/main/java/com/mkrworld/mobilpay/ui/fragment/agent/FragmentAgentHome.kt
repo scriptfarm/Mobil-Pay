@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
 import com.mkrworld.androidlib.ui.adapter.BaseAdapter
@@ -22,9 +21,9 @@ import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler
 import com.mkrworld.mobilpay.ui.adapter.GridSpacingItemDecoration
+import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.PreferenceData
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by mkr on 13/3/18.
@@ -89,27 +88,31 @@ class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHC
                 when (dtoMerchantHomeTab.tabType) {
                     DTOAgentHomeTab.TabType.STATIC_QR_CODE -> if (activity is OnBaseActivityListener) {
                         val bundle = Bundle()
-                        bundle.putString(FragmentAgentQrCode.EXTRA_QR_CODE_TITLE, PreferenceData.getLoginId(activity))
+                        bundle.putString(FragmentAgentQrCode.EXTRA_QR_CODE_TITLE, if (PreferenceData.getUserType(activity).equals(Constants.USER_TYPE_MERCHANT)) {
+                            PreferenceData.getLoginMerchantId(activity)
+                        } else {
+                            PreferenceData.getLoginAgentId(activity)
+                        })
                         val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_QR_CODE)
-                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, bundle, true, FragmentTag.AGENT_QR_CODE)
+                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, bundle, true, FragmentTag.AGENT_QR_CODE)
                     }
                     DTOAgentHomeTab.TabType.DYNAMIC_QR_CODE -> if (activity is OnBaseActivityListener) {
                         val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_QR_CODE_GENERATOR)
-                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, null, true, FragmentTag.AGENT_QR_CODE_GENERATOR)
+                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_QR_CODE_GENERATOR)
                     }
                     DTOAgentHomeTab.TabType.SEND_BILL -> if (activity is OnBaseActivityListener) {
                         val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_SEND_BILL)
-                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, null, true, FragmentTag.AGENT_SEND_BILL)
+                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_SEND_BILL)
                     }
                     DTOAgentHomeTab.TabType.UPI_COLLECT -> {
                     }
                     DTOAgentHomeTab.TabType.AEPS_COLLECT -> if (activity is OnBaseActivityListener) {
                         val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_AEPS_COLLECT)
-                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, null, true, FragmentTag.AGENT_AEPS_COLLECT)
+                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_AEPS_COLLECT)
                     }
                     DTOAgentHomeTab.TabType.COLLECTION_SUMMARY -> if (activity is OnBaseActivityListener) {
                         val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_COLLECTION_SUMMARY)
-                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment!!, null, true, FragmentTag.AGENT_COLLECTION_SUMMARY)
+                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_COLLECTION_SUMMARY)
                     }
                 }
             }

@@ -45,9 +45,9 @@
     <dimen name="activity_main_sliding_content_margin_ver">@dimen/mkrdp_1</dimen>
 
     <!-- FRAGMENT AGENT LOGIN -->
-    <dimen name="fragment_agent_login_card_title_text_size">@dimen/title_text_size</dimen>
-    <dimen name="fragment_agent_login_content_margin">@dimen/content_margin</dimen>
-    <dimen name="fragment_agent_thumb_icon_dimen">@dimen/mkrdp_30</dimen>
+    <dimen name="fragment_login_thumb_icon_dimen">@dimen/mkrdp_30</dimen>
+    <dimen name="fragment_login_card_title_text_size">@dimen/title_text_size</dimen>
+    <dimen name="fragment_login_content_margin">@dimen/content_margin</dimen>
 
     <!-- ITEM AGENT HOME -->
     <dimen name="item_agent_home_icon_dim">@dimen/mkrdp_25</dimen>

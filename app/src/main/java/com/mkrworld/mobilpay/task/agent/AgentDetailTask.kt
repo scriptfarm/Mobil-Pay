@@ -18,10 +18,6 @@ import org.json.JSONObject
  */
 class AgentDetailTask : MobilPayBaseTask<DTOAgentDetailResponse> {
 
-    companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".AgentDetailTask"
-    }
-
     /**
      * Constructor
      *

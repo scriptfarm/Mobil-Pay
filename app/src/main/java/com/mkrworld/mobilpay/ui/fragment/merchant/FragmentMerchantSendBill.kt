@@ -208,8 +208,7 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_send_bill), date)
         val publicKey = getString(R.string.public_key)
-        val id = PreferenceData.getLoginId(activity)
-        val dtoMerchantSendBillRequest = DTOMerchantSendBillRequest(token !!, timeStamp, publicKey, id, mobileNumber, mobileNumber, billNumber, billDescription, billAmount)
+        val dtoMerchantSendBillRequest = DTOMerchantSendBillRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), mobileNumber, mobileNumber, billNumber, billDescription, billAmount)
         Utils.showLoadingDialog(activity)
         mMerchantNetworkTaskProvider !!.merchantSendBillTask(activity, dtoMerchantSendBillRequest, mMerchantSendBillResponseNetworkCallBack)
     }

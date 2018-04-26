@@ -1,8 +1,10 @@
 <resources>
     <string name="url_login">login</string>
     <string name="url_collection_summary">getCollectionSummary</string>
+    <string name="url_collection_status">getCollectionStatus</string>
+    <string name="url_agent_merchant_list">getMerchantList</string>
     <string name="url_agent_logo">admin/agent_qr/</string>
-    <string name="url_agent_logout">logout</string>
+    <string name="url_logout">logout</string>
     <string name="url_generate_qr_code_token">generateQRCodeToken</string>
     <string name="url_send_bill">sendBill</string>
     <string name="url_fetch_bill">fetchBill</string>
@@ -16,7 +18,9 @@
 
     <string name="endpoint_login">login</string>
     <string name="endpoint_collection_summary">getCollectionSummary</string>
-    <string name="endpoint_agent_logout">logout</string>
+    <string name="endpoint_collection_status">getCollectionStatus</string>
+    <string name="endpoint_agent_merchant_list">getMerchantList</string>
+    <string name="endpoint_logout">logout</string>
     <string name="endpoint_generate_qr_code_token">generateQRCodeToken</string>
     <string name="endpoint_send_bill">sendBill</string>
     <string name="endpoint_fetch_bill">fetchBill</string>

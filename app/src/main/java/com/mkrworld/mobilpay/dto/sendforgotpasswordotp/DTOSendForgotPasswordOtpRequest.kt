@@ -1,18 +1,17 @@
-package com.mkrworld.mobilpay.dto.agent.agentdetails
+package com.mkrworld.mobilpay.dto.sendforgotpasswordotp
 
-import com.google.gson.annotations.SerializedName
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.dto.DTOBaseRequest
 
 /**
- * Created by mkr on 27/3/18.
+ * Created by mkr on 2/4/18.
  */
 
-class DTOAgentDetailRequest : DTOBaseRequest {
+class DTOSendForgotPasswordOtpRequest : DTOBaseRequest {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentDetailRequest"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOSendForgotPasswordOtpRequest"
     }
 
     /**
@@ -21,8 +20,11 @@ class DTOAgentDetailRequest : DTOBaseRequest {
      * @param token
      * @param timeStamp
      * @param publicKey
+     * @param userType
+     * @param merchantId
+     * @param agentId
      */
     constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String) : super(token, timeStamp, publicKey, userType, merchantId, agentId) {
-        Tracer.debug(TAG, "DTOAgentDetailRequest : ")
+        Tracer.debug(TAG, "DTOSendForgotPasswordOtpRequest : ")
     }
 }

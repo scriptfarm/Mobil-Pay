@@ -182,7 +182,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
      */
     private fun init() {
         Tracer.debug(TAG, "init: ")
-        var permissions : Array<String> = arrayOf(Manifest.permission.INTERNET,Manifest.permission.ACCESS_NETWORK_STATE,Manifest.permission.USE_FINGERPRINT)
+        var permissions : Array<String> = arrayOf(Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.USE_FINGERPRINT)
         mAppPermissionController = AppPermissionController(this, permissions, this)
         mAppPermissionController?.initializedAppPermission()
         mAgentNetworkTaskProvider = AgentNetworkTaskProvider()
@@ -258,12 +258,11 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
      */
     private fun logoutMerchant() {
         Tracer.debug(TAG, "logoutMerchant : ")
-        val agentId = PreferenceData.getLoginId(this)
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
-        val token = Utils.createToken(this, getString(R.string.endpoint_agent_logout), date)
+        val token = Utils.createToken(this, getString(R.string.endpoint_logout), date)
         val publicKey = getString(R.string.public_key)
-        val dtoAgentLogoutRequest = DTOAgentLogoutRequest(token !!, timeStamp, publicKey, agentId)
+        val dtoAgentLogoutRequest = DTOAgentLogoutRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(this), PreferenceData.getLoginMerchantId(this), PreferenceData.getLoginAgentId(this))
         Utils.showLoadingDialog(this)
         mAgentNetworkTaskProvider !!.agentLogoutTask(this, dtoAgentLogoutRequest, mAgentLogoutResponseNetworkCallBack)
     }

@@ -5,10 +5,8 @@ import android.content.Context
 import com.google.gson.Gson
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.network.NetworkConstants
-import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.collectionsummary.DTOCollectionSummaryResponse
-import com.mkrworld.mobilpay.dto.login.DTOLoginResponse
+import com.mkrworld.mobilpay.dto.collectionstatus.DTOCollectionStatusResponse
 import com.mkrworld.mobilpay.utils.UrlUtils
 
 import org.json.JSONObject
@@ -16,7 +14,7 @@ import org.json.JSONObject
 /**
  * Created by mkr on 27/3/18.
  */
-class CollectionSummaryTask : MobilPayBaseTask<DTOCollectionSummaryResponse> {
+class CollectionStatusTask : MobilPayBaseTask<DTOCollectionStatusResponse> {
 
     /**
      * Constructor
@@ -25,10 +23,10 @@ class CollectionSummaryTask : MobilPayBaseTask<DTOCollectionSummaryResponse> {
      * @param requestJson
      * @param networkCallBack
      */
-    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOCollectionSummaryResponse>) : super(context, requestJson, networkCallBack) {}
+    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOCollectionStatusResponse>) : super(context, requestJson, networkCallBack) {}
 
-    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOCollectionSummaryResponse {
-        return Gson().fromJson(jsonObject.toString(), DTOCollectionSummaryResponse::class.java !!)
+    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOCollectionStatusResponse {
+        return Gson().fromJson(jsonObject.toString(), DTOCollectionStatusResponse::class.java !!)
     }
 
     override fun getUrl() : String {

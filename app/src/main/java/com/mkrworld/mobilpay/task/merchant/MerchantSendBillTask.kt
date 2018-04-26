@@ -16,10 +16,6 @@ import org.json.JSONObject
  */
 class MerchantSendBillTask : MobilPayBaseTask<DTOMerchantSendBillResponse> {
 
-    companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".MerchantSendBillTask"
-    }
-
     /**
      * Constructor
      *

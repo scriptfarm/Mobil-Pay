@@ -14,13 +14,22 @@ open class DTOBaseRequest {
     }
 
     @SerializedName("token")
-    private var mToken : String?=null
+    private var mToken : String? = null
 
     @SerializedName("timestamp")
-    private var mTimeStamp : String?=null
+    private var mTimeStamp : String? = null
 
     @SerializedName("public_key")
-    private var mPublicKey : String?=null
+    private var mPublicKey : String? = null
+
+    @SerializedName("user_type")
+    private var mUserType : String? = null
+
+    @SerializedName("agent_id")
+    private var mAgentId : String? = null
+
+    @SerializedName("merchant_id")
+    private var mMerchantId : String? = null
 
     /**
      * Constructor
@@ -28,10 +37,16 @@ open class DTOBaseRequest {
      * @param token
      * @param timeStamp
      * @param publicKey
+     * @param userType
+     * @param merchantId
+     * @param agentId
      */
-    constructor(token : String, timeStamp : String, publicKey : String) {
+    constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String) {
         mToken = token
         mTimeStamp = timeStamp
         mPublicKey = publicKey
+        mUserType = userType
+        mMerchantId = merchantId
+        mAgentId = agentId
     }
 }

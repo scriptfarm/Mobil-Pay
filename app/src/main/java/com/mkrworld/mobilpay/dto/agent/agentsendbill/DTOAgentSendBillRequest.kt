@@ -15,17 +15,11 @@ class DTOAgentSendBillRequest : DTOBaseRequest {
         private val TAG = BuildConfig.BASE_TAG + ".DTOAgentSendBillRequest"
     }
 
-    @SerializedName("id")
-    private var mAgentId : String? = null
-
     @SerializedName("user_id")
     private var mUserId : String? = null
 
     @SerializedName("bill_no")
     private var mBillNo : String? = null
-
-    @SerializedName("sender_type")
-    private var mSenderType : String = "A"
 
     /**
      * Constructor
@@ -33,13 +27,14 @@ class DTOAgentSendBillRequest : DTOBaseRequest {
      * @param token
      * @param timeStamp
      * @param publicKey
-     * @param id
+     * @param userType
+     * @param merchantId
+     * @param agentId
      * @param userId
      * @param billNo
      */
-    constructor(token : String, timeStamp : String, publicKey : String, id : String, userId : String, billNo : String) : super(token, timeStamp, publicKey) {
+    constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String, userId : String, billNo : String) : super(token, timeStamp, publicKey, userType, merchantId, agentId) {
         Tracer.debug(TAG, "DTOAgentFetchBillRequest : ")
-        mAgentId = id
         mUserId = userId
         mBillNo = billNo
     }

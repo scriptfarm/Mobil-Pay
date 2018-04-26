@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#A8CE48</color>
-    <color name="colorPrimaryDark">#688E08</color>
+    <color name="colorPrimary">#0116fd</color>
+    <color name="colorPrimaryDark">#1e01ff</color>
     <color name="colorAccent">#1BA1E2</color>
     <color name="toolbar_back">@color/colorPrimary</color>
     <color name="toolbar_text_color">@android:color/white</color>

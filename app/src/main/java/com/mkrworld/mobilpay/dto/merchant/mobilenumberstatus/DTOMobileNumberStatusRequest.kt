@@ -16,7 +16,7 @@ class DTOMobileNumberStatusRequest : DTOBaseRequest {
     }
 
     @SerializedName("user_id")
-    private var mUserId : String?=null
+    private var mUserId : String? = null
 
     /**
      * Constructor
@@ -26,7 +26,7 @@ class DTOMobileNumberStatusRequest : DTOBaseRequest {
      * @param publicKey
      * @param userId
      */
-    constructor(token : String, timeStamp : String, publicKey : String, userId : String) : super(token, timeStamp, publicKey) {
+    constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String, userId : String) : super(token, timeStamp, publicKey, userType, merchantId, agentId) {
         Tracer.debug(TAG, "DTOMobileNumberStatusRequest : ")
         mUserId = userId
     }

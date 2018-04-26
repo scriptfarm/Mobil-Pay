@@ -13,8 +13,8 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.agent.agentchangepassword.DTOAgentChangePasswordRequest
-import com.mkrworld.mobilpay.dto.agent.agentchangepassword.DTOAgentChangePasswordResponse
+import com.mkrworld.mobilpay.dto.changepassword.DTOChangePasswordRequest
+import com.mkrworld.mobilpay.dto.changepassword.DTOChangePasswordResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
@@ -40,19 +40,21 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
     private var mEditTextNewPassword : EditText? = null
     private var mEditTextConfirmPassword : EditText? = null
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
-    private val mAgentChangePasswordResponseNetworkCallBack = object : NetworkCallBack<DTOAgentChangePasswordResponse> {
-        override fun onSuccess(dtoAgentChangePasswordResponse : DTOAgentChangePasswordResponse) {
+    private val mAgentChangePasswordResponseNetworkCallBack = object : NetworkCallBack<DTOChangePasswordResponse> {
+        override fun onSuccess(dtoChangePasswordResponse : DTOChangePasswordResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
-            if (dtoAgentChangePasswordResponse == null || dtoAgentChangePasswordResponse.getData() == null) {
+            if (dtoChangePasswordResponse == null || dtoChangePasswordResponse.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            PreferenceData.setLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim { it <= ' ' })
-            Tracer.showSnack(view !!, dtoAgentChangePasswordResponse.getMessage())
+            if (PreferenceData.isHaveFingerPrintConsent(activity) && PreferenceData.getThumbLoginUserType(activity).equals(PreferenceData.getUserType(activity)) && PreferenceData.getThumbLoginMerchantId(activity).equals(PreferenceData.getLoginMerchantId(activity)) && PreferenceData.getThumbLoginAgentId(activity).equals(PreferenceData.getLoginAgentId(activity))) {
+                PreferenceData.setThumbLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim { it <= ' ' })
+            }
+            Tracer.showSnack(view !!, dtoChangePasswordResponse.getMessage())
             activity.onBackPressed()
         }
 
@@ -198,9 +200,9 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_change_password), date)
         val publicKey = getString(R.string.public_key)
-        val dtoAgentChangePasswordRequest = DTOAgentChangePasswordRequest(token !!, timeStamp, publicKey, PreferenceData.getLoginId(activity), oldPassword, confirmPassword)
+        val dtoAgentChangePasswordRequest = DTOChangePasswordRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), oldPassword, confirmPassword)
         Utils.showLoadingDialog(activity)
-        mAgentNetworkTaskProvider !!.agentChangePasswordTask(activity, dtoAgentChangePasswordRequest, mAgentChangePasswordResponseNetworkCallBack)
+        mAgentNetworkTaskProvider !!.changePasswordTask(activity, dtoAgentChangePasswordRequest, mAgentChangePasswordResponseNetworkCallBack)
     }
 
     /**

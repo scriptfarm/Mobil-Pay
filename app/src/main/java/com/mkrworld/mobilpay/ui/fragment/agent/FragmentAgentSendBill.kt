@@ -277,8 +277,7 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_get_user_details), date)
         val publicKey = getString(R.string.public_key)
-        val AgentId = PreferenceData.getLoginId(activity)
-        val dtoUserDetailRequest = DTOUserDetailRequest(token !!, timeStamp, publicKey, AgentId)
+        val dtoUserDetailRequest = DTOUserDetailRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity))
         Utils.showLoadingDialog(activity)
         mUserNetworkTaskProvider !!.userDetailTask(activity, dtoUserDetailRequest, mUserDetailResponseNetworkCallBack)
     }
@@ -294,8 +293,7 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_fetch_bill), date)
         val publicKey = getString(R.string.public_key)
-        val AgentId = PreferenceData.getLoginId(activity)
-        val dtoFetchBillRequest = DTOAgentFetchBillRequest(token !!, timeStamp, publicKey, AgentId, userId)
+        val dtoFetchBillRequest = DTOAgentFetchBillRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), userId)
         Utils.showLoadingDialog(activity)
         mAgentNetworkTaskProvider !!.agentFetchBillTask(activity, dtoFetchBillRequest, mAgentFetchBillResponseNetworkCallBack)
     }
@@ -313,8 +311,7 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_send_bill), date)
         val publicKey = getString(R.string.public_key)
-        val AgentId = PreferenceData.getLoginId(activity)
-        val dtoAgentSendBillRequest = DTOAgentSendBillRequest(token !!, timeStamp, publicKey, AgentId, mDTOSelectedUserBillData !!.userId !!, mDTOSelectedUserBillData !!.billNumber !!)
+        val dtoAgentSendBillRequest = DTOAgentSendBillRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), mDTOSelectedUserBillData !!.userId !!, mDTOSelectedUserBillData !!.billNumber !!)
         Utils.showLoadingDialog(activity)
         mAgentNetworkTaskProvider !!.agentSendBillTask(activity, dtoAgentSendBillRequest, mAgentSendBillResponseNetworkCallBack)
     }

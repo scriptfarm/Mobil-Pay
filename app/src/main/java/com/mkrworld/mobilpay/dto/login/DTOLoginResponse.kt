@@ -41,16 +41,6 @@ class DTOLoginResponse {
      * Class to hold the Response Data
      */
     inner class Data {
-
-        /**
-         * Method to get the user type
-         *
-         * @return
-         */
-        @SerializedName("user_type")
-        var userType : String? = null
-            get() {
-                return field ?: ""
-            }
+        // NOTHING TO DO
     }
 }

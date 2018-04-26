@@ -15,14 +15,11 @@ class DTOLoginRequest : DTOBaseRequest {
         private val TAG = BuildConfig.BASE_TAG + ".DTOLoginRequest"
     }
 
-    @SerializedName("id")
-    private var mId : String?=null
-
     @SerializedName("password")
-    private var mPassword : String?=null
+    private var mPassword : String? = null
 
     @SerializedName("extra")
-    private var mExtra : Extra?=null
+    private var mExtra : Extra? = null
 
     /**
      * Constructor
@@ -30,14 +27,15 @@ class DTOLoginRequest : DTOBaseRequest {
      * @param token
      * @param timeStamp
      * @param publicKey
-     * @param id
+     * @param userType
+     * @param merchantId
+     * @param agentId
      * @param password
      * @param pushId
      * @param gcmId
      */
-    constructor(token : String, timeStamp : String, publicKey : String, id : String, password : String, pushId : String, gcmId : String) : super(token, timeStamp, publicKey) {
+    constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String, password : String, pushId : String, gcmId : String) : super(token, timeStamp, publicKey, userType, merchantId, agentId) {
         Tracer.debug(TAG, "DTOLoginRequest : ")
-        mId = id
         mPassword = password
         mExtra = Extra(pushId, gcmId)
     }
@@ -46,10 +44,10 @@ class DTOLoginRequest : DTOBaseRequest {
     private inner class Extra {
 
         @SerializedName("push_id")
-        private var mPushId : String?=null
+        private var mPushId : String? = null
 
         @SerializedName("gcm_id")
-        private var mGcmId : String?=null
+        private var mGcmId : String? = null
 
         /**
          * Constructor

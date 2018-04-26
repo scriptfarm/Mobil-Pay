@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.ui.fragment.agent
+package com.mkrworld.mobilpay.ui.fragment.merchant
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -30,10 +30,10 @@ import kotlin.collections.ArrayList
  * Created by mkr on 15/3/18.
  */
 
-class FragmentAgentCollectionSummary : Fragment(), OnBaseFragmentListener, View.OnClickListener {
+class FragmentMerchantCollectionSummary : Fragment(), OnBaseFragmentListener, View.OnClickListener {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".FragmentAgentCollectionSummary"
+        private val TAG = BuildConfig.BASE_TAG + ".FragmentMerchantCollectionSummary"
     }
 
     private var mBaseAdapter : BaseAdapter? = null
@@ -108,7 +108,7 @@ class FragmentAgentCollectionSummary : Fragment(), OnBaseFragmentListener, View.
     //        }
 
     override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
-        return inflater !!.inflate(R.layout.fragment_agent_collection_summary, container, false)
+        return inflater !!.inflate(R.layout.fragment_merchant_collection_summary, container, false)
     }
 
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
@@ -170,7 +170,7 @@ class FragmentAgentCollectionSummary : Fragment(), OnBaseFragmentListener, View.
         if (view == null) {
             return
         }
-        val recyclerViewUserData = view !!.findViewById<View>(R.id.fragment_agent_collection_summary_recycler_view) as RecyclerView
+        val recyclerViewUserData = view !!.findViewById<View>(R.id.fragment_merchant_collection_summary_recycler_view) as RecyclerView
         mBaseAdapter = BaseAdapter(AdapterItemHandler())
         recyclerViewUserData.adapter = mBaseAdapter
         recyclerViewUserData.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
