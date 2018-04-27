@@ -10,6 +10,6 @@
         android:background="@color/transparent"
         app:progress_color="@color/colorAccent"
         android:layout_centerInParent="true"
-        app:progress_image="@drawable/ic_nupay_load"
+        app:progress_image="@mipmap/ic_launcher"
         app:progress_width="@dimen/dialog_progress_progress_width" />
 </RelativeLayout>
