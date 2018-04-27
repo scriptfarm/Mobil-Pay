@@ -16,7 +16,7 @@ import com.mkrworld.androidlib.ui.adapter.BaseViewHolder
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.appdata.DTOAgentHomeTab
+import com.mkrworld.mobilpay.dto.appdata.DTOHomeTab
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler
@@ -44,14 +44,15 @@ class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHC
         get() {
             Tracer.debug(TAG, "getHomeTabList: ")
             val baseAdapterItemList = ArrayList<BaseAdapterItem<*>>()
-            val adapterViewType = AdapterItemHandler.AdapterItemViewType.AGENT_HOME_TAB.ordinal
-            //baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOAgentHomeTab(DTOAgentHomeTab.TabType.STATIC_QR_CODE, R.drawable.ic_static_qr_code, getString(R.string.static_qr_code))))
-            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOAgentHomeTab(DTOAgentHomeTab.TabType.SEND_NOTIFICATION, R.drawable.ic_static_qr_code, getString(R.string.send_notification))))
-            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOAgentHomeTab(DTOAgentHomeTab.TabType.DYNAMIC_QR_CODE, R.drawable.ic_qr_code, getString(R.string.dynamic_qr_code))))
-            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOAgentHomeTab(DTOAgentHomeTab.TabType.UPI_COLLECT, R.drawable.ic_upi_collect, getString(R.string.upi_collect))))
-            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOAgentHomeTab(DTOAgentHomeTab.TabType.AEPS_COLLECT, R.drawable.ic_aeps_collect, getString(R.string.aeps_collect))))
-            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOAgentHomeTab(DTOAgentHomeTab.TabType.SEND_BILL, R.drawable.ic_send_bill, getString(R.string.send_bill))))
-            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOAgentHomeTab(DTOAgentHomeTab.TabType.COLLECTION_SUMMARY, R.drawable.ic_collection_summary, getString(R.string.collection_summary))))
+            val adapterViewType = AdapterItemHandler.AdapterItemViewType.HOME_TAB.ordinal
+            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.SEND_NOTIFICATION, R.drawable.ic_static_qr_code, getString(R.string.send_notification))))
+            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.STATIC_QR_CODE, R.drawable.ic_static_qr_code, getString(R.string.static_qr_code))))
+            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.DYNAMIC_QR_CODE, R.drawable.ic_qr_code, getString(R.string.dynamic_qr_code))))
+            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.UPI_COLLECT, R.drawable.ic_upi_collect, getString(R.string.upi_collect))))
+            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.AEPS_COLLECT, R.drawable.ic_aeps_collect, getString(R.string.aeps_collect))))
+            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.SEND_BILL, R.drawable.ic_send_bill, getString(R.string.send_bill))))
+            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.COLLECTION_SUMMARY, R.drawable.ic_collection_summary, getString(R.string.collection_summary))))
+            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.COLLECTION_STATUS, R.drawable.ic_static_qr_code, getString(R.string.collection_status))))
             return baseAdapterItemList
         }
 
@@ -84,10 +85,10 @@ class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHC
     override fun onViewHolderClicked(holder : BaseViewHolder<*>, view : View) {
         Tracer.debug(TAG, "onViewHolderClicked: ")
         when (view.id) {
-            R.id.item_home_parent -> if (view.tag != null && view.tag is DTOAgentHomeTab) {
-                val dtoMerchantHomeTab = view.tag as DTOAgentHomeTab
+            R.id.item_home_parent -> if (view.tag != null && view.tag is DTOHomeTab) {
+                val dtoMerchantHomeTab = view.tag as DTOHomeTab
                 when (dtoMerchantHomeTab.tabType) {
-                    DTOAgentHomeTab.TabType.STATIC_QR_CODE -> if (activity is OnBaseActivityListener) {
+                    DTOHomeTab.TabType.STATIC_QR_CODE -> if (activity is OnBaseActivityListener) {
                         val bundle = Bundle()
                         bundle.putString(FragmentAgentQrCode.EXTRA_QR_CODE_TITLE, if (PreferenceData.getUserType(activity).equals(Constants.USER_TYPE_MERCHANT)) {
                             PreferenceData.getLoginMerchantId(activity)
@@ -97,27 +98,31 @@ class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHC
                         val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_QR_CODE)
                         (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, bundle, true, FragmentTag.AGENT_QR_CODE)
                     }
-                    DTOAgentHomeTab.TabType.SEND_NOTIFICATION -> if (activity is OnBaseActivityListener) {
-                        val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_SEND_NOTIFICATION)
-                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_SEND_NOTIFICATION)
+                    DTOHomeTab.TabType.SEND_NOTIFICATION -> if (activity is OnBaseActivityListener) {
+                        val fragment = FragmentProvider.getFragment(FragmentTag.SEND_NOTIFICATION)
+                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.SEND_NOTIFICATION)
                     }
-                    DTOAgentHomeTab.TabType.DYNAMIC_QR_CODE -> if (activity is OnBaseActivityListener) {
+                    DTOHomeTab.TabType.DYNAMIC_QR_CODE -> if (activity is OnBaseActivityListener) {
                         val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_QR_CODE_GENERATOR)
                         (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_QR_CODE_GENERATOR)
                     }
-                    DTOAgentHomeTab.TabType.SEND_BILL -> if (activity is OnBaseActivityListener) {
+                    DTOHomeTab.TabType.SEND_BILL -> if (activity is OnBaseActivityListener) {
                         val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_SEND_BILL)
                         (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_SEND_BILL)
                     }
-                    DTOAgentHomeTab.TabType.UPI_COLLECT -> {
+                    DTOHomeTab.TabType.UPI_COLLECT -> {
                     }
-                    DTOAgentHomeTab.TabType.AEPS_COLLECT -> if (activity is OnBaseActivityListener) {
+                    DTOHomeTab.TabType.AEPS_COLLECT -> if (activity is OnBaseActivityListener) {
                         val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_AEPS_COLLECT)
                         (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_AEPS_COLLECT)
                     }
-                    DTOAgentHomeTab.TabType.COLLECTION_SUMMARY -> if (activity is OnBaseActivityListener) {
-                        val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_COLLECTION_SUMMARY)
-                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.AGENT_COLLECTION_SUMMARY)
+                    DTOHomeTab.TabType.COLLECTION_SUMMARY -> if (activity is OnBaseActivityListener) {
+                        val fragment = FragmentProvider.getFragment(FragmentTag.COLLECTION_SUMMARY)
+                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.COLLECTION_SUMMARY)
+                    }
+                    DTOHomeTab.TabType.COLLECTION_STATUS -> if (activity is OnBaseActivityListener) {
+                        val fragment = FragmentProvider.getFragment(FragmentTag.COLLECTION_STATUS)
+                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.COLLECTION_STATUS)
                     }
                 }
             }

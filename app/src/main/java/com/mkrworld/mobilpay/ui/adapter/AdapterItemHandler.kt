@@ -18,18 +18,18 @@ class AdapterItemHandler : BaseAdapterItemHandler() {
      * Type of view hold by adapter
      */
     enum class AdapterItemViewType {
-        NONE, AGENT_HOME_TAB, MERCHANT_HOME_TAB, SUMMARY_CONSOLIDATE_DATA_LIST, SUMMARY_CONSOLIDATE_DATA, SUMMARY_USER_DATA, AGENT_NOTIFICATION_DATA_ITEM, MERCHANT_NOTIFICATION_DATA_ITEM
+        NONE, HOME_TAB, SUMMARY_CONSOLIDATE_DATA_LIST, SUMMARY_CONSOLIDATE_DATA, SUMMARY_USER_DATA, SEND_NOTIFICATION_DATA_ITEM, STATUS_CONSOLIDATE_DATA_LIST, STATUS_CONSOLIDATE_DATA
     }
 
     override fun createHolder(inflater : LayoutInflater, parent : ViewGroup, viewType : Int) : BaseViewHolder<*> {
         when (getItemViewType(viewType)) {
-            AdapterItemHandler.AdapterItemViewType.MERCHANT_HOME_TAB -> return MerchantHomeTabVH(inflater.inflate(R.layout.item_home_tab, parent, false))
-            AdapterItemHandler.AdapterItemViewType.AGENT_HOME_TAB -> return AgentHomeTabVH(inflater.inflate(R.layout.item_home_tab, parent, false))
-            AdapterItemHandler.AdapterItemViewType.SUMMARY_CONSOLIDATE_DATA_LIST -> return SummaryConsolidateDataListVH(inflater.inflate(R.layout.item_card_recycler_view, parent, false))
-            AdapterItemHandler.AdapterItemViewType.SUMMARY_CONSOLIDATE_DATA -> return SummaryConsolidateDataVH(inflater.inflate(R.layout.item_summary_consolidate_data, parent, false))
-            AdapterItemHandler.AdapterItemViewType.SUMMARY_USER_DATA -> return SummaryUserDataVH(inflater.inflate(R.layout.item_summary_user_data, parent, false))
-            AdapterItemHandler.AdapterItemViewType.AGENT_NOTIFICATION_DATA_ITEM -> return AgentNotificationVH(inflater.inflate(R.layout.item_notification_data, parent, false))
-            AdapterItemHandler.AdapterItemViewType.MERCHANT_NOTIFICATION_DATA_ITEM -> return MerchantNotificationVH(inflater.inflate(R.layout.item_notification_data, parent, false))
+            AdapterItemHandler.AdapterItemViewType.HOME_TAB -> return HomeTabVH(inflater.inflate(R.layout.item_home_tab, parent, false))
+            AdapterItemHandler.AdapterItemViewType.SUMMARY_CONSOLIDATE_DATA_LIST -> return CollectionSummaryDataItemListVH(inflater.inflate(R.layout.item_card_recycler_view, parent, false))
+            AdapterItemHandler.AdapterItemViewType.SUMMARY_CONSOLIDATE_DATA -> return CollectionSummaryDataItemVH(inflater.inflate(R.layout.item_collection_summary_data, parent, false))
+            AdapterItemHandler.AdapterItemViewType.STATUS_CONSOLIDATE_DATA_LIST -> return CollectionStatusDataItemListVH(inflater.inflate(R.layout.item_card_recycler_view, parent, false))
+            AdapterItemHandler.AdapterItemViewType.STATUS_CONSOLIDATE_DATA -> return CollectionStatusDataItemVH(inflater.inflate(R.layout.item_collection_status_data, parent, false))
+            AdapterItemHandler.AdapterItemViewType.SUMMARY_USER_DATA -> return SummaryUserDataVH(inflater.inflate(R.layout.item_collection_summary_user_data, parent, false))
+            AdapterItemHandler.AdapterItemViewType.SEND_NOTIFICATION_DATA_ITEM -> return SendNotificationVH(inflater.inflate(R.layout.item_send_notification_data, parent, false))
             else -> return object : BaseViewHolder<Any>(FrameLayout(inflater.context)) {
                 protected override fun bindData(o : Any) {
 

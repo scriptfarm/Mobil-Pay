@@ -39,6 +39,7 @@ class UrlUtils {
             when (urlResId) {
                 R.string.url_login -> return context.getString(R.string.url_login)
                 R.string.url_collection_summary -> return context.getString(R.string.url_collection_summary)
+                R.string.url_collection_status -> return context.getString(R.string.url_collection_status)
                 R.string.url_agent_merchant_list -> return context.getString(R.string.url_agent_merchant_list)
                 R.string.url_send_notification -> return context.getString(R.string.url_send_notification)
                 R.string.url_agent_logo -> return context.getString(R.string.url_agent_logo)

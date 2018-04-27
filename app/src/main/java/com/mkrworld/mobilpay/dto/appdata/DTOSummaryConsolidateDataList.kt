@@ -1,6 +1,5 @@
 package com.mkrworld.mobilpay.dto.appdata
 
-import android.content.ContentValues.TAG
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 
@@ -16,32 +15,32 @@ class DTOSummaryConsolidateDataList {
         private val TAG = BuildConfig.BASE_TAG + ".DTOSummaryConsolidateDataList"
     }
 
-    val dtoSummaryConsolidateDataList : ArrayList<DTOSummaryConsolidateData>
+    val dtoCollectionSummaryConsolidateDataList : ArrayList<DTOCollectionSummaryConsolidateData>
 
     init {
         Tracer.debug(TAG, "DTOSummaryConsolidateDataList: ")
-        dtoSummaryConsolidateDataList = ArrayList()
+        dtoCollectionSummaryConsolidateDataList = ArrayList()
     }
 
     /**
      * Method to add consolidate mData Item
      *
-     * @param dtoSummaryConsolidateData
+     * @param dtoCollectionSummaryConsolidateData
      */
-    fun addConsolidateData(dtoSummaryConsolidateData : DTOSummaryConsolidateData) {
-        Tracer.debug(TAG, "addConsolidateData: $dtoSummaryConsolidateData")
-        dtoSummaryConsolidateDataList.add(dtoSummaryConsolidateData)
+    fun addConsolidateData(dtoCollectionSummaryConsolidateData : DTOCollectionSummaryConsolidateData) {
+        Tracer.debug(TAG, "addConsolidateData: $dtoCollectionSummaryConsolidateData")
+        dtoCollectionSummaryConsolidateDataList.add(dtoCollectionSummaryConsolidateData)
     }
 
     /**
      * Method to add consolidate mData Item List
      *
-     * @param dtoSummaryConsolidateDataList
+     * @param dtoCollectionSummaryConsolidateDataList
      */
-    fun addConsolidateDataList(dtoSummaryConsolidateDataList : ArrayList<DTOSummaryConsolidateData>?) {
-        Tracer.debug(TAG, "addData: " + dtoSummaryConsolidateDataList !!)
-        if (dtoSummaryConsolidateDataList != null) {
-            this.dtoSummaryConsolidateDataList.addAll(dtoSummaryConsolidateDataList)
+    fun addConsolidateDataList(dtoCollectionSummaryConsolidateDataList : ArrayList<DTOCollectionSummaryConsolidateData>?) {
+        Tracer.debug(TAG, "addData: " + dtoCollectionSummaryConsolidateDataList !!)
+        if (dtoCollectionSummaryConsolidateDataList != null) {
+            this.dtoCollectionSummaryConsolidateDataList.addAll(dtoCollectionSummaryConsolidateDataList)
         }
     }
 }

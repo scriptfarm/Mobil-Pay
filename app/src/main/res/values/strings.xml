@@ -51,6 +51,7 @@
 
     <string name="static_qr_code">Static QR Code</string>
     <string name="send_notification">Send Notification</string>
+    <string name="collection_status">Collection Status</string>
     <string name="dynamic_qr_code">Dynamic QR Code</string>
     <string name="upi_collect">UPI Collect</string>
     <string name="aeps_collect">AEPS Collect</string>
@@ -63,9 +64,6 @@
     <string name="bill_amount_star">Bill Amount ₹ *</string>
     <string name="generate_caps">GENERATE</string>
     <string name="cancel_caps">CANCEL</string>
-
-    <string name="agent_send_notification">Agent Send Notification</string>
-    <string name="merchant_send_notification">Merchant Send Notification</string>
 
     <string name="customer_id">Customer-ID</string>
     <string name="bill_number">Bill Number</string>
@@ -93,6 +91,7 @@
     <string name="qr_code_caps">QR-CODE</string>
     <string name="upi_caps">UPI</string>
     <string name="total_caps">TOTAL</string>
+    <string name="total_bill_sent">Total Bills Sent</string>
     <string name="mode_caps">MODE</string>
     <string name="amount_caps">AMOUNT</string>
     <string name="txns_caps">TXN\'s</string>

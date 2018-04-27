@@ -6,22 +6,23 @@ import com.mkrworld.androidlib.network.BaseTaskProvider
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
-import com.mkrworld.mobilpay.dto.changepassword.DTOChangePasswordRequest
-import com.mkrworld.mobilpay.dto.changepassword.DTOChangePasswordResponse
-import com.mkrworld.mobilpay.dto.collectionstatus.DTOCollectionStatusRequest
-import com.mkrworld.mobilpay.dto.collectionstatus.DTOCollectionStatusResponse
-import com.mkrworld.mobilpay.dto.collectionsummary.DTOCollectionSummaryRequest
-import com.mkrworld.mobilpay.dto.collectionsummary.DTOCollectionSummaryResponse
-import com.mkrworld.mobilpay.dto.forgotpassword.DTOForgotPasswordRequest
-import com.mkrworld.mobilpay.dto.forgotpassword.DTOForgotPasswordResponse
-import com.mkrworld.mobilpay.dto.login.DTOLoginRequest
-import com.mkrworld.mobilpay.dto.login.DTOLoginResponse
-import com.mkrworld.mobilpay.dto.sendforgotpasswordotp.DTOSendForgotPasswordOtpRequest
-import com.mkrworld.mobilpay.dto.sendforgotpasswordotp.DTOSendForgotPasswordOtpResponse
-import com.mkrworld.mobilpay.dto.sendnotification.DTOSendNotificationRequest
-import com.mkrworld.mobilpay.dto.sendnotification.DTOSendNotificationResponse
-import com.mkrworld.mobilpay.task.*
-import com.mkrworld.mobilpay.task.CollectionStatusTask
+import com.mkrworld.mobilpay.dto.comms.changepassword.DTOChangePasswordRequest
+import com.mkrworld.mobilpay.dto.comms.changepassword.DTOChangePasswordResponse
+import com.mkrworld.mobilpay.dto.comms.collectionstatus.DTOCollectionStatusRequest
+import com.mkrworld.mobilpay.dto.comms.collectionstatus.DTOCollectionStatusResponse
+import com.mkrworld.mobilpay.dto.comms.collectionsummary.DTOCollectionSummaryRequest
+import com.mkrworld.mobilpay.dto.comms.collectionsummary.DTOCollectionSummaryResponse
+import com.mkrworld.mobilpay.dto.comms.forgotpassword.DTOForgotPasswordRequest
+import com.mkrworld.mobilpay.dto.comms.forgotpassword.DTOForgotPasswordResponse
+import com.mkrworld.mobilpay.dto.comms.login.DTOLoginRequest
+import com.mkrworld.mobilpay.dto.comms.login.DTOLoginResponse
+import com.mkrworld.mobilpay.dto.comms.logout.DTOLogoutRequest
+import com.mkrworld.mobilpay.dto.comms.logout.DTOLogoutResponse
+import com.mkrworld.mobilpay.dto.comms.sendforgotpasswordotp.DTOSendForgotPasswordOtpRequest
+import com.mkrworld.mobilpay.dto.comms.sendforgotpasswordotp.DTOSendForgotPasswordOtpResponse
+import com.mkrworld.mobilpay.dto.comms.sendnotification.DTOSendNotificationRequest
+import com.mkrworld.mobilpay.dto.comms.sendnotification.DTOSendNotificationResponse
+import com.mkrworld.mobilpay.task.comms.*
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -45,6 +46,31 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
         val task = LoginTask(context, requestJson, object : NetworkCallBack<DTOLoginResponse> {
 
             override fun onSuccess(networkResponse : DTOLoginResponse) {
+                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
+            }
+
+            override fun onError(errorMessage : String, errorCode : Int) {
+                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
+            }
+        })
+        task.executeTask()
+    }
+
+
+    /**
+     * Method called to Logout Agent
+     *
+     * @param context
+     * @param request
+     * @param networkCallBack
+     */
+    fun logoutTask(context : Context, request : DTOLogoutRequest, networkCallBack : NetworkCallBack<DTOLogoutResponse>) {
+        Tracer.debug(TAG, "logoutTask : ")
+        val requestJson = parseDtoToJson(request, DTOLogoutRequest::class.java, networkCallBack)
+                ?: return
+        val task = LogoutTask(context, requestJson, object : NetworkCallBack<DTOLogoutResponse> {
+
+            override fun onSuccess(networkResponse : DTOLogoutResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 

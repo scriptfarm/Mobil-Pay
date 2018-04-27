@@ -5,10 +5,9 @@ import android.content.Context
 import com.google.gson.Gson
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.network.NetworkConstants
-import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
 import com.mkrworld.mobilpay.dto.agent.agentdetails.DTOAgentDetailResponse
-import com.mkrworld.mobilpay.task.MobilPayBaseTask
+import com.mkrworld.mobilpay.task.comms.MobilPayBaseTask
 import com.mkrworld.mobilpay.utils.UrlUtils
 
 import org.json.JSONObject

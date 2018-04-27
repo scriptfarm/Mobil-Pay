@@ -23,9 +23,7 @@
 
     <color name="fragment_agent_qrcode_generator_card_title_text">@color/colorAccent</color>
 
-    <color name="fragment_agent_send_notification_card_title_text">@color/colorAccent</color>
-
-    <color name="fragment_merchant_send_notification_card_title_text">@color/colorAccent</color>
+    <color name="fragment_send_notification_card_title_text">@color/colorAccent</color>
 
     <color name="fragment_forgot_password_card_title_text">@color/colorAccent</color>
 

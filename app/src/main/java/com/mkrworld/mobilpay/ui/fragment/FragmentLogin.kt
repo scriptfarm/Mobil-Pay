@@ -21,8 +21,8 @@ import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
 import com.mkrworld.mobilpay.dto.agent.agentmerchantlist.DTOAgentMerchantListRequest
 import com.mkrworld.mobilpay.dto.agent.agentmerchantlist.DTOAgentMerchantListResponse
-import com.mkrworld.mobilpay.dto.login.DTOLoginRequest
-import com.mkrworld.mobilpay.dto.login.DTOLoginResponse
+import com.mkrworld.mobilpay.dto.comms.login.DTOLoginRequest
+import com.mkrworld.mobilpay.dto.comms.login.DTOLoginResponse
 import com.mkrworld.mobilpay.fingerprintauth.FingerPrintAuthHelper
 import com.mkrworld.mobilpay.fingerprintauth.OnFingerPrintAuthCallback
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
