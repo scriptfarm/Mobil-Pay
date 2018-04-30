@@ -5,9 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
 import com.mkrworld.androidlib.ui.adapter.BaseAdapter
@@ -62,8 +60,15 @@ class FragmentMerchantHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
         Tracer.debug(TAG, "onViewCreated: ")
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         setTitle()
         init()
+    }
+
+    override fun onCreateOptionsMenu(menu : Menu?, inflater : MenuInflater?) {
+        menu?.clear()
+        inflater?.inflate(R.menu.menu_nothing, menu);
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onBackPressed() : Boolean {

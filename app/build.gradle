@@ -19,7 +19,6 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        generatedDensities = []
     }
     buildTypes {
         debug {
@@ -44,6 +43,20 @@ dependencies {
     compile 'com.github.kenglxn.QRGen:android:2.2.0'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    //compile 'com.google.firebase:firebase-core:15.0.0'
+    compile 'com.google.firebase:firebase-messaging:15.0.0'
     compile project(':mkr-android-lib')
     compile project(':biometric')
+}
+apply plugin: 'com.google.gms.google-services'
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '26.0.2'
+            }
+        }
+    }
 }

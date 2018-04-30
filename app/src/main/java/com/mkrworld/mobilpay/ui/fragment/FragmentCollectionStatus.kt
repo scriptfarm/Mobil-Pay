@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.mkrworld.androidlib.BuildConfig
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
@@ -86,8 +84,15 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, View.OnClic
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Tracer.debug(TAG, "onViewCreated: ")
+        setHasOptionsMenu(true)
         setTitle()
         init()
+    }
+
+    override fun onCreateOptionsMenu(menu : Menu?, inflater : MenuInflater?) {
+        menu?.clear()
+        inflater?.inflate(R.menu.menu_nothing, menu);
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onResume() {

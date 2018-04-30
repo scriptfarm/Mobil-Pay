@@ -3,9 +3,7 @@ package com.mkrworld.mobilpay.ui.fragment.merchant
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
@@ -117,8 +115,15 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
         Tracer.debug(TAG, "onViewCreated: ")
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         setTitle()
         init()
+    }
+
+    override fun onCreateOptionsMenu(menu : Menu?, inflater : MenuInflater?) {
+        menu?.clear()
+        inflater?.inflate(R.menu.menu_nothing, menu);
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onDestroyView() {

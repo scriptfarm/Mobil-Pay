@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_dropdown_array_adapter_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/card_background"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/item_dropdown_array_adapter_padding_ver"
+    android:paddingLeft="@dimen/item_dropdown_array_adapter_padding_hor"
+    android:paddingRight="@dimen/item_dropdown_array_adapter_padding_hor"
+    android:paddingTop="@dimen/item_dropdown_array_adapter_padding_ver">
+
+    <TextView
+        android:id="@+id/item_popup_array_adapter_solid_textView"
+        style="@style/style_text_view_default"
+        android:clickable="false"
+        android:gravity="left"
+        android:text="@string/mode_caps" />
+
+</LinearLayout>

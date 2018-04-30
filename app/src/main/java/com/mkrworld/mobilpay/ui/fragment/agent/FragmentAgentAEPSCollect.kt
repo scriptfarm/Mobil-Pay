@@ -3,9 +3,7 @@ package com.mkrworld.mobilpay.ui.fragment.agent
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
@@ -13,6 +11,7 @@ import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
+import com.mkrworld.mobilpay.ui.fragment.FragmentSendNotification
 import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.Utils
 
@@ -101,6 +100,7 @@ class FragmentAgentAEPSCollect : Fragment(), OnBaseFragmentListener, View.OnClic
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
         Tracer.debug(TAG, "onViewCreated: ")
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         setTitle()
         init()
     }
@@ -108,6 +108,12 @@ class FragmentAgentAEPSCollect : Fragment(), OnBaseFragmentListener, View.OnClic
     override fun onBackPressed() : Boolean {
         Tracer.debug(TAG, "onBackPressed: ")
         return false
+    }
+
+    override fun onCreateOptionsMenu(menu : Menu?, inflater : MenuInflater?) {
+        menu?.clear()
+        inflater?.inflate(R.menu.menu_nothing, menu);
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onPopFromBackStack() {

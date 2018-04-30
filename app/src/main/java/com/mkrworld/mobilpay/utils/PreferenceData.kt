@@ -24,6 +24,8 @@ class PreferenceData {
         private val MERCHANT_LOGIN_ID = "MERCHANT_LOGIN_ID"
         private val AGENT_LOGIN_ID = "AGENT_LOGIN_ID"
         private val USER_TYPE = "USER_TYPE"
+        private val LOGIN_TIME = "LOGIN_TIME"
+        private val SMS_READ_TIME = "SMS_READ_TIME"
 
         //==================================================================================================================
         //==================================================================================================================
@@ -203,6 +205,55 @@ class PreferenceData {
         fun setUserType(context : Context, userType : String) {
             Tracer.debug(TAG, "setUserType : ")
             getShearedPreferenceEditor(context).putString(USER_TYPE, userType).commit()
+        }
+
+        /**
+         * Method to get the time when user login in the app
+         *
+         * @param context
+         * @return
+         */
+        fun getLoginTime(context : Context) : Long {
+            Tracer.debug(TAG, "getLoginTime : ")
+            return getShearedPreference(context).getLong(LOGIN_TIME, 0)
+        }
+
+        /**
+         * Method to set the time when user login in the app
+         *
+         * @param context
+         * @param loginTime
+         */
+        fun setLoginTime(context : Context, loginTime : Long) {
+            Tracer.debug(TAG, "setLoginTime : ")
+            getShearedPreferenceEditor(context).putLong(LOGIN_TIME, loginTime).commit()
+        }
+
+        /**
+         * Method to get the time when sms read from inbox
+         *
+         * @param context
+         * @return
+         */
+        fun getSmsReadTime(context : Context) : Long {
+            Tracer.debug(TAG, "getSmsReadTime : ")
+            val lastSmsReadTime = getShearedPreference(context).getLong(SMS_READ_TIME, 0)
+            return if (System.currentTimeMillis() - lastSmsReadTime > Constants.MAX_SMS_READ_INTERVAL) {
+                System.currentTimeMillis() - Constants.MAX_SMS_READ_INTERVAL;
+            } else {
+                return lastSmsReadTime
+            }
+        }
+
+        /**
+         * Method to set the time when sms read from inbox
+         *
+         * @param context
+         * @param loginTime
+         */
+        fun setSmsReadTime(context : Context, loginTime : Long) {
+            Tracer.debug(TAG, "setSmsReadTime : ")
+            getShearedPreferenceEditor(context).putLong(SMS_READ_TIME, loginTime).commit()
         }
 
         //==================================================================================================================

@@ -14,6 +14,9 @@
 
     <!-- TOOL BAR DIMENSION -->
     <dimen name="toolbar_height">@dimen/mkrdp_15</dimen>
+    <dimen name="toolbar_title_text_size">@dimen/mkrdp_5.50</dimen>
+    <dimen name="toolbar_title_text_padding">@dimen/mkrdp_3</dimen>
+    <dimen name="toolbar_icon_width">@dimen/mkrdp_15</dimen>
 
     <!-- POPUP LIST ITEM PADDING -->
     <dimen name="item_dropdown_array_adapter_padding_ver">@dimen/mkrdp_1.49</dimen>

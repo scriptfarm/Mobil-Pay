@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.mkrworld.androidlib.BuildConfig
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
@@ -20,6 +18,8 @@ import com.mkrworld.mobilpay.dto.comms.sendnotification.DTOSendNotificationReque
 import com.mkrworld.mobilpay.dto.comms.sendnotification.DTOSendNotificationResponse
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler
+import com.mkrworld.mobilpay.ui.fragment.agent.FragmentAgentHome
+import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
 import java.util.*
@@ -70,8 +70,20 @@ class FragmentSendNotification : Fragment(), OnBaseFragmentListener, View.OnClic
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Tracer.debug(TAG, "onViewCreated: ")
+        setHasOptionsMenu(true)
         setTitle()
         init()
+    }
+
+    override fun onCreateOptionsMenu(menu : Menu?, inflater : MenuInflater?) {
+        menu?.clear()
+        inflater?.inflate(R.menu.menu_nothing, menu);
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onPopFromBackStack() {
+        Tracer.debug(TAG, "onPopFromBackStack: ")
+        setTitle()
     }
 
     override fun onResume() {
@@ -87,11 +99,6 @@ class FragmentSendNotification : Fragment(), OnBaseFragmentListener, View.OnClic
     override fun onBackPressed() : Boolean {
         Tracer.debug(TAG, "onBackPressed: ")
         return false
-    }
-
-    override fun onPopFromBackStack() {
-        Tracer.debug(TAG, "onPopFromBackStack: ")
-        setTitle()
     }
 
     override fun onRefresh() {
@@ -153,7 +160,9 @@ class FragmentSendNotification : Fragment(), OnBaseFragmentListener, View.OnClic
 
         // SET OPTION DATA
         val baseAdapterItemArrayList = ArrayList<BaseAdapterItem<*>>()
-        //        baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.SEND_NOTIFICATION_DATA_ITEM.ordinal, DTOSendNotificationData(1, "PAID")))
+        if (PreferenceData.getUserType(activity).equals(Constants.USER_TYPE_MERCHANT)) {
+            baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.SEND_NOTIFICATION_DATA_ITEM.ordinal, DTOSendNotificationData(- 1, "AGENT")))
+        }
         baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.SEND_NOTIFICATION_DATA_ITEM.ordinal, DTOSendNotificationData(0, "UNPAID")))
         baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.SEND_NOTIFICATION_DATA_ITEM.ordinal, DTOSendNotificationData(3, "PARTIAL-PAID")))
         mBaseAdapter !!.updateAdapterItemList(baseAdapterItemArrayList)

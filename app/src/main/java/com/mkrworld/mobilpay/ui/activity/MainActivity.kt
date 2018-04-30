@@ -2,6 +2,8 @@ package com.mkrworld.mobilpay.ui.activity
 
 import android.Manifest
 import android.os.Bundle
+import android.os.Handler
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.widget.DrawerLayout
@@ -155,6 +157,11 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         }
         fragmentTransaction.commit()
         setNavigationDrawerSwipeState(tag)
+        Handler().postDelayed(object : Runnable{
+            override fun run() {
+                invalidateOptionsMenu()
+            }
+        }, 50)
     }
 
     override fun onBaseActivityAddFragment(fragment : Fragment, bundle : Bundle?, isAddToBackStack : Boolean, tag : String) {
@@ -175,6 +182,11 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         }
         fragmentTransaction.commit()
         setNavigationDrawerSwipeState(tag)
+        Handler().postDelayed(object : Runnable{
+            override fun run() {
+                invalidateOptionsMenu()
+            }
+        }, 50)
     }
 
     /**
@@ -182,7 +194,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
      */
     private fun init() {
         Tracer.debug(TAG, "init: ")
-        var permissions : Array<String> = arrayOf(Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.USE_FINGERPRINT)
+        var permissions : Array<String> = arrayOf(Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.USE_FINGERPRINT, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS)
         mAppPermissionController = AppPermissionController(this, permissions, this)
         mAppPermissionController?.initializedAppPermission()
         mAgentNetworkTaskProvider = AgentNetworkTaskProvider()

@@ -7,9 +7,8 @@ import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.app.AppCompatActivity
+import android.view.*
 import android.widget.EditText
 import android.widget.RadioButton
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
@@ -70,7 +69,7 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
                 return
             }
             Tracer.showSnack(view !!, dtoLoginResponse.getMessage())
-
+            PreferenceData.setLoginTime(activity, System.currentTimeMillis())
             // TEMP SAVE LOGIN DATA
             if (mIsMerchant) {
                 PreferenceData.setUserType(activity, Constants.USER_TYPE_MERCHANT)
@@ -155,6 +154,11 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
         Tracer.debug(TAG, "onViewCreated: ")
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+        if ((PreferenceData.getLoginTime(activity) + Constants.AUTO_LOGOUT_INTERVAL) > System.currentTimeMillis()) {
+            goToSuccessScreen()
+            return
+        }
         PreferenceData.setUserType(activity, "")
         PreferenceData.setLoginMerchantId(activity, "")
         PreferenceData.setLoginAgentId(activity, "")
@@ -164,6 +168,12 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
         mAgentNetworkTaskProvider?.attachProvider()
         setTitle()
         init()
+    }
+
+    override fun onCreateOptionsMenu(menu : Menu?, inflater : MenuInflater?) {
+        menu?.clear()
+        inflater?.inflate(R.menu.menu_nothing, menu);
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onDestroyView() {

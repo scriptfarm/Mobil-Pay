@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "110992550267",
+    "firebase_url": "https://mobil-pay.firebaseio.com",
+    "project_id": "mobil-pay",
+    "storage_bucket": "mobil-pay.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110992550267:android:0cefe124380ea22c",
+        "android_client_info": {
+          "package_name": "com.mkrworld.mobilpay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110992550267-qhk2mak83dav0ii2fsupf6ivrk1oi22b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQDk9luzGyLZQsf21dQxZjBSJh2G1M5Es"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
