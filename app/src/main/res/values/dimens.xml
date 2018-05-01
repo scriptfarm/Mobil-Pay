@@ -18,6 +18,11 @@
     <dimen name="toolbar_title_text_padding">@dimen/mkrdp_3</dimen>
     <dimen name="toolbar_icon_width">@dimen/mkrdp_15</dimen>
 
+    <!-- HEADER ICON -->
+    <dimen name="app_header_icon_width">@dimen/mkrdp_45</dimen>
+    <dimen name="app_header_icon_height">@dimen/mkrdp_8.65</dimen>
+    <dimen name="app_header_icon_margin">@dimen/mkrdp_3</dimen>
+
     <!-- POPUP LIST ITEM PADDING -->
     <dimen name="item_dropdown_array_adapter_padding_ver">@dimen/mkrdp_1.49</dimen>
     <dimen name="item_dropdown_array_adapter_padding_hor">@dimen/mkrdp_3</dimen>
@@ -53,9 +58,9 @@
     <dimen name="fragment_login_content_margin">@dimen/content_margin</dimen>
 
     <!-- ITEM AGENT HOME -->
-    <dimen name="item_agent_home_icon_dim">@dimen/mkrdp_25</dimen>
-    <dimen name="item_agent_home_icon_padding">@dimen/mkrdp_5</dimen>
-    <dimen name="item_agent_home_content_padding">@dimen/mkrdp_2</dimen>
+    <dimen name="item_agent_home_icon_dim">@dimen/mkrdp_17</dimen>
+    <dimen name="item_agent_home_icon_padding">@dimen/mkrdp_2</dimen>
+    <dimen name="item_agent_home_content_padding">@dimen/mkrdp_1</dimen>
 
     <!-- ITEM STATUS CONSOLIDATE DATA -->
     <dimen name="item_collection_status_padding_ver">@dimen/mkrdp_1.49</dimen>
