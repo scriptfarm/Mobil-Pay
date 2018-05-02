@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.network.NetworkConstants
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.agent.agentsendbill.DTOAgentSendBillResponse
+import com.mkrworld.mobilpay.dto.agent.agentsendbill.DTOAgentPayCashResponse
 import com.mkrworld.mobilpay.task.comms.MobilPayBaseTask
 import com.mkrworld.mobilpay.utils.UrlUtils
 import org.json.JSONObject
@@ -13,7 +13,7 @@ import org.json.JSONObject
 /**
  * Created by mkr on 27/3/18.
  */
-class AgentSendBillTask : MobilPayBaseTask<DTOAgentSendBillResponse> {
+class AgentPayCashTask : MobilPayBaseTask<DTOAgentPayCashResponse> {
 
     /**
      * Constructor
@@ -22,14 +22,14 @@ class AgentSendBillTask : MobilPayBaseTask<DTOAgentSendBillResponse> {
      * @param requestJson
      * @param networkCallBack
      */
-    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOAgentSendBillResponse>) : super(context, requestJson, networkCallBack) {}
+    constructor(context : Context, requestJson : JSONObject, networkCallBack : NetworkCallBack<DTOAgentPayCashResponse>) : super(context, requestJson, networkCallBack) {}
 
-    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOAgentSendBillResponse {
-        return Gson().fromJson(jsonObject.toString(), DTOAgentSendBillResponse::class.java !!)
+    public override fun parseNetworkResponse(jsonObject : JSONObject) : DTOAgentPayCashResponse {
+        return Gson().fromJson(jsonObject.toString(), DTOAgentPayCashResponse::class.java !!)
     }
 
     override fun getUrl() : String {
-        return UrlUtils.getUrl(getContext(), R.string.url_send_bill)
+        return UrlUtils.getUrl(getContext(), R.string.url_pay_cash)
     }
 
     public override fun getRequestType() : NetworkConstants.RequestType {

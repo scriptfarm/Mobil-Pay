@@ -9,10 +9,10 @@ import com.mkrworld.mobilpay.dto.DTOBaseRequest
  * Created by mkr on 2/4/18.
  */
 
-class DTOAgentSendBillRequest : DTOBaseRequest {
+class DTOAgentPayCashRequest : DTOBaseRequest {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentSendBillRequest"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentPayCashRequest"
     }
 
     @SerializedName("user_id")
@@ -20,6 +20,9 @@ class DTOAgentSendBillRequest : DTOBaseRequest {
 
     @SerializedName("bill_no")
     private var mBillNo : String? = null
+
+    @SerializedName("collected_amount")
+    private var mCollectedAmount : String? = null
 
     /**
      * Constructor
@@ -32,10 +35,12 @@ class DTOAgentSendBillRequest : DTOBaseRequest {
      * @param agentId
      * @param userId
      * @param billNo
+     * @param collectedAmount
      */
-    constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String, userId : String, billNo : String) : super(token, timeStamp, publicKey, userType, merchantId, agentId) {
+    constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String, userId : String, billNo : String, collectedAmount : String) : super(token, timeStamp, publicKey, userType, merchantId, agentId) {
         Tracer.debug(TAG, "DTOAgentFetchBillRequest : ")
         mUserId = userId
         mBillNo = billNo
+        mCollectedAmount = collectedAmount
     }
 }

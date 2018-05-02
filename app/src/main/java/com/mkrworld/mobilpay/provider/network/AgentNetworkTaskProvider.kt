@@ -14,8 +14,8 @@ import com.mkrworld.mobilpay.dto.agent.agentmerchantlist.DTOAgentMerchantListReq
 import com.mkrworld.mobilpay.dto.agent.agentmerchantlist.DTOAgentMerchantListResponse
 import com.mkrworld.mobilpay.dto.agent.agentqrcodegenarator.DTOAgentQRCodeGeneratorRequest
 import com.mkrworld.mobilpay.dto.agent.agentqrcodegenarator.DTOAgentQRCodeGeneratorResponse
-import com.mkrworld.mobilpay.dto.agent.agentsendbill.DTOAgentSendBillRequest
-import com.mkrworld.mobilpay.dto.agent.agentsendbill.DTOAgentSendBillResponse
+import com.mkrworld.mobilpay.dto.agent.agentsendbill.DTOAgentPayCashRequest
+import com.mkrworld.mobilpay.dto.agent.agentsendbill.DTOAgentPayCashResponse
 import com.mkrworld.mobilpay.dto.merchant.mobilenumberstatus.DTOMobileNumberStatusRequest
 import com.mkrworld.mobilpay.dto.merchant.mobilenumberstatus.DTOMobileNumberStatusResponse
 import com.mkrworld.mobilpay.task.agent.*
@@ -100,19 +100,19 @@ class AgentNetworkTaskProvider : AppNetworkTaskProvider() {
     }
 
     /**
-     * Method called when agent send the bill of a user
+     * Method called when agent payed by the cash
      *
      * @param context
      * @param request
      * @param networkCallBack
      */
-    fun agentSendBillTask(context : Context, request : DTOAgentSendBillRequest, networkCallBack : NetworkCallBack<DTOAgentSendBillResponse>) {
-        Tracer.debug(TAG, "agentSendBillTask : ")
-        val requestJson = parseDtoToJson(request, DTOAgentSendBillRequest::class.java, networkCallBack)
+    fun agentPayCashTask(context : Context, request : DTOAgentPayCashRequest, networkCallBack : NetworkCallBack<DTOAgentPayCashResponse>) {
+        Tracer.debug(TAG, "agentPayCashTask : ")
+        val requestJson = parseDtoToJson(request, DTOAgentPayCashRequest::class.java, networkCallBack)
                 ?: return
-        val task = AgentSendBillTask(context, requestJson, object : NetworkCallBack<DTOAgentSendBillResponse> {
+        val task = AgentPayCashTask(context, requestJson, object : NetworkCallBack<DTOAgentPayCashResponse> {
 
-            override fun onSuccess(networkResponse : DTOAgentSendBillResponse) {
+            override fun onSuccess(networkResponse : DTOAgentPayCashResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 

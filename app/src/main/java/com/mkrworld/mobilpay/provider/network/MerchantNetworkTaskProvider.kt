@@ -30,7 +30,7 @@ class MerchantNetworkTaskProvider : AppNetworkTaskProvider() {
      * @param networkCallBack
      */
     fun merchantSendBillTask(context : Context, request : DTOMerchantSendBillRequest, networkCallBack : NetworkCallBack<DTOMerchantSendBillResponse>) {
-        Tracer.debug(TAG, "agentSendBillTask : ")
+        Tracer.debug(TAG, "merchantSendBillTask : ")
         val requestJson = parseDtoToJson(request, DTOMerchantSendBillRequest::class.java, networkCallBack)
                 ?: return
         val task = MerchantSendBillTask(context, requestJson, object : NetworkCallBack<DTOMerchantSendBillResponse> {

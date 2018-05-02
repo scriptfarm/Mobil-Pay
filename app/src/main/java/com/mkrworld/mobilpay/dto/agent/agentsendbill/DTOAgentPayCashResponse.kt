@@ -7,7 +7,7 @@ import com.mkrworld.mobilpay.BuildConfig
  * Created by mkr on 27/3/18.
  */
 
-class DTOAgentSendBillResponse {
+class DTOAgentPayCashResponse {
 
     companion object {
         private val TAG = BuildConfig.BASE_TAG + ".DTOAgentFetchBillResponse"
@@ -17,14 +17,14 @@ class DTOAgentSendBillResponse {
     private var mMessage : String? = null
 
     @SerializedName("data")
-    private var mData : DTOAgentSendBillResponse.Data? = null
+    private var mData : DTOAgentPayCashResponse.Data? = null
 
     /**
      * Method to get the API Data
      *
      * @return
      */
-    fun getData() : DTOAgentSendBillResponse.Data {
+    fun getData() : DTOAgentPayCashResponse.Data {
         return mData ?: Data()
     }
 

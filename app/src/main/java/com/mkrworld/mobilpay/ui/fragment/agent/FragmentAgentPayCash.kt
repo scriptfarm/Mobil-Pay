@@ -14,8 +14,8 @@ import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
 import com.mkrworld.mobilpay.dto.agent.agentfetchbill.DTOAgentFetchBillRequest
 import com.mkrworld.mobilpay.dto.agent.agentfetchbill.DTOAgentFetchBillResponse
-import com.mkrworld.mobilpay.dto.agent.agentsendbill.DTOAgentSendBillRequest
-import com.mkrworld.mobilpay.dto.agent.agentsendbill.DTOAgentSendBillResponse
+import com.mkrworld.mobilpay.dto.agent.agentsendbill.DTOAgentPayCashRequest
+import com.mkrworld.mobilpay.dto.agent.agentsendbill.DTOAgentPayCashResponse
 import com.mkrworld.mobilpay.dto.appdata.DTODropdownArrayAdapter
 import com.mkrworld.mobilpay.dto.user.userdetail.DTOUserDetailRequest
 import com.mkrworld.mobilpay.dto.user.userdetail.DTOUserDetailResponse
@@ -34,20 +34,22 @@ import kotlin.collections.ArrayList
  * Created by mkr on 13/3/18.
  */
 
-class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickListener {
+class FragmentAgentPayCash : Fragment(), OnBaseFragmentListener, View.OnClickListener {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".FragmentAgentSendBill"
+        private val TAG = BuildConfig.BASE_TAG + ".FragmentAgentPayCash"
     }
 
     private var mTextInputLayoutUserName : TextInputLayout? = null
     private var mTextInputLayoutBillNumber : TextInputLayout? = null
     private var mTextInputLayoutBillDescription : TextInputLayout? = null
     private var mTextInputLayoutBillAmount : TextInputLayout? = null
+    private var mTextInputLayoutBillCollectedAmount : TextInputLayout? = null
     private var mEditTextDropDownUserName : EditTextDropDown? = null
     private var mEditTextBillNumber : EditText? = null
     private var mEditTextBillDescription : EditText? = null
     private var mEditTextBillAmount : EditText? = null
+    private var mEditTextBillCollectedAmmount : EditText? = null
     private var mDTOSelectedUserBillData : DTOAgentFetchBillResponse.Data? = null
     private var mUserNetworkTaskProvider : UserNetworkTaskProvider? = null
     private val mUserDetailResponseNetworkCallBack = object : NetworkCallBack<DTOUserDetailResponse> {
@@ -95,6 +97,7 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
             mEditTextBillNumber !!.setText(mDTOSelectedUserBillData !!.billNumber)
             mEditTextBillDescription !!.setText(mDTOSelectedUserBillData !!.billDetail)
             mEditTextBillAmount !!.setText(mDTOSelectedUserBillData !!.billAmount)
+            mEditTextBillCollectedAmmount !!.setText(mDTOSelectedUserBillData !!.billAmount)
             mEditTextBillAmount !!.isEnabled = ! mDTOSelectedUserBillData !!.paymentType !!.trim().equals(Constants.PAYMENT_TYPE_FULL, true)
         }
 
@@ -108,19 +111,19 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
         }
     }
 
-    private val mAgentSendBillResponseNetworkCallBack = object : NetworkCallBack<DTOAgentSendBillResponse> {
-        override fun onSuccess(dtoAgentSendBillResponse : DTOAgentSendBillResponse) {
+    private val mAgentPayCashResponseNetworkCallBack = object : NetworkCallBack<DTOAgentPayCashResponse> {
+        override fun onSuccess(dtoAgentPayCashResponse : DTOAgentPayCashResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             mDTOSelectedUserBillData = null
             if (view == null) {
                 return
             }
-            if (dtoAgentSendBillResponse == null || dtoAgentSendBillResponse.getData() == null) {
+            if (dtoAgentPayCashResponse == null || dtoAgentPayCashResponse.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            Tracer.showSnack(view !!, dtoAgentSendBillResponse.getMessage())
+            Tracer.showSnack(view !!, dtoAgentPayCashResponse.getMessage())
             activity.onBackPressed()
         }
 
@@ -143,9 +146,10 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
         get() {
             Tracer.debug(TAG, "isBillDetailValid: ")
             if (mDTOSelectedUserBillData == null || view == null) {
+                showTextInputError(mTextInputLayoutUserName, getString(R.string.no_bill_data_fetched_caps))
                 return false
             }
-            val billAmount = mEditTextBillAmount !!.text.toString()
+            val billAmount = mEditTextBillCollectedAmmount !!.text.toString()
             if (! mDTOSelectedUserBillData !!.paymentType !!.trim().equals(Constants.PAYMENT_TYPE_FULL, true)) {
                 try {
                     val amount = Integer.parseInt(billAmount.trim())
@@ -157,7 +161,6 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
                     Tracer.error(TAG, "isBillDetailValid: " + e.message + "  " + e.message)
                     return false
                 }
-
             }
 
             return true
@@ -165,7 +168,7 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
 
     override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
         Tracer.debug(TAG, "onCreateView: ")
-        return inflater !!.inflate(R.layout.fragment_agent_send_bill, container, false)
+        return inflater !!.inflate(R.layout.fragment_agent_pay_cash, container, false)
     }
 
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
@@ -206,9 +209,9 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
     override fun onClick(view : View) {
         Tracer.debug(TAG, "onClick: ")
         when (view.id) {
-            R.id.fragment_agent_send_bill_textView_cancel -> activity.onBackPressed()
-            R.id.fragment_agent_send_bill_textView_send -> startSendBillProcess()
-            R.id.fragment_agent_send_bill_editText_customer_id -> showOptionList()
+            R.id.fragment_pay_cash_bill_textView_cancel -> activity.onBackPressed()
+            R.id.fragment_agent_pay_cash_textView_send -> startPayCashProcess()
+            R.id.fragment_agent_pay_cash_editText_customer_id -> showOptionList()
         }
     }
 
@@ -218,7 +221,7 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
     private fun setTitle() {
         Tracer.debug(TAG, "setTitle: ")
         if (activity is OnBaseActivityListener) {
-            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_send_bill))
+            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_pay_cash))
         }
     }
 
@@ -237,18 +240,20 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
         mAgentNetworkTaskProvider = AgentNetworkTaskProvider()
         mAgentNetworkTaskProvider !!.attachProvider()
 
-        view !!.findViewById<View>(R.id.fragment_agent_send_bill_textView_send).setOnClickListener(this)
-        view !!.findViewById<View>(R.id.fragment_agent_send_bill_textView_cancel).setOnClickListener(this)
-        view !!.findViewById<View>(R.id.fragment_agent_send_bill_editText_customer_id).setOnClickListener(this)
+        view !!.findViewById<View>(R.id.fragment_agent_pay_cash_textView_send).setOnClickListener(this)
+        view !!.findViewById<View>(R.id.fragment_pay_cash_bill_textView_cancel).setOnClickListener(this)
+        view !!.findViewById<View>(R.id.fragment_agent_pay_cash_editText_customer_id).setOnClickListener(this)
 
-        mTextInputLayoutUserName = view !!.findViewById<View>(R.id.fragment_agent_send_bill_textInputLayout_customer_id) as TextInputLayout
-        mEditTextDropDownUserName = view !!.findViewById<View>(R.id.fragment_agent_send_bill_editText_customer_id) as EditTextDropDown
-        mTextInputLayoutBillNumber = view !!.findViewById<View>(R.id.fragment_agent_send_bill_textInputLayout_bill_number) as TextInputLayout
-        mEditTextBillNumber = view !!.findViewById<View>(R.id.fragment_agent_send_bill_editText_bill_number) as EditText
-        mTextInputLayoutBillDescription = view !!.findViewById<View>(R.id.fragment_agent_send_bill_textInputLayout_bill_description) as TextInputLayout
-        mEditTextBillDescription = view !!.findViewById<View>(R.id.fragment_agent_send_bill_editText_bill_description) as EditText
-        mTextInputLayoutBillAmount = view !!.findViewById<View>(R.id.fragment_agent_send_bill_textInputLayout_bill_amount) as TextInputLayout
-        mEditTextBillAmount = view !!.findViewById<View>(R.id.fragment_agent_send_bill_editText_bill_amount) as EditText
+        mTextInputLayoutUserName = view !!.findViewById<View>(R.id.fragment_agent_pay_cash_textInputLayout_customer_id) as TextInputLayout
+        mEditTextDropDownUserName = view !!.findViewById<View>(R.id.fragment_agent_pay_cash_editText_customer_id) as EditTextDropDown
+        mTextInputLayoutBillNumber = view !!.findViewById<View>(R.id.fragment_agent_pay_cash_textInputLayout_bill_number) as TextInputLayout
+        mEditTextBillNumber = view !!.findViewById<View>(R.id.fragment_agent_pay_cash_editText_bill_number) as EditText
+        mTextInputLayoutBillDescription = view !!.findViewById<View>(R.id.fragment_agent_pay_cash_textInputLayout_bill_description) as TextInputLayout
+        mEditTextBillDescription = view !!.findViewById<View>(R.id.fragment_agent_pay_cash_editText_bill_description) as EditText
+        mTextInputLayoutBillAmount = view !!.findViewById<View>(R.id.fragment_agent_pay_cash_textInputLayout_bill_amount) as TextInputLayout
+        mEditTextBillAmount = view !!.findViewById<View>(R.id.fragment_pay_cash_bill_editText_bill_amount) as EditText
+        mTextInputLayoutBillCollectedAmount = view !!.findViewById<View>(R.id.fragment_agent_pay_cash_textInputLayout_bill_collected_amount) as TextInputLayout
+        mEditTextBillCollectedAmmount = view !!.findViewById<View>(R.id.fragment_pay_cash_bill_editText_bill_collected_amount) as EditText
 
         // ADD TEXT CHANGE LISTENER
         mEditTextDropDownUserName !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutUserName !!))
@@ -259,6 +264,7 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
         // INIT STATUS
         mEditTextBillDescription !!.isEnabled = false
         mEditTextBillNumber !!.isEnabled = false
+        mEditTextBillAmount !!.isEnabled = false
         mEditTextDropDownUserName !!.threshold = 0
         startFetchUserListProcess()
         mEditTextDropDownUserName !!.onItemClickListener = object : AdapterView.OnItemClickListener {
@@ -276,7 +282,7 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
      * Method to Fetch the User list
      */
     private fun startFetchUserListProcess() {
-        Tracer.debug(TAG, "startSendBillProcess: ")
+        Tracer.debug(TAG, "startPayCashProcess: ")
         Utils.hideKeyboard(activity, view)
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
@@ -306,19 +312,20 @@ class FragmentAgentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickLi
     /**
      * Method to initiate the Send Bill Process
      */
-    private fun startSendBillProcess() {
-        Tracer.debug(TAG, "startSendBillProcess: ")
+    private fun startPayCashProcess() {
+        Tracer.debug(TAG, "startPayCashProcess: ")
         Utils.hideKeyboard(activity, view)
         if (! isBillDetailValid) {
             return
         }
+        val collectedCash = mEditTextBillCollectedAmmount !!.text.toString().trim()
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
-        val token = Utils.createToken(activity, getString(R.string.endpoint_send_bill), date)
+        val token = Utils.createToken(activity, getString(R.string.endpoint_pay_cash), date)
         val publicKey = getString(R.string.public_key)
-        val dtoAgentSendBillRequest = DTOAgentSendBillRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), mDTOSelectedUserBillData !!.userId !!, mDTOSelectedUserBillData !!.billNumber !!)
+        val dtoAgentSendBillRequest = DTOAgentPayCashRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), mDTOSelectedUserBillData !!.userId !!, mDTOSelectedUserBillData !!.billNumber !!, collectedCash)
         Utils.showLoadingDialog(activity)
-        mAgentNetworkTaskProvider !!.agentSendBillTask(activity, dtoAgentSendBillRequest, mAgentSendBillResponseNetworkCallBack)
+        mAgentNetworkTaskProvider !!.agentPayCashTask(activity, dtoAgentSendBillRequest, mAgentPayCashResponseNetworkCallBack)
     }
 
     /**

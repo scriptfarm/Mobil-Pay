@@ -87,7 +87,7 @@
     <dimen name="fragment_apes_collect_content_margin">@dimen/content_margin</dimen>
 
     <!-- FRAGMENT AGENT SEND BILL -->
-    <dimen name="fragment_agent_send_bill_content_margin">@dimen/content_margin</dimen>
+    <dimen name="fragment_agent_pay_cash_content_margin">@dimen/content_margin</dimen>
 
     <!-- FRAGMENT MERCHANT SEND BILL -->
     <dimen name="fragment_merchant_send_bill_content_margin">@dimen/content_margin</dimen>

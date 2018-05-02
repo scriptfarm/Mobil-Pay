@@ -3,6 +3,7 @@
     <string name="url_collection_summary">getCollectionSummary</string>
     <string name="url_collection_status">getCollectionStatus</string>
     <string name="url_agent_merchant_list">getMerchantList</string>
+    <string name="url_pay_cash">payCash</string>
     <string name="url_send_notification">sendReminder</string>
     <string name="url_agent_logo">admin/agent_qr/</string>
     <string name="url_logout">logout</string>
@@ -22,6 +23,7 @@
     <string name="endpoint_collection_summary">@string/url_collection_summary</string>
     <string name="endpoint_collection_status">@string/url_collection_status</string>
     <string name="endpoint_agent_merchant_list">@string/url_agent_merchant_list</string>
+    <string name="endpoint_pay_cash">@string/url_pay_cash</string>
     <string name="endpoint_send_notification">@string/url_send_notification</string>
     <string name="endpoint_logout">@string/url_logout</string>
     <string name="endpoint_generate_qr_code_token">@string/url_generate_qr_code_token</string>

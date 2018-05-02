@@ -15,6 +15,7 @@
     <string name="no_data_fetch_from_server">No Data Fetch From Server</string>
     <string name="nothing_selected">Nothing selected</string>
 
+    <string name="no_bill_data_fetched_caps">NO BILL DATA FETCHED</string>
     <string name="field_should_not_be_empty_caps">FIELD SHOULD NOT BE EMPTY</string>
     <string name="enter_valid_mobile_number">ENTER A VALID 10 DIGIT MOBILE NUMBER</string>
     <string name="amount_should_be_greater_then_caps">AMOUNT SHOULD BE GREATER THEN </string>
@@ -29,6 +30,7 @@
     <string name="screen_title_agent_qrcode">Agent Qr-Code</string>
     <string name="screen_title_aeps_collect">AEPS Collect</string>
     <string name="screen_title_send_bill">Send Bill</string>
+    <string name="screen_title_pay_cash">Pay Cash</string>
     <string name="screen_title_forgot_password">Forgot Password</string>
     <string name="screen_title_change_password">Change Password</string>
     <string name="screen_title_collection_summary">Collection Summary</string>
@@ -60,18 +62,21 @@
     <string name="upi_collect">UPI Collect</string>
     <string name="aeps_collect">AEPS Collect</string>
     <string name="send_bill">Send Bill</string>
+    <string name="pay_cash">Pay Cash</string>
     <string name="collection_summary">Collection Summary</string>
 
     <string name="agent_qrcode_generator">Agent QR-Code Generator</string>
     <string name="bill_number_star">Bill Number *</string>
     <string name="bill_description_star">Bill Description *</string>
     <string name="bill_amount_star">Bill Amount ₹ *</string>
+    <string name="collected_amount_star">Collected Amount ₹ *</string>
     <string name="generate_caps">GENERATE</string>
     <string name="cancel_caps">CANCEL</string>
 
     <string name="customer_id">Customer-ID</string>
     <string name="bill_number">Bill Number</string>
     <string name="send_caps">SEND</string>
+    <string name="pay_caps">PAY</string>
 
     <string name="aeps_caps">AEPS</string>
     <string name="customer_name">Customer Name</string>
