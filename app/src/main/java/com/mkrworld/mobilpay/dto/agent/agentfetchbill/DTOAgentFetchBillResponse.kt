@@ -150,5 +150,17 @@ class DTOAgentFetchBillResponse {
                 Tracer.debug(TAG, "getMinPayment : ")
                 return field ?: billAmount
             }
+
+        /**
+         * Var to hold the actual amount should be paid by the Customer
+         */
+        var amountPending : String? = null
+            get() {
+                try {
+                    return "" + (billAmount !!.toInt() - minPayment !!.toInt())
+                } catch (e : Exception) {
+                    return billAmount
+                }
+            }
     }
 }

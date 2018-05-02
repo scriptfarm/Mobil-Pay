@@ -64,7 +64,7 @@ class FragmentAgentPayCash : Fragment(), OnBaseFragmentListener, View.OnClickLis
             }
             var dropDownOptionList : ArrayList<DTODropdownArrayAdapter> = ArrayList<DTODropdownArrayAdapter>()
             for (data in dtoAgentFetchBillResponse.getData() !!) {
-                dropDownOptionList.add(DTODropdownArrayAdapter(data.userId !!, data.firstName + "-" + data.mobileNumber))
+                dropDownOptionList.add(DTODropdownArrayAdapter(data.userId !!, "" + data.mobileNumber + " (" + data.firstName!!.trim() + ")"))
             }
             var adapter : DropdownArrayAdapter = DropdownArrayAdapter(activity, R.layout.item_dropdown_array_adapter, R.id.item_dropdown_array_adapter_textView, dropDownOptionList)
             mEditTextDropDownUserName !!.setAdapter(adapter)
@@ -96,8 +96,8 @@ class FragmentAgentPayCash : Fragment(), OnBaseFragmentListener, View.OnClickLis
             mDTOSelectedUserBillData = dtoAgentFetchBillResponse.getData()
             mEditTextBillNumber !!.setText(mDTOSelectedUserBillData !!.billNumber)
             mEditTextBillDescription !!.setText(mDTOSelectedUserBillData !!.billDetail)
-            mEditTextBillAmount !!.setText(mDTOSelectedUserBillData !!.billAmount)
-            mEditTextBillCollectedAmmount !!.setText(mDTOSelectedUserBillData !!.billAmount)
+            mEditTextBillAmount !!.setText(mDTOSelectedUserBillData !!.amountPending)
+            mEditTextBillCollectedAmmount !!.setText(mDTOSelectedUserBillData !!.amountPending)
             mEditTextBillAmount !!.isEnabled = ! mDTOSelectedUserBillData !!.paymentType !!.trim().equals(Constants.PAYMENT_TYPE_FULL, true)
         }
 
@@ -221,7 +221,7 @@ class FragmentAgentPayCash : Fragment(), OnBaseFragmentListener, View.OnClickLis
     private fun setTitle() {
         Tracer.debug(TAG, "setTitle: ")
         if (activity is OnBaseActivityListener) {
-            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_pay_cash))
+            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_collect_cash))
         }
     }
 

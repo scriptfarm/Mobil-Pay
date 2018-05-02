@@ -30,7 +30,7 @@
     <string name="screen_title_agent_qrcode">Agent Qr-Code</string>
     <string name="screen_title_aeps_collect">AEPS Collect</string>
     <string name="screen_title_send_bill">Send Bill</string>
-    <string name="screen_title_pay_cash">Pay Cash</string>
+    <string name="screen_title_collect_cash">Collect Cash</string>
     <string name="screen_title_forgot_password">Forgot Password</string>
     <string name="screen_title_change_password">Change Password</string>
     <string name="screen_title_collection_summary">Collection Summary</string>
@@ -63,6 +63,7 @@
     <string name="aeps_collect">AEPS Collect</string>
     <string name="send_bill">Send Bill</string>
     <string name="pay_cash">Pay Cash</string>
+    <string name="collect_cash">Collect Cash</string>
     <string name="collection_summary">Collection Summary</string>
 
     <string name="agent_qrcode_generator">Agent QR-Code Generator</string>
@@ -77,6 +78,7 @@
     <string name="bill_number">Bill Number</string>
     <string name="send_caps">SEND</string>
     <string name="pay_caps">PAY</string>
+    <string name="collect_caps">COLLECT</string>
 
     <string name="aeps_caps">AEPS</string>
     <string name="customer_name">Customer Name</string>

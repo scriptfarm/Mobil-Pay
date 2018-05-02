@@ -30,7 +30,7 @@
                     <com.mkrworld.mobilpay.ui.custom.EditTextDropDown
                         android:id="@+id/fragment_agent_pay_cash_editText_customer_id"
                         style="@style/style_text_input_layout_inputText"
-                        android:hint="@string/customer_id"
+                        android:hint="@string/mobile_number_star"
                         android:inputType="textNoSuggestions" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -42,7 +42,7 @@
 
                     <EditText
                         android:id="@+id/fragment_agent_pay_cash_editText_bill_number"
-                        style="@style/style_text_input_layout_inputText"
+                        style="@style/style_text_input_layout_inputText_hint"
                         android:hint="@string/bill_number_star"
                         android:inputType="textNoSuggestions" />
 
@@ -55,7 +55,7 @@
 
                     <EditText
                         android:id="@+id/fragment_agent_pay_cash_editText_bill_description"
-                        style="@style/style_text_input_layout_inputText"
+                        style="@style/style_text_input_layout_inputText_hint"
                         android:hint="@string/bill_description_star"
                         android:inputType="textNoSuggestions" />
 
@@ -68,7 +68,7 @@
 
                     <EditText
                         android:id="@+id/fragment_pay_cash_bill_editText_bill_amount"
-                        style="@style/style_text_input_layout_inputText"
+                        style="@style/style_text_input_layout_inputText_hint"
                         android:hint="@string/bill_amount_star"
                         android:inputType="number" />
 
@@ -81,7 +81,7 @@
 
                     <EditText
                         android:id="@+id/fragment_pay_cash_bill_editText_bill_collected_amount"
-                        style="@style/style_text_input_layout_inputText"
+                        style="@style/style_text_input_layout_inputText_green"
                         android:hint="@string/collected_amount_star"
                         android:inputType="number" />
 
@@ -97,7 +97,7 @@
                     <TextView
                         android:id="@+id/fragment_agent_pay_cash_textView_send"
                         style="@style/style_button_width_weight"
-                        android:text="@string/pay_caps" />
+                        android:text="@string/collect_caps" />
 
                     <TextView
                         android:id="@+id/fragment_pay_cash_bill_textView_cancel"

@@ -84,6 +84,18 @@
         <item name="android:maxLines">1</item>
     </style>
 
+    <style name="style_text_input_layout_inputText_hint" parent="style_text_view_default">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/text_color_gray</item>
+    </style>
+
+    <style name="style_text_input_layout_inputText_green" parent="style_text_view_default">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/text_color_green</item>
+    </style>
+
     <style name="style_text_input_layout_hint_appearince" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">@dimen/text_input_layout_hint_text_size</item>
     </style>
