@@ -10,8 +10,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView style="@style/app_header_icon" />
-
         <android.support.v7.widget.CardView
             style="@style/style_card_view_property"
             android:layout_width="match_parent"

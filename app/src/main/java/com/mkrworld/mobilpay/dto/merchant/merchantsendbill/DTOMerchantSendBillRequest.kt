@@ -30,6 +30,9 @@ class DTOMerchantSendBillRequest : DTOBaseRequest {
     @SerializedName("mobile_no")
     private var mMobileNumber : String? = null
 
+    @SerializedName("single_bill")
+    private var mSingleBill : String = "0"
+
     /**
      * Constructor
      *
@@ -53,4 +56,25 @@ class DTOMerchantSendBillRequest : DTOBaseRequest {
         mBillDescription = description
         mBillAmount = billAmount
     }
+
+    /**
+     * Constructor Called When Merchant Create Single Bill
+     *
+     * @param token
+     * @param timeStamp
+     * @param publicKey
+     * @param userType
+     * @param merchantId
+     * @param agentId
+     * @param userId
+     * @param mobileNumber
+     * @param billNo
+     * @param description
+     * @param billAmount
+     *@param singleBillCode
+     */
+    constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String, userId : String, mobileNumber : String, billNo : String, description : String, billAmount : String, singleBillCode : String) : this(token, timeStamp, publicKey, userType, merchantId, agentId, userId, mobileNumber, billNo, description, billAmount) {
+        mSingleBill = singleBillCode
+    }
+
 }

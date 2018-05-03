@@ -78,7 +78,7 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
             val billDescription = mEditTextBillDescription !!.text.toString()
             val billAmount = mEditTextBillAmount !!.text.toString()
 
-            if (mobileNumber.trim().length != 10 || (!Utils.isValidPhone(mobileNumber.trim()))) {
+            if (mobileNumber.trim().length != 10 || (! Utils.isValidPhone(mobileNumber.trim()))) {
                 showTextInputError(mTextInputLayoutMobileNumber, getString(R.string.enter_valid_mobile_number))
                 return false
             }
@@ -213,7 +213,7 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_send_bill), date)
         val publicKey = getString(R.string.public_key)
-        val dtoMerchantSendBillRequest = DTOMerchantSendBillRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), mobileNumber, mobileNumber, billNumber, billDescription, billAmount)
+        val dtoMerchantSendBillRequest = DTOMerchantSendBillRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), mobileNumber, mobileNumber, billNumber, billDescription, billAmount, "1")
         Utils.showLoadingDialog(activity)
         mMerchantNetworkTaskProvider !!.merchantSendBillTask(activity, dtoMerchantSendBillRequest, mMerchantSendBillResponseNetworkCallBack)
     }
