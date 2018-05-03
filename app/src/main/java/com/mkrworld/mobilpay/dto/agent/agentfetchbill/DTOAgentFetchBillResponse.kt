@@ -148,7 +148,7 @@ class DTOAgentFetchBillResponse {
         var minPayment : String? = null
             get() {
                 Tracer.debug(TAG, "getMinPayment : ")
-                return field ?: billAmount
+                return field ?: "0"
             }
 
         /**
