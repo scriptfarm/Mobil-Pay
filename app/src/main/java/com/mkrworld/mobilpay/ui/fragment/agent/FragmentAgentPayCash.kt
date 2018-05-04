@@ -64,7 +64,7 @@ class FragmentAgentPayCash : Fragment(), OnBaseFragmentListener, View.OnClickLis
             }
             var dropDownOptionList : ArrayList<DTODropdownArrayAdapter> = ArrayList<DTODropdownArrayAdapter>()
             for (data in dtoAgentFetchBillResponse.getData() !!) {
-                dropDownOptionList.add(DTODropdownArrayAdapter(data.userId !!, "" + data.mobileNumber + " (" + data.firstName!!.trim() + ")"))
+                dropDownOptionList.add(DTODropdownArrayAdapter(data.userId !!, "" + data.mobileNumber + " (" + data.firstName !!.trim() + ")"))
             }
             var adapter : DropdownArrayAdapter = DropdownArrayAdapter(activity, R.layout.item_dropdown_array_adapter, R.id.item_dropdown_array_adapter_textView, dropDownOptionList)
             mEditTextDropDownUserName !!.setAdapter(adapter)
@@ -153,8 +153,8 @@ class FragmentAgentPayCash : Fragment(), OnBaseFragmentListener, View.OnClickLis
             if (! mDTOSelectedUserBillData !!.paymentType !!.trim().equals(Constants.PAYMENT_TYPE_FULL, true)) {
                 try {
                     val amount = Integer.parseInt(billAmount.trim())
-                    if (amount < Integer.parseInt(mDTOSelectedUserBillData !!.minPayment)) {
-                        showTextInputError(mTextInputLayoutBillAmount, getString(R.string.amount_should_be_greater_then_caps) + " " + mDTOSelectedUserBillData !!.minPayment)
+                    if (amount < 1) {
+                        showTextInputError(mTextInputLayoutBillCollectedAmount, getString(R.string.amount_should_be_greater_then_caps) + " " + 1)
                         return false
                     }
                 } catch (e : Exception) {
