@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.dto.merchant.merchantsendbill
+package com.mkrworld.mobilpay.dto.comms.sendbill
 
 import com.google.gson.annotations.SerializedName
 import com.mkrworld.androidlib.utils.Tracer
@@ -9,10 +9,10 @@ import com.mkrworld.mobilpay.dto.DTOBaseRequest
  * Created by mkr on 2/4/18.
  */
 
-class DTOMerchantSendBillRequest : DTOBaseRequest {
+class DTOSendBillRequest : DTOBaseRequest {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOMerchantSendBillRequest"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOSendBillRequest"
     }
 
     @SerializedName("user_id")
@@ -49,7 +49,7 @@ class DTOMerchantSendBillRequest : DTOBaseRequest {
      * @param billAmount
      */
     constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String, userId : String, mobileNumber : String, billNo : String, description : String, billAmount : String) : super(token, timeStamp, publicKey, userType, merchantId, agentId) {
-        Tracer.debug(TAG, "DTOMerchantSendBillRequest : ")
+        Tracer.debug(TAG, "DTOSendBillRequest : ")
         mUserId = userId
         mMobileNumber = mobileNumber
         mBillNo = billNo

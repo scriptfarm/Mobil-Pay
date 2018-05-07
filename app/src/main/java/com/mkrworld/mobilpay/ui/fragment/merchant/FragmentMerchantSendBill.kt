@@ -11,8 +11,8 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.merchant.merchantsendbill.DTOMerchantSendBillRequest
-import com.mkrworld.mobilpay.dto.merchant.merchantsendbill.DTOMerchantSendBillResponse
+import com.mkrworld.mobilpay.dto.comms.sendbill.DTOSendBillRequest
+import com.mkrworld.mobilpay.dto.comms.sendbill.DTOSendBillResponse
 import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
 import com.mkrworld.mobilpay.utils.Constants
@@ -40,18 +40,18 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
     private var mEditTextBillAmount : EditText? = null
 
     private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
-    private val mMerchantSendBillResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantSendBillResponse> {
-        override fun onSuccess(dtoMerchantSendBillResponse : DTOMerchantSendBillResponse) {
+    private val mMerchantSendBillResponseNetworkCallBack = object : NetworkCallBack<DTOSendBillResponse> {
+        override fun onSuccess(dtoSendBillResponse : DTOSendBillResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
-            if (dtoMerchantSendBillResponse == null || dtoMerchantSendBillResponse.getData() == null) {
+            if (dtoSendBillResponse == null || dtoSendBillResponse.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            Tracer.showSnack(view !!, dtoMerchantSendBillResponse.getMessage())
+            Tracer.showSnack(view !!, dtoSendBillResponse.getMessage())
             activity.onBackPressed()
         }
 
@@ -213,9 +213,9 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_send_bill), date)
         val publicKey = getString(R.string.public_key)
-        val dtoMerchantSendBillRequest = DTOMerchantSendBillRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), mobileNumber, mobileNumber, billNumber, billDescription, billAmount, "1")
+        val dtoMerchantSendBillRequest = DTOSendBillRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), mobileNumber, mobileNumber, billNumber, billDescription, billAmount, "1")
         Utils.showLoadingDialog(activity)
-        mMerchantNetworkTaskProvider !!.merchantSendBillTask(activity, dtoMerchantSendBillRequest, mMerchantSendBillResponseNetworkCallBack)
+        mMerchantNetworkTaskProvider !!.sendBillTask(activity, dtoMerchantSendBillRequest, mMerchantSendBillResponseNetworkCallBack)
     }
 
     /**

@@ -34,6 +34,7 @@ class FragmentProvider {
                 FragmentTag.AGENT_QR_CODE_GENERATOR -> return FragmentAgentQrCodeGenerator()
                 FragmentTag.AGENT_AEPS_COLLECT -> return FragmentAgentAEPSCollect()
                 FragmentTag.AGENT_PAY_CASH -> return FragmentAgentPayCash()
+                FragmentTag.AGENT_SEND_BILL -> return FragmentAgentSendBill()
 
                 FragmentTag.FORGOT_PASSWORD -> return FragmentForgotPassword()
                 FragmentTag.CHANGE_PASSWORD -> return FragmentChangePassword()

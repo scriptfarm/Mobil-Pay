@@ -18,6 +18,8 @@ import com.mkrworld.mobilpay.dto.comms.login.DTOLoginRequest
 import com.mkrworld.mobilpay.dto.comms.login.DTOLoginResponse
 import com.mkrworld.mobilpay.dto.comms.logout.DTOLogoutRequest
 import com.mkrworld.mobilpay.dto.comms.logout.DTOLogoutResponse
+import com.mkrworld.mobilpay.dto.comms.sendbill.DTOSendBillRequest
+import com.mkrworld.mobilpay.dto.comms.sendbill.DTOSendBillResponse
 import com.mkrworld.mobilpay.dto.comms.sendforgotpasswordotp.DTOSendForgotPasswordOtpRequest
 import com.mkrworld.mobilpay.dto.comms.sendforgotpasswordotp.DTOSendForgotPasswordOtpResponse
 import com.mkrworld.mobilpay.dto.comms.sendnotification.DTOSendNotificationRequest
@@ -216,6 +218,30 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
         val task = SendNotificationTask(context, requestJson, object : NetworkCallBack<DTOSendNotificationResponse> {
 
             override fun onSuccess(networkResponse : DTOSendNotificationResponse) {
+                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
+            }
+
+            override fun onError(errorMessage : String, errorCode : Int) {
+                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
+            }
+        })
+        task.executeTask()
+    }
+
+    /**
+     * Method called when merchant send the bill of a user
+     *
+     * @param context
+     * @param request
+     * @param networkCallBack
+     */
+    fun sendBillTask(context : Context, request : DTOSendBillRequest, networkCallBack : NetworkCallBack<DTOSendBillResponse>) {
+        Tracer.debug(MerchantNetworkTaskProvider.TAG, "sendBillTask : ")
+        val requestJson = parseDtoToJson(request, DTOSendBillRequest::class.java, networkCallBack)
+                ?: return
+        val task = SendBillTask(context, requestJson, object : NetworkCallBack<DTOSendBillResponse> {
+
+            override fun onSuccess(networkResponse : DTOSendBillResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 

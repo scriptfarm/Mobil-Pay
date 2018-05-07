@@ -1,4 +1,4 @@
-package com.mkrworld.mobilpay.dto.merchant.merchantsendbill
+package com.mkrworld.mobilpay.dto.comms.sendbill
 
 import com.google.gson.annotations.SerializedName
 import com.mkrworld.mobilpay.BuildConfig
@@ -7,24 +7,24 @@ import com.mkrworld.mobilpay.BuildConfig
  * Created by mkr on 27/3/18.
  */
 
-class DTOMerchantSendBillResponse {
+class DTOSendBillResponse {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOMerchantSendBillResponse"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOSendBillResponse"
     }
 
     @SerializedName("message")
     private var mMessage : String? = null
 
     @SerializedName("data")
-    private var mData : DTOMerchantSendBillResponse.Data? = null
+    private var mData : DTOSendBillResponse.Data? = null
 
     /**
      * Method to get the API Data
      *
      * @return
      */
-    fun getData() : DTOMerchantSendBillResponse.Data {
+    fun getData() : DTOSendBillResponse.Data {
         return mData ?: Data()
     }
 
