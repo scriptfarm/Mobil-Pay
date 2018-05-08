@@ -59,7 +59,9 @@ class FragmentSendNotification : Fragment(), OnBaseFragmentListener, View.OnClic
                 for (data : DTOMerchantAgentListResponse.Data in dtoMerchantAgentListRequest.getData()) {
                     childOptionList.add(DTOMultiSelectionItemData(data.userName, data.mobileNumber + "(" + data.name + ")", true))
                 }
-                baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.MULTI_SELECTION_ITEM_WITH_MESSAGE.ordinal, DTOMultiSelectionItemData(Constants.NOTIFICATION_TYPE_AGENT, "AGENT", false, childOptionList, "edit")))
+                val dtoMultiSelectionItemData = DTOMultiSelectionItemData(Constants.NOTIFICATION_TYPE_AGENT, "AGENT", false, childOptionList, "edit")
+                dtoMultiSelectionItemData.selectedChildOptionList = dtoMultiSelectionItemData.childOptionList
+                baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.MULTI_SELECTION_ITEM_WITH_MESSAGE.ordinal, dtoMultiSelectionItemData))
             }
             baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.MULTI_SELECTION_ITEM_WITH_MESSAGE.ordinal, DTOMultiSelectionItemData(Constants.NOTIFICATION_TYPE_UNPAID, "UNPAID", false)))
             baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.MULTI_SELECTION_ITEM_WITH_MESSAGE.ordinal, DTOMultiSelectionItemData(Constants.NOTIFICATION_TYPE_PARTIAL_PAID, "PARTIAL-PAID", false)))
