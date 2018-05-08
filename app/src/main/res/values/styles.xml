@@ -34,6 +34,13 @@
         <item name="android:textColor">@color/text_color_white</item>
     </style>
 
+    <style name="style_text_view_edit" parent="style_text_view_default">
+        <item name="android:textColor">@color/hyperlink</item>
+        <item name="android:textSize">@dimen/sub_text_size</item>
+        <item name="android:padding">@dimen/sub_text_size_padding</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="style_text_view_default_white_width_weight" parent="style_text_view_default_white">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>

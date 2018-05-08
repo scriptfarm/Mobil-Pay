@@ -69,7 +69,7 @@ class DTOAgentDetailResponse {
          *
          * @return
          */
-        @SerializedName("name")
+        @SerializedName("label")
         var name : String? = null
             get() {
                 return field ?: ""

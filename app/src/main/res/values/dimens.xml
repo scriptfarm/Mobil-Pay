@@ -4,6 +4,7 @@
     <dimen name="text_size">@dimen/mkrdp_4.50</dimen>
     <dimen name="title_text_size">@dimen/mkrdp_6</dimen>
     <dimen name="sub_text_size">@dimen/mkrdp_3.49</dimen>
+    <dimen name="sub_text_size_padding">@dimen/mkrdp_1</dimen>
     <dimen name="divider_size">@dimen/mkrdp_0.2</dimen>
     <dimen name="content_margin">@dimen/mkrdp_4</dimen>
     <integer name="length_mobile_number">10</integer>
@@ -108,5 +109,11 @@
     <dimen name="fragment_change_password_otp_content_margin">@dimen/content_margin</dimen>
     <dimen name="fragment_change_password_otp_title_text_size">@dimen/title_text_size</dimen>
     <dimen name="fragment_change_password_otp_sub_text_size">@dimen/sub_text_size</dimen>
+
+    <!-- DIALOG MULTI SELECTION -->
+    <dimen name="dialog_multi_selection_content_margin">@dimen/content_margin</dimen>
+
+    <!-- ITEM MULTI SELECTION -->
+    <dimen name="item_multi_selection_content_margin">@dimen/content_margin</dimen>
 
 </resources>

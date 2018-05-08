@@ -15,8 +15,17 @@ class DTOSendNotificationRequest : DTOBaseRequest {
         private val TAG = BuildConfig.BASE_TAG + ".DTOSendNotificationRequest"
     }
 
-    @SerializedName("payment_status")
-    private var mPaymentStatus : ArrayList<String>
+    @SerializedName("agentList")
+    private var mAgentList : ArrayList<String>
+
+    @SerializedName("agentMessage")
+    private var mAgentMessage : String? = null
+
+    @SerializedName("unPaidID")
+    private var mUnpaidId : ArrayList<String>
+
+    @SerializedName("partialPaidID")
+    private var mPartialPaidId : ArrayList<String>
 
     /**
      * Constructor
@@ -27,9 +36,16 @@ class DTOSendNotificationRequest : DTOBaseRequest {
      * @param userType
      * @param merchantId
      * @param agentId
+     * @param agentList
+     * @param agentMessage
+     * @param unpaidId
+     * @param partialPaidId
      */
-    constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String, paymentStatus : ArrayList<String>) : super(token, timeStamp, publicKey, userType, merchantId, agentId) {
+    constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String, agentList : ArrayList<String>, agentMessage : String, unpaidId : ArrayList<String>, partialPaidId : ArrayList<String>) : super(token, timeStamp, publicKey, userType, merchantId, agentId) {
         Tracer.debug(TAG, "DTOAgentDetailRequest : ")
-        mPaymentStatus = paymentStatus
+        mAgentList = agentList
+        mAgentMessage = agentMessage
+        mUnpaidId = unpaidId
+        mPartialPaidId = partialPaidId
     }
 }

@@ -17,6 +17,7 @@
     <string name="url_get_user_details">getUser</string>
     <string name="url_send_forgot_password_otp">sendForgotPasswordOTP</string>
     <string name="url_forgot_password">forgotPassword</string>
+    <string name="url_merchant_agent_list">getAgent</string>
 
 
     <string name="endpoint_login">@string/url_login</string>
@@ -36,4 +37,5 @@
     <string name="endpoint_get_user_details">@string/url_get_user_details</string>
     <string name="endpoint_send_forgot_password_otp">@string/url_send_forgot_password_otp</string>
     <string name="endpoint_forgot_password">@string/url_forgot_password</string>
+    <string name="endpoint_merchant_agent_list">@string/url_merchant_agent_list</string>
 </resources>

@@ -18,7 +18,7 @@ class AdapterItemHandler : BaseAdapterItemHandler() {
      * Type of view hold by adapter
      */
     enum class AdapterItemViewType {
-        NONE, HOME_TAB, SUMMARY_CONSOLIDATE_DATA_LIST, SUMMARY_CONSOLIDATE_DATA, SUMMARY_USER_DATA, SEND_NOTIFICATION_DATA_ITEM, STATUS_CONSOLIDATE_DATA_LIST, STATUS_CONSOLIDATE_DATA
+        NONE, HOME_TAB, SUMMARY_CONSOLIDATE_DATA_LIST, SUMMARY_CONSOLIDATE_DATA, SUMMARY_USER_DATA, STATUS_CONSOLIDATE_DATA_LIST, STATUS_CONSOLIDATE_DATA, MULTI_SELECTION_ITEM_WITH_MESSAGE, MULTI_SELECTION_ITEM
     }
 
     override fun createHolder(inflater : LayoutInflater, parent : ViewGroup, viewType : Int) : BaseViewHolder<*> {
@@ -29,7 +29,8 @@ class AdapterItemHandler : BaseAdapterItemHandler() {
             AdapterItemHandler.AdapterItemViewType.STATUS_CONSOLIDATE_DATA_LIST -> return CollectionStatusDataItemListVH(inflater.inflate(R.layout.item_card_recycler_view, parent, false))
             AdapterItemHandler.AdapterItemViewType.STATUS_CONSOLIDATE_DATA -> return CollectionStatusDataItemVH(inflater.inflate(R.layout.item_collection_status_data, parent, false))
             AdapterItemHandler.AdapterItemViewType.SUMMARY_USER_DATA -> return SummaryUserDataVH(inflater.inflate(R.layout.item_collection_summary_user_data, parent, false))
-            AdapterItemHandler.AdapterItemViewType.SEND_NOTIFICATION_DATA_ITEM -> return SendNotificationVH(inflater.inflate(R.layout.item_send_notification_data, parent, false))
+            AdapterItemHandler.AdapterItemViewType.MULTI_SELECTION_ITEM_WITH_MESSAGE -> return MultiSelectionDataWithMessageVH(inflater.inflate(R.layout.item_multi_selection_item_with_message, parent, false))
+            AdapterItemHandler.AdapterItemViewType.MULTI_SELECTION_ITEM -> return MultiSelectionDataVH(inflater.inflate(R.layout.item_multi_selection_item, parent, false))
             else -> return object : BaseViewHolder<Any>(FrameLayout(inflater.context)) {
                 protected override fun bindData(o : Any) {
 

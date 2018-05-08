@@ -95,7 +95,7 @@ class ReadSmsTask : AsyncTask<Void, Void, ArrayList<MessageData>> {
          * extracted and listed in a sequence.
          *
          * @param mssageDataList Map of all valid sms from the user inbox correspond to the
-         * vendor name
+         * vendor label
          */
         fun onMessageFiltered(messageDataList : ArrayList<MessageData>)
     }

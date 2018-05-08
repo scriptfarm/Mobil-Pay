@@ -2,7 +2,10 @@ package com.mkrworld.mobilpay.utils
 
 import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.text.Editable
+import android.text.Html
+import android.text.Spanned
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -162,6 +165,14 @@ class Utils {
         fun isValidPhone(phone : String) : Boolean {
             val pattern = Patterns.PHONE
             return pattern.matcher(phone).matches()
+        }
+
+        fun fromHtml(html : String) : Spanned {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
+            } else {
+                Html.fromHtml(html)
+            }
         }
     }
 }

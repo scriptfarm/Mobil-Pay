@@ -73,6 +73,10 @@
     <string name="collected_amount_star">Collected Amount ₹ *</string>
     <string name="generate_caps">GENERATE</string>
     <string name="cancel_caps">CANCEL</string>
+    <string name="message_optional_caps">MESSAGE(optional)</string>
+    <string name="ok_caps">OK</string>
+    <string name="all_caps">ALL</string>
+    <string name="edit_underline"><u>edit</u></string>
 
     <string name="customer_id">Customer-ID</string>
     <string name="bill_number">Bill Number</string>

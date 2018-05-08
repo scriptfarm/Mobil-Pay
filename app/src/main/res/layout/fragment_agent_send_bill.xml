@@ -32,7 +32,8 @@
                         android:id="@+id/fragment_agent_send_bill_editText_customer_id"
                         style="@style/style_text_input_layout_inputText"
                         android:hint="@string/mobile_number_star"
-                        android:inputType="textNoSuggestions" />
+                        android:inputType="textNoSuggestions"
+                        android:maxLength="10" />
 
                 </android.support.design.widget.TextInputLayout>
 

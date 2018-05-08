@@ -15,6 +15,7 @@
     <color name="card_background">#FFFFFF</color>
     <color name="button_background">@color/colorPrimary</color>
     <color name="button_background_f">@color/colorPrimaryDark</color>
+    <color name="hyperlink">#1BA1E2</color>
 
     <color name="activity_main_sliding_title_text_color">@color/text_color_white</color>
     <color name="activity_main_sliding_text_color">#555555</color>
