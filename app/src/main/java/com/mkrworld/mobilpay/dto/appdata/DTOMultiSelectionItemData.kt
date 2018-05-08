@@ -24,6 +24,8 @@ class DTOMultiSelectionItemData {
 
     var isChecked : Boolean = false
 
+    var isShowMessage : Boolean = false
+
     var label : String? = null
         get() {
             return field?.trim() ?: ""

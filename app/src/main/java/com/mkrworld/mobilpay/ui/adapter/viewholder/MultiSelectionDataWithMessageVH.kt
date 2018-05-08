@@ -95,7 +95,7 @@ class MultiSelectionDataWithMessageVH : BaseViewHolder<DTOMultiSelectionItemData
             }
             R.id.item_multi_selection_item_with_message_textView_edit -> {
                 if (mDTOMultiSelectionItemData !!.childOptionList.size > 0) {
-                    mDTOMultiSelectionItemData!!.selectedChildOptionList = mDTOMultiSelectionItemData!!.childOptionList
+                    mDTOMultiSelectionItemData !!.selectedChildOptionList = mDTOMultiSelectionItemData !!.childOptionList
                     var dialogMultiSelection : DialogMultiSelection
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         dialogMultiSelection = DialogMultiSelection(getContext(), android.R.style.Theme_Material_Light_NoActionBar, mDTOMultiSelectionItemData !!.childOptionList, this, true)
@@ -121,9 +121,13 @@ class MultiSelectionDataWithMessageVH : BaseViewHolder<DTOMultiSelectionItemData
             } else {
                 View.GONE
             }
-            mTextInputLayoutMessage !!.visibility = View.VISIBLE
-            mEditTextMessage !!.requestFocus()
-            Utils.showKeyboard(getContext(), mEditTextMessage)
+            if (mDTOMultiSelectionItemData !!.isShowMessage) {
+                mTextInputLayoutMessage !!.visibility = View.VISIBLE
+                mEditTextMessage!!.requestFocus()
+                Utils.showKeyboard(getContext(), mEditTextMessage)
+            } else {
+                mTextInputLayoutMessage !!.visibility = View.GONE
+            }
         } else {
             mTextViewEdit !!.visibility = View.GONE
             mTextInputLayoutMessage !!.visibility = View.GONE

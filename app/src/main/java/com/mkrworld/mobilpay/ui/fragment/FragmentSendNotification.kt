@@ -61,6 +61,7 @@ class FragmentSendNotification : Fragment(), OnBaseFragmentListener, View.OnClic
                 }
                 val dtoMultiSelectionItemData = DTOMultiSelectionItemData(Constants.NOTIFICATION_TYPE_AGENT, "AGENT", false, childOptionList, "edit")
                 dtoMultiSelectionItemData.selectedChildOptionList = dtoMultiSelectionItemData.childOptionList
+                dtoMultiSelectionItemData.isShowMessage = true
                 baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.MULTI_SELECTION_ITEM_WITH_MESSAGE.ordinal, dtoMultiSelectionItemData))
             }
             baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.MULTI_SELECTION_ITEM_WITH_MESSAGE.ordinal, DTOMultiSelectionItemData(Constants.NOTIFICATION_TYPE_UNPAID, "UNPAID", false)))
