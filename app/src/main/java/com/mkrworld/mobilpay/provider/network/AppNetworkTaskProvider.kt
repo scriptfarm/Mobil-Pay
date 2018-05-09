@@ -6,6 +6,8 @@ import com.mkrworld.androidlib.network.BaseTaskProvider
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
+import com.mkrworld.mobilpay.dto.agent.agentfetchbill.DTOFetchBillRequest
+import com.mkrworld.mobilpay.dto.agent.agentfetchbill.DTOFetchBillResponse
 import com.mkrworld.mobilpay.dto.comms.changepassword.DTOChangePasswordRequest
 import com.mkrworld.mobilpay.dto.comms.changepassword.DTOChangePasswordResponse
 import com.mkrworld.mobilpay.dto.comms.collectionstatus.DTOCollectionStatusRequest
@@ -24,6 +26,7 @@ import com.mkrworld.mobilpay.dto.comms.sendforgotpasswordotp.DTOSendForgotPasswo
 import com.mkrworld.mobilpay.dto.comms.sendforgotpasswordotp.DTOSendForgotPasswordOtpResponse
 import com.mkrworld.mobilpay.dto.comms.sendnotification.DTOSendNotificationRequest
 import com.mkrworld.mobilpay.dto.comms.sendnotification.DTOSendNotificationResponse
+import com.mkrworld.mobilpay.task.agent.FetchBillTask
 import com.mkrworld.mobilpay.task.comms.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -242,6 +245,30 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
         val task = SendBillTask(context, requestJson, object : NetworkCallBack<DTOSendBillResponse> {
 
             override fun onSuccess(networkResponse : DTOSendBillResponse) {
+                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
+            }
+
+            override fun onError(errorMessage : String, errorCode : Int) {
+                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
+            }
+        })
+        task.executeTask()
+    }
+
+    /**
+     * Method called when agent fetch the bill of a user
+     *
+     * @param context
+     * @param request
+     * @param networkCallBack
+     */
+    fun fetchBillTask(context : Context, request : DTOFetchBillRequest, networkCallBack : NetworkCallBack<DTOFetchBillResponse>) {
+        Tracer.debug(TAG, "fetchBillTask : ")
+        val requestJson = parseDtoToJson(request, DTOFetchBillRequest::class.java, networkCallBack)
+                ?: return
+        val task = FetchBillTask(context, requestJson, object : NetworkCallBack<DTOFetchBillResponse> {
+
+            override fun onSuccess(networkResponse : DTOFetchBillResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 

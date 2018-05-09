@@ -37,19 +37,19 @@ class FragmentCollectionSummary : Fragment(), OnBaseFragmentListener, View.OnCli
     private var mBaseAdapter : BaseAdapter? = null
     private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null
     private val mCollectionSummaryNetworkCallBack = object : NetworkCallBack<DTOCollectionSummaryResponse> {
-        override fun onSuccess(dtoCollectionSummaryResponse : DTOCollectionSummaryResponse) {
+        override fun onSuccess(dto : DTOCollectionSummaryResponse) {
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
-            if (dtoCollectionSummaryResponse == null || dtoCollectionSummaryResponse.getData() == null || dtoCollectionSummaryResponse.getData() !!.size <= 0) {
+            if (dto == null || dto.getData() == null || dto.getData() !!.size <= 0) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
             // RECYCLER VIEW DATA
             val baseAdapterItemArrayList = ArrayList<BaseAdapterItem<*>>()
             val dtoSummaryConsolidateDataList = DTOSummaryConsolidateDataList()
-            val dataList : ArrayList<DTOCollectionSummaryResponse.Data> = dtoCollectionSummaryResponse.getData()
+            val dataList : ArrayList<DTOCollectionSummaryResponse.Data> = dto.getData()
             dtoSummaryConsolidateDataList.addConsolidateData(DTOCollectionSummaryConsolidateData(DTOCollectionSummaryConsolidateData.RowType.TITLE, getString(R.string.mode_caps), getString(R.string.txns_caps), getString(R.string.amount_caps)))
             for (data : DTOCollectionSummaryResponse.Data in dataList) {
                 dtoSummaryConsolidateDataList.addConsolidateData(DTOCollectionSummaryConsolidateData(DTOCollectionSummaryConsolidateData.RowType.TEXT, data.label !!, data.count !!, data.amount !!))

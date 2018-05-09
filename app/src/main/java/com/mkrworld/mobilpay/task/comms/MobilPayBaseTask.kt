@@ -1,5 +1,6 @@
 package com.mkrworld.mobilpay.task.comms
 
+import android.accounts.AccountManager.KEY_ERROR_CODE
 import android.content.Context
 
 import com.mkrworld.androidlib.network.BaseNetworkTask
@@ -20,6 +21,7 @@ abstract class MobilPayBaseTask<MKR> : BaseNetworkTask<MKR> {
     companion object {
         private val TAG = BuildConfig.BASE_TAG + ".MobilPayBaseTask"
         private val KEY_ERROR = "error"
+        private val KEY_ERROR_CODE = "error_code"
         private val KEY_MESSAGE = "message"
     }
 
@@ -46,6 +48,14 @@ abstract class MobilPayBaseTask<MKR> : BaseNetworkTask<MKR> {
             return "Unknown error"
         }
         return if (jsonObject.has(KEY_MESSAGE)) jsonObject.optString(KEY_MESSAGE, "Unknown error") else "Unknown error"
+    }
+
+    public override fun getBusinessResponseErrorCode(jsonObject : JSONObject) : Int {
+        Tracer.debug(TAG, "getBusinessResponseErrorCode : " + jsonObject !!)
+        if (jsonObject == null) {
+            return - 1
+        }
+        return if (jsonObject.has(KEY_ERROR_CODE)) jsonObject.optInt(KEY_ERROR_CODE, - 1) else - 1
     }
 
     override fun isActualNetworkConnected() : Boolean {

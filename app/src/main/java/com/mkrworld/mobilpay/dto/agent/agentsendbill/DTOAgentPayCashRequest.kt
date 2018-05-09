@@ -38,7 +38,7 @@ class DTOAgentPayCashRequest : DTOBaseRequest {
      * @param collectedAmount
      */
     constructor(token : String, timeStamp : String, publicKey : String, userType : String, merchantId : String, agentId : String, userId : String, billNo : String, collectedAmount : String) : super(token, timeStamp, publicKey, userType, merchantId, agentId) {
-        Tracer.debug(TAG, "DTOAgentFetchBillRequest : ")
+        Tracer.debug(TAG, "DTOFetchBillRequest : ")
         mUserId = userId
         mBillNo = billNo
         mCollectedAmount = collectedAmount

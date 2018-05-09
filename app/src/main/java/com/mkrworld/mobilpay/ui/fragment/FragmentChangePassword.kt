@@ -16,7 +16,7 @@ import com.mkrworld.mobilpay.dto.comms.changepassword.DTOChangePasswordResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
-import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
+import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChange
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
 import java.util.*
@@ -39,20 +39,20 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
     private var mEditTextConfirmPassword : EditText? = null
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
     private val mAgentChangePasswordResponseNetworkCallBack = object : NetworkCallBack<DTOChangePasswordResponse> {
-        override fun onSuccess(dtoChangePasswordResponse : DTOChangePasswordResponse) {
+        override fun onSuccess(dto : DTOChangePasswordResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
-            if (dtoChangePasswordResponse == null || dtoChangePasswordResponse.getData() == null) {
+            if (dto == null || dto.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
             if (PreferenceData.isHaveFingerPrintConsent(activity) && PreferenceData.getThumbLoginUserType(activity).equals(PreferenceData.getUserType(activity)) && PreferenceData.getThumbLoginMerchantId(activity).equals(PreferenceData.getLoginMerchantId(activity)) && PreferenceData.getThumbLoginAgentId(activity).equals(PreferenceData.getLoginAgentId(activity)) && ! PreferenceData.getThumbLoginPassword(activity).equals(mEditTextConfirmPassword !!.text.toString().trim())) {
                 PreferenceData.setThumbLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim { it <= ' ' })
             }
-            Tracer.showSnack(view !!, dtoChangePasswordResponse.getMessage())
+            Tracer.showSnack(view !!, dto.getMessage())
             activity.onBackPressed()
         }
 
@@ -183,9 +183,9 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         mEditTextConfirmPassword = view !!.findViewById<View>(R.id.fragment_change_password_editText_confirm_password) as EditText
 
         // ADD TEXT CHANGE LISTENER
-        mEditTextOldPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutOldPassword !!))
-        mEditTextNewPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutNewPassword !!))
-        mEditTextConfirmPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutConfirmPassword !!))
+        mEditTextOldPassword !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutOldPassword !!))
+        mEditTextNewPassword !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutNewPassword !!))
+        mEditTextConfirmPassword !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutConfirmPassword !!))
     }
 
     /**

@@ -10,8 +10,7 @@ import com.mkrworld.androidlib.callback.OnBaseFragmentListener
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
-import com.mkrworld.mobilpay.ui.fragment.FragmentSendNotification
+import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChange
 import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.Utils
 
@@ -41,13 +40,7 @@ class FragmentAgentAEPSCollect : Fragment(), OnBaseFragmentListener, View.OnClic
      *
      * @return
      */
-    private // Validate Customer Name
-    // Validate Bank Name
-    // Validate Transaction Amount
-    // Validate Customer Mobile Number
-    // Validate Aadhar Number
-    // VALIDATE MIN AMOUNT
-    val isAEPSTransactionDetailValid : Boolean
+    private val isAEPSTransactionDetailValid : Boolean
         get() {
             Tracer.debug(TAG, "isAEPSTransactionDetailValid: ")
             if (view == null) {
@@ -164,11 +157,11 @@ class FragmentAgentAEPSCollect : Fragment(), OnBaseFragmentListener, View.OnClic
         mEditTextAadharNumber = view !!.findViewById<View>(R.id.fragment_agent_aeps_collect_editText_aadhar_number) as EditText
 
         // ADD TEXT CHANGE LISTENER
-        mEditTextCustomerName !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutCustomerName !!))
-        mEditTextBankName !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutBankName !!))
-        mEditTextTransactionAmount !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutTransactionAmount !!))
-        mEditTextMobileNumber !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutMobileNumber !!))
-        mEditTextAadharNumber !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutAadharNumber !!))
+        mEditTextCustomerName !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutCustomerName !!))
+        mEditTextBankName !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutBankName !!))
+        mEditTextTransactionAmount !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutTransactionAmount !!))
+        mEditTextMobileNumber !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutMobileNumber !!))
+        mEditTextAadharNumber !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutAadharNumber !!))
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.mkrworld.mobilpay.ui.adapter.viewholder
 
-import android.content.ContentValues.TAG
 import android.view.View
 import android.widget.TextView
 
@@ -42,16 +41,16 @@ class SummaryUserDataVH : BaseViewHolder<DTOSummaryUserData> {
         mTextViewTxnStatus = itemView.findViewById<View>(R.id.item_summary_user_data_textView_txn_status) as TextView
     }
 
-    override fun bindData(dtoSummaryUserData : DTOSummaryUserData) {
-        Tracer.debug(TAG, "bindData: " + dtoSummaryUserData !!)
-        if (dtoSummaryUserData == null) {
+    override fun bindData(dto : DTOSummaryUserData) {
+        Tracer.debug(TAG, "bindData: " + dto !!)
+        if (dto == null) {
             return
         }
-        mTextViewNumber!!.text = dtoSummaryUserData.number
-        mTextViewAmount!!.text = getContext().getString(R.string.symbol_rs) + dtoSummaryUserData.amount
-        mTextViewDate!!.text = dtoSummaryUserData.date
-        mTextViewTxnNumber!!.text = dtoSummaryUserData.txnNumber
-        mTextViewMode!!.text = dtoSummaryUserData.mode
-        mTextViewTxnStatus!!.text = dtoSummaryUserData.txnStatus
+        mTextViewNumber!!.text = dto.number
+        mTextViewAmount!!.text = getContext().getString(R.string.symbol_rs) + dto.amount
+        mTextViewDate!!.text = dto.date
+        mTextViewTxnNumber!!.text = dto.txnNumber
+        mTextViewMode!!.text = dto.mode
+        mTextViewTxnStatus!!.text = dto.txnStatus
     }
 }

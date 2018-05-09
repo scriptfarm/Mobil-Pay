@@ -3,7 +3,6 @@ package com.mkrworld.mobilpay.ui.activity
 import android.Manifest
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.widget.DrawerLayout
@@ -35,15 +34,15 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
     private var mAppPermissionController : AppPermissionController? = null
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
     private val mAgentLogoutResponseNetworkCallBack = object : NetworkCallBack<DTOLogoutResponse> {
-        override fun onSuccess(dtoLogoutResponse : DTOLogoutResponse) {
+        override fun onSuccess(dto : DTOLogoutResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             try {
-                if (dtoLogoutResponse == null) {
+                if (dto == null) {
                     Tracer.showSnack(findViewById(R.id.activity_main_parent), R.string.no_data_fetch_from_server)
                     return
                 }
-                Tracer.showSnack(findViewById(R.id.activity_main_parent), dtoLogoutResponse.getMessage())
+                Tracer.showSnack(findViewById(R.id.activity_main_parent), dto.getMessage())
                 PreferenceData.clearStore(applicationContext)
                 // MOVE TO LOGIN FRAGMENT
                 val fragment = FragmentProvider.getFragment(FragmentTag.LOGIN)

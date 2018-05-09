@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.EditText
 import android.widget.RadioButton
@@ -28,7 +27,7 @@ import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
-import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
+import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChange
 import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
@@ -61,14 +60,14 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
 
     private val mLoginResponseNetworkCallBack = object : NetworkCallBack<DTOLoginResponse> {
-        override fun onSuccess(dtoLoginResponse : DTOLoginResponse) {
-            Tracer.debug(TAG, "onSuccess : " + dtoLoginResponse !!)
+        override fun onSuccess(dto : DTOLoginResponse) {
+            Tracer.debug(TAG, "onSuccess : " + dto !!)
             Utils.dismissLoadingDialog()
-            if (dtoLoginResponse == null || dtoLoginResponse.getData() == null) {
+            if (dto == null || dto.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            Tracer.showSnack(view !!, dtoLoginResponse.getMessage())
+            Tracer.showSnack(view !!, dto.getMessage())
             PreferenceData.setLoginTime(activity, System.currentTimeMillis())
             // TEMP SAVE LOGIN DATA
             if (mIsMerchant) {
@@ -100,18 +99,18 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
     }
 
     private val mAgentMerchantListNetworkCallBack = object : NetworkCallBack<DTOAgentMerchantListResponse> {
-        override fun onSuccess(dtoAgentMerchantListResponse : DTOAgentMerchantListResponse) {
-            Tracer.debug(TAG, "onSuccess : " + dtoAgentMerchantListResponse !!)
+        override fun onSuccess(dto : DTOAgentMerchantListResponse) {
+            Tracer.debug(TAG, "onSuccess : " + dto !!)
             Utils.dismissLoadingDialog()
-            if (dtoAgentMerchantListResponse == null || dtoAgentMerchantListResponse.getData().size <= 0) {
+            if (dto == null || dto.getData().size <= 0) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            if (dtoAgentMerchantListResponse.getData().size == 1) {
-                mLoginMerchantId = dtoAgentMerchantListResponse.getData()[0].merchantId !!
+            if (dto.getData().size == 1) {
+                mLoginMerchantId = dto.getData()[0].merchantId !!
                 startSignInProcess()
             } else {
-                showSelectionDialog(dtoAgentMerchantListResponse.getData())
+                showSelectionDialog(dto.getData())
             }
         }
 
@@ -301,8 +300,8 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
         view !!.findViewById<View>(R.id.fragment_login_textView_sign_in).setOnClickListener(this)
         view !!.findViewById<View>(R.id.fragment_login_textView_forgot_password).setOnClickListener(this)
         // ADD TEXT CHANGE LISTENER
-        mEditTextId !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutId !!))
-        mEditTextPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutPassword !!))
+        mEditTextId !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutId !!))
+        mEditTextPassword !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutPassword !!))
         // INIT UI
         if (mIsMerchant) {
             mRadioButtonMerchant !!.isChecked = true

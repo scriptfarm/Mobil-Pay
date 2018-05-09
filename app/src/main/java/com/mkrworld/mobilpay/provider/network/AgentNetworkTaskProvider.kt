@@ -8,8 +8,6 @@ import com.mkrworld.mobilpay.dto.agent.agentdetails.DTOAgentDetailRequest
 import com.mkrworld.mobilpay.dto.agent.agentdetails.DTOAgentDetailResponse
 import com.mkrworld.mobilpay.dto.agent.agentfcm.DTOAgentFCMRequest
 import com.mkrworld.mobilpay.dto.agent.agentfcm.DTOAgentFCMResponse
-import com.mkrworld.mobilpay.dto.agent.agentfetchbill.DTOAgentFetchBillRequest
-import com.mkrworld.mobilpay.dto.agent.agentfetchbill.DTOAgentFetchBillResponse
 import com.mkrworld.mobilpay.dto.agent.agentmerchantlist.DTOAgentMerchantListRequest
 import com.mkrworld.mobilpay.dto.agent.agentmerchantlist.DTOAgentMerchantListResponse
 import com.mkrworld.mobilpay.dto.agent.agentqrcodegenarator.DTOAgentQRCodeGeneratorRequest
@@ -65,30 +63,6 @@ class AgentNetworkTaskProvider : AppNetworkTaskProvider() {
         val task = AgentFcmTask(context, requestJson, object : NetworkCallBack<DTOAgentFCMResponse> {
 
             override fun onSuccess(networkResponse : DTOAgentFCMResponse) {
-                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
-            }
-
-            override fun onError(errorMessage : String, errorCode : Int) {
-                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
-            }
-        })
-        task.executeTask()
-    }
-
-    /**
-     * Method called when agent fetch the bill of a user
-     *
-     * @param context
-     * @param request
-     * @param networkCallBack
-     */
-    fun agentFetchBillTask(context : Context, request : DTOAgentFetchBillRequest, networkCallBack : NetworkCallBack<DTOAgentFetchBillResponse>) {
-        Tracer.debug(TAG, "agentFetchBillTask : ")
-        val requestJson = parseDtoToJson(request, DTOAgentFetchBillRequest::class.java, networkCallBack)
-                ?: return
-        val task = AgentFetchBillTask(context, requestJson, object : NetworkCallBack<DTOAgentFetchBillResponse> {
-
-            override fun onSuccess(networkResponse : DTOAgentFetchBillResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 

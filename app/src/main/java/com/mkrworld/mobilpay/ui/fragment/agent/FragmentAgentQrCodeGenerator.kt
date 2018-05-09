@@ -16,7 +16,7 @@ import com.mkrworld.mobilpay.dto.agent.agentqrcodegenarator.DTOAgentQRCodeGenera
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
-import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
+import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChange
 import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
@@ -40,14 +40,14 @@ class FragmentAgentQrCodeGenerator : Fragment(), OnBaseFragmentListener, View.On
     private var mEditTextBillAmount : EditText? = null
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
     private val mQRCodeGeneratorResponseNetworkCallBack = object : NetworkCallBack<DTOAgentQRCodeGeneratorResponse> {
-        override fun onSuccess(dtoQRCodeGeneratorResponse : DTOAgentQRCodeGeneratorResponse) {
+        override fun onSuccess(dto : DTOAgentQRCodeGeneratorResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
-            if (dtoQRCodeGeneratorResponse == null || dtoQRCodeGeneratorResponse.getData() == null) {
+            if (dto == null || dto.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            val data = dtoQRCodeGeneratorResponse.getData()
+            val data = dto.getData()
             if (activity is OnBaseActivityListener) {
                 val bundle = Bundle()
                 bundle.putString(FragmentAgentQrCode.EXTRA_QR_CODE_TITLE, if (PreferenceData.getUserType(activity).equals(Constants.USER_TYPE_MERCHANT)) {
@@ -195,9 +195,9 @@ class FragmentAgentQrCodeGenerator : Fragment(), OnBaseFragmentListener, View.On
         mEditTextBillAmount = view !!.findViewById<View>(R.id.fragment_agent_qrcode_generator_editText_bill_amount) as EditText
 
         // ADD TEXT CHANGE LISTENER
-        mEditTextBillNumber !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutBillNumber !!))
-        mEditTextBillDescription !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutBillDescription !!))
-        mEditTextBillAmount !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutBillAmount !!))
+        mEditTextBillNumber !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutBillNumber !!))
+        mEditTextBillDescription !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutBillDescription !!))
+        mEditTextBillAmount !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutBillAmount !!))
     }
 
     /**

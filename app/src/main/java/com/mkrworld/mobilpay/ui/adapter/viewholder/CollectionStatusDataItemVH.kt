@@ -35,12 +35,12 @@ class CollectionStatusDataItemVH : BaseViewHolder<DTOCollectionStatusConsolidate
         mTextViewCount = itemView.findViewById(R.id.item_collection_status_data_textView_count)
     }
 
-    override fun bindData(dtoCollectionStatusConsolidateData : DTOCollectionStatusConsolidateData) {
-        Tracer.debug(TAG, "bindData: " + dtoCollectionStatusConsolidateData !!)
-        if (dtoCollectionStatusConsolidateData == null) {
+    override fun bindData(dto : DTOCollectionStatusConsolidateData) {
+        Tracer.debug(TAG, "bindData: " + dto !!)
+        if (dto == null) {
             return
         }
-        if (dtoCollectionStatusConsolidateData.rowType == DTOCollectionStatusConsolidateData.RowType.TITLE) {
+        if (dto.rowType == DTOCollectionStatusConsolidateData.RowType.TITLE) {
             mTextViewMode !!.setTypeface(mTextViewMode !!.typeface, Typeface.BOLD_ITALIC)
             mTextViewCount !!.setTypeface(mTextViewCount !!.typeface, Typeface.BOLD_ITALIC)
         } else {
@@ -48,7 +48,7 @@ class CollectionStatusDataItemVH : BaseViewHolder<DTOCollectionStatusConsolidate
             mTextViewCount !!.setTypeface(mTextViewCount !!.typeface, Typeface.NORMAL)
         }
 
-        mTextViewMode !!.text = dtoCollectionStatusConsolidateData.mode
-        mTextViewCount !!.text = dtoCollectionStatusConsolidateData.count
+        mTextViewMode !!.text = dto.mode
+        mTextViewCount !!.text = dto.count
     }
 }

@@ -81,7 +81,6 @@ abstract class BaseNetworkTask<MKR> {
         } else {
             mNetworkCallBack?.onError("No Network Connection", - 1)
         }
-
     }
 
     /**
@@ -91,7 +90,7 @@ abstract class BaseNetworkTask<MKR> {
         NetworkRequest.addToRequestQueue(getRequestType(), getUrl(), mRequestJsonObject !!, getHeader(), object : NetworkRequest.Companion.OnNetworkRequestListener {
             override fun onNetworkRequestCompleted(json : JSONObject) {
                 if (! isBusinessResponseSuccess(json)) {
-                    mNetworkCallBack?.onError(getBusinessResponseErrorMessage(json), - 1)
+                    mNetworkCallBack?.onError(getBusinessResponseErrorMessage(json), getBusinessResponseErrorCode(json))
                     return
                 }
                 object : AsyncTask<Void, Void, MKR>() {
@@ -202,6 +201,14 @@ abstract class BaseNetworkTask<MKR> {
      * @return
      */
     protected abstract fun getBusinessResponseErrorMessage(jsonObject : JSONObject) : String
+
+    /**
+     * Method to get Business Response error code<br></br>
+     *
+     * @param jsonObject
+     * @return
+     */
+    protected abstract fun getBusinessResponseErrorCode(jsonObject : JSONObject) : Int
 
     /**
      * Method to get the API URL

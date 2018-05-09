@@ -52,12 +52,12 @@ class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHC
     private var mMessageDataList : ArrayList<MessageData> = ArrayList<MessageData>()
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null;
     private val mAgentFCMResponseNetworkCallBack = object : NetworkCallBack<DTOAgentFCMResponse> {
-        override fun onSuccess(dtoAgentFCMResponse : DTOAgentFCMResponse) {
+        override fun onSuccess(dto : DTOAgentFCMResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             if (view == null) {
                 return
             }
-            if (dtoAgentFCMResponse == null || dtoAgentFCMResponse.getData() == null) {
+            if (dto == null || dto.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }

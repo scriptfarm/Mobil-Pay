@@ -23,7 +23,7 @@ class MultiSelectionDataVH : BaseViewHolder<DTOMultiSelectionItemData>, DialogMu
 
     private var mCheckBox : CheckBox? = null
     private var mTextViewLabel : TextView? = null
-    private var mDTOMultiSelectionItemData : DTOMultiSelectionItemData? = null
+    private var mDTO : DTOMultiSelectionItemData? = null
 
     /**
      * Constructor
@@ -38,27 +38,27 @@ class MultiSelectionDataVH : BaseViewHolder<DTOMultiSelectionItemData>, DialogMu
         mCheckBox !!.setOnClickListener(this)
     }
 
-    override fun bindData(dtoMultiSelectionItemData : DTOMultiSelectionItemData) {
-        Tracer.debug(TAG, "bindData: " + dtoMultiSelectionItemData !!)
-        mDTOMultiSelectionItemData = dtoMultiSelectionItemData
-        if (dtoMultiSelectionItemData == null) {
+    override fun bindData(dto : DTOMultiSelectionItemData) {
+        Tracer.debug(TAG, "bindData: " + dto !!)
+        mDTO = dto
+        if (dto == null) {
             return
         }
-        mTextViewLabel?.text = dtoMultiSelectionItemData.label
-        mCheckBox !!.isChecked = dtoMultiSelectionItemData.isChecked
+        mTextViewLabel?.text = dto.label
+        mCheckBox !!.isChecked = dto.isChecked
     }
 
     override fun onClick(v : View) {
         when (v.id) {
             R.id.item_multi_selection_item_data_checkBox -> {
-                if (mDTOMultiSelectionItemData == null) {
+                if (mDTO == null) {
                     return
                 }
-                if (mDTOMultiSelectionItemData !!.isChecked) {
-                    mDTOMultiSelectionItemData !!.isChecked = false
+                if (mDTO !!.isChecked) {
+                    mDTO !!.isChecked = false
                     mCheckBox !!.isChecked = false
                 } else {
-                    mDTOMultiSelectionItemData !!.isChecked = true
+                    mDTO !!.isChecked = true
                     mCheckBox !!.isChecked = true
                 }
             }
@@ -68,11 +68,11 @@ class MultiSelectionDataVH : BaseViewHolder<DTOMultiSelectionItemData>, DialogMu
 
     override fun onDialogMultiSelectionSelecetItemList(multiSelectionItemDataList : ArrayList<DTOMultiSelectionItemData>) {
         Tracer.debug(TAG, "onDialogMultiSelectionSelecetItemList : ")
-        mDTOMultiSelectionItemData?.selectedChildOptionList = multiSelectionItemDataList
+        mDTO?.selectedChildOptionList = multiSelectionItemDataList
     }
 
     override fun onDialogMultiSelectionCancel() {
         Tracer.debug(TAG, "onDialogMultiSelectionCancel : ")
-        mDTOMultiSelectionItemData?.selectedChildOptionList = ArrayList()
+        mDTO?.selectedChildOptionList = ArrayList()
     }
 }

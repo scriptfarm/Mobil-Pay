@@ -46,12 +46,12 @@ class CollectionSummaryDataItemListVH : BaseViewHolder<DTOSummaryConsolidateData
         mRecyclerView!!.addItemDecoration(GridSpacingItemDecoration(1, dividerHeight, colorDivider, false))
     }
 
-    override fun bindData(dtoSummaryConsolidateDataList : DTOSummaryConsolidateDataList) {
-        Tracer.debug(TAG, "bindData: " + dtoSummaryConsolidateDataList !!)
-        if (dtoSummaryConsolidateDataList == null) {
+    override fun bindData(dto : DTOSummaryConsolidateDataList) {
+        Tracer.debug(TAG, "bindData: " + dto !!)
+        if (dto == null) {
             return
         }
-        mBaseAdapter!!.updateAdapterItemList(getSummaryConsolidateDataList(dtoSummaryConsolidateDataList))
+        mBaseAdapter!!.updateAdapterItemList(getSummaryConsolidateDataList(dto))
     }
 
     /**

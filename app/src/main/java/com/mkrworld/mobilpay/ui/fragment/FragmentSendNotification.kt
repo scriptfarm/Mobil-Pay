@@ -42,12 +42,12 @@ class FragmentSendNotification : Fragment(), OnBaseFragmentListener, View.OnClic
     private var mBaseAdapter : BaseAdapter? = null
     private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
     private val mAgentListResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantAgentListResponse> {
-        override fun onSuccess(dtoMerchantAgentListRequest : DTOMerchantAgentListResponse) {
+        override fun onSuccess(dto : DTOMerchantAgentListResponse) {
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
-            if (dtoMerchantAgentListRequest == null || dtoMerchantAgentListRequest.getData() == null) {
+            if (dto == null || dto.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 activity.onBackPressed()
                 return
@@ -56,7 +56,7 @@ class FragmentSendNotification : Fragment(), OnBaseFragmentListener, View.OnClic
             val baseAdapterItemArrayList = ArrayList<BaseAdapterItem<*>>()
             if (PreferenceData.getUserType(activity).equals(Constants.USER_TYPE_MERCHANT)) {
                 var childOptionList : ArrayList<DTOMultiSelectionItemData> = ArrayList<DTOMultiSelectionItemData>()
-                for (data : DTOMerchantAgentListResponse.Data in dtoMerchantAgentListRequest.getData()) {
+                for (data : DTOMerchantAgentListResponse.Data in dto.getData()) {
                     childOptionList.add(DTOMultiSelectionItemData(data.userName, data.mobileNumber + "(" + data.name + ")", true))
                 }
                 val dtoMultiSelectionItemData = DTOMultiSelectionItemData(Constants.NOTIFICATION_TYPE_AGENT, "AGENT", false, childOptionList, "edit")
@@ -81,16 +81,16 @@ class FragmentSendNotification : Fragment(), OnBaseFragmentListener, View.OnClic
     }
     private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null
     private val mNotificationResponseNetworkCallBack = object : NetworkCallBack<DTOSendNotificationResponse> {
-        override fun onSuccess(dtoSendNotificationResponse : DTOSendNotificationResponse) {
+        override fun onSuccess(dto : DTOSendNotificationResponse) {
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
-            if (dtoSendNotificationResponse == null || dtoSendNotificationResponse.getData() == null) {
+            if (dto == null || dto.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            Tracer.showSnack(view !!, dtoSendNotificationResponse.getMessage())
+            Tracer.showSnack(view !!, dto.getMessage())
             activity.onBackPressed()
         }
 

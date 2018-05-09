@@ -12,8 +12,8 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.agent.agentfetchbill.DTOAgentFetchBillRequest
-import com.mkrworld.mobilpay.dto.agent.agentfetchbill.DTOAgentFetchBillResponse
+import com.mkrworld.mobilpay.dto.agent.agentfetchbill.DTOFetchBillRequest
+import com.mkrworld.mobilpay.dto.agent.agentfetchbill.DTOFetchBillResponse
 import com.mkrworld.mobilpay.dto.agent.agentsendbill.DTOAgentPayCashRequest
 import com.mkrworld.mobilpay.dto.agent.agentsendbill.DTOAgentPayCashResponse
 import com.mkrworld.mobilpay.dto.appdata.DTODropdownArrayAdapter
@@ -23,7 +23,7 @@ import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
 import com.mkrworld.mobilpay.provider.network.UserNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.adapter.DropdownArrayAdapter
 import com.mkrworld.mobilpay.ui.custom.EditTextDropDown
-import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
+import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChange
 import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
@@ -50,20 +50,20 @@ class FragmentAgentPayCash : Fragment(), OnBaseFragmentListener, View.OnClickLis
     private var mEditTextBillDescription : EditText? = null
     private var mEditTextBillAmount : EditText? = null
     private var mEditTextBillCollectedAmmount : EditText? = null
-    private var mDTOSelectedUserBillData : DTOAgentFetchBillResponse.Data? = null
+    private var mDTOSelectedUserBillData : DTOFetchBillResponse.Data? = null
     private var mUserNetworkTaskProvider : UserNetworkTaskProvider? = null
     private val mUserDetailResponseNetworkCallBack = object : NetworkCallBack<DTOUserDetailResponse> {
-        override fun onSuccess(dtoAgentFetchBillResponse : DTOUserDetailResponse) {
+        override fun onSuccess(dto : DTOUserDetailResponse) {
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
-            if (dtoAgentFetchBillResponse == null || dtoAgentFetchBillResponse.getData() == null || dtoAgentFetchBillResponse.getData() !!.size <= 0) {
+            if (dto == null || dto.getData() == null || dto.getData() !!.size <= 0) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
             var dropDownOptionList : ArrayList<DTODropdownArrayAdapter> = ArrayList<DTODropdownArrayAdapter>()
-            for (data in dtoAgentFetchBillResponse.getData() !!) {
+            for (data in dto.getData() !!) {
                 dropDownOptionList.add(DTODropdownArrayAdapter(data.userId !!, "" + data.mobileNumber + " (" + data.firstName !!.trim() + ")"))
             }
             var adapter : DropdownArrayAdapter = DropdownArrayAdapter(activity, R.layout.item_dropdown_array_adapter, R.id.item_dropdown_array_adapter_textView, dropDownOptionList)
@@ -81,19 +81,19 @@ class FragmentAgentPayCash : Fragment(), OnBaseFragmentListener, View.OnClickLis
 
     }
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
-    private val mAgentFetchBillResponseNetworkCallBack = object : NetworkCallBack<DTOAgentFetchBillResponse> {
-        override fun onSuccess(dtoAgentFetchBillResponse : DTOAgentFetchBillResponse) {
+    private val mAgentFetchBillResponseNetworkCallBack = object : NetworkCallBack<DTOFetchBillResponse> {
+        override fun onSuccess(dto : DTOFetchBillResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             mDTOSelectedUserBillData = null
             if (view == null) {
                 return
             }
-            if (dtoAgentFetchBillResponse == null || dtoAgentFetchBillResponse.getData() == null) {
+            if (dto == null || dto.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            mDTOSelectedUserBillData = dtoAgentFetchBillResponse.getData()
+            mDTOSelectedUserBillData = dto.getData()
             mEditTextBillNumber !!.setText(mDTOSelectedUserBillData !!.billNumber)
             mEditTextBillDescription !!.setText(mDTOSelectedUserBillData !!.billDetail)
             mEditTextBillAmount !!.setText(mDTOSelectedUserBillData !!.amountPending)
@@ -112,18 +112,18 @@ class FragmentAgentPayCash : Fragment(), OnBaseFragmentListener, View.OnClickLis
     }
 
     private val mAgentPayCashResponseNetworkCallBack = object : NetworkCallBack<DTOAgentPayCashResponse> {
-        override fun onSuccess(dtoAgentPayCashResponse : DTOAgentPayCashResponse) {
+        override fun onSuccess(dto : DTOAgentPayCashResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             mDTOSelectedUserBillData = null
             if (view == null) {
                 return
             }
-            if (dtoAgentPayCashResponse == null || dtoAgentPayCashResponse.getData() == null) {
+            if (dto == null || dto.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            Tracer.showSnack(view !!, dtoAgentPayCashResponse.getMessage())
+            Tracer.showSnack(view !!, dto.getMessage())
             activity.onBackPressed()
         }
 
@@ -256,10 +256,10 @@ class FragmentAgentPayCash : Fragment(), OnBaseFragmentListener, View.OnClickLis
         mEditTextBillCollectedAmmount = view !!.findViewById<View>(R.id.fragment_pay_cash_bill_editText_bill_collected_amount) as EditText
 
         // ADD TEXT CHANGE LISTENER
-        mEditTextDropDownUserName !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutUserName !!))
-        mEditTextBillNumber !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutBillNumber !!))
-        mEditTextBillDescription !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutBillDescription !!))
-        mEditTextBillAmount !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutBillAmount !!))
+        mEditTextDropDownUserName !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutUserName !!))
+        mEditTextBillNumber !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutBillNumber !!))
+        mEditTextBillDescription !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutBillDescription !!))
+        mEditTextBillAmount !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutBillAmount !!))
 
         // INIT STATUS
         mEditTextBillDescription !!.isEnabled = false
@@ -304,9 +304,9 @@ class FragmentAgentPayCash : Fragment(), OnBaseFragmentListener, View.OnClickLis
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_fetch_bill), date)
         val publicKey = getString(R.string.public_key)
-        val dtoFetchBillRequest = DTOAgentFetchBillRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), userId)
+        val dtoFetchBillRequest = DTOFetchBillRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), userId)
         Utils.showLoadingDialog(activity)
-        mAgentNetworkTaskProvider !!.agentFetchBillTask(activity, dtoFetchBillRequest, mAgentFetchBillResponseNetworkCallBack)
+        mAgentNetworkTaskProvider !!.fetchBillTask(activity, dtoFetchBillRequest, mAgentFetchBillResponseNetworkCallBack)
     }
 
     /**

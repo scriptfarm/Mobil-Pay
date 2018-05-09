@@ -10,7 +10,7 @@ import com.mkrworld.mobilpay.BuildConfig
 class DTOAgentPayCashResponse {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOAgentFetchBillResponse"
+        private val TAG = BuildConfig.BASE_TAG + ".DTOFetchBillResponse"
     }
 
     @SerializedName("message")

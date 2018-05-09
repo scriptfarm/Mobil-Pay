@@ -16,7 +16,7 @@ import com.mkrworld.mobilpay.dto.comms.forgotpassword.DTOForgotPasswordResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
-import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
+import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChange
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
 import java.util.*
@@ -42,13 +42,13 @@ class FragmentChangePasswordByOtp : Fragment(), OnBaseFragmentListener, View.OnC
     private var mEditTextConfirmPassword : EditText? = null
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
     private val mAgentForgotPasswordResponseNetworkCallBack = object : NetworkCallBack<DTOForgotPasswordResponse> {
-        override fun onSuccess(dtoForgotPasswordResponse : DTOForgotPasswordResponse) {
+        override fun onSuccess(dto : DTOForgotPasswordResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
-            if (dtoForgotPasswordResponse == null || dtoForgotPasswordResponse.getData() == null) {
+            if (dto == null || dto.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
@@ -61,7 +61,7 @@ class FragmentChangePasswordByOtp : Fragment(), OnBaseFragmentListener, View.OnC
                     PreferenceData.setThumbLoginPassword(activity, mEditTextConfirmPassword !!.text.toString().trim())
                 }
             }
-            Tracer.showSnack(view !!, dtoForgotPasswordResponse.getMessage())
+            Tracer.showSnack(view !!, dto.getMessage())
             if (activity is OnBaseActivityListener) {
                 val fragment = FragmentProvider.getFragment(FragmentTag.LOGIN)
                 (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment !!, null, FragmentTag.LOGIN)
@@ -190,9 +190,9 @@ class FragmentChangePasswordByOtp : Fragment(), OnBaseFragmentListener, View.OnC
         mEditTextConfirmPassword = view !!.findViewById<View>(R.id.fragment_change_password_otp_editText_confirm_password) as EditText
 
         // ADD TEXT CHANGE LISTENER
-        mEditTextOtp !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutOtp !!))
-        mEditTextNewPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutNewPassword !!))
-        mEditTextConfirmPassword !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutConfirmPassword !!))
+        mEditTextOtp !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutOtp !!))
+        mEditTextNewPassword !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutNewPassword !!))
+        mEditTextConfirmPassword !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutConfirmPassword !!))
     }
 
     /**

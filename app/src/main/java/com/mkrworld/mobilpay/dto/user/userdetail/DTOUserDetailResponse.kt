@@ -13,6 +13,12 @@ class DTOUserDetailResponse {
         private val TAG = BuildConfig.BASE_TAG + ".DTOUserDetailResponse"
     }
 
+    @SerializedName("searchText")
+    var searchText : String? = null
+        get() {
+            return field?.trim() ?: ""
+        }
+
     @SerializedName("message")
     private var mMessage : String? = null
 
@@ -24,8 +30,8 @@ class DTOUserDetailResponse {
      *
      * @return
      */
-    fun getData() : ArrayList<Data>? {
-        return mDataList
+    fun getData() : ArrayList<Data> {
+        return mDataList ?: ArrayList<Data>()
     }
 
     /**

@@ -35,13 +35,13 @@ class HomeTabVH : BaseViewHolder<DTOHomeTab> {
         mTextViewLabel = itemView.findViewById(R.id.item_home_textView_label)
     }
 
-    override fun bindData(dtoHomeTab : DTOHomeTab) {
-        Tracer.debug(TAG, "bindData: " + dtoHomeTab !!)
-        if (dtoHomeTab == null) {
+    override fun bindData(dto : DTOHomeTab) {
+        Tracer.debug(TAG, "bindData: " + dto !!)
+        if (dto == null) {
             return
         }
-        getParent().tag = dtoHomeTab
-        mImageViewIcon?.setImageResource(dtoHomeTab.iconResId)
-        mTextViewLabel?.text = dtoHomeTab.label
+        getParent().tag = dto
+        mImageViewIcon?.setImageResource(dto.iconResId)
+        mTextViewLabel?.text = dto.label
     }
 }

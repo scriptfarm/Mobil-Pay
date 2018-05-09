@@ -37,6 +37,19 @@
 
                 </android.support.design.widget.TextInputLayout>
 
+                <!-- NAME -->
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/fragment_merchant_send_bill_textInputLayout_name"
+                    style="@style/style_text_input_layout_hint">
+
+                    <EditText
+                        android:id="@+id/fragment_merchant_send_bill_editText_name"
+                        style="@style/style_text_input_layout_inputText"
+                        android:hint="@string/customer_name_optional"
+                        android:inputType="textPersonName" />
+
+                </android.support.design.widget.TextInputLayout>
+
                 <!-- BILL NUMBER -->
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/fragment_merchant_send_bill_textInputLayout_bill_number"

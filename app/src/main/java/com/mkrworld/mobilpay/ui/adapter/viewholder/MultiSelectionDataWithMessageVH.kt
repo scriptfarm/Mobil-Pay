@@ -31,7 +31,7 @@ class MultiSelectionDataWithMessageVH : BaseViewHolder<DTOMultiSelectionItemData
     private var mCheckBox : CheckBox? = null
     private var mTextViewLabel : TextView? = null
     private var mTextViewEdit : TextView? = null
-    private var mDTOMultiSelectionItemData : DTOMultiSelectionItemData? = null
+    private var mDTO : DTOMultiSelectionItemData? = null
     private var mTextInputLayoutMessage : TextInputLayout? = null
     private var mEditTextMessage : EditText? = null
 
@@ -52,16 +52,16 @@ class MultiSelectionDataWithMessageVH : BaseViewHolder<DTOMultiSelectionItemData
         mTextViewEdit !!.setOnClickListener(this)
     }
 
-    override fun bindData(dtoMultiSelectionItemData : DTOMultiSelectionItemData) {
-        Tracer.debug(TAG, "bindData: " + dtoMultiSelectionItemData !!)
-        mDTOMultiSelectionItemData = dtoMultiSelectionItemData
-        if (dtoMultiSelectionItemData == null) {
+    override fun bindData(dto : DTOMultiSelectionItemData) {
+        Tracer.debug(TAG, "bindData: " + dto !!)
+        mDTO = dto
+        if (dto == null) {
             return
         }
-        val fromHtml : Spanned = Utils.fromHtml("<HTML><BODY><U>" + dtoMultiSelectionItemData.selectionButtonText !! + "</U></BODY></HTML")
+        val fromHtml : Spanned = Utils.fromHtml("<HTML><BODY><U>" + dto.selectionButtonText !! + "</U></BODY></HTML")
         mTextViewEdit?.text = fromHtml
-        mTextViewLabel?.text = dtoMultiSelectionItemData.label
-        mCheckBox !!.isChecked = dtoMultiSelectionItemData.isChecked
+        mTextViewLabel?.text = dto.label
+        mCheckBox !!.isChecked = dto.isChecked
         setEditMessageVisibility()
         mEditTextMessage !!.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0 : Editable?) {
@@ -73,7 +73,7 @@ class MultiSelectionDataWithMessageVH : BaseViewHolder<DTOMultiSelectionItemData
             }
 
             override fun onTextChanged(p0 : CharSequence?, p1 : Int, p2 : Int, p3 : Int) {
-                mDTOMultiSelectionItemData?.message = p0.toString().trim()
+                mDTO?.message = p0.toString().trim()
             }
         })
     }
@@ -81,26 +81,26 @@ class MultiSelectionDataWithMessageVH : BaseViewHolder<DTOMultiSelectionItemData
     override fun onClick(v : View) {
         when (v.id) {
             R.id.item_multi_selection_item_with_message_data_checkBox -> {
-                if (mDTOMultiSelectionItemData == null) {
+                if (mDTO == null) {
                     return
                 }
-                if (mDTOMultiSelectionItemData !!.isChecked) {
-                    mDTOMultiSelectionItemData !!.isChecked = false
+                if (mDTO !!.isChecked) {
+                    mDTO !!.isChecked = false
                     mCheckBox !!.isChecked = false
                 } else {
-                    mDTOMultiSelectionItemData !!.isChecked = true
+                    mDTO !!.isChecked = true
                     mCheckBox !!.isChecked = true
                 }
                 setEditMessageVisibility()
             }
             R.id.item_multi_selection_item_with_message_textView_edit -> {
-                if (mDTOMultiSelectionItemData !!.childOptionList.size > 0) {
-                    mDTOMultiSelectionItemData !!.selectedChildOptionList = mDTOMultiSelectionItemData !!.childOptionList
+                if (mDTO !!.childOptionList.size > 0) {
+                    mDTO !!.selectedChildOptionList = mDTO !!.childOptionList
                     var dialogMultiSelection : DialogMultiSelection
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        dialogMultiSelection = DialogMultiSelection(getContext(), android.R.style.Theme_Material_Light_NoActionBar, mDTOMultiSelectionItemData !!.childOptionList, this, true)
+                        dialogMultiSelection = DialogMultiSelection(getContext(), android.R.style.Theme_Material_Light_NoActionBar, mDTO !!.childOptionList, this, true)
                     } else {
-                        dialogMultiSelection = DialogMultiSelection(getContext(), mDTOMultiSelectionItemData !!.childOptionList, this, true)
+                        dialogMultiSelection = DialogMultiSelection(getContext(), mDTO !!.childOptionList, this, true)
                     }
                     dialogMultiSelection.setCancelable(false)
                     dialogMultiSelection.show()
@@ -115,13 +115,13 @@ class MultiSelectionDataWithMessageVH : BaseViewHolder<DTOMultiSelectionItemData
      */
     private fun setEditMessageVisibility() {
         mEditTextMessage !!.setText("")
-        if (mDTOMultiSelectionItemData !!.isChecked) {
-            mTextViewEdit !!.visibility = if (mDTOMultiSelectionItemData !!.childOptionList.size > 0) {
+        if (mDTO !!.isChecked) {
+            mTextViewEdit !!.visibility = if (mDTO !!.childOptionList.size > 0) {
                 View.VISIBLE
             } else {
                 View.GONE
             }
-            if (mDTOMultiSelectionItemData !!.isShowMessage) {
+            if (mDTO !!.isShowMessage) {
                 mTextInputLayoutMessage !!.visibility = View.VISIBLE
                 mEditTextMessage!!.requestFocus()
                 Utils.showKeyboard(getContext(), mEditTextMessage)
@@ -136,11 +136,11 @@ class MultiSelectionDataWithMessageVH : BaseViewHolder<DTOMultiSelectionItemData
 
     override fun onDialogMultiSelectionSelecetItemList(multiSelectionItemDataList : ArrayList<DTOMultiSelectionItemData>) {
         Tracer.debug(TAG, "onDialogMultiSelectionSelecetItemList : ")
-        mDTOMultiSelectionItemData?.selectedChildOptionList = multiSelectionItemDataList
+        mDTO?.selectedChildOptionList = multiSelectionItemDataList
     }
 
     override fun onDialogMultiSelectionCancel() {
         Tracer.debug(TAG, "onDialogMultiSelectionCancel : ")
-        mDTOMultiSelectionItemData?.selectedChildOptionList = ArrayList()
+        mDTO?.selectedChildOptionList = ArrayList()
     }
 }

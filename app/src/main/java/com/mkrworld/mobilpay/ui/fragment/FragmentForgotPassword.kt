@@ -23,7 +23,7 @@ import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
-import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChangeListener
+import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChange
 import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.Utils
 import java.util.*
@@ -49,17 +49,17 @@ class FragmentForgotPassword : Fragment(), OnBaseFragmentListener, View.OnClickL
     private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
 
     private val mSendForgotPasswordOtpResponseNetworkCallBack = object : NetworkCallBack<DTOSendForgotPasswordOtpResponse> {
-        override fun onSuccess(dtoSendForgotPasswordOtpResponse : DTOSendForgotPasswordOtpResponse) {
+        override fun onSuccess(dto : DTOSendForgotPasswordOtpResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
-            if (dtoSendForgotPasswordOtpResponse == null || dtoSendForgotPasswordOtpResponse.getData() == null) {
+            if (dto == null || dto.getData() == null) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            Tracer.showSnack(view !!, dtoSendForgotPasswordOtpResponse.getMessage())
+            Tracer.showSnack(view !!, dto.getMessage())
             if (activity is OnBaseActivityListener) {
                 val bundle = Bundle()
                 var userType = ""
@@ -92,14 +92,14 @@ class FragmentForgotPassword : Fragment(), OnBaseFragmentListener, View.OnClickL
     }
 
     private val mAgentMerchantListNetworkCallBack = object : NetworkCallBack<DTOAgentMerchantListResponse> {
-        override fun onSuccess(dtoAgentMerchantListResponse : DTOAgentMerchantListResponse) {
-            Tracer.debug(TAG, "onSuccess : " + dtoAgentMerchantListResponse !!)
+        override fun onSuccess(dto : DTOAgentMerchantListResponse) {
+            Tracer.debug(TAG, "onSuccess : " + dto !!)
             Utils.dismissLoadingDialog()
-            if (dtoAgentMerchantListResponse == null || dtoAgentMerchantListResponse.getData().size <= 0) {
+            if (dto == null || dto.getData().size <= 0) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
-            showSelectionDialog(dtoAgentMerchantListResponse.getData())
+            showSelectionDialog(dto.getData())
         }
 
         override fun onError(errorMessage : String, errorCode : Int) {
@@ -252,7 +252,7 @@ class FragmentForgotPassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         mRadioButtonMerchant !!.setOnClickListener(this)
         view !!.findViewById<View>(R.id.fragment_forgot_password_textView_submit).setOnClickListener(this)
         // ADD TEXT WATCHER
-        mEditTextMobileNumber !!.addTextChangedListener(OnTextInputLayoutTextChangeListener(mTextInputLayoutMobileNumber !!))
+        mEditTextMobileNumber !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutMobileNumber !!))
 
         // INIT UI
         if (mIsMerchant) {

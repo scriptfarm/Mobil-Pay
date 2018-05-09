@@ -37,19 +37,19 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, View.OnClic
     private var mBaseAdapter : BaseAdapter? = null
     private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null
     private val mCollectionStatusNetworkCallBack = object : NetworkCallBack<DTOCollectionStatusResponse> {
-        override fun onSuccess(dtoCollectionStatusResponse : DTOCollectionStatusResponse) {
+        override fun onSuccess(dto : DTOCollectionStatusResponse) {
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
             }
-            if (dtoCollectionStatusResponse == null || dtoCollectionStatusResponse.getData() == null || dtoCollectionStatusResponse.getData() !!.size <= 0) {
+            if (dto == null || dto.getData() == null || dto.getData() !!.size <= 0) {
                 Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
             // RECYCLER VIEW DATA
             val baseAdapterItemArrayList = ArrayList<BaseAdapterItem<*>>()
             val dtoStatusConsolidateDataList = DTOStatusConsolidateDataList()
-            val dataList : ArrayList<DTOCollectionStatusResponse.Data> = dtoCollectionStatusResponse.getData()
+            val dataList : ArrayList<DTOCollectionStatusResponse.Data> = dto.getData()
             //dtoStatusConsolidateDataList.addConsolidateData(DTOCollectionStatusConsolidateData(DTOCollectionStatusConsolidateData.RowType.TITLE, getString(R.string.mode_caps), getString(R.string.txns_caps)))
             var count : Int = 0
             for (data : DTOCollectionStatusResponse.Data in dataList) {

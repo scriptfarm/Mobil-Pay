@@ -37,12 +37,12 @@ class CollectionSummaryDataItemVH : BaseViewHolder<DTOCollectionSummaryConsolida
         mTextViewAmount = itemView.findViewById(R.id.item_collection_summary_consolidate_data_textView_amount)
     }
 
-    override fun bindData(dtoCollectionSummaryConsolidateData : DTOCollectionSummaryConsolidateData) {
-        Tracer.debug(TAG, "bindData: " + dtoCollectionSummaryConsolidateData !!)
-        if (dtoCollectionSummaryConsolidateData == null) {
+    override fun bindData(dto : DTOCollectionSummaryConsolidateData) {
+        Tracer.debug(TAG, "bindData: " + dto !!)
+        if (dto == null) {
             return
         }
-        if (dtoCollectionSummaryConsolidateData.rowType == DTOCollectionSummaryConsolidateData.RowType.TITLE) {
+        if (dto.rowType == DTOCollectionSummaryConsolidateData.RowType.TITLE) {
             mTextViewMode!!.setTypeface(mTextViewMode!!.typeface, Typeface.BOLD_ITALIC)
             mTextViewCount!!.setTypeface(mTextViewCount!!.typeface, Typeface.BOLD_ITALIC)
             mTextViewAmount!!.setTypeface(mTextViewAmount!!.typeface, Typeface.BOLD_ITALIC)
@@ -52,8 +52,8 @@ class CollectionSummaryDataItemVH : BaseViewHolder<DTOCollectionSummaryConsolida
             mTextViewAmount!!.setTypeface(mTextViewAmount!!.typeface, Typeface.NORMAL)
         }
 
-        mTextViewMode!!.text = dtoCollectionSummaryConsolidateData.mode
-        mTextViewCount!!.text = dtoCollectionSummaryConsolidateData.count
-        mTextViewAmount!!.text = dtoCollectionSummaryConsolidateData.amount
+        mTextViewMode!!.text = dto.mode
+        mTextViewCount!!.text = dto.count
+        mTextViewAmount!!.text = dto.amount
     }
 }
