@@ -27,7 +27,7 @@ import com.mkrworld.mobilpay.dto.appdata.DTOHomeTab
 import com.mkrworld.mobilpay.dto.appdata.MessageData
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
-import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
+import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
 import com.mkrworld.mobilpay.task.app.ReadSmsTask
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler
 import com.mkrworld.mobilpay.ui.adapter.GridSpacingItemDecoration
@@ -50,7 +50,7 @@ class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHC
     }
 
     private var mMessageDataList : ArrayList<MessageData> = ArrayList<MessageData>()
-    private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null;
+    private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null;
     private val mAgentFCMResponseNetworkCallBack = object : NetworkCallBack<DTOAgentFCMResponse> {
         override fun onSuccess(dto : DTOAgentFCMResponse) {
             Tracer.debug(TAG, "onSuccess : ")
@@ -108,7 +108,7 @@ class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHC
     }
 
     override fun onDestroyView() {
-        mAgentNetworkTaskProvider?.detachProvider()
+        mAppNetworkTaskProvider?.detachProvider()
         super.onDestroyView()
     }
 
@@ -222,8 +222,8 @@ class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHC
         if (view == null) {
             return
         }
-        mAgentNetworkTaskProvider = AgentNetworkTaskProvider()
-        mAgentNetworkTaskProvider?.attachProvider()
+        mAppNetworkTaskProvider = AppNetworkTaskProvider()
+        mAppNetworkTaskProvider?.attachProvider()
 
         // INIT the RecyclerView
         val recyclerView = view !!.findViewById<View>(R.id.fragment_agent_home_recycler_view) as RecyclerView
@@ -265,7 +265,7 @@ class FragmentAgentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHC
                 val token = Utils.createToken(activity, getString(R.string.endpoint_agent_fcm), date)
                 val publicKey = getString(R.string.public_key)
                 val dtoAgentFCMRequest = DTOAgentFCMRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), result.trim())
-                mAgentNetworkTaskProvider !!.setFcmId(activity, dtoAgentFCMRequest, mAgentFCMResponseNetworkCallBack)
+                mAppNetworkTaskProvider !!.setFcmId(activity, dtoAgentFCMRequest, mAgentFCMResponseNetworkCallBack)
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }

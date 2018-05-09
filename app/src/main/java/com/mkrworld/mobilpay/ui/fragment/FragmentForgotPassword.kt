@@ -21,7 +21,6 @@ import com.mkrworld.mobilpay.dto.comms.sendforgotpasswordotp.DTOSendForgotPasswo
 import com.mkrworld.mobilpay.dto.comms.sendforgotpasswordotp.DTOSendForgotPasswordOtpResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
-import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChange
 import com.mkrworld.mobilpay.utils.Constants
@@ -46,7 +45,6 @@ class FragmentForgotPassword : Fragment(), OnBaseFragmentListener, View.OnClickL
     private var mLoginMerchantId : String = ""
 
     private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null
-    private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
 
     private val mSendForgotPasswordOtpResponseNetworkCallBack = object : NetworkCallBack<DTOSendForgotPasswordOtpResponse> {
         override fun onSuccess(dto : DTOSendForgotPasswordOtpResponse) {
@@ -182,7 +180,6 @@ class FragmentForgotPassword : Fragment(), OnBaseFragmentListener, View.OnClickL
 
     override fun onDestroyView() {
         mAppNetworkTaskProvider?.detachProvider()
-        mAgentNetworkTaskProvider?.detachProvider()
         super.onDestroyView()
     }
 
@@ -238,10 +235,8 @@ class FragmentForgotPassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         if (view == null) {
             return
         }
-        mAppNetworkTaskProvider = AgentNetworkTaskProvider()
+        mAppNetworkTaskProvider = AppNetworkTaskProvider()
         mAppNetworkTaskProvider?.attachProvider()
-        mAgentNetworkTaskProvider = AgentNetworkTaskProvider()
-        mAgentNetworkTaskProvider?.attachProvider()
 
         mTextInputLayoutMobileNumber = view !!.findViewById<View>(R.id.fragment_forgot_password_textInputLayout_mobile_number) as TextInputLayout
         mEditTextMobileNumber = view !!.findViewById<View>(R.id.fragment_forgot_password_editText_mobile_number) as EditText
@@ -321,7 +316,7 @@ class FragmentForgotPassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         val publicKey = getString(R.string.public_key)
         val dtoAgentMerchantListRequest = DTOAgentMerchantListRequest(token !!, timeStamp, publicKey, userType, merchantId, agentId)
         Utils.showLoadingDialog(activity)
-        mAgentNetworkTaskProvider !!.agentMerchantsList(activity, dtoAgentMerchantListRequest, mAgentMerchantListNetworkCallBack)
+        mAppNetworkTaskProvider !!.agentMerchantsList(activity, dtoAgentMerchantListRequest, mAgentMerchantListNetworkCallBack)
     }
 
     /**

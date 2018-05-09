@@ -6,5 +6,5 @@
         android:left="@dimen/button_padding_hor"
         android:right="@dimen/button_padding_hor"
         android:top="@dimen/button_padding_ver" />
-    <solid android:color="@color/button_f" />
+    <solid android:color="@color/button_inv" />
 </shape>

@@ -12,16 +12,22 @@
         <item name="actionOverflowMenuStyle">@style/PopupMenu</item>
     </style>
 
+    <!-- TOOLBAR STYLE -->
+    <style name="toolbar_dimen">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <item name="android:background">@color/toolbar_back</item>
+    </style>
+
     <style name="PopupMenu" parent="@style/Widget.AppCompat.Light.PopupMenu.Overflow">
         <item name="android:popupBackground">@color/colorPrimaryDark</item>
     </style>
 
-
-    <!-- TEXT VIEW Default Property Start-->
+    <!-- EditText Property Start -->
     <style name="style_text_view_default">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/text_color_black</item>
+        <item name="android:textColor">@color/app_text_color</item>
         <item name="android:textSize">@dimen/text_size</item>
     </style>
 
@@ -29,6 +35,123 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
     </style>
+
+    <style name="style_text_view_default_full_width" parent="style_text_view_default">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="style_text_view_default_inv" parent="style_text_view_default">
+        <item name="android:textColor">@color/app_text_color_inv</item>
+    </style>
+
+    <style name="style_text_view_default_inv_width_weight" parent="style_text_view_default_inv_width_weight">
+        <item name="android:textColor">@color/app_text_color_inv</item>
+    </style>
+
+    <style name="style_text_view_default_inv_full_width" parent="style_text_view_default_full_width">
+        <item name="android:textColor">@color/app_text_color_inv</item>
+    </style>
+
+    <style name="style_sub_text_view_default">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/app_sub_text_color</item>
+        <item name="android:textSize">@dimen/sub_text_size</item>
+    </style>
+
+    <style name="style_title_text_view_default">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/app_title_text_color</item>
+        <item name="android:textSize">@dimen/title_text_size</item>
+    </style>
+
+    <style name="style_title_text_view_default_width_weight" parent="style_title_text_view_default">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="style_text_view_multiple_line" parent="style_text_view_default_full_width">
+        <item name="android:minLines">1</item>
+    </style>
+
+    <style name="style_text_view_single_line" parent="style_text_view_multiple_line">
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="style_text_view_hint_multiple_line" parent="style_text_view_default_full_width">
+        <item name="android:minLines">1</item>
+        <item name="android:textColor">@color/text_color_gray</item>
+    </style>
+
+    <style name="style_text_view_hint_single_line" parent="style_text_view_hint_multiple_line">
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="style_text_view_green" parent="style_text_view_default_full_width">
+        <item name="android:textColor">@color/text_color_green</item>
+    </style>
+    <!-- EditText Property End -->
+
+    <!-- TextInputLayout Property Start -->
+    <style name="style_text_input_layout_hint">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="hintTextAppearance">@style/style_text_input_layout_hint_appearince</item>
+        <item name="android:layout_marginTop">@dimen/text_input_layout_margin_ver</item>
+        <item name="android:layout_marginBottom">@dimen/text_input_layout_margin_ver</item>
+    </style>
+
+    <style name="style_text_input_layout_hint_appearince" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">@dimen/text_input_layout_hint_text_size</item>
+        <item name="android:textColor">@color/input_layout_text_color</item>
+    </style>
+    <!-- TextInputLayout Property End -->
+
+    <!-- Button Layout Start -->
+    <style name="style_button" parent="style_text_view_default_inv">
+        <item name="android:background">@drawable/selector_button</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="style_button_width_weight" parent="style_text_view_default_inv_width_weight">
+        <item name="android:background">@drawable/selector_button</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">0.5</item>
+    </style>
+
+    <style name="style_button_width_full" parent="style_text_view_default_inv_full_width">
+        <item name="android:background">@drawable/selector_button</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="style_button_inv" parent="style_text_view_default_inv">
+        <item name="android:background">@drawable/selector_button_inv</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="style_button_inv_width_weight" parent="style_text_view_default_inv_width_weight">
+        <item name="android:background">@drawable/selector_button_inv</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">0.5</item>
+    </style>
+
+    <style name="style_button_inv_width_full" parent="style_text_view_default_inv_full_width">
+        <item name="android:background">@drawable/selector_button_inv</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!-- Button Layout End -->
+
+    <!-- ====================================================================== -->
+    <!-- ====================================================================== -->
+    <!-- ====================================================================== -->
+    <!-- ====================================================================== -->
+    <!-- ====================================================================== -->
+    <!-- ====================================================================== -->
+    <!-- ====================================================================== -->
+
 
     <style name="style_text_view_default_white" parent="style_text_view_default">
         <item name="android:textColor">@color/text_color_white</item>
@@ -46,13 +169,6 @@
         <item name="android:layout_weight">1</item>
     </style>
     <!-- TEXT VIEW Default Property End-->
-
-    <!-- TOOLBAR STYLE -->
-    <style name="toolbar_dimen">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/toolbar_height</item>
-        <item name="android:background">@color/toolbar_back</item>
-    </style>
 
     <style name="app_header_icon">
         <item name="android:layout_width">@dimen/app_header_icon_width</item>
@@ -77,50 +193,6 @@
     </style>
     <!-- CardView Property End -->
 
-    <!-- TextInputLayout Property Start -->
-    <style name="style_text_input_layout_hint">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="hintTextAppearance">@style/style_text_input_layout_hint_appearince</item>
-        <item name="android:layout_marginTop">@dimen/text_input_layout_margin_ver</item>
-        <item name="android:layout_marginBottom">@dimen/text_input_layout_margin_ver</item>
-    </style>
-
-    <style name="style_text_input_layout_inputText" parent="style_text_view_default">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:maxLines">1</item>
-    </style>
-
-    <style name="style_text_input_layout_inputText_hint" parent="style_text_view_default">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:textColor">@color/text_color_gray</item>
-    </style>
-
-    <style name="style_text_input_layout_inputText_green" parent="style_text_view_default">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:textColor">@color/text_color_green</item>
-    </style>
-
-    <style name="style_text_input_layout_hint_appearince" parent="TextAppearance.Design.Hint">
-        <item name="android:textSize">@dimen/text_input_layout_hint_text_size</item>
-    </style>
-    <!-- TextInputLayout Property End -->
-
-    <!-- Button Layout Start -->
-    <style name="style_button" parent="style_text_view_default_white">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:background">@drawable/selector_button</item>
-        <item name="android:gravity">center</item>
-    </style>
-
-    <!-- Use in case when set in linear layout where orientation is horizontal -->
-    <style name="style_button_width_weight" parent="style_button">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_weight">0.5</item>
-    </style>
-    <!-- Button Layout End -->
 
     <!-- Sliding Drawer Property Start -->
     <style name="style_sliding_drawer_option_layout">

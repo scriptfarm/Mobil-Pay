@@ -17,8 +17,7 @@ import com.mkrworld.mobilpay.dto.comms.sendbill.DTOSendBillRequest
 import com.mkrworld.mobilpay.dto.comms.sendbill.DTOSendBillResponse
 import com.mkrworld.mobilpay.dto.user.userdetail.DTOUserDetailRequest
 import com.mkrworld.mobilpay.dto.user.userdetail.DTOUserDetailResponse
-import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider
-import com.mkrworld.mobilpay.provider.network.UserNetworkTaskProvider
+import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChange
 import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.PreferenceData
@@ -46,7 +45,7 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
     private var mTextInputLayoutBillAmount : TextInputLayout? = null
     private var mEditTextBillAmount : EditText? = null
     private var mDTOSelectedUserBillData : DTOFetchBillResponse.Data? = null
-    private var mUserNetworkTaskProvider : UserNetworkTaskProvider? = null
+    private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null
     private val mUserDetailResponseNetworkCallBack = object : NetworkCallBack<DTOUserDetailResponse> {
         override fun onSuccess(dto : DTOUserDetailResponse) {
             Tracer.debug(TAG, "onSuccess : ")
@@ -74,7 +73,6 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
             Tracer.showSnack(view !!, errorMessage)
         }
     }
-    private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
     private val mMerchantSendBillResponseNetworkCallBack = object : NetworkCallBack<DTOSendBillResponse> {
         override fun onSuccess(dto : DTOSendBillResponse) {
             Tracer.debug(TAG, "onSuccess : ")
@@ -192,8 +190,7 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
     }
 
     override fun onDestroyView() {
-        mMerchantNetworkTaskProvider?.detachProvider()
-        mUserNetworkTaskProvider?.detachProvider()
+        mAppNetworkTaskProvider?.detachProvider()
         super.onDestroyView()
     }
 
@@ -238,10 +235,8 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
             return
         }
 
-        mUserNetworkTaskProvider = UserNetworkTaskProvider()
-        mUserNetworkTaskProvider !!.attachProvider()
-        mMerchantNetworkTaskProvider = MerchantNetworkTaskProvider()
-        mMerchantNetworkTaskProvider !!.attachProvider()
+        mAppNetworkTaskProvider = AppNetworkTaskProvider()
+        mAppNetworkTaskProvider?.attachProvider()
 
         view !!.findViewById<View>(R.id.fragment_merchant_send_bill_textView_send).setOnClickListener(this)
         view !!.findViewById<View>(R.id.fragment_merchant_send_bill_textView_cancel).setOnClickListener(this)
@@ -302,7 +297,7 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
         val publicKey = getString(R.string.public_key)
         val dtoMerchantSendBillRequest = DTOSendBillRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), userId, mobileNumber, billNumber, billDescription, billAmount, type)
         Utils.showLoadingDialog(activity)
-        mMerchantNetworkTaskProvider !!.sendBillTask(activity, dtoMerchantSendBillRequest, mMerchantSendBillResponseNetworkCallBack)
+        mAppNetworkTaskProvider !!.sendBillTask(activity, dtoMerchantSendBillRequest, mMerchantSendBillResponseNetworkCallBack)
     }
 
     /**
@@ -316,7 +311,7 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
         val publicKey = getString(R.string.public_key)
         val dtoUserDetailRequest = DTOUserDetailRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), prefix)
         Utils.showLoadingDialog(activity)
-        mUserNetworkTaskProvider !!.userDetailTask(activity, dtoUserDetailRequest, mUserDetailResponseNetworkCallBack)
+        mAppNetworkTaskProvider?.userDetailTask(activity, dtoUserDetailRequest, mUserDetailResponseNetworkCallBack)
     }
 
     /**
@@ -331,7 +326,7 @@ class FragmentMerchantSendBill : Fragment(), OnBaseFragmentListener, View.OnClic
         val publicKey = getString(R.string.public_key)
         val dtoFetchBillRequest = DTOFetchBillRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), userId)
         Utils.showLoadingDialog(activity)
-        mMerchantNetworkTaskProvider !!.fetchBillTask(activity, dtoFetchBillRequest, mFetchBillResponseNetworkCallBack)
+        mAppNetworkTaskProvider !!.fetchBillTask(activity, dtoFetchBillRequest, mFetchBillResponseNetworkCallBack)
     }
 
     /**

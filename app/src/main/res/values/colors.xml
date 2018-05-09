@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#AFD91A</color>
-    <color name="colorPrimaryDark">#82a310</color>
-    <color name="colorAccent">#1BA1E2</color>
+    <color name="colorPrimary">#00a1c1</color>
+    <color name="colorPrimaryDark">#0f6584</color>
+    <color name="colorAccent">@color/colorPrimary</color>
     <color name="toolbar_back">@color/colorPrimary</color>
     <color name="toolbar_text_color">@android:color/white</color>
+    <color name="button">@color/colorPrimary</color>
+    <color name="button_f">@color/colorPrimaryDark</color>
+    <color name="button_inv">#f16777</color>
+    <color name="button_inv_f">#ca4959</color>
+    <color name="app_text_color">#242a2a</color>
+    <color name="app_text_color_inv">#EEEEEE</color>
+    <color name="app_title_text_color">@color/colorPrimaryDark</color>
+    <color name="app_sub_text_color">@color/colorPrimaryDark</color>
+    <color name="input_layout_text_color">@color/colorPrimaryDark</color>
     <color name="transparent">#00000000</color>
+
+    <!-- ============================================= -->
+    <!-- ============================================= -->
+    <!-- ============================================= -->
+    <!-- ============================================= -->
+    <!-- ============================================= -->
+    <!-- ============================================= -->
+    <!-- ============================================= -->
+    <!-- ============================================= -->
+
     <color name="text_color_black">#000000</color>
     <color name="text_color_white">#FFFFFF</color>
     <color name="divider_color">#77777777</color>
-    <color name="screen_back">#EEEEEE</color>
+    <color name="screen_back">#FFFFFF</color>
     <color name="text_color_gray">#888888</color>
     <color name="text_color_green">#12b412</color>
     <color name="card_background">#FFFFFF</color>

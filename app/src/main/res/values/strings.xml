@@ -2,28 +2,23 @@
     <string name="app_name">Mobil Pay</string>
     <string name="symbol_rs">₹</string>
     <string name="default_notification_channel_id">com.mkrworld.mobilpay</string>
-
     <string name="no_finger_print_device_not_detected">No finger print device detected</string>
     <string name="no_finger_print_register">No finger print register</string>
     <string name="plz_login_manually">Plz login manually........</string>
     <string name="error_scanning_finger_not_recognized">Error : Scanning finger not recognized</string>
     <string name="unable_to_generate_qr_code">Unable to generate the QR-Code</string>
-
     <string name="public_key">791E14FF-6243-4A73-A6E1-08B143EF0F2B</string>
     <string name="private_key">15080811-E0DC-4F3E-B826-C799D3477967</string>
     <string name="salt">Nupaysvi6uEWaiqjHvx8B3lhnLuZBaDyEEAO1QEo4UboTRam4y0LPfdGk0oHjatgjKed9oxgrROXq03RaKs9WNoExVcrM5aXvnMwBaroQ7acCLGyPbfrfOJnnmhxwjrCplMtTXMZ2v6XAh2gZqligqM16wMpJQ7t0QxemsQIqs9OUvAdza7hMMfjwjwjXPjpuA55sbzsUdldWPI5hBxFUyGoRDTDEnOqhvJhMaKOIjq2X1SpuQ7Fxslj3ZuPfGgSNupay</string>
     <string name="no_data_fetch_from_server">No Data Fetch From Server</string>
     <string name="nothing_selected">Nothing selected</string>
-
     <string name="no_bill_data_fetched_caps">NO BILL DATA FETCHED</string>
     <string name="field_should_not_be_empty_caps">FIELD SHOULD NOT BE EMPTY</string>
     <string name="enter_valid_mobile_number">ENTER A VALID 10 DIGIT MOBILE NUMBER</string>
     <string name="amount_should_be_greater_then_caps">AMOUNT SHOULD BE GREATER THEN </string>
     <string name="password_does_not_match_with_new_password">PASSWORD DOESN\'T MATCH WITH NEW PASSWORD</string>
-
     <string name="notification_caps">NOTIFICATION</string>
     <string name="no_pending_alerts_caps">NO PENDING ALERT\'s</string>
-    
     <string name="screen_title_login">Login</string>
     <string name="screen_title_merchant_home">Merchant Home</string>
     <string name="screen_title_agent_home">Agent Home</string>
@@ -35,7 +30,6 @@
     <string name="screen_title_change_password">Change Password</string>
     <string name="screen_title_collection_summary">Collection Summary</string>
     <string name="screen_title_send_notification">Send Notification</string>
-
     <string name="home">Home</string>
     <string name="change_password">Change Password</string>
     <string name="language">Language</string>
@@ -43,7 +37,6 @@
     <string name="terms_and_condition">Terms &amp; Condition</string>
     <string name="contact_mobil_pay">Contact MobilPay</string>
     <string name="logout">Logout</string>
-
     <string name="mobile_number">Mobile Number</string>
     <string name="merchant">Merchant</string>
     <string name="agent">Agent</string>
@@ -51,10 +44,14 @@
     <string name="agent_id_start">Agent-ID *</string>
     <string name="agent_id">Agent-ID</string>
     <string name="password">Password</string>
+    <string name="password_star">Password *</string>
+    <string name="forgot_password_question">Forgot Password ?</string>
+    <string name="old_password_star">Old Password *</string>
+    <string name="new_password_star">New Password *</string>
+    <string name="confirm_password_star">Confirm Password *</string>
     <string name="login_to_your_account">Login to your account</string>
     <string name="sign_in_caps">SIGN IN</string>
     <string name="use_finger_print_question">Use Fingerprint?</string>
-
     <string name="static_qr_code">Static QR Code</string>
     <string name="send_notification">Send Notification</string>
     <string name="collection_status">Collection Status</string>
@@ -65,7 +62,6 @@
     <string name="pay_cash">Pay Cash</string>
     <string name="collect_cash">Collect Cash</string>
     <string name="collection_summary">Collection Summary</string>
-
     <string name="agent_qrcode_generator">Agent QR-Code Generator</string>
     <string name="bill_number_star">Bill Number *</string>
     <string name="bill_description_star">Bill Description *</string>
@@ -77,13 +73,11 @@
     <string name="ok_caps">OK</string>
     <string name="all_caps">ALL</string>
     <string name="edit_underline"><u>edit</u></string>
-
     <string name="customer_id">Customer-ID</string>
     <string name="bill_number">Bill Number</string>
     <string name="send_caps">SEND</string>
     <string name="pay_caps">PAY</string>
     <string name="collect_caps">COLLECT</string>
-
     <string name="aeps_caps">AEPS</string>
     <string name="customer_name">Customer Name</string>
     <string name="customer_name_optional">Customer Name (Optional)</string>
@@ -91,19 +85,12 @@
     <string name="Transaction_amount_star">Transaction Amount *</string>
     <string name="mobile_number_star">Mobile Number *</string>
     <string name="enter_last_4_digit_aadhar_number">Enter Last 4 Digit Aadhar Number</string>
-
     <string name="first_name_star">First Name *</string>
     <string name="last_name_star">Last Name *</string>
     <string name="enter_your_login_details">Enter Your Login Details</string>
     <string name="submit_caps">SUBMIT</string>
-
-    <string name="forgot_password_question">Forgot Password ?</string>
-    <string name="old_password_star">Old Password *</string>
-    <string name="new_password_star">New Password *</string>
-    <string name="confirm_password_star">Confirm Password *</string>
     <string name="code_received_via_sms">Code Received via SMS *</string>
     <string name="change_your_password">Change Your Password</string>
-
     <string name="qr_code_caps">QR-CODE</string>
     <string name="upi_caps">UPI</string>
     <string name="total_caps">TOTAL</string>
@@ -111,7 +98,6 @@
     <string name="mode_caps">MODE</string>
     <string name="amount_caps">AMOUNT</string>
     <string name="txns_caps">TXN\'s</string>
-
     <string name="enable_finger_print">Enable Finger Print</string>
     <string name="are_you_sure_enable_finger_print_login">Are you sure to enable finger print login ??</string>
     <string name="update_finger_print">Update Finger Print</string>

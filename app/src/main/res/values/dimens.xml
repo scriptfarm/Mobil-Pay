@@ -2,14 +2,13 @@
 <resources>
     <!-- STANDARD SIZE -->
     <dimen name="text_size">@dimen/mkrdp_4.50</dimen>
-    <dimen name="title_text_size">@dimen/mkrdp_6</dimen>
-    <dimen name="sub_text_size">@dimen/mkrdp_3.49</dimen>
+    <dimen name="title_text_size">@dimen/mkrdp_6.50</dimen>
+    <dimen name="sub_text_size">@dimen/mkrdp_3.74</dimen>
     <dimen name="sub_text_size_padding">@dimen/mkrdp_1</dimen>
     <dimen name="divider_size">@dimen/mkrdp_0.2</dimen>
     <dimen name="content_margin">@dimen/mkrdp_4</dimen>
     <integer name="length_mobile_number">10</integer>
     <integer name="length_aadhar_number_4">4</integer>
-
     <dimen name="dialog_progress_circle_dim">@dimen/mkrdp_25</dimen>
     <dimen name="dialog_progress_progress_width">@dimen/mkrdp_1.49</dimen>
 
@@ -19,10 +18,26 @@
     <dimen name="toolbar_title_text_padding">@dimen/mkrdp_3</dimen>
     <dimen name="toolbar_icon_width">@dimen/mkrdp_15</dimen>
 
+    <!-- TEXT INPUT LAYOUT -->
+    <dimen name="text_input_layout_margin_ver">@dimen/mkrdp_0.50</dimen>
+    <dimen name="text_input_layout_hint_text_size">@dimen/mkrdp_3.49</dimen>
+
     <!-- HEADER ICON -->
     <dimen name="app_header_icon_width">@dimen/mkrdp_45</dimen>
     <dimen name="app_header_icon_height">@dimen/mkrdp_8.65</dimen>
     <dimen name="app_header_icon_margin">@dimen/mkrdp_3</dimen>
+
+    <!-- FRAGMENT AGENT LOGIN -->
+    <dimen name="fragment_login_thumb_icon_dimen">@dimen/mkrdp_20</dimen>
+    <dimen name="fragment_login_hor_margin">@dimen/mkrdp_12</dimen>
+    <dimen name="fragment_login_ver_margin">@dimen/mkrdp_3</dimen>
+
+    <!-- ===================================================== -->
+    <!-- ===================================================== -->
+    <!-- ===================================================== -->
+    <!-- ===================================================== -->
+    <!-- ===================================================== -->
+    <!-- ===================================================== -->
 
     <!-- POPUP LIST ITEM PADDING -->
     <dimen name="item_dropdown_array_adapter_padding_ver">@dimen/mkrdp_1.49</dimen>
@@ -34,10 +49,6 @@
     <dimen name="card_content_padding_hor">@dimen/mkrdp_2</dimen>
     <dimen name="card_margin_hor">@dimen/mkrdp_2</dimen>
     <dimen name="card_margin_ver">@dimen/mkrdp_2</dimen>
-
-    <!-- TEXT INPUT LAYOUT -->
-    <dimen name="text_input_layout_margin_ver">@dimen/mkrdp_1</dimen>
-    <dimen name="text_input_layout_hint_text_size">@dimen/mkrdp_3.49</dimen>
 
     <!-- BUTTON LAYOUT -->
     <dimen name="button_corner">@dimen/mkrdp_0.50</dimen>
@@ -52,11 +63,6 @@
     <dimen name="activity_main_sliding_logo_dim">@dimen/mkrdp_6</dimen>
     <dimen name="activity_main_sliding_title_text_size">@dimen/title_text_size</dimen>
     <dimen name="activity_main_sliding_content_margin_ver">@dimen/mkrdp_1</dimen>
-
-    <!-- FRAGMENT AGENT LOGIN -->
-    <dimen name="fragment_login_thumb_icon_dimen">@dimen/mkrdp_30</dimen>
-    <dimen name="fragment_login_card_title_text_size">@dimen/title_text_size</dimen>
-    <dimen name="fragment_login_content_margin">@dimen/content_margin</dimen>
 
     <!-- ITEM AGENT HOME -->
     <dimen name="item_agent_home_icon_dim">@dimen/mkrdp_17</dimen>

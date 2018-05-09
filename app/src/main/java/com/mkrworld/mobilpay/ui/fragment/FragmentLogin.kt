@@ -25,7 +25,6 @@ import com.mkrworld.mobilpay.fingerprintauth.FingerPrintAuthHelper
 import com.mkrworld.mobilpay.fingerprintauth.OnFingerPrintAuthCallback
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
-import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChange
 import com.mkrworld.mobilpay.utils.Constants
@@ -55,10 +54,7 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
 
     private var mIsFingerPrintDeviceWorkingFine : Boolean = false
     private var mFingerPrintAuthHelper : FingerPrintAuthHelper? = null
-
     private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null
-    private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
-
     private val mLoginResponseNetworkCallBack = object : NetworkCallBack<DTOLoginResponse> {
         override fun onSuccess(dto : DTOLoginResponse) {
             Tracer.debug(TAG, "onSuccess : " + dto !!)
@@ -163,8 +159,6 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
         PreferenceData.setLoginAgentId(activity, "")
         mAppNetworkTaskProvider = AppNetworkTaskProvider()
         mAppNetworkTaskProvider?.attachProvider()
-        mAgentNetworkTaskProvider = AgentNetworkTaskProvider()
-        mAgentNetworkTaskProvider?.attachProvider()
         setTitle()
         init()
     }
@@ -178,7 +172,6 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
     override fun onDestroyView() {
         mFingerPrintAuthHelper?.stopAuth()
         mAppNetworkTaskProvider?.detachProvider()
-        mAgentNetworkTaskProvider?.detachProvider()
         super.onDestroyView()
     }
 
@@ -374,7 +367,7 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
         val publicKey = getString(R.string.public_key)
         val dtoAgentMerchantListRequest = DTOAgentMerchantListRequest(token !!, timeStamp, publicKey, userType, merchantId, agentId)
         Utils.showLoadingDialog(activity)
-        mAgentNetworkTaskProvider !!.agentMerchantsList(activity, dtoAgentMerchantListRequest, mAgentMerchantListNetworkCallBack)
+        mAppNetworkTaskProvider?.agentMerchantsList(activity, dtoAgentMerchantListRequest, mAgentMerchantListNetworkCallBack)
     }
 
     /**

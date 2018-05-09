@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
@@ -20,7 +19,7 @@ import com.mkrworld.mobilpay.dto.comms.logout.DTOLogoutRequest
 import com.mkrworld.mobilpay.dto.comms.logout.DTOLogoutResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
-import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
+import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
 import java.util.*
@@ -32,7 +31,7 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
     }
 
     private var mAppPermissionController : AppPermissionController? = null
-    private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
+    private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null
     private val mAgentLogoutResponseNetworkCallBack = object : NetworkCallBack<DTOLogoutResponse> {
         override fun onSuccess(dto : DTOLogoutResponse) {
             Tracer.debug(TAG, "onSuccess : ")
@@ -75,18 +74,14 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
     }
 
     override fun onDestroy() {
-        if (mAgentNetworkTaskProvider != null) {
-            mAgentNetworkTaskProvider !!.detachProvider()
+        if (mAppNetworkTaskProvider != null) {
+            mAppNetworkTaskProvider !!.detachProvider()
         }
         super.onDestroy()
     }
 
     override fun onBackPressed() {
         Tracer.debug(TAG, "onBackPressed: ")
-        if (isDrawerVisible()) {
-            hideDrawer()
-            return
-        }
         var fragment : Fragment? = supportFragmentManager.findFragmentById(R.id.activity_main_fragment_container)
         if (fragment != null && fragment is OnBaseFragmentListener && (fragment as OnBaseFragmentListener).onBackPressed()) {
             return
@@ -122,9 +117,6 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
             R.id.activity_main_sliding_layout_option_term_and_condition -> {
             }
         }
-        if (isDrawerVisible()) {
-            hideDrawer()
-        }
     }
 
     override fun onBaseActivitySetScreenTitle(title : String) {
@@ -155,7 +147,6 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
             fragment !!.arguments = bundle
         }
         fragmentTransaction.commit()
-        setNavigationDrawerSwipeState(tag)
         Handler().postDelayed(object : Runnable{
             override fun run() {
                 invalidateOptionsMenu()
@@ -180,7 +171,6 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
             fragment !!.arguments = bundle
         }
         fragmentTransaction.commit()
-        setNavigationDrawerSwipeState(tag)
         Handler().postDelayed(object : Runnable{
             override fun run() {
                 invalidateOptionsMenu()
@@ -196,72 +186,13 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         var permissions : Array<String> = arrayOf(Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.USE_FINGERPRINT, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS)
         mAppPermissionController = AppPermissionController(this, permissions, this)
         mAppPermissionController?.initializedAppPermission()
-        mAgentNetworkTaskProvider = AgentNetworkTaskProvider()
-        mAgentNetworkTaskProvider !!.attachProvider()
-        findViewById<View>(R.id.activity_main_sliding_layout_option_password).setOnClickListener(this)
-        findViewById<View>(R.id.activity_main_sliding_layout_option_contact_mobil_pay).setOnClickListener(this)
-        findViewById<View>(R.id.activity_main_sliding_layout_option_faq).setOnClickListener(this)
-        findViewById<View>(R.id.activity_main_sliding_layout_option_home).setOnClickListener(this)
-        findViewById<View>(R.id.activity_main_sliding_layout_option_language).setOnClickListener(this)
-        findViewById<View>(R.id.activity_main_sliding_layout_option_logout).setOnClickListener(this)
-        findViewById<View>(R.id.activity_main_sliding_layout_option_term_and_condition).setOnClickListener(this)
+        mAppNetworkTaskProvider = AppNetworkTaskProvider()
+        mAppNetworkTaskProvider !!.attachProvider()
     }
 
     override fun onRequestPermissionsResult(requestCode : Int, permissions : Array<String>, grantResults : IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         mAppPermissionController?.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
-
-    /**
-     * Method to set the state of the navigation drawer swipe gesture
-     *
-     * @param currentFragmentTag
-     */
-    private fun setNavigationDrawerSwipeState(currentFragmentTag : String?) {
-        if (currentFragmentTag != null && currentFragmentTag.trim { it <= ' ' }.equals(FragmentTag.LOGIN, ignoreCase = true)) {
-            lockDrawerSwipe()
-        } else {
-            unlockDrawerSwipe()
-        }
-    }
-
-    /**
-     * Method to hide the Drawer
-     */
-    private fun hideDrawer() {
-        Tracer.debug(TAG, "hideDrawer: ")
-        val drawerLayout = findViewById<View>(R.id.activity_main_drawer_layout) as DrawerLayout
-        drawerLayout.closeDrawer(findViewById<View>(R.id.activity_main_hide_layout))
-    }
-
-    /**
-     * Method to check weather the drawer View is visible or not
-     *
-     * @return TRUE if drawer is visible, else FALSE
-     */
-    fun isDrawerVisible() : Boolean {
-        Tracer.debug(TAG, "isDrawerVisible: ")
-        val drawerLayout = findViewById<View>(R.id.activity_main_drawer_layout) as DrawerLayout
-        return drawerLayout != null && drawerLayout.isDrawerVisible(findViewById<View>(R.id.activity_main_hide_layout))
-    }
-
-    /**
-     * Method to lock Drawer Swipe Gesture
-     */
-    private fun lockDrawerSwipe() {
-        Tracer.debug(TAG, "lockDrawerSwipe: ")
-        val drawerLayout = findViewById<View>(R.id.activity_main_drawer_layout) as DrawerLayout
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        drawerLayout.closeDrawer(findViewById<View>(R.id.activity_main_hide_layout))
-    }
-
-    /**
-     * Method to unlock Drawer Swipe Gesture
-     */
-    private fun unlockDrawerSwipe() {
-        Tracer.debug(TAG, "unlockDrawerSwipe: ")
-        val drawerLayout = findViewById<View>(R.id.activity_main_drawer_layout) as DrawerLayout
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
     /**
@@ -275,6 +206,6 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         val publicKey = getString(R.string.public_key)
         val dtoAgentLogoutRequest = DTOLogoutRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(this), PreferenceData.getLoginMerchantId(this), PreferenceData.getLoginAgentId(this))
         Utils.showLoadingDialog(this)
-        mAgentNetworkTaskProvider !!.logoutTask(this, dtoAgentLogoutRequest, mAgentLogoutResponseNetworkCallBack)
+        mAppNetworkTaskProvider !!.logoutTask(this, dtoAgentLogoutRequest, mAgentLogoutResponseNetworkCallBack)
     }
 }

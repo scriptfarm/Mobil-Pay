@@ -39,7 +39,7 @@
 
         <EditText
             android:id="@+id/item_multi_selection_item_with_message_editText_message"
-            style="@style/style_text_input_layout_inputText"
+            style="@style/style_text_view_single_line"
             android:hint="@string/message_optional_caps"
             android:inputType="textNoSuggestions"
             android:maxLength="100" />

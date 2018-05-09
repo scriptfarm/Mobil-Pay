@@ -15,7 +15,7 @@ import com.mkrworld.mobilpay.dto.comms.changepassword.DTOChangePasswordRequest
 import com.mkrworld.mobilpay.dto.comms.changepassword.DTOChangePasswordResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
-import com.mkrworld.mobilpay.provider.network.AgentNetworkTaskProvider
+import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChange
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
@@ -37,7 +37,7 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
     private var mEditTextOldPassword : EditText? = null
     private var mEditTextNewPassword : EditText? = null
     private var mEditTextConfirmPassword : EditText? = null
-    private var mAgentNetworkTaskProvider : AgentNetworkTaskProvider? = null
+    private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null
     private val mAgentChangePasswordResponseNetworkCallBack = object : NetworkCallBack<DTOChangePasswordResponse> {
         override fun onSuccess(dto : DTOChangePasswordResponse) {
             Tracer.debug(TAG, "onSuccess : ")
@@ -121,9 +121,7 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
     }
 
     override fun onDestroyView() {
-        if (mAgentNetworkTaskProvider != null) {
-            mAgentNetworkTaskProvider !!.detachProvider()
-        }
+        mAppNetworkTaskProvider?.detachProvider()
         super.onDestroyView()
     }
 
@@ -170,8 +168,8 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         if (view == null) {
             return
         }
-        mAgentNetworkTaskProvider = AgentNetworkTaskProvider()
-        mAgentNetworkTaskProvider !!.attachProvider()
+        mAppNetworkTaskProvider = AppNetworkTaskProvider()
+        mAppNetworkTaskProvider?.attachProvider()
         view !!.findViewById<View>(R.id.fragment_change_password_textView_forgot_password).setOnClickListener(this)
         view !!.findViewById<View>(R.id.fragment_change_password_textView_submit).setOnClickListener(this)
 
@@ -207,7 +205,7 @@ class FragmentChangePassword : Fragment(), OnBaseFragmentListener, View.OnClickL
         val publicKey = getString(R.string.public_key)
         val dtoAgentChangePasswordRequest = DTOChangePasswordRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), oldPassword, confirmPassword)
         Utils.showLoadingDialog(activity)
-        mAgentNetworkTaskProvider !!.changePasswordTask(activity, dtoAgentChangePasswordRequest, mAgentChangePasswordResponseNetworkCallBack)
+        mAppNetworkTaskProvider?.changePasswordTask(activity, dtoAgentChangePasswordRequest, mAgentChangePasswordResponseNetworkCallBack)
     }
 
     /**

@@ -20,7 +20,6 @@ import com.mkrworld.mobilpay.dto.comms.sendnotification.DTOSendNotificationRespo
 import com.mkrworld.mobilpay.dto.merchant.getagent.DTOMerchantAgentListRequest
 import com.mkrworld.mobilpay.dto.merchant.getagent.DTOMerchantAgentListResponse
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
-import com.mkrworld.mobilpay.provider.network.MerchantNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler
 import com.mkrworld.mobilpay.ui.adapter.GridSpacingItemDecoration
 import com.mkrworld.mobilpay.utils.Constants
@@ -40,7 +39,7 @@ class FragmentSendNotification : Fragment(), OnBaseFragmentListener, View.OnClic
     }
 
     private var mBaseAdapter : BaseAdapter? = null
-    private var mMerchantNetworkTaskProvider : MerchantNetworkTaskProvider? = null
+    private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null
     private val mAgentListResponseNetworkCallBack = object : NetworkCallBack<DTOMerchantAgentListResponse> {
         override fun onSuccess(dto : DTOMerchantAgentListResponse) {
             Utils.dismissLoadingDialog()
@@ -79,7 +78,6 @@ class FragmentSendNotification : Fragment(), OnBaseFragmentListener, View.OnClic
             activity.onBackPressed()
         }
     }
-    private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null
     private val mNotificationResponseNetworkCallBack = object : NetworkCallBack<DTOSendNotificationResponse> {
         override fun onSuccess(dto : DTOSendNotificationResponse) {
             Utils.dismissLoadingDialog()
@@ -131,12 +129,10 @@ class FragmentSendNotification : Fragment(), OnBaseFragmentListener, View.OnClic
     override fun onResume() {
         super.onResume()
         mAppNetworkTaskProvider?.attachProvider()
-        mMerchantNetworkTaskProvider?.attachProvider()
     }
 
     override fun onDestroyView() {
         mAppNetworkTaskProvider?.detachProvider()
-        mMerchantNetworkTaskProvider?.detachProvider()
         super.onDestroyView()
     }
 
@@ -178,8 +174,6 @@ class FragmentSendNotification : Fragment(), OnBaseFragmentListener, View.OnClic
         Tracer.debug(TAG, "init: ")
         mAppNetworkTaskProvider = AppNetworkTaskProvider()
         mAppNetworkTaskProvider?.attachProvider()
-        mMerchantNetworkTaskProvider = MerchantNetworkTaskProvider()
-        mMerchantNetworkTaskProvider?.attachProvider()
         if (view == null) {
             return
         }
@@ -276,6 +270,6 @@ class FragmentSendNotification : Fragment(), OnBaseFragmentListener, View.OnClic
         val publicKey = getString(R.string.public_key)
         val dtoAgentMerchantListRequest = DTOMerchantAgentListRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity))
         Utils.showLoadingDialog(activity)
-        mMerchantNetworkTaskProvider !!.agentListTask(activity, dtoAgentMerchantListRequest, mAgentListResponseNetworkCallBack)
+        mAppNetworkTaskProvider !!.agentListTask(activity, dtoAgentMerchantListRequest, mAgentListResponseNetworkCallBack)
     }
 }

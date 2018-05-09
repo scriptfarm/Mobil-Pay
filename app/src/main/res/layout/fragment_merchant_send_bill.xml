@@ -30,7 +30,7 @@
 
                     <EditText
                         android:id="@+id/fragment_merchant_send_bill_editText_mobile_number"
-                        style="@style/style_text_input_layout_inputText"
+                        style="@style/style_text_view_single_line"
                         android:hint="@string/mobile_number_star"
                         android:inputType="number"
                         android:maxLength="10" />
@@ -44,7 +44,7 @@
 
                     <EditText
                         android:id="@+id/fragment_merchant_send_bill_editText_name"
-                        style="@style/style_text_input_layout_inputText"
+                        style="@style/style_text_view_single_line"
                         android:hint="@string/customer_name_optional"
                         android:inputType="textPersonName" />
 
@@ -57,7 +57,7 @@
 
                     <EditText
                         android:id="@+id/fragment_merchant_send_bill_editText_bill_number"
-                        style="@style/style_text_input_layout_inputText"
+                        style="@style/style_text_view_single_line"
                         android:hint="@string/bill_number_star"
                         android:inputType="textNoSuggestions" />
 
@@ -70,7 +70,7 @@
 
                     <EditText
                         android:id="@+id/fragment_merchant_send_bill_editText_bill_description"
-                        style="@style/style_text_input_layout_inputText"
+                        style="@style/style_text_view_single_line"
                         android:hint="@string/bill_description_star"
                         android:inputType="textNoSuggestions" />
 
@@ -83,7 +83,7 @@
 
                     <EditText
                         android:id="@+id/fragment_merchant_send_bill_editText_bill_amount"
-                        style="@style/style_text_input_layout_inputText"
+                        style="@style/style_text_view_single_line"
                         android:hint="@string/bill_amount_star"
                         android:inputType="number" />
 

@@ -30,7 +30,7 @@
 
                     <com.mkrworld.mobilpay.ui.custom.EditTextDropDown
                         android:id="@+id/fragment_agent_pay_cash_editText_customer_id"
-                        style="@style/style_text_input_layout_inputText"
+                        style="@style/style_text_view_single_line"
                         android:hint="@string/mobile_number_star"
                         android:inputType="textNoSuggestions" />
 
@@ -43,7 +43,7 @@
 
                     <EditText
                         android:id="@+id/fragment_agent_pay_cash_editText_bill_number"
-                        style="@style/style_text_input_layout_inputText_hint"
+                        style="@style/style_text_view_hint_single_line"
                         android:hint="@string/bill_number_star"
                         android:inputType="textNoSuggestions" />
 
@@ -56,7 +56,7 @@
 
                     <EditText
                         android:id="@+id/fragment_agent_pay_cash_editText_bill_description"
-                        style="@style/style_text_input_layout_inputText_hint"
+                        style="@style/style_text_view_hint_single_line"
                         android:hint="@string/bill_description_star"
                         android:inputType="textNoSuggestions" />
 
@@ -69,7 +69,7 @@
 
                     <EditText
                         android:id="@+id/fragment_pay_cash_bill_editText_bill_amount"
-                        style="@style/style_text_input_layout_inputText_hint"
+                        style="@style/style_text_view_hint_single_line"
                         android:hint="@string/bill_amount_star"
                         android:inputType="number" />
 
@@ -82,7 +82,7 @@
 
                     <EditText
                         android:id="@+id/fragment_pay_cash_bill_editText_bill_collected_amount"
-                        style="@style/style_text_input_layout_inputText_green"
+                        style="@style/style_text_view_green"
                         android:hint="@string/collected_amount_star"
                         android:inputType="number" />
 

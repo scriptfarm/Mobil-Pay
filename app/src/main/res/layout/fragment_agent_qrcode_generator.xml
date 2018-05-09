@@ -40,7 +40,7 @@
 
                     <EditText
                         android:id="@+id/fragment_agent_qrcode_generator_editText_bill_number"
-                        style="@style/style_text_input_layout_inputText"
+                        style="@style/style_text_view_single_line"
                         android:hint="@string/bill_number_star"
                         android:inputType="textNoSuggestions" />
 
@@ -53,7 +53,7 @@
 
                     <EditText
                         android:id="@+id/fragment_agent_qrcode_generator_editText_bill_description"
-                        style="@style/style_text_input_layout_inputText"
+                        style="@style/style_text_view_single_line"
                         android:hint="@string/bill_description_star"
                         android:inputType="textNoSuggestions" />
 
@@ -66,7 +66,7 @@
 
                     <EditText
                         android:id="@+id/fragment_agent_qrcode_generator_editText_bill_amount"
-                        style="@style/style_text_input_layout_inputText"
+                        style="@style/style_text_view_single_line"
                         android:hint="@string/bill_amount_star"
                         android:inputType="number" />
 
