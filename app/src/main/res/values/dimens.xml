@@ -6,11 +6,15 @@
     <dimen name="sub_text_size">@dimen/mkrdp_3.74</dimen>
     <dimen name="sub_text_size_padding">@dimen/mkrdp_1</dimen>
     <dimen name="divider_size">@dimen/mkrdp_0.2</dimen>
-    <dimen name="content_margin">@dimen/mkrdp_4</dimen>
+    <dimen name="content_margin">@dimen/mkrdp_5</dimen>
+    <dimen name="button_margin">@dimen/mkrdp_10</dimen>
     <integer name="length_mobile_number">10</integer>
     <integer name="length_aadhar_number_4">4</integer>
-    <dimen name="dialog_progress_circle_dim">@dimen/mkrdp_25</dimen>
-    <dimen name="dialog_progress_progress_width">@dimen/mkrdp_1.49</dimen>
+
+    <!-- CIRCULAR PROGRESS DIMEN -->
+    <dimen name="circular_progress_dim">@dimen/mkrdp_25</dimen>
+    <dimen name="circular_progress_width">@dimen/mkrdp_1.49</dimen>
+    <dimen name="home_icon_circular_progress_width">@dimen/mkrdp_1</dimen>
 
     <!-- TOOL BAR DIMENSION -->
     <dimen name="toolbar_height">@dimen/mkrdp_15</dimen>
@@ -22,15 +26,41 @@
     <dimen name="text_input_layout_margin_ver">@dimen/mkrdp_0.50</dimen>
     <dimen name="text_input_layout_hint_text_size">@dimen/mkrdp_3.49</dimen>
 
+    <!-- ITEM AGENT HOME -->
+    <dimen name="item_home_tab_icon_dim">@dimen/mkrdp_17</dimen>
+    <dimen name="item_home_tab_width">@dimen/mkrdp_24</dimen>
+    <dimen name="item_home_tab_outer_padding_ver">@dimen/mkrdp_1</dimen>
+    <dimen name="item_home_tab_outer_padding_hor">@dimen/mkrdp_3</dimen>
+
     <!-- HEADER ICON -->
     <dimen name="app_header_icon_width">@dimen/mkrdp_45</dimen>
     <dimen name="app_header_icon_height">@dimen/mkrdp_8.65</dimen>
-    <dimen name="app_header_icon_margin">@dimen/mkrdp_3</dimen>
+    <dimen name="app_header_icon_margin">@dimen/mkrdp_2</dimen>
 
-    <!-- FRAGMENT AGENT LOGIN -->
+    <!-- FRAGMENT LOGIN -->
     <dimen name="fragment_login_thumb_icon_dimen">@dimen/mkrdp_20</dimen>
     <dimen name="fragment_login_hor_margin">@dimen/mkrdp_12</dimen>
     <dimen name="fragment_login_ver_margin">@dimen/mkrdp_3</dimen>
+
+    <!-- FRAGMENT CASH COLLECT -->
+    <dimen name="fragment_cash_collect_content_margin">@dimen/content_margin</dimen>
+    <dimen name="fragment_cash_collect_button_margin">@dimen/button_margin</dimen>
+
+    <!-- FRAGMENT SEND BILL -->
+    <dimen name="fragment_send_bill_content_margin">@dimen/content_margin</dimen>
+    <dimen name="fragment_send_bill_button_margin">@dimen/button_margin</dimen>
+
+    <!-- FRAGMENT AEPS COLLECT -->
+    <dimen name="fragment_apes_collect_content_margin">@dimen/content_margin</dimen>
+
+    <!-- FRAGMENT QR-CODE GENERATOR -->
+    <dimen name="fragment_qrcode_generator_content_margin">@dimen/content_margin</dimen>
+    <dimen name="fragment_qrcode_generator_button_margin">@dimen/button_margin</dimen>
+
+
+    <!-- FRAGMENT QR-CODE -->
+    <dimen name="fragment_qrcode_qrcode_dimen">@dimen/mkrdp_80</dimen>
+    <dimen name="fragment_qrcode_content_margin">@dimen/content_margin</dimen>
 
     <!-- ===================================================== -->
     <!-- ===================================================== -->
@@ -64,43 +94,16 @@
     <dimen name="activity_main_sliding_title_text_size">@dimen/title_text_size</dimen>
     <dimen name="activity_main_sliding_content_margin_ver">@dimen/mkrdp_1</dimen>
 
-    <!-- ITEM AGENT HOME -->
-    <dimen name="item_agent_home_icon_dim">@dimen/mkrdp_17</dimen>
-    <dimen name="item_agent_home_icon_padding">@dimen/mkrdp_2</dimen>
-    <dimen name="item_agent_home_content_padding">@dimen/mkrdp_1</dimen>
-
     <!-- ITEM STATUS CONSOLIDATE DATA -->
     <dimen name="item_collection_status_padding_ver">@dimen/mkrdp_1.49</dimen>
 
     <!-- ITEM SUMMARY CONSOLIDATE DATA -->
     <dimen name="item_collection_summary_padding_ver">@dimen/mkrdp_1.49</dimen>
 
-    <!-- FRAGMENT AGENT QR-CODE -->
-    <dimen name="fragment_agent_qrcode_card_title_text_size">@dimen/title_text_size</dimen>
-    <dimen name="fragment_agent_qrcode_qrcode_dimen">@dimen/mkrdp_80</dimen>
-    <dimen name="fragment_agent_qrcode_content_margin">@dimen/content_margin</dimen>
-
-    <!-- FRAGMENT AGENT QR-CODE GENERATOR -->
-    <dimen name="fragment_agent_qrcode_generator_card_title_text_size">@dimen/title_text_size
-    </dimen>
-    <dimen name="fragment_agent_qrcode_generator_content_margin">@dimen/content_margin</dimen>
-
     <!-- FRAGMENT SEND NOTIFICATION -->
     <dimen name="fragment_send_notification_content_margin">@dimen/content_margin</dimen>
     <dimen name="fragment_send_notification_card_title_text_size">@dimen/title_text_size
     </dimen>
-
-    <!-- FRAGMENT AEPS COLLECT -->
-    <dimen name="fragment_apes_collect_content_margin">@dimen/content_margin</dimen>
-
-    <!-- FRAGMENT AGENT SEND BILL -->
-    <dimen name="fragment_agent_send_bill_content_margin">@dimen/content_margin</dimen>
-
-    <!-- FRAGMENT AGENT PAY CASH -->
-    <dimen name="fragment_agent_pay_cash_content_margin">@dimen/content_margin</dimen>
-
-    <!-- FRAGMENT MERCHANT SEND BILL -->
-    <dimen name="fragment_merchant_send_bill_content_margin">@dimen/content_margin</dimen>
 
     <!-- FRAGMENT FORGOT PASSWORD -->
     <dimen name="fragment_forgot_password_content_margin">@dimen/content_margin</dimen>

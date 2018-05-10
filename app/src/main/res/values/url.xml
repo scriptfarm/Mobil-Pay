@@ -13,7 +13,7 @@
     <string name="url_mobile_number_status">getmobilenumberstatus</string>
     <string name="url_change_password">changePassword</string>
     <string name="url_agent_details">agentDetail</string>
-    <string name="url_agent_fcm">agentFCM</string>
+    <string name="url_update_fcm">updateFCM</string>
     <string name="url_get_user_details">getUser</string>
     <string name="url_send_forgot_password_otp">sendForgotPasswordOTP</string>
     <string name="url_forgot_password">forgotPassword</string>
@@ -33,7 +33,7 @@
     <string name="endpoint_mobile_number_status">@string/url_mobile_number_status</string>
     <string name="endpoint_change_password">@string/url_change_password</string>
     <string name="endpoint_agent_details">@string/url_agent_details</string>
-    <string name="endpoint_agent_fcm">@string/url_agent_fcm</string>
+    <string name="endpoint_update_fcm">@string/url_update_fcm</string>
     <string name="endpoint_get_user_details">@string/url_get_user_details</string>
     <string name="endpoint_send_forgot_password_otp">@string/url_send_forgot_password_otp</string>
     <string name="endpoint_forgot_password">@string/url_forgot_password</string>

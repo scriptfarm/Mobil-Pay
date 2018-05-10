@@ -174,5 +174,12 @@ class Utils {
                 Html.fromHtml(html)
             }
         }
+
+        /**
+         * Method to check weather Its is a merchant login or not
+         */
+        fun isMerchant(context : Context) : Boolean {
+            return PreferenceData.getUserType(context).equals(Constants.USER_TYPE_MERCHANT)
+        }
     }
 }

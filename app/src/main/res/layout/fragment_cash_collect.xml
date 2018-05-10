@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_back"
+    android:clickable="true"
+    android:fillViewport="true"
+    android:focusable="true"
+    android:paddingBottom="@dimen/fragment_cash_collect_content_margin"
+    android:paddingLeft="@dimen/fragment_cash_collect_content_margin"
+    android:paddingRight="@dimen/fragment_cash_collect_content_margin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView style="@style/app_header_icon" />
+
+        <!-- CUSTOMER-NUMBER -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fragment_cash_collect_textInputLayout_mobile_number"
+            style="@style/style_text_input_layout_hint">
+
+            <com.mkrworld.mobilpay.ui.custom.FontEditText
+                android:id="@+id/fragment_cash_collect_editText_mobile_number"
+                style="@style/style_text_view_single_line"
+                android:hint="@string/mobile_number_star"
+                android:inputType="number"
+                android:maxLength="@integer/length_mobile_number" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- BILL NUMBER -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fragment_cash_collect_textInputLayout_bill_number"
+            style="@style/style_text_input_layout_hint">
+
+            <com.mkrworld.mobilpay.ui.custom.FontEditText
+                android:id="@+id/fragment_cash_collect_editText_bill_number"
+                style="@style/style_text_view_hint_single_line"
+                android:hint="@string/bill_number_star"
+                android:inputType="textNoSuggestions" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- BILL DESCRIPTION -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fragment_cash_collect_textInputLayout_bill_description"
+            style="@style/style_text_input_layout_hint">
+
+            <com.mkrworld.mobilpay.ui.custom.FontEditText
+                android:id="@+id/fragment_cash_collect_editText_bill_description"
+                style="@style/style_text_view_hint_single_line"
+                android:hint="@string/bill_description_star"
+                android:inputType="textNoSuggestions" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- BILL AMOUNT -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fragment_cash_collect_textInputLayout_bill_amount"
+            style="@style/style_text_input_layout_hint">
+
+            <com.mkrworld.mobilpay.ui.custom.FontEditText
+                android:id="@+id/fragment_pay_cash_bill_editText_bill_amount"
+                style="@style/style_text_view_hint_single_line"
+                android:hint="@string/bill_amount_star"
+                android:inputType="number" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- AMOUNT PAY -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/fragment_cash_collect_textInputLayout_cash_amount"
+            style="@style/style_text_input_layout_hint">
+
+            <com.mkrworld.mobilpay.ui.custom.FontEditText
+                android:id="@+id/fragment_cash_collect_editText_cash_amount"
+                style="@style/style_text_view_green"
+                android:hint="@string/collected_amount_star"
+                android:inputType="number" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fragment_cash_collect_content_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/fragment_agent_pay_cash_textView_send"
+                style="@style/style_button_width_weight"
+                android:text="@string/collect_caps" />
+
+            <TextView
+                android:id="@+id/fragment_pay_cash_bill_textView_cancel"
+                style="@style/style_button_inv_width_weight"
+                android:layout_marginLeft="@dimen/fragment_cash_collect_button_margin"
+                android:text="@string/cancel_caps" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -2,7 +2,6 @@ package com.mkrworld.mobilpay.ui.activity
 
 import android.Manifest
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
@@ -15,8 +14,8 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.comms.logout.DTOLogoutRequest
-import com.mkrworld.mobilpay.dto.comms.logout.DTOLogoutResponse
+import com.mkrworld.mobilpay.dto.network.logout.DTOLogoutRequest
+import com.mkrworld.mobilpay.dto.network.logout.DTOLogoutResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
@@ -142,16 +141,16 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         Utils.hideKeyboard(this)
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
+        val enterAnim1 = R.anim.slide_in_right
+        val exitAnim1 = R.anim.slide_out_left
+        val enterAnim2 = R.anim.slide_in_left
+        val exitAnim2 = R.anim.slide_out_right
+        fragmentTransaction.setCustomAnimations(enterAnim1, exitAnim1, enterAnim2, exitAnim2);
         fragmentTransaction.replace(containerId, fragment, tag)
         if (bundle != null) {
             fragment !!.arguments = bundle
         }
         fragmentTransaction.commit()
-        Handler().postDelayed(object : Runnable{
-            override fun run() {
-                invalidateOptionsMenu()
-            }
-        }, 50)
     }
 
     override fun onBaseActivityAddFragment(fragment : Fragment, bundle : Bundle?, isAddToBackStack : Boolean, tag : String) {
@@ -163,6 +162,11 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
         Tracer.debug(TAG, "onBaseActivityAddFragment: ")
         Utils.hideKeyboard(this)
         val fragmentTransaction = supportFragmentManager.beginTransaction()
+        val enterAnim1 = R.anim.slide_in_right
+        val exitAnim1 = R.anim.slide_out_left
+        val enterAnim2 = R.anim.slide_in_left
+        val exitAnim2 = R.anim.slide_out_right
+        fragmentTransaction.setCustomAnimations(enterAnim1, exitAnim1, enterAnim2, exitAnim2);
         fragmentTransaction.add(containerId, fragment, tag)
         if (isAddToBackStack) {
             fragmentTransaction.addToBackStack(tag)
@@ -171,11 +175,6 @@ class MainActivity : AppCompatActivity(), OnBaseActivityListener, View.OnClickLi
             fragment !!.arguments = bundle
         }
         fragmentTransaction.commit()
-        Handler().postDelayed(object : Runnable{
-            override fun run() {
-                invalidateOptionsMenu()
-            }
-        }, 50)
     }
 
     /**

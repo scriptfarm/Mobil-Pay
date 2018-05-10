@@ -11,8 +11,8 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.comms.forgotpassword.DTOForgotPasswordRequest
-import com.mkrworld.mobilpay.dto.comms.forgotpassword.DTOForgotPasswordResponse
+import com.mkrworld.mobilpay.dto.network.forgotpassword.DTOForgotPasswordRequest
+import com.mkrworld.mobilpay.dto.network.forgotpassword.DTOForgotPasswordResponse
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider

@@ -15,8 +15,8 @@ import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.R
 import com.mkrworld.mobilpay.dto.appdata.DTOCollectionSummaryConsolidateData
 import com.mkrworld.mobilpay.dto.appdata.DTOSummaryConsolidateDataList
-import com.mkrworld.mobilpay.dto.comms.collectionsummary.DTOCollectionSummaryRequest
-import com.mkrworld.mobilpay.dto.comms.collectionsummary.DTOCollectionSummaryResponse
+import com.mkrworld.mobilpay.dto.network.collectionsummary.DTOCollectionSummaryRequest
+import com.mkrworld.mobilpay.dto.network.collectionsummary.DTOCollectionSummaryResponse
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler
 import com.mkrworld.mobilpay.utils.PreferenceData

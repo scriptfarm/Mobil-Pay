@@ -6,46 +6,46 @@ import com.mkrworld.androidlib.network.BaseTaskProvider
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
-import com.mkrworld.mobilpay.dto.agent.agentdetails.DTOAgentDetailRequest
-import com.mkrworld.mobilpay.dto.agent.agentdetails.DTOAgentDetailResponse
-import com.mkrworld.mobilpay.dto.agent.agentfcm.DTOAgentFCMRequest
-import com.mkrworld.mobilpay.dto.agent.agentfcm.DTOAgentFCMResponse
-import com.mkrworld.mobilpay.dto.agent.agentfetchbill.DTOFetchBillRequest
-import com.mkrworld.mobilpay.dto.agent.agentfetchbill.DTOFetchBillResponse
-import com.mkrworld.mobilpay.dto.agent.agentmerchantlist.DTOAgentMerchantListRequest
-import com.mkrworld.mobilpay.dto.agent.agentmerchantlist.DTOAgentMerchantListResponse
-import com.mkrworld.mobilpay.dto.agent.agentqrcodegenarator.DTOAgentQRCodeGeneratorRequest
-import com.mkrworld.mobilpay.dto.agent.agentqrcodegenarator.DTOAgentQRCodeGeneratorResponse
-import com.mkrworld.mobilpay.dto.agent.agentsendbill.DTOAgentPayCashRequest
-import com.mkrworld.mobilpay.dto.agent.agentsendbill.DTOAgentPayCashResponse
-import com.mkrworld.mobilpay.dto.comms.changepassword.DTOChangePasswordRequest
-import com.mkrworld.mobilpay.dto.comms.changepassword.DTOChangePasswordResponse
-import com.mkrworld.mobilpay.dto.comms.collectionstatus.DTOCollectionStatusRequest
-import com.mkrworld.mobilpay.dto.comms.collectionstatus.DTOCollectionStatusResponse
-import com.mkrworld.mobilpay.dto.comms.collectionsummary.DTOCollectionSummaryRequest
-import com.mkrworld.mobilpay.dto.comms.collectionsummary.DTOCollectionSummaryResponse
-import com.mkrworld.mobilpay.dto.comms.forgotpassword.DTOForgotPasswordRequest
-import com.mkrworld.mobilpay.dto.comms.forgotpassword.DTOForgotPasswordResponse
-import com.mkrworld.mobilpay.dto.comms.login.DTOLoginRequest
-import com.mkrworld.mobilpay.dto.comms.login.DTOLoginResponse
-import com.mkrworld.mobilpay.dto.comms.logout.DTOLogoutRequest
-import com.mkrworld.mobilpay.dto.comms.logout.DTOLogoutResponse
-import com.mkrworld.mobilpay.dto.comms.sendbill.DTOSendBillRequest
-import com.mkrworld.mobilpay.dto.comms.sendbill.DTOSendBillResponse
-import com.mkrworld.mobilpay.dto.comms.sendforgotpasswordotp.DTOSendForgotPasswordOtpRequest
-import com.mkrworld.mobilpay.dto.comms.sendforgotpasswordotp.DTOSendForgotPasswordOtpResponse
-import com.mkrworld.mobilpay.dto.comms.sendnotification.DTOSendNotificationRequest
-import com.mkrworld.mobilpay.dto.comms.sendnotification.DTOSendNotificationResponse
-import com.mkrworld.mobilpay.dto.merchant.getagent.DTOMerchantAgentListRequest
-import com.mkrworld.mobilpay.dto.merchant.getagent.DTOMerchantAgentListResponse
-import com.mkrworld.mobilpay.dto.merchant.mobilenumberstatus.DTOMobileNumberStatusRequest
-import com.mkrworld.mobilpay.dto.merchant.mobilenumberstatus.DTOMobileNumberStatusResponse
+import com.mkrworld.mobilpay.dto.network.agent.agentdetails.DTOAgentDetailRequest
+import com.mkrworld.mobilpay.dto.network.agent.agentdetails.DTOAgentDetailResponse
+import com.mkrworld.mobilpay.dto.network.fcm.DTOFCMRequest
+import com.mkrworld.mobilpay.dto.network.fcm.DTOFCMResponse
+import com.mkrworld.mobilpay.dto.network.fetchbill.DTOFetchBillRequest
+import com.mkrworld.mobilpay.dto.network.fetchbill.DTOFetchBillResponse
+import com.mkrworld.mobilpay.dto.network.agent.agentmerchantlist.DTOAgentMerchantListRequest
+import com.mkrworld.mobilpay.dto.network.agent.agentmerchantlist.DTOAgentMerchantListResponse
+import com.mkrworld.mobilpay.dto.network.qrcodegenarator.DTOQRCodeGeneratorRequest
+import com.mkrworld.mobilpay.dto.network.qrcodegenarator.DTOQRCodeGeneratorResponse
+import com.mkrworld.mobilpay.dto.network.cashcollect.DTOCashCollectRequest
+import com.mkrworld.mobilpay.dto.network.cashcollect.DTOCashCollectResponse
+import com.mkrworld.mobilpay.dto.network.changepassword.DTOChangePasswordRequest
+import com.mkrworld.mobilpay.dto.network.changepassword.DTOChangePasswordResponse
+import com.mkrworld.mobilpay.dto.network.collectionstatus.DTOCollectionStatusRequest
+import com.mkrworld.mobilpay.dto.network.collectionstatus.DTOCollectionStatusResponse
+import com.mkrworld.mobilpay.dto.network.collectionsummary.DTOCollectionSummaryRequest
+import com.mkrworld.mobilpay.dto.network.collectionsummary.DTOCollectionSummaryResponse
+import com.mkrworld.mobilpay.dto.network.forgotpassword.DTOForgotPasswordRequest
+import com.mkrworld.mobilpay.dto.network.forgotpassword.DTOForgotPasswordResponse
+import com.mkrworld.mobilpay.dto.network.login.DTOLoginRequest
+import com.mkrworld.mobilpay.dto.network.login.DTOLoginResponse
+import com.mkrworld.mobilpay.dto.network.logout.DTOLogoutRequest
+import com.mkrworld.mobilpay.dto.network.logout.DTOLogoutResponse
+import com.mkrworld.mobilpay.dto.network.sendbill.DTOSendBillRequest
+import com.mkrworld.mobilpay.dto.network.sendbill.DTOSendBillResponse
+import com.mkrworld.mobilpay.dto.network.sendforgotpasswordotp.DTOSendForgotPasswordOtpRequest
+import com.mkrworld.mobilpay.dto.network.sendforgotpasswordotp.DTOSendForgotPasswordOtpResponse
+import com.mkrworld.mobilpay.dto.network.sendnotification.DTOSendNotificationRequest
+import com.mkrworld.mobilpay.dto.network.sendnotification.DTOSendNotificationResponse
+import com.mkrworld.mobilpay.dto.network.merchantagentlist.DTOMerchantAgentListRequest
+import com.mkrworld.mobilpay.dto.network.merchantagentlist.DTOMerchantAgentListResponse
+import com.mkrworld.mobilpay.dto.network.mobilenumberstatus.DTOMobileNumberStatusRequest
+import com.mkrworld.mobilpay.dto.network.mobilenumberstatus.DTOMobileNumberStatusResponse
 import com.mkrworld.mobilpay.dto.user.userdetail.DTOUserDetailRequest
 import com.mkrworld.mobilpay.dto.user.userdetail.DTOUserDetailResponse
-import com.mkrworld.mobilpay.task.agent.*
-import com.mkrworld.mobilpay.task.comms.*
-import com.mkrworld.mobilpay.task.merchant.MerchantAgentListTask
-import com.mkrworld.mobilpay.task.merchant.MobileNumberStatusTask
+import com.mkrworld.mobilpay.task.network.agent.*
+import com.mkrworld.mobilpay.task.network.*
+import com.mkrworld.mobilpay.task.network.merchant.MerchantAgentListTask
+import com.mkrworld.mobilpay.task.network.merchant.MobileNumberStatusTask
 import com.mkrworld.mobilpay.task.user.UserListTask
 import org.json.JSONException
 import org.json.JSONObject
@@ -305,13 +305,13 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun agentQRCodeGeneratorTask(context : Context, request : DTOAgentQRCodeGeneratorRequest, networkCallBack : NetworkCallBack<DTOAgentQRCodeGeneratorResponse>) {
+    fun agentQRCodeGeneratorTask(context : Context, request : DTOQRCodeGeneratorRequest, networkCallBack : NetworkCallBack<DTOQRCodeGeneratorResponse>) {
         Tracer.debug(TAG, "agentQRCodeGeneratorTask : ")
-        val requestJson = parseDtoToJson(request, DTOAgentQRCodeGeneratorRequest::class.java, networkCallBack)
+        val requestJson = parseDtoToJson(request, DTOQRCodeGeneratorRequest::class.java, networkCallBack)
                 ?: return
-        val task = AgentQRCodeGeneratorTask(context, requestJson, object : NetworkCallBack<DTOAgentQRCodeGeneratorResponse> {
+        val task = QRCodeGeneratorTask(context, requestJson, object : NetworkCallBack<DTOQRCodeGeneratorResponse> {
 
-            override fun onSuccess(networkResponse : DTOAgentQRCodeGeneratorResponse) {
+            override fun onSuccess(networkResponse : DTOQRCodeGeneratorResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
@@ -329,13 +329,13 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun setFcmId(context : Context, request : DTOAgentFCMRequest, networkCallBack : NetworkCallBack<DTOAgentFCMResponse>) {
+    fun setFcmId(context : Context, request : DTOFCMRequest, networkCallBack : NetworkCallBack<DTOFCMResponse>) {
         Tracer.debug(TAG, "setFcmId : ")
-        val requestJson = parseDtoToJson(request, DTOAgentFCMRequest::class.java, networkCallBack)
+        val requestJson = parseDtoToJson(request, DTOFCMRequest::class.java, networkCallBack)
                 ?: return
-        val task = AgentFcmTask(context, requestJson, object : NetworkCallBack<DTOAgentFCMResponse> {
+        val task = FcmTask(context, requestJson, object : NetworkCallBack<DTOFCMResponse> {
 
-            override fun onSuccess(networkResponse : DTOAgentFCMResponse) {
+            override fun onSuccess(networkResponse : DTOFCMResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
@@ -350,17 +350,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * Method called when agent payed by the cash
      *
      * @param context
-     * @param request
+     * @param collectRequest
      * @param networkCallBack
      */
-    fun agentPayCashTask(context : Context, request : DTOAgentPayCashRequest, networkCallBack : NetworkCallBack<DTOAgentPayCashResponse>) {
-        Tracer.debug(TAG, "agentPayCashTask : ")
-        val requestJson = parseDtoToJson(request, DTOAgentPayCashRequest::class.java, networkCallBack)
+    fun cashCollectTask(context : Context, collectRequest : DTOCashCollectRequest, networkCallBack : NetworkCallBack<DTOCashCollectResponse>) {
+        Tracer.debug(TAG, "cashCollectTask : ")
+        val requestJson = parseDtoToJson(collectRequest, DTOCashCollectRequest::class.java, networkCallBack)
                 ?: return
-        val task = AgentPayCashTask(context, requestJson, object : NetworkCallBack<DTOAgentPayCashResponse> {
+        val task = AgentCashCollectTask(context, requestJson, object : NetworkCallBack<DTOCashCollectResponse> {
 
-            override fun onSuccess(networkResponse : DTOAgentPayCashResponse) {
-                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
+            override fun onSuccess(networkCollectResponse : DTOCashCollectResponse) {
+                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkCollectResponse)
             }
 
             override fun onError(errorMessage : String, errorCode : Int) {

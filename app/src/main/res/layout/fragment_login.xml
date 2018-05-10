@@ -14,8 +14,6 @@
         android:paddingLeft="@dimen/fragment_login_hor_margin"
         android:paddingRight="@dimen/fragment_login_hor_margin">
 
-        <ImageView style="@style/app_header_icon" />
-
         <TextView
             style="@style/style_title_text_view_default"
             android:layout_gravity="center"
@@ -29,7 +27,7 @@
             style="@style/style_text_input_layout_hint"
             android:layout_marginBottom="@dimen/fragment_login_ver_margin">
 
-            <EditText
+            <com.mkrworld.mobilpay.ui.custom.FontEditText
                 android:id="@+id/fragment_login_editText_merchant_id_mobile_number"
                 style="@style/style_text_view_single_line"
                 android:hint="@string/mobile_number_star"
@@ -44,7 +42,7 @@
             style="@style/style_text_input_layout_hint"
             android:layout_marginBottom="@dimen/fragment_login_ver_margin">
 
-            <EditText
+            <com.mkrworld.mobilpay.ui.custom.FontEditText
                 android:id="@+id/fragment_login_editText_password"
                 style="@style/style_text_view_single_line"
                 android:hint="@string/password_star"

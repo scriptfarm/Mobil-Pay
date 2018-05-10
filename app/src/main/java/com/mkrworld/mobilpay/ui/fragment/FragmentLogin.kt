@@ -17,10 +17,10 @@ import com.mkrworld.androidlib.utils.MKRDialogUtil
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.agent.agentmerchantlist.DTOAgentMerchantListRequest
-import com.mkrworld.mobilpay.dto.agent.agentmerchantlist.DTOAgentMerchantListResponse
-import com.mkrworld.mobilpay.dto.comms.login.DTOLoginRequest
-import com.mkrworld.mobilpay.dto.comms.login.DTOLoginResponse
+import com.mkrworld.mobilpay.dto.network.agent.agentmerchantlist.DTOAgentMerchantListRequest
+import com.mkrworld.mobilpay.dto.network.agent.agentmerchantlist.DTOAgentMerchantListResponse
+import com.mkrworld.mobilpay.dto.network.login.DTOLoginRequest
+import com.mkrworld.mobilpay.dto.network.login.DTOLoginResponse
 import com.mkrworld.mobilpay.fingerprintauth.FingerPrintAuthHelper
 import com.mkrworld.mobilpay.fingerprintauth.OnFingerPrintAuthCallback
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
@@ -467,13 +467,7 @@ class FragmentLogin : Fragment(), OnBaseFragmentListener, View.OnClickListener, 
     private fun goToSuccessScreen() {
         Tracer.debug(TAG, "goToSuccessScreen : ")
         if (activity is OnBaseActivityListener) {
-            if (PreferenceData.getUserType(activity).equals(Constants.USER_TYPE_MERCHANT)) {
-                val fragment = FragmentProvider.getFragment(FragmentTag.MERCHANT_HOME)
-                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment !!, null, FragmentTag.MERCHANT_HOME)
-            } else {
-                val fragment = FragmentProvider.getFragment(FragmentTag.AGENT_HOME)
-                (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(fragment !!, null, FragmentTag.AGENT_HOME)
-            }
+         (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(FragmentProvider.getFragment(FragmentTag.HOME)!!, null, FragmentTag.HOME)
         }
     }
 }

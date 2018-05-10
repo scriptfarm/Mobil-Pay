@@ -4,5 +4,9 @@
         <attr name="progress_width" format="dimension" />
         <attr name="progress_color" format="color" />
         <attr name="progress_image" format="reference" />
+        <attr name="progress_state" format="enum" >
+            <enum name="enable" value="0" />
+            <enum name="disable" value="1" />
+        </attr>
     </declare-styleable>
 </resources>

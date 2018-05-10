@@ -15,10 +15,10 @@ import com.mkrworld.androidlib.ui.adapter.BaseAdapterItem
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.R
 import com.mkrworld.mobilpay.dto.appdata.DTOMultiSelectionItemData
-import com.mkrworld.mobilpay.dto.comms.sendnotification.DTOSendNotificationRequest
-import com.mkrworld.mobilpay.dto.comms.sendnotification.DTOSendNotificationResponse
-import com.mkrworld.mobilpay.dto.merchant.getagent.DTOMerchantAgentListRequest
-import com.mkrworld.mobilpay.dto.merchant.getagent.DTOMerchantAgentListResponse
+import com.mkrworld.mobilpay.dto.network.sendnotification.DTOSendNotificationRequest
+import com.mkrworld.mobilpay.dto.network.sendnotification.DTOSendNotificationResponse
+import com.mkrworld.mobilpay.dto.network.merchantagentlist.DTOMerchantAgentListRequest
+import com.mkrworld.mobilpay.dto.network.merchantagentlist.DTOMerchantAgentListResponse
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler
 import com.mkrworld.mobilpay.ui.adapter.GridSpacingItemDecoration

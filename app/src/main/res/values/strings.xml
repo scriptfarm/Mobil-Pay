@@ -30,6 +30,19 @@
     <string name="screen_title_change_password">Change Password</string>
     <string name="screen_title_collection_summary">Collection Summary</string>
     <string name="screen_title_send_notification">Send Notification</string>
+
+    <string name="static_qr_code">QR-Code</string>
+    <string name="send_notification">Send Notification</string>
+    <string name="collection_status">Collection Status</string>
+    <string name="dynamic_qr_code">Dynamic QR-Code</string>
+    <string name="upi_collect">UPI Collect</string>
+    <string name="aeps_collect">AEPS Collect</string>
+    <string name="send_bill">Send Bill</string>
+    <string name="pay_cash">Pay Cash</string>
+    <string name="cash_collect">Cash Collect</string>
+    <string name="collection_summary">Collection Summary</string>
+
+    <string name="qrcode_generator">QR-Code Generator</string>
     <string name="home">Home</string>
     <string name="change_password">Change Password</string>
     <string name="language">Language</string>
@@ -52,17 +65,7 @@
     <string name="login_to_your_account">Login to your account</string>
     <string name="sign_in_caps">SIGN IN</string>
     <string name="use_finger_print_question">Use Fingerprint?</string>
-    <string name="static_qr_code">Static QR Code</string>
-    <string name="send_notification">Send Notification</string>
-    <string name="collection_status">Collection Status</string>
-    <string name="dynamic_qr_code">Dynamic QR Code</string>
-    <string name="upi_collect">UPI Collect</string>
-    <string name="aeps_collect">AEPS Collect</string>
-    <string name="send_bill">Send Bill</string>
-    <string name="pay_cash">Pay Cash</string>
-    <string name="collect_cash">Collect Cash</string>
-    <string name="collection_summary">Collection Summary</string>
-    <string name="agent_qrcode_generator">Agent QR-Code Generator</string>
+
     <string name="bill_number_star">Bill Number *</string>
     <string name="bill_description_star">Bill Description *</string>
     <string name="bill_amount_star">Bill Amount ₹ *</string>
@@ -74,6 +77,7 @@
     <string name="all_caps">ALL</string>
     <string name="edit_underline"><u>edit</u></string>
     <string name="customer_id">Customer-ID</string>
+    <string name="customer_id_star">Customer-ID *</string>
     <string name="bill_number">Bill Number</string>
     <string name="send_caps">SEND</string>
     <string name="pay_caps">PAY</string>

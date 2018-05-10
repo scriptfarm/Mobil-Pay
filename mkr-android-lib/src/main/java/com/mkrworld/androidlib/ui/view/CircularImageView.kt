@@ -2,13 +2,12 @@ package com.mkrworld.androidlib.ui.view
 
 import android.content.Context
 import android.graphics.*
-import android.os.AsyncTask
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import com.mkrworld.androidlib.R
+import com.mkrworld.androidlib.utils.Tracer
 
 /**
  * Created by mkr on 30/3/18.
@@ -32,6 +31,7 @@ class CircularImageView : View {
     private var mIsProgressMoveUp : Boolean = false
     private var mProgressRectF : RectF? = null
     private var mPaintProgress : Paint? = null
+    private var mIsProgressEnable : Boolean? = null
     private var mInvalidator : Invalidator? = null
 
     constructor(context : Context) : super(context) {
@@ -60,16 +60,27 @@ class CircularImageView : View {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        if (mInvalidator == null || ! mInvalidator !!.isRunning) {
+        if (! mIsProgressEnable !!) {
+            return
+        }
+        if (mInvalidator == null || ! mInvalidator !!.isAlive) {
             mInvalidator = Invalidator()
-            mInvalidator !!.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            mInvalidator !!.isDaemon = true
+            mInvalidator !!.start()
         }
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        if (mInvalidator != null) {
-            mInvalidator !!.isRunning = false
+        if (! mIsProgressEnable !!) {
+            return
+        }
+        if (mInvalidator != null && mInvalidator !!.isAlive) {
+            try {
+                mInvalidator !!.interrupt()
+            } catch (e : Exception) {
+
+            }
         }
         mInvalidator = null
     }
@@ -80,11 +91,16 @@ class CircularImageView : View {
      * @param attrs
      */
     private fun init(attrs : AttributeSet?) {
+        mProgressColor = Color.BLUE
+        mProgressWidth = (resources.displayMetrics.widthPixels.toFloat() * 0.05f).toInt()
+        mProgressImageRef = - 1
+        mIsProgressEnable = true
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.CircularImageView, 0, 0)
             mProgressColor = a.getColor(R.styleable.CircularImageView_progress_color, Color.BLUE)
             mProgressWidth = a.getDimensionPixelOffset(R.styleable.CircularImageView_progress_width, (resources.displayMetrics.widthPixels.toFloat() * 0.05f).toInt())
             mProgressImageRef = a.getResourceId(R.styleable.CircularImageView_progress_image, - 1)
+            mIsProgressEnable = a.getInt(R.styleable.CircularImageView_progress_state, 0) == 0
             a.recycle()
         }
         mPaintProgress = Paint()
@@ -168,6 +184,10 @@ class CircularImageView : View {
     private fun drawProgress(canvas : Canvas) {
         mPaintProgress !!.style = Paint.Style.FILL_AND_STROKE
         mPaintProgress !!.color = mProgressColor
+        if (!mIsProgressEnable !!) {
+            canvas.drawArc(mProgressRectF !!, 0F, 360F, true, mPaintProgress !!)
+            return
+        }
         canvas.drawArc(mProgressRectF !!, mProgressStartAngle.toFloat(), mProgressSwipeAngle.toFloat(), true, mPaintProgress !!)
         mProgressStartAngle += PROGRESS_START_ANGLE_INC
         if (mProgressSwipeAngle >= PROGRESS_MAX_ANGLE_DIFF) {
@@ -250,55 +270,21 @@ class CircularImageView : View {
     /**
      * Class to watch the Performance
      */
-    private inner class Invalidator : AsyncTask<Void, Void, Void>() {
-        private var mIsRunning : Boolean? = null
-
-        /**
-         * Method to check weather the watcher is watching or not
-         *
-         * @return
-         */
-        /**
-         * Method to set the Watching state
-         *
-         * @param isWatching
-         */
-        var isRunning : Boolean
-            @Synchronized get() = if (mIsRunning != null) mIsRunning !! else false
-            @Synchronized set(isRunning) {
-                mIsRunning = isRunning
-            }
-
-        /**
-         * Constructor
-         */
-        init {
-            isRunning = true
-        }
-
-        override fun doInBackground(vararg voids : Void) : Void? {
-            isRunning = true
-            while (isRunning) {
-                publishProgress()
-                try {
-                    Thread.sleep(5)
-                } catch (e : InterruptedException) {
-                    e.printStackTrace()
-                }
-
-            }
-            isRunning = false
-            return null
-        }
-
-        override fun onProgressUpdate(vararg values : Void) {
-            super.onProgressUpdate(*values)
+    private inner class Invalidator : Thread() {
+        override fun run() {
             try {
-                invalidate()
+                while (! isInterrupted) {
+                    postInvalidate()
+                    try {
+                        Thread.sleep(5)
+                    } catch (e : InterruptedException) {
+                        e.printStackTrace()
+                    }
+                }
+                Tracer.debug("MKR", "run : ")
             } catch (e : Exception) {
-                Log.e("MKR", "CircularImageView.Invalidator.onProgressUpdate : " + e.message)
-            }
 
+            }
         }
     }
 }
