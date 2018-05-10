@@ -28,7 +28,7 @@
 
     <!-- ITEM AGENT HOME -->
     <dimen name="item_home_tab_icon_dim">@dimen/mkrdp_17</dimen>
-    <dimen name="item_home_tab_width">@dimen/mkrdp_24</dimen>
+    <dimen name="item_home_tab_width">@dimen/mkrdp_26</dimen>
     <dimen name="item_home_tab_outer_padding_ver">@dimen/mkrdp_1</dimen>
     <dimen name="item_home_tab_outer_padding_hor">@dimen/mkrdp_3</dimen>
 
@@ -62,12 +62,14 @@
     <dimen name="fragment_qrcode_qrcode_dimen">@dimen/mkrdp_80</dimen>
     <dimen name="fragment_qrcode_content_margin">@dimen/content_margin</dimen>
 
-    <!-- ===================================================== -->
-    <!-- ===================================================== -->
-    <!-- ===================================================== -->
-    <!-- ===================================================== -->
-    <!-- ===================================================== -->
-    <!-- ===================================================== -->
+    <!-- FRAGMENT CHANGE PASSWORD -->
+    <dimen name="fragment_change_password_content_margin">@dimen/content_margin</dimen>
+
+    <!-- FRAGMENT FORGOT PASSWORD -->
+    <dimen name="fragment_forgot_password_content_margin">@dimen/content_margin</dimen>
+
+    <!-- FRAGMENT CHANGE PASSWORD OTP -->
+    <dimen name="fragment_change_password_otp_content_margin">@dimen/content_margin</dimen>
 
     <!-- POPUP LIST ITEM PADDING -->
     <dimen name="item_dropdown_array_adapter_padding_ver">@dimen/mkrdp_1.49</dimen>
@@ -81,18 +83,9 @@
     <dimen name="card_margin_ver">@dimen/mkrdp_3</dimen>
 
     <!-- BUTTON LAYOUT -->
-    <dimen name="button_corner">@dimen/mkrdp_0.50</dimen>
+    <dimen name="button_corner">@dimen/mkrdp_1</dimen>
     <dimen name="button_padding_ver">@dimen/mkrdp_3</dimen>
     <dimen name="button_padding_hor">@dimen/mkrdp_2</dimen>
-
-    <!-- ACTIVITY MAIN -->
-    <dimen name="activity_main_sliding_width">@dimen/mkrdp_80</dimen>
-    <dimen name="activity_main_sliding_content_padding">@dimen/mkrdp_3</dimen>
-    <dimen name="activity_main_sliding_profile_logo_width">@dimen/mkrdp_20</dimen>
-    <dimen name="activity_main_sliding_profile_logo_height">@dimen/mkrdp_15</dimen>
-    <dimen name="activity_main_sliding_logo_dim">@dimen/mkrdp_6</dimen>
-    <dimen name="activity_main_sliding_title_text_size">@dimen/title_text_size</dimen>
-    <dimen name="activity_main_sliding_content_margin_ver">@dimen/mkrdp_1</dimen>
 
     <!-- ITEM STATUS CONSOLIDATE DATA -->
     <dimen name="item_collection_status_padding_ver">@dimen/mkrdp_1.49</dimen>
@@ -105,24 +98,26 @@
     <dimen name="fragment_send_notification_card_title_text_size">@dimen/title_text_size
     </dimen>
 
-    <!-- FRAGMENT FORGOT PASSWORD -->
-    <dimen name="fragment_forgot_password_content_margin">@dimen/content_margin</dimen>
-    <dimen name="fragment_forgot_password_title_text_size">@dimen/title_text_size</dimen>
-
-    <!-- FRAGMENT CHANGE PASSWORD -->
-    <dimen name="fragment_change_password_content_margin">@dimen/content_margin</dimen>
-    <dimen name="fragment_change_password_title_text_size">@dimen/title_text_size</dimen>
-    <dimen name="fragment_change_password_sub_text_size">@dimen/sub_text_size</dimen>
-
-    <!-- FRAGMENT CHANGE PASSWORD OTP -->
-    <dimen name="fragment_change_password_otp_content_margin">@dimen/content_margin</dimen>
-    <dimen name="fragment_change_password_otp_title_text_size">@dimen/title_text_size</dimen>
-    <dimen name="fragment_change_password_otp_sub_text_size">@dimen/sub_text_size</dimen>
-
     <!-- DIALOG MULTI SELECTION -->
     <dimen name="dialog_multi_selection_content_margin">@dimen/content_margin</dimen>
 
     <!-- ITEM MULTI SELECTION -->
     <dimen name="item_multi_selection_content_margin">@dimen/content_margin</dimen>
+
+    <!-- ===================================================== -->
+    <!-- ===================================================== -->
+    <!-- ===================================================== -->
+    <!-- ===================================================== -->
+    <!-- ===================================================== -->
+    <!-- ===================================================== -->
+
+    <!-- ACTIVITY MAIN -->
+    <dimen name="activity_main_sliding_width">@dimen/mkrdp_80</dimen>
+    <dimen name="activity_main_sliding_content_padding">@dimen/mkrdp_3</dimen>
+    <dimen name="activity_main_sliding_profile_logo_width">@dimen/mkrdp_20</dimen>
+    <dimen name="activity_main_sliding_profile_logo_height">@dimen/mkrdp_15</dimen>
+    <dimen name="activity_main_sliding_logo_dim">@dimen/mkrdp_6</dimen>
+    <dimen name="activity_main_sliding_title_text_size">@dimen/title_text_size</dimen>
+    <dimen name="activity_main_sliding_content_margin_ver">@dimen/mkrdp_1</dimen>
 
 </resources>

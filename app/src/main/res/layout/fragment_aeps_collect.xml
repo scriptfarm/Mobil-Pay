@@ -20,7 +20,7 @@
             android:id="@+id/fragment_aeps_collect_textInputLayout_customer_name"
             style="@style/style_text_input_layout_hint">
 
-            <com.mkrworld.mobilpay.ui.custom.EditTextDropDown
+            <com.mkrworld.mobilpay.ui.custom.FontEditText
                 android:id="@+id/fragment_aeps_collect_editText_customer_name"
                 style="@style/style_text_view_single_line"
                 android:hint="@string/customer_name"
@@ -33,7 +33,7 @@
             android:id="@+id/fragment_aeps_collect_textInputLayout_bank_name"
             style="@style/style_text_input_layout_hint">
 
-            <EditText
+            <com.mkrworld.mobilpay.ui.custom.FontEditText
                 android:id="@+id/fragment_aeps_collect_editText_bank_name"
                 style="@style/style_text_view_single_line"
                 android:hint="@string/bank_name"
@@ -46,7 +46,7 @@
             android:id="@+id/fragment_aeps_collect_textInputLayout_transaction_amount"
             style="@style/style_text_input_layout_hint">
 
-            <EditText
+            <com.mkrworld.mobilpay.ui.custom.FontEditText
                 android:id="@+id/fragment_aeps_collect_editText_transaction_amount"
                 style="@style/style_text_view_single_line"
                 android:hint="@string/Transaction_amount_star"
@@ -59,7 +59,7 @@
             android:id="@+id/fragment_aeps_collect_textInputLayout_mobile_number"
             style="@style/style_text_input_layout_hint">
 
-            <EditText
+            <com.mkrworld.mobilpay.ui.custom.FontEditText
                 android:id="@+id/fragment_aeps_collect_editText_mobile_number"
                 style="@style/style_text_view_single_line"
                 android:hint="@string/mobile_number_star"
@@ -73,7 +73,7 @@
             android:id="@+id/fragment_aeps_collect_textInputLayout_aadhar_number"
             style="@style/style_text_input_layout_hint">
 
-            <EditText
+            <com.mkrworld.mobilpay.ui.custom.FontEditText
                 android:id="@+id/fragment_aeps_collect_editText_aadhar_number"
                 style="@style/style_text_view_single_line"
                 android:hint="@string/enter_last_4_digit_aadhar_number"

@@ -21,6 +21,7 @@
         <TextView
             style="@style/style_title_text_view_default"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/fragment_qrcode_generator_content_margin"
             android:layout_marginTop="@dimen/fragment_qrcode_generator_content_margin"
             android:text="@string/qrcode_generator" />
 
