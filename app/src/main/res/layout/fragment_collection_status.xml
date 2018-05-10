@@ -7,9 +7,12 @@
     android:focusable="true"
     android:orientation="vertical">
 
+    <ImageView style="@style/app_header_icon" />
+
     <!-- CARD TO HAVE THE USER DATA LIST -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fragment_collection_status_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>

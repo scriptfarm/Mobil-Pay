@@ -50,7 +50,6 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, View.OnClic
             val baseAdapterItemArrayList = ArrayList<BaseAdapterItem<*>>()
             val dtoStatusConsolidateDataList = DTOStatusConsolidateDataList()
             val dataList : ArrayList<DTOCollectionStatusResponse.Data> = dto.getData()
-            //dtoStatusConsolidateDataList.addConsolidateData(DTOCollectionStatusConsolidateData(DTOCollectionStatusConsolidateData.RowType.TITLE, getString(R.string.mode_caps), getString(R.string.txns_caps)))
             var count : Int = 0
             for (data : DTOCollectionStatusResponse.Data in dataList) {
                 try {

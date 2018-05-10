@@ -77,8 +77,8 @@
     <dimen name="card_corner">@dimen/mkrdp_0.50</dimen>
     <dimen name="card_content_padding_ver">@dimen/mkrdp_2</dimen>
     <dimen name="card_content_padding_hor">@dimen/mkrdp_2</dimen>
-    <dimen name="card_margin_hor">@dimen/mkrdp_2</dimen>
-    <dimen name="card_margin_ver">@dimen/mkrdp_2</dimen>
+    <dimen name="card_margin_hor">@dimen/mkrdp_3</dimen>
+    <dimen name="card_margin_ver">@dimen/mkrdp_3</dimen>
 
     <!-- BUTTON LAYOUT -->
     <dimen name="button_corner">@dimen/mkrdp_0.50</dimen>
