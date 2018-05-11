@@ -12,6 +12,7 @@
     <string name="salt">Nupaysvi6uEWaiqjHvx8B3lhnLuZBaDyEEAO1QEo4UboTRam4y0LPfdGk0oHjatgjKed9oxgrROXq03RaKs9WNoExVcrM5aXvnMwBaroQ7acCLGyPbfrfOJnnmhxwjrCplMtTXMZ2v6XAh2gZqligqM16wMpJQ7t0QxemsQIqs9OUvAdza7hMMfjwjwjXPjpuA55sbzsUdldWPI5hBxFUyGoRDTDEnOqhvJhMaKOIjq2X1SpuQ7Fxslj3ZuPfGgSNupay</string>
     <string name="no_data_fetch_from_server">No Data Fetch From Server</string>
     <string name="nothing_selected">Nothing selected</string>
+    <string name="write_a_valid_message_for_agent">Write a valid message for Agent</string>
     <string name="no_bill_data_fetched_caps">NO BILL DATA FETCHED</string>
     <string name="field_should_not_be_empty_caps">FIELD SHOULD NOT BE EMPTY</string>
     <string name="enter_valid_mobile_number">ENTER A VALID 10 DIGIT MOBILE NUMBER</string>
@@ -20,15 +21,15 @@
     <string name="notification_caps">NOTIFICATION</string>
     <string name="no_pending_alerts_caps">NO PENDING ALERT\'s</string>
     <string name="screen_title_login">Login</string>
-    <string name="screen_title_merchant_home">Merchant Home</string>
-    <string name="screen_title_agent_home">Agent Home</string>
-    <string name="screen_title_agent_qrcode">Agent Qr-Code</string>
+    <string name="screen_title_home">Home</string>
+    <string name="screen_title_qrcode">Qr-Code</string>
     <string name="screen_title_aeps_collect">AEPS Collect</string>
     <string name="screen_title_send_bill">Send Bill</string>
     <string name="screen_title_collect_cash">Collect Cash</string>
     <string name="screen_title_forgot_password">Forgot Password</string>
     <string name="screen_title_change_password">Change Password</string>
     <string name="screen_title_collection_summary">Collection Summary</string>
+    <string name="screen_title_collection_status">Collection Status</string>
     <string name="screen_title_send_notification">Send Notification</string>
 
     <string name="static_qr_code">QR-Code</string>
@@ -41,6 +42,17 @@
     <string name="pay_cash">Pay Cash</string>
     <string name="cash_collect">Cash Collect</string>
     <string name="collection_summary">Collection Summary</string>
+
+    <string name="send_notification_to_all">Send Notification To ALL</string>
+    <string name="send_notification_to_agent">Send Notification To AGENT</string>
+    <string name="send_notification_to_customer">Send Notification To CUSTOMER</string>
+
+    <string name="customer_caps">CUSTOMER</string>
+
+    <string name="all_agent">All Agents</string>
+    <string name="agent_caps">AGENT</string>
+    <string name="all_unpaid_customer">All Upaid Customers</string>
+    <string name="all_partial_paid_customer">All Partial Paid Customers</string>
 
     <string name="qrcode_generator">QR-Code Generator</string>
     <string name="home">Home</string>
@@ -65,16 +77,16 @@
     <string name="login_to_your_account">Login to your account</string>
     <string name="sign_in_caps">SIGN IN</string>
     <string name="use_finger_print_question">Use Fingerprint?</string>
-
     <string name="bill_number_star">Bill Number *</string>
     <string name="bill_description_star">Bill Description *</string>
     <string name="bill_amount_star">Bill Amount ₹ *</string>
     <string name="collected_amount_star">Collected Amount ₹ *</string>
     <string name="generate_caps">GENERATE</string>
     <string name="cancel_caps">CANCEL</string>
-    <string name="message_optional_caps">MESSAGE(optional)</string>
+    <string name="message_caps_star">MESSAGE *</string>
     <string name="ok_caps">OK</string>
     <string name="all_caps">ALL</string>
+    <string name="select_all">Select All</string>
     <string name="edit_underline"><u>edit</u></string>
     <string name="customer_id">Customer-ID</string>
     <string name="customer_id_star">Customer-ID *</string>
@@ -103,7 +115,9 @@
     <string name="amount_caps">AMOUNT</string>
     <string name="txns_caps">TXN\'s</string>
     <string name="enable_finger_print">Enable Finger Print</string>
+    <string name="message_confirmation">Message Confirmation</string>
     <string name="are_you_sure_enable_finger_print_login">Are you sure to enable finger print login ??</string>
+    <string name="are_you_sure_to_send_the_reminder_to_all">Are you sure to send the reminder to all ??</string>
     <string name="update_finger_print">Update Finger Print</string>
     <string name="are_you_sure_to_update_the_login_detail">Are you sure to update the login detail.</string>
 

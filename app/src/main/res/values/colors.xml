@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00a1c1</color>
-    <color name="colorPrimaryDark">#0f6584</color>
+    <color name="colorPrimary">#1f4838</color><!--#00a1c1-->
+    <color name="colorPrimaryDark">#143025</color>
     <color name="colorAccent">@color/colorPrimary</color>
     <color name="toolbar_back">@color/colorPrimary</color>
     <color name="toolbar_text_color">@android:color/white</color>
@@ -16,42 +16,47 @@
     <color name="input_layout_text_color">@color/colorPrimaryDark</color>
     <color name="transparent">#00000000</color>
     <color name="circular_progress_color">@color/colorPrimaryDark</color>
-
-    <!-- ============================================= -->
-    <!-- ============================================= -->
-    <!-- ============================================= -->
-    <!-- ============================================= -->
-    <!-- ============================================= -->
-    <!-- ============================================= -->
-    <!-- ============================================= -->
-    <!-- ============================================= -->
-
-    <color name="text_color_black">#000000</color>
-    <color name="text_color_white">#FFFFFF</color>
-    <color name="divider_color">#77777777</color>
     <color name="screen_back">#FFFFFF</color>
-    <color name="text_color_gray">#888888</color>
-    <color name="text_color_green">#12b412</color>
+    <color name="tab_back">@color/colorPrimary</color>
+    <color name="tab_text_color">#FFFFFF</color>
+    <color name="tab_text_color_focus">#FFFFFF</color>
+    <color name="tab_strip">#FFFFFF</color>
     <color name="card_background">#FFFFFF</color>
-    <color name="button_background">@color/colorPrimary</color>
-    <color name="button_background_f">@color/colorPrimaryDark</color>
-    <color name="hyperlink">#1BA1E2</color>
-
-    <color name="activity_main_sliding_title_text_color">@color/text_color_white</color>
+    <color name="activity_main_sliding_title_text_color">@color/app_text_color_inv</color>
     <color name="activity_main_sliding_text_color">#555555</color>
+    <color name="hyperlink">#1BA1E2</color>
+    <color name="divider_color">#77777777</color>
+    <!-- ============================================= -->
+    <!-- ============================================= -->
+    <!-- ============================================= -->
+    <!-- ============================================= -->
+    <!-- ============================================= -->
+    <!-- ============================================= -->
+    <!-- ============================================= -->
+    <!-- ============================================= -->
 
-    <color name="fragment_login_card_title_text">@color/colorAccent</color>
+    <!--<color name="text_color_black">#000000</color>-->
+    <!--<color name="text_color_white">#FFFFFF</color>-->
+    <!--<color name="text_color_gray">#888888</color>-->
+    <!--<color name="text_color_green">#12b412</color>-->
 
-    <color name="fragment_qrcode_card_title_text">@color/colorAccent</color>
+    <!--<color name="button_background">@color/colorPrimary</color>-->
+    <!--<color name="button_background_f">@color/colorPrimaryDark</color>-->
 
-    <color name="fragment_qrcode_generator_card_title_text">@color/colorAccent</color>
 
-    <color name="fragment_send_notification_card_title_text">@color/colorAccent</color>
 
-    <color name="fragment_forgot_password_card_title_text">@color/colorAccent</color>
+    <!--<color name="fragment_login_card_title_text">@color/colorAccent</color>-->
 
-    <color name="fragment_change_password_card_title_text">@color/colorAccent</color>
+    <!--<color name="fragment_qrcode_card_title_text">@color/colorAccent</color>-->
 
-    <!-- FRAGMENT CHANGE PASSWORD OTP -->
-    <color name="fragment_change_password_otp_card_title_text">@color/colorAccent</color>
+    <!--<color name="fragment_qrcode_generator_card_title_text">@color/colorAccent</color>-->
+
+    <!--<color name="fragment_send_notification_card_title_text">@color/colorAccent</color>-->
+
+    <!--<color name="fragment_forgot_password_card_title_text">@color/colorAccent</color>-->
+
+    <!--<color name="fragment_change_password_card_title_text">@color/colorAccent</color>-->
+
+    <!--&lt;!&ndash; FRAGMENT CHANGE PASSWORD OTP &ndash;&gt;-->
+    <!--<color name="fragment_change_password_otp_card_title_text">@color/colorAccent</color>-->
 </resources>

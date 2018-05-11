@@ -6,14 +6,16 @@
     android:clickable="true"
     android:fillViewport="true"
     android:focusable="true"
-    android:paddingBottom="@dimen/fragment_cash_collect_content_margin"
     android:paddingLeft="@dimen/fragment_cash_collect_content_margin"
     android:paddingRight="@dimen/fragment_cash_collect_content_margin">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/fragment_cash_collect_content_margin"
+        android:paddingLeft="@dimen/fragment_cash_collect_content_margin"
+        android:paddingRight="@dimen/fragment_cash_collect_content_margin">
 
         <ImageView style="@style/app_header_icon" />
 
@@ -89,12 +91,12 @@
             android:layout_marginTop="@dimen/fragment_cash_collect_content_margin"
             android:orientation="horizontal">
 
-            <TextView
+            <com.mkrworld.mobilpay.ui.custom.FontTextView
                 android:id="@+id/fragment_agent_pay_cash_textView_send"
                 style="@style/style_button_width_weight"
                 android:text="@string/collect_caps" />
 
-            <TextView
+            <com.mkrworld.mobilpay.ui.custom.FontTextView
                 android:id="@+id/fragment_pay_cash_bill_textView_cancel"
                 style="@style/style_button_inv_width_weight"
                 android:layout_marginLeft="@dimen/fragment_cash_collect_button_margin"

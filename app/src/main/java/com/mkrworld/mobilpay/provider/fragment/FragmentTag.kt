@@ -15,9 +15,12 @@ interface FragmentTag {
         val QR_CODE = "FragmentQrCode"
         val COLLECTION_STATUS = "FragmentCollectionStatus"
         val FORGOT_PASSWORD = "FragmentForgotPassword"
-        val SEND_NOTIFICATION = "FragmentSendNotification"
         val CHANGE_PASSWORD = "FragmentChangePassword"
         val CHANGE_PASSWORD_BY_OTP = "FragmentChangePasswordByOtp"
         val COLLECTION_SUMMARY = "FragmentCollectionSummary"
+        val NOTIFICATION = "FragmentNotification"
+        val NOTIFICATION_TAB_ALL = "FragmentNotificationTabAll"
+        val NOTIFICATION_TAB_AGENT = "FragmentNotificationTabAgent"
+        val NOTIFICATION_TAB_CUSTOMER = "FragmentNotificationTabCustomer"
     }
 }

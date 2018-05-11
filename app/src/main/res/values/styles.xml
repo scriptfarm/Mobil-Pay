@@ -82,7 +82,7 @@
 
     <style name="style_text_view_hint_multiple_line" parent="style_text_view_default_full_width">
         <item name="android:minLines">1</item>
-        <item name="android:textColor">@color/text_color_gray</item>
+        <item name="android:textColor">@color/app_text_color_inv</item>
     </style>
 
     <style name="style_text_view_hint_single_line" parent="style_text_view_hint_multiple_line">
@@ -90,7 +90,7 @@
     </style>
 
     <style name="style_text_view_green" parent="style_text_view_default_full_width">
-        <item name="android:textColor">@color/text_color_green</item>
+        <item name="android:textColor">@color/app_text_color_inv</item>
     </style>
     <!-- EditText Property End -->
 
@@ -151,7 +151,7 @@
 
 
     <style name="style_text_view_default_white" parent="style_text_view_default">
-        <item name="android:textColor">@color/text_color_white</item>
+        <item name="android:textColor">@color/app_text_color_inv</item>
     </style>
 
     <style name="style_text_view_edit" parent="style_text_view_default">

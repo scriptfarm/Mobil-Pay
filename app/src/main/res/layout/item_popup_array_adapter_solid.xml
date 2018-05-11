@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/item_dropdown_array_adapter_padding_hor"
     android:paddingTop="@dimen/item_dropdown_array_adapter_padding_ver">
 
-    <TextView
+    <com.mkrworld.mobilpay.ui.custom.FontTextView
         android:id="@+id/item_popup_array_adapter_solid_textView"
         style="@style/style_text_view_default"
         android:clickable="false"

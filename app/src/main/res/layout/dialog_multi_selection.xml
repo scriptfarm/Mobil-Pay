@@ -38,12 +38,12 @@
         android:layout_marginTop="@dimen/dialog_multi_selection_content_margin"
         android:orientation="horizontal">
 
-        <TextView
+        <com.mkrworld.mobilpay.ui.custom.FontTextView
             android:id="@+id/dialog_multi_selection_textView_submit"
             style="@style/style_button_width_weight"
             android:text="@string/submit_caps" />
 
-        <TextView
+        <com.mkrworld.mobilpay.ui.custom.FontTextView
             android:id="@+id/dialog_multi_selection_textView_cancel"
             style="@style/style_button_width_weight"
             android:layout_marginLeft="@dimen/dialog_multi_selection_content_margin"

@@ -2,16 +2,15 @@ package com.mkrworld.mobilpay.dto.appdata
 
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
-import com.mkrworld.mobilpay.R
 
 /**
  * Created by mkr on 14/3/18.
  * Class to hold the mData of the Merchant Home Tab
  */
-class DTOHomeTab {
+class DTONotificationTab {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".DTOHomeTab"
+        private val TAG = BuildConfig.BASE_TAG + ".DTONotificationTab"
     }
 
     /**
@@ -22,16 +21,6 @@ class DTOHomeTab {
     var label : String = ""
         get() {
             return field?.trim() ?: ""
-        }
-
-    /**
-     * Method to get the icon id
-     *
-     * @return
-     */
-    var iconResId : Int = R.mipmap.ic_launcher
-        get() {
-            return field ?: R.mipmap.ic_launcher
         }
 
     /**
@@ -58,10 +47,9 @@ class DTOHomeTab {
      * @param iconResId
      * @param label
      */
-    constructor(tabType : TabType, iconResId : Int, label : String) {
+    constructor(tabType : TabType, label : String) {
         Tracer.debug(TAG, "Constructor: $tabType  $label")
         this.tabType = tabType
-        this.iconResId = iconResId
         this.label = label
     }
 
@@ -69,13 +57,13 @@ class DTOHomeTab {
      * TYPE OF THE TAB ON THE HOME SCREEN
      */
     enum class TabType {
-        NONE, STATIC_QR_CODE, DYNAMIC_QR_CODE, UPI_COLLECT, AEPS_COLLECT, SEND_BILL, COLLECTION_SUMMARY, SEND_NOTIFICATION, COLLECTION_STATUS, CASH_COLLECT
+        NONE, SEND_TO_ALL, SEND_TO_AGENTS, SEND_TO_CUSTOMER
     }
 
     override fun equals(obj : Any?) : Boolean {
-        if (obj is DTOHomeTab) {
-            val dto = obj as DTOHomeTab?
-            if (dto !!.tabType == tabType && dto.label !!.equals(label !!, ignoreCase = true) && dto.iconResId == iconResId) {
+        if (obj is DTONotificationTab) {
+            val dto = obj as DTONotificationTab?
+            if (dto !!.tabType == tabType && dto.label !!.equals(label !!, ignoreCase = true)) {
                 return true
             }
         }

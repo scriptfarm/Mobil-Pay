@@ -7,8 +7,6 @@
     android:focusable="true"
     android:orientation="vertical">
 
-    <ImageView style="@style/app_header_icon" />
-
     <View
         android:layout_width="1px"
         android:layout_height="0dp"
@@ -16,8 +14,9 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mkrdp_100"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_height="@dimen/mkrdp_120"
+        android:padding="@dimen/fragment_home_content_margin"
+        android:src="@drawable/mobil_pay_home_icon" />
 
     <View
         android:layout_width="1px"

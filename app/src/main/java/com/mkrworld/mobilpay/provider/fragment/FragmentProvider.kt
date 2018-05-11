@@ -24,7 +24,6 @@ class FragmentProvider {
             when (fragmentTag) {
                 FragmentTag.AEPS_COLLECT -> return FragmentAEPSCollect()
                 FragmentTag.CASH_COLLECT -> return FragmentCashCollect()
-
                 FragmentTag.SEND_BILL -> return FragmentSendBill()
                 FragmentTag.QR_CODE -> return FragmentQrCode()
                 FragmentTag.QR_CODE_GENERATOR -> return FragmentQrCodeGenerator()
@@ -32,7 +31,10 @@ class FragmentProvider {
                 FragmentTag.CHANGE_PASSWORD -> return FragmentChangePassword()
                 FragmentTag.CHANGE_PASSWORD_BY_OTP -> return FragmentChangePasswordByOtp()
                 FragmentTag.COLLECTION_STATUS -> return FragmentCollectionStatus()
-                FragmentTag.SEND_NOTIFICATION -> return FragmentSendNotification()
+                FragmentTag.NOTIFICATION -> return FragmentNotification()
+                FragmentTag.NOTIFICATION_TAB_ALL -> return FragmentNotificationTabAll()
+                FragmentTag.NOTIFICATION_TAB_AGENT -> return FragmentNotificationTabAgent()
+                FragmentTag.NOTIFICATION_TAB_CUSTOMER -> return FragmentNotificationTabCustomer()
                 FragmentTag.LOGIN -> return FragmentLogin()
                 FragmentTag.HOME -> return FragmentHome()
                 FragmentTag.COLLECTION_SUMMARY -> return FragmentCollectionSummary()

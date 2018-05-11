@@ -56,7 +56,6 @@ class FragmentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHClicka
                 return
             }
             if (dto == null || dto.getData() == null) {
-                Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
                 return
             }
         }
@@ -66,7 +65,6 @@ class FragmentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHClicka
             if (view == null) {
                 return
             }
-            Tracer.showSnack(view !!, errorMessage)
         }
     }
 
@@ -82,11 +80,13 @@ class FragmentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHClicka
         if (! Utils.isMerchant(activity)) {
             baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.CASH_COLLECT, R.drawable.ic_send_bill, getString(R.string.cash_collect))))
         }
-        baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.SEND_BILL, R.drawable.ic_send_bill, getString(R.string.send_bill))))
-        baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.AEPS_COLLECT, R.drawable.ic_aeps_collect, getString(R.string.aeps_collect))))
-        baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.UPI_COLLECT, R.drawable.ic_upi_collect, getString(R.string.upi_collect))))
+        if (Utils.isMerchant(activity)) {
+            baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.SEND_BILL, R.drawable.ic_send_bill, getString(R.string.send_bill))))
+        }
+        //baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.AEPS_COLLECT, R.drawable.ic_aeps_collect, getString(R.string.aeps_collect))))
+        //baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.UPI_COLLECT, R.drawable.ic_upi_collect, getString(R.string.upi_collect))))
         baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.SEND_NOTIFICATION, R.drawable.ic_static_qr_code, getString(R.string.send_notification))))
-        baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.DYNAMIC_QR_CODE, R.drawable.ic_qr_code, getString(R.string.dynamic_qr_code))))
+        //baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.DYNAMIC_QR_CODE, R.drawable.ic_qr_code, getString(R.string.dynamic_qr_code))))
         baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.COLLECTION_SUMMARY, R.drawable.ic_collection_summary, getString(R.string.collection_summary))))
         baseAdapterItemList.add(BaseAdapterItem(adapterViewType, DTOHomeTab(DTOHomeTab.TabType.COLLECTION_STATUS, R.drawable.ic_static_qr_code, getString(R.string.collection_status))))
         return baseAdapterItemList
@@ -162,8 +162,8 @@ class FragmentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHClicka
                         (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.QR_CODE)
                     }
                     DTOHomeTab.TabType.SEND_NOTIFICATION -> if (activity is OnBaseActivityListener) {
-                        val fragment = FragmentProvider.getFragment(FragmentTag.SEND_NOTIFICATION)
-                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.SEND_NOTIFICATION)
+                        val fragment = FragmentProvider.getFragment(FragmentTag.NOTIFICATION)
+                        (activity as OnBaseActivityListener).onBaseActivityAddFragment(fragment !!, null, true, FragmentTag.NOTIFICATION)
                     }
                     DTOHomeTab.TabType.DYNAMIC_QR_CODE -> if (activity is OnBaseActivityListener) {
                         val fragment = FragmentProvider.getFragment(FragmentTag.QR_CODE_GENERATOR)
@@ -215,7 +215,7 @@ class FragmentHome : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHClicka
     private fun setTitle() {
         Tracer.debug(TAG, "setTitle: ")
         if (activity is OnBaseActivityListener) {
-            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_agent_home))
+            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_home))
         }
     }
 

@@ -151,7 +151,7 @@ class DialogMultiSelection : Dialog, View.OnClickListener, BaseViewHolder.VHClic
 
     override fun onViewHolderClicked(holder : BaseViewHolder<*>, view : View) {
         when (view.id) {
-            R.id.item_multi_selection_item_data_checkBox -> {
+            R.id.item_multi_selection_item_data_radio -> {
                 mIsAllSelected = true
                 for (index : Int in 0 .. (mBaseAdapter !!.itemCount - 1)) {
                     val item : BaseAdapterItem<*> = mBaseAdapter !!.getItem(index)

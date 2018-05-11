@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/fragment_notification_tab_all_content_margin"
+    android:layout_marginRight="@dimen/fragment_notification_tab_all_content_margin"
+    android:background="@color/screen_back"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/fragment_notification_tab_all_content_margin"
+    android:paddingLeft="@dimen/fragment_notification_tab_all_content_margin"
+    android:paddingRight="@dimen/fragment_notification_tab_all_content_margin">
+
+    <ImageView style="@style/app_header_icon" />
+
+    <!-- CARD TO HAVE THE USER DATA LIST -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_send_notification_tab_all_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_notification_tab_all_content_margin" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_notification_tab_all_content_margin"
+        android:orientation="horizontal">
+
+        <com.mkrworld.mobilpay.ui.custom.FontTextView
+            android:id="@+id/fragment_notification_tab_all_textView_send"
+            style="@style/style_button_width_weight"
+            android:text="@string/send_caps" />
+
+        <com.mkrworld.mobilpay.ui.custom.FontTextView
+            android:id="@+id/fragment_notification_tab_all_textView_cancel"
+            style="@style/style_button_inv_width_weight"
+            android:layout_marginLeft="@dimen/fragment_notification_tab_all_button_margin"
+            android:text="@string/cancel_caps" />
+    </LinearLayout>
+</LinearLayout>

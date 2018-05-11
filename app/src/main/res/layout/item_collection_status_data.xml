@@ -8,14 +8,14 @@
     android:paddingBottom="@dimen/item_collection_status_padding_ver"
     android:paddingTop="@dimen/item_collection_status_padding_ver">
 
-    <TextView
+    <com.mkrworld.mobilpay.ui.custom.FontTextView
         android:id="@+id/item_collection_status_data_textView_mode"
         style="@style/style_text_view_default_width_weight"
         android:layout_weight="0.4"
         android:gravity="left"
         android:text="@string/mode_caps" />
 
-    <TextView
+    <com.mkrworld.mobilpay.ui.custom.FontTextView
         android:id="@+id/item_collection_status_data_textView_count"
         style="@style/style_text_view_default_width_weight"
         android:layout_weight="0.25"

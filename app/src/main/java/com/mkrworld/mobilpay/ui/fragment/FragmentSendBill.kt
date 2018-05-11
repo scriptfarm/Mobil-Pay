@@ -1,8 +1,5 @@
 package com.mkrworld.mobilpay.ui.fragment
 
-import android.app.AlertDialog
-import android.content.DialogInterface
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
 import android.support.v4.app.Fragment
@@ -14,15 +11,10 @@ import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.network.fetchbill.DTOFetchBillRequest
-import com.mkrworld.mobilpay.dto.network.fetchbill.DTOFetchBillResponse
 import com.mkrworld.mobilpay.dto.network.sendbill.DTOSendBillRequest
 import com.mkrworld.mobilpay.dto.network.sendbill.DTOSendBillResponse
-import com.mkrworld.mobilpay.dto.user.userdetail.DTOUserDetailRequest
-import com.mkrworld.mobilpay.dto.user.userdetail.DTOUserDetailResponse
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.custom.OnTextInputLayoutTextChange
-import com.mkrworld.mobilpay.utils.Constants
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
 import java.util.*
@@ -41,72 +33,16 @@ class FragmentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickListene
     private var mTextInputLayoutBillNumber : TextInputLayout? = null
     private var mTextInputLayoutBillDescription : TextInputLayout? = null
     private var mTextInputLayoutBillAmount : TextInputLayout? = null
-    private var mEditTextDropDownMobileNumber : EditText? = null
+    private var mEditTextMobileNumber : EditText? = null
     private var mEditTextBillNumber : EditText? = null
     private var mEditTextBillDescription : EditText? = null
     private var mEditTextBillAmount : EditText? = null
-    private var mDTOSelectedUserBillData : DTOFetchBillResponse.Data? = null
     private var mAppNetworkTaskProvider : AppNetworkTaskProvider? = null
-    private val mUserDetailResponseNetworkCallBack = object : NetworkCallBack<DTOUserDetailResponse> {
-        override fun onSuccess(dto : DTOUserDetailResponse) {
-            Utils.dismissLoadingDialog()
-            if (view == null) {
-                return
-            }
-            if (dto == null || dto.getData() == null || dto.getData() !!.size <= 0) {
-                Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
-                return
-            }
-            if (dto.getData().size > 1) {
-                showSelectionDialog(dto.getData())
-            } else {
-                startFetchBillProcess(dto.getData().get(0) !!.userId !!)
-            }
-        }
-
-        override fun onError(errorMessage : String, errorCode : Int) {
-            Utils.dismissLoadingDialog()
-            Tracer.debug(TAG, "onError : ")
-            if (view == null) {
-                return
-            }
-            Tracer.showSnack(view !!, errorMessage)
-        }
-    }
-    private val mFetchBillResponseNetworkCallBack = object : NetworkCallBack<DTOFetchBillResponse> {
-        override fun onSuccess(dto : DTOFetchBillResponse) {
-            Tracer.debug(TAG, "onSuccess : ")
-            Utils.dismissLoadingDialog()
-            mDTOSelectedUserBillData = null
-            if (view == null) {
-                return
-            }
-            if (dto == null || dto.getData() == null) {
-                Tracer.showSnack(view !!, R.string.no_data_fetch_from_server)
-                return
-            }
-            mDTOSelectedUserBillData = dto.getData()
-            mEditTextBillNumber !!.setText(mDTOSelectedUserBillData !!.billNumber)
-            mEditTextBillDescription !!.setText(mDTOSelectedUserBillData !!.billDetail)
-            mEditTextBillAmount !!.setText(mDTOSelectedUserBillData !!.amountPending)
-            mEditTextBillAmount !!.isEnabled = ! mDTOSelectedUserBillData !!.paymentType !!.trim().equals(Constants.PAYMENT_TYPE_FULL, true)
-        }
-
-        override fun onError(errorMessage : String, errorCode : Int) {
-            Utils.dismissLoadingDialog()
-            Tracer.debug(TAG, "onError : ")
-            if (view == null) {
-                return
-            }
-            Tracer.showSnack(view !!, errorMessage)
-        }
-    }
 
     private val mSendBillResponseNetworkCallBack = object : NetworkCallBack<DTOSendBillResponse> {
         override fun onSuccess(dto : DTOSendBillResponse) {
             Tracer.debug(TAG, "onSuccess : ")
             Utils.dismissLoadingDialog()
-            mDTOSelectedUserBillData = null
             if (view == null) {
                 return
             }
@@ -129,32 +65,6 @@ class FragmentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickListene
     }
 
     /**
-     * Method to show the Selction dialog
-     */
-    private fun showSelectionDialog(dataList : java.util.ArrayList<DTOUserDetailResponse.Data>) {
-        Tracer.debug(TAG, "showSelectionDialog : ")
-        var mBuilder : AlertDialog.Builder? = null
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mBuilder = AlertDialog.Builder(context, android.R.style.Theme_Material_Light_Dialog_Alert)
-        } else {
-            mBuilder = AlertDialog.Builder(context)
-        }
-        mBuilder.setTitle(getString(R.string.choose_merchant))
-        var nameList : Array<String?> = arrayOfNulls<String>(dataList.size)
-        for (index : Int in 0 .. (dataList.size - 1)) {
-            nameList.set(index, dataList[index].userId)
-        }
-        mBuilder.setSingleChoiceItems(nameList, 1, object : DialogInterface.OnClickListener {
-            override fun onClick(dialogInterface : DialogInterface?, which : Int) {
-                dialogInterface !!.dismiss()
-                startFetchBillProcess(dataList[which].userId !!)
-            }
-        })
-        val mDialog = mBuilder.create()
-        mDialog.show()
-    }
-
-    /**
      * Method to check weather detail insert by agent is valid or not
      *
      * @return
@@ -162,8 +72,25 @@ class FragmentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickListene
     private val isBillDetailValid : Boolean
         get() {
             Tracer.debug(TAG, "isBillDetailValid: ")
-            if (mDTOSelectedUserBillData == null || view == null) {
-                showTextInputError(mTextInputLayoutMobileNumber, getString(R.string.no_bill_data_fetched_caps))
+            val userId = mEditTextMobileNumber!!.text.toString().trim()
+            val billNumber = mEditTextBillNumber!!.text.toString().trim()
+            val billDescription = mEditTextBillDescription!!.text.toString().trim()
+            val billAmount  = mEditTextBillAmount!!.text.toString().trim()
+
+            if (userId.length!=10) {
+                showTextInputError(mTextInputLayoutMobileNumber, getString(R.string.enter_valid_mobile_number))
+                return false
+            }
+            if (billNumber.length<=0) {
+                showTextInputError(mTextInputLayoutBillNumber, getString(R.string.field_should_not_be_empty_caps))
+                return false
+            }
+            if (billDescription.length<=0) {
+                showTextInputError(mTextInputLayoutBillDescription, getString(R.string.field_should_not_be_empty_caps))
+                return false
+            }
+            if (billAmount.length<=0) {
+                showTextInputError(mTextInputLayoutBillAmount, getString(R.string.field_should_not_be_empty_caps))
                 return false
             }
             return true
@@ -221,7 +148,7 @@ class FragmentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickListene
     private fun setTitle() {
         Tracer.debug(TAG, "setTitle: ")
         if (activity is OnBaseActivityListener) {
-            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_collect_cash))
+            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_send_bill))
         }
     }
 
@@ -241,7 +168,7 @@ class FragmentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickListene
         view !!.findViewById<View>(R.id.fragment_send_bill_textView_cancel).setOnClickListener(this)
 
         mTextInputLayoutMobileNumber = view !!.findViewById<View>(R.id.fragment_send_bill_textInputLayout_mobile_number) as TextInputLayout
-        mEditTextDropDownMobileNumber = view !!.findViewById<View>(R.id.fragment_send_bill_editText_mobile_number) as EditText
+        mEditTextMobileNumber = view !!.findViewById<View>(R.id.fragment_send_bill_editText_mobile_number) as EditText
         mTextInputLayoutBillNumber = view !!.findViewById<View>(R.id.fragment_send_bill_textInputLayout_bill_number) as TextInputLayout
         mEditTextBillNumber = view !!.findViewById<View>(R.id.fragment_send_bill_editText_bill_number) as EditText
         mTextInputLayoutBillDescription = view !!.findViewById<View>(R.id.fragment_send_bill_textInputLayout_bill_description) as TextInputLayout
@@ -250,65 +177,10 @@ class FragmentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickListene
         mEditTextBillAmount = view !!.findViewById<View>(R.id.fragment_send_bill_editText_bill_amount) as EditText
 
         // ADD TEXT CHANGE LISTENER
-        mEditTextDropDownMobileNumber !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutMobileNumber !!, object : OnTextInputLayoutTextChange.OnTextInputLayoutTextChangeListener {
-            override fun onTextChanged(charSequence : CharSequence, i : Int, i1 : Int, i2 : Int) {
-                if (Utils.isMerchant(activity)) {
-
-                } else {
-                    mEditTextBillDescription !!.setText("")
-                    mEditTextBillNumber !!.setText("")
-                    mEditTextBillAmount !!.setText("")
-                    mEditTextBillAmount!!.isEnabled = false
-                    if (charSequence.toString().trim().length == 10) {
-                        startFetchUserListProcess(charSequence.toString().trim())
-                    }
-                }
-            }
-        }))
+        mEditTextMobileNumber !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutMobileNumber !!))
         mEditTextBillNumber !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutBillNumber !!))
         mEditTextBillDescription !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutBillDescription !!))
         mEditTextBillAmount !!.addTextChangedListener(OnTextInputLayoutTextChange(mTextInputLayoutBillAmount !!))
-
-        // INIT STATUS
-        if (Utils.isMerchant(activity)) {
-            mEditTextBillDescription !!.isEnabled = true
-            mEditTextBillNumber !!.isEnabled = true
-            mEditTextBillAmount !!.isEnabled = true
-        } else {
-            mEditTextBillDescription !!.isEnabled = false
-            mEditTextBillNumber !!.isEnabled = false
-            mEditTextBillAmount !!.isEnabled = false
-        }
-    }
-
-    /**
-     * Method to Fetch the User list
-     */
-    private fun startFetchUserListProcess(mobileNumber : String) {
-        Tracer.debug(TAG, "startPayCashProcess: ")
-        Utils.hideKeyboard(activity, view)
-        val date = Date()
-        val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
-        val token = Utils.createToken(activity, getString(R.string.endpoint_get_user_details), date)
-        val publicKey = getString(R.string.public_key)
-        val dtoUserDetailRequest = DTOUserDetailRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), mobileNumber)
-        Utils.showLoadingDialog(activity)
-        mAppNetworkTaskProvider !!.userDetailTask(activity, dtoUserDetailRequest, mUserDetailResponseNetworkCallBack)
-    }
-
-    /**
-     * Method to initiate the Fetch Bill Process
-     */
-    private fun startFetchBillProcess(userId : String) {
-        Tracer.debug(TAG, "startFetchBillProcess: ")
-        Utils.hideKeyboard(activity, view)
-        val date = Date()
-        val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
-        val token = Utils.createToken(activity, getString(R.string.endpoint_fetch_bill), date)
-        val publicKey = getString(R.string.public_key)
-        val dtoFetchBillRequest = DTOFetchBillRequest(token !!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity), userId)
-        Utils.showLoadingDialog(activity)
-        mAppNetworkTaskProvider?.fetchBillTask(activity, dtoFetchBillRequest, mFetchBillResponseNetworkCallBack)
     }
 
     /**
@@ -320,10 +192,10 @@ class FragmentSendBill : Fragment(), OnBaseFragmentListener, View.OnClickListene
         if (! isBillDetailValid) {
             return
         }
-        val userId = mDTOSelectedUserBillData !!.userId
-        val billNumber = mDTOSelectedUserBillData !!.billNumber
-        val billDescription = mDTOSelectedUserBillData !!.billDetail
-        val billAmount = mDTOSelectedUserBillData !!.billAmount
+        val userId = mEditTextMobileNumber!!.text.toString().trim()
+        val billNumber = mEditTextBillNumber!!.text.toString().trim()
+        val billDescription = mEditTextBillDescription!!.text.toString().trim()
+        val billAmount  = mEditTextBillAmount!!.text.toString().trim()
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
         val token = Utils.createToken(activity, getString(R.string.endpoint_send_bill), date)

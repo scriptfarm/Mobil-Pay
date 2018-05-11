@@ -28,7 +28,7 @@
                 android:background="#FFFFFF" />
 
             <!-- User Name -->
-            <TextView
+            <com.mkrworld.mobilpay.ui.custom.FontTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_main_sliding_content_margin_ver"
@@ -48,7 +48,7 @@
                 style="@style/style_sliding_drawer_option_icon"
                 android:src="@drawable/ic_sliding_home" />
 
-            <TextView
+            <com.mkrworld.mobilpay.ui.custom.FontTextView
                 style="@style/style_sliding_drawer_option_text"
                 android:text="@string/home" />
         </LinearLayout>
@@ -62,7 +62,7 @@
                 style="@style/style_sliding_drawer_option_icon"
                 android:src="@drawable/ic_sliding_change_password" />
 
-            <TextView
+            <com.mkrworld.mobilpay.ui.custom.FontTextView
                 style="@style/style_sliding_drawer_option_text"
                 android:text="@string/change_password" />
         </LinearLayout>
@@ -76,7 +76,7 @@
                 style="@style/style_sliding_drawer_option_icon"
                 android:src="@drawable/ic_sliding_language" />
 
-            <TextView
+            <com.mkrworld.mobilpay.ui.custom.FontTextView
                 style="@style/style_sliding_drawer_option_text"
                 android:text="@string/language" />
         </LinearLayout>
@@ -90,7 +90,7 @@
                 style="@style/style_sliding_drawer_option_icon"
                 android:src="@drawable/ic_sliding_faq" />
 
-            <TextView
+            <com.mkrworld.mobilpay.ui.custom.FontTextView
                 style="@style/style_sliding_drawer_option_text"
                 android:text="@string/faq" />
         </LinearLayout>
@@ -104,7 +104,7 @@
                 style="@style/style_sliding_drawer_option_icon"
                 android:src="@drawable/ic_sliding_term_and_condition" />
 
-            <TextView
+            <com.mkrworld.mobilpay.ui.custom.FontTextView
                 style="@style/style_sliding_drawer_option_text"
                 android:text="@string/terms_and_condition" />
         </LinearLayout>
@@ -118,7 +118,7 @@
                 style="@style/style_sliding_drawer_option_icon"
                 android:src="@drawable/ic_sliding_contact_mobilpay" />
 
-            <TextView
+            <com.mkrworld.mobilpay.ui.custom.FontTextView
                 style="@style/style_sliding_drawer_option_text"
                 android:text="@string/contact_mobil_pay" />
         </LinearLayout>
@@ -138,7 +138,7 @@
                 style="@style/style_sliding_drawer_option_icon"
                 android:src="@drawable/ic_sliding_logout" />
 
-            <TextView
+            <com.mkrworld.mobilpay.ui.custom.FontTextView
                 style="@style/style_sliding_drawer_option_text"
                 android:text="@string/logout" />
         </LinearLayout>

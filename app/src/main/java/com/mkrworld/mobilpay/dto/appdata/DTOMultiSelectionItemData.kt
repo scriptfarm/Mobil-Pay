@@ -12,12 +12,7 @@ class DTOMultiSelectionItemData {
         val TAG : String = BuildConfig.BASE_TAG + ".DTOMultiSelectionItemData"
     }
 
-    var id : String? = null
-        get() {
-            return field?.trim() ?: ""
-        }
-
-    var selectionButtonText : String? = null
+    var id : String = ""
         get() {
             return field?.trim() ?: ""
         }
@@ -26,7 +21,7 @@ class DTOMultiSelectionItemData {
 
     var isShowMessage : Boolean = false
 
-    var label : String? = null
+    var label : String = ""
         get() {
             return field?.trim() ?: ""
         }
@@ -39,28 +34,18 @@ class DTOMultiSelectionItemData {
             field = value.trim()
         }
 
-    var childOptionList : ArrayList<DTOMultiSelectionItemData> = ArrayList<DTOMultiSelectionItemData>()
-
-    var selectedChildOptionList : ArrayList<DTOMultiSelectionItemData> = ArrayList<DTOMultiSelectionItemData>()
-
     /**
      * Constructor
+     * @param id
+     * @param name
+     * @param isChecked
+     * @param isShowMessage
      */
-    constructor(id : String, name : String, isChecked : Boolean) {
+    constructor(id : String, name : String, isChecked : Boolean, isShowMessage : Boolean) {
         Tracer.debug(TAG, "Constructor : ")
-        this.label = name
         this.id = id
+        this.label = name
         this.isChecked = isChecked
-    }
-
-    /**
-     * Constructor
-     */
-    constructor(id : String, name : String, isChecked : Boolean, childOptionList : ArrayList<DTOMultiSelectionItemData>, selectionButtonText : String) : this(id, name, isChecked) {
-        Tracer.debug(TAG, "Constructor : ")
-        if (childOptionList != null) {
-            this.childOptionList.addAll(childOptionList)
-        }
-        this.selectionButtonText = selectionButtonText
+        this.isShowMessage = isShowMessage
     }
 }

@@ -18,8 +18,11 @@ interface Constants {
         val USER_TYPE_MERCHANT = "M"
         val USER_TYPE_AGENT = "A"
 
-        val NOTIFICATION_TYPE_AGENT = "NOTIFICATION_TYPE_AGENT"
-        val NOTIFICATION_TYPE_PARTIAL_PAID = "NOTIFICATION_TYPE_PARTIAL_PAID"
-        val NOTIFICATION_TYPE_UNPAID = "NOTIFICATION_TYPE_UNPAID"
+        /**
+         * TYPE OF THE TAB ON THE HOME SCREEN
+         */
+        enum class NotificationType {
+            NONE, AGENT, UNPAID_CUSTOMER, PARTIAL_PAID_CUSTOMER
+        }
     }
 }

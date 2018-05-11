@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/fragment_qrcode_content_margin"
+    android:layout_marginRight="@dimen/fragment_qrcode_content_margin"
     android:background="@color/screen_back"
     android:clickable="true"
     android:focusable="true"
@@ -12,7 +14,7 @@
 
     <ImageView style="@style/app_header_icon" />
 
-    <TextView
+    <com.mkrworld.mobilpay.ui.custom.FontTextView
         android:id="@+id/fragment_qrcode_textView_name"
         style="@style/style_title_text_view_default"
         android:layout_gravity="center_horizontal"

@@ -7,7 +7,7 @@
     <dimen name="sub_text_size_padding">@dimen/mkrdp_1</dimen>
     <dimen name="divider_size">@dimen/mkrdp_0.2</dimen>
     <dimen name="content_margin">@dimen/mkrdp_5</dimen>
-    <dimen name="button_margin">@dimen/mkrdp_10</dimen>
+    <dimen name="button_margin">@dimen/mkrdp_5</dimen>
     <integer name="length_mobile_number">10</integer>
     <integer name="length_aadhar_number_4">4</integer>
 
@@ -26,7 +26,7 @@
     <dimen name="text_input_layout_margin_ver">@dimen/mkrdp_0.50</dimen>
     <dimen name="text_input_layout_hint_text_size">@dimen/mkrdp_3.49</dimen>
 
-    <!-- ITEM AGENT HOME -->
+    <!-- ITEM  HOME -->
     <dimen name="item_home_tab_icon_dim">@dimen/mkrdp_17</dimen>
     <dimen name="item_home_tab_width">@dimen/mkrdp_26</dimen>
     <dimen name="item_home_tab_outer_padding_ver">@dimen/mkrdp_1</dimen>
@@ -38,9 +38,12 @@
     <dimen name="app_header_icon_margin">@dimen/mkrdp_2</dimen>
 
     <!-- FRAGMENT LOGIN -->
+    <dimen name="fragment_login_content_margin">@dimen/content_margin</dimen>
     <dimen name="fragment_login_thumb_icon_dimen">@dimen/mkrdp_20</dimen>
-    <dimen name="fragment_login_hor_margin">@dimen/mkrdp_12</dimen>
     <dimen name="fragment_login_ver_margin">@dimen/mkrdp_3</dimen>
+
+    <!-- FRAGMENT HOME -->
+    <dimen name="fragment_home_content_margin">@dimen/content_margin</dimen>
 
     <!-- FRAGMENT CASH COLLECT -->
     <dimen name="fragment_cash_collect_content_margin">@dimen/content_margin</dimen>
@@ -94,15 +97,29 @@
     <dimen name="item_collection_summary_padding_ver">@dimen/mkrdp_1.49</dimen>
 
     <!-- FRAGMENT SEND NOTIFICATION -->
-    <dimen name="fragment_send_notification_content_margin">@dimen/content_margin</dimen>
-    <dimen name="fragment_send_notification_card_title_text_size">@dimen/title_text_size
-    </dimen>
+    <dimen name="tab_padding_strip_hor">@dimen/mkrdp_4</dimen>
+    <dimen name="tab_strip">@dimen/mkrdp_1</dimen>
+    <dimen name="tab_padding_outer">@dimen/mkrdp_0.50</dimen>
+
+    <!-- FRAGMENT NOTIFICATION TAB ALL -->
+    <dimen name="fragment_notification_tab_all_content_margin">@dimen/content_margin</dimen>
+    <dimen name="fragment_notification_tab_all_button_margin">@dimen/button_margin</dimen>
+
+    <!-- FRAGMENT NOTIFICATION TAB AGENT -->
+    <dimen name="fragment_notification_tab_agent_content_margin">@dimen/content_margin</dimen>
+    <dimen name="fragment_notification_tab_agent_button_margin">@dimen/button_margin</dimen>
+
+    <!-- FRAGMENT NOTIFICATION TAB CUSTOMER -->
+    <dimen name="fragment_notification_tab_customer_content_margin">@dimen/content_margin</dimen>
+    <dimen name="fragment_notification_tab_customer_button_margin">@dimen/button_margin</dimen>
 
     <!-- DIALOG MULTI SELECTION -->
     <dimen name="dialog_multi_selection_content_margin">@dimen/content_margin</dimen>
 
     <!-- ITEM MULTI SELECTION -->
+    <dimen name="item_multi_selection_padding_ver">@dimen/mkrdp_2</dimen>
     <dimen name="item_multi_selection_content_margin">@dimen/content_margin</dimen>
+    <dimen name="item_multi_selection_message_margin">@dimen/mkrdp_8</dimen>
 
     <!-- ===================================================== -->
     <!-- ===================================================== -->

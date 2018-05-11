@@ -5,16 +5,20 @@
     android:background="@color/screen_back"
     android:clickable="true"
     android:fillViewport="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:paddingLeft="@dimen/fragment_login_content_margin"
+    android:paddingRight="@dimen/fragment_login_content_margin">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/fragment_login_hor_margin"
-        android:paddingRight="@dimen/fragment_login_hor_margin">
+        android:paddingLeft="@dimen/fragment_login_content_margin"
+        android:paddingRight="@dimen/fragment_login_content_margin">
 
-        <TextView
+        <ImageView style="@style/app_header_icon" />
+
+        <com.mkrworld.mobilpay.ui.custom.FontTextView
             style="@style/style_title_text_view_default"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/fragment_login_ver_margin"
@@ -63,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <TextView
+            <com.mkrworld.mobilpay.ui.custom.FontTextView
                 style="@style/style_sub_text_view_default"
                 android:text="@string/merchant" />
 
@@ -78,19 +82,19 @@
                 android:layout_height="wrap_content" />
 
 
-            <TextView
+            <com.mkrworld.mobilpay.ui.custom.FontTextView
                 style="@style/style_sub_text_view_default"
                 android:text="@string/agent" />
 
         </LinearLayout>
 
-        <TextView
+        <com.mkrworld.mobilpay.ui.custom.FontTextView
             android:id="@+id/fragment_login_textView_sign_in"
             style="@style/style_button_width_full"
             android:layout_marginBottom="@dimen/fragment_login_ver_margin"
             android:text="@string/sign_in_caps" />
 
-        <TextView
+        <com.mkrworld.mobilpay.ui.custom.FontTextView
             android:id="@+id/fragment_login_textView_forgot_password"
             style="@style/style_sub_text_view_default"
             android:layout_gravity="center_horizontal"
@@ -104,7 +108,7 @@
             android:layout_marginBottom="@dimen/fragment_login_ver_margin"
             android:src="@drawable/ic_fingerprint_normal" />
 
-        <TextView
+        <com.mkrworld.mobilpay.ui.custom.FontTextView
             style="@style/style_title_text_view_default"
             android:layout_gravity="center_horizontal"
             android:text="@string/use_finger_print_question" />
