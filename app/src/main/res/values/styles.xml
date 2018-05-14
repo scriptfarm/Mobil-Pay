@@ -60,6 +60,13 @@
         <item name="android:textSize">@dimen/sub_text_size</item>
     </style>
 
+    <style name="style_sub_text_view_inv_default">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/app_sub_text_color_inv</item>
+        <item name="android:textSize">@dimen/sub_text_size</item>
+    </style>
+
     <style name="style_title_text_view_default">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_back"
+    android:background="@color/colorPrimary"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical">
@@ -15,7 +15,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/mkrdp_120"
-        android:padding="@dimen/fragment_home_content_margin"
         android:src="@drawable/mobil_pay_home_icon" />
 
     <View

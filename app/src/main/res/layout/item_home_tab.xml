@@ -24,7 +24,7 @@
 
     <com.mkrworld.mobilpay.ui.custom.FontTextView
         android:id="@+id/item_home_textView_label"
-        style="@style/style_sub_text_view_default"
+        style="@style/style_sub_text_view_inv_default"
         android:clickable="false"
         android:gravity="center"
         android:minLines="2"
