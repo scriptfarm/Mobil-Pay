@@ -39,9 +39,7 @@ class CollectionStatusDataItemVH : BaseViewHolder<DTOCollectionStatusConsolidate
         mTextViewMode = itemView.findViewById(R.id.item_collection_status_data_textView_mode)
         mTextViewCount = itemView.findViewById(R.id.item_collection_status_data_textView_count)
         mImageViewQuestion = itemView.findViewById(R.id.item_collection_status_data_imageview_question)
-        mImageViewQuestion?.setOnClickListener {
-            EventBus.getDefault().post(OpenUnpaidBillDetails())
-        }
+        mImageViewQuestion?.setOnClickListener(this)
     }
 
     override fun bindData(dto: DTOCollectionStatusConsolidateData) {
@@ -60,9 +58,14 @@ class CollectionStatusDataItemVH : BaseViewHolder<DTOCollectionStatusConsolidate
         mTextViewMode!!.text = dto.mode
         mTextViewCount!!.text = dto.count
 
-        if (!TextUtils.isEmpty(dto.mode) && dto.mode.equals("un-paid", true))
+        if (!TextUtils.isEmpty(dto.mode) && dto.mode.equals("un-paid", true)) {
             mImageViewQuestion?.visibility = View.VISIBLE
-        else
+        } else {
             mImageViewQuestion?.visibility = View.GONE
+        }
+    }
+
+    override fun onClick(v: View) {
+        super.onClick(v)
     }
 }

@@ -27,27 +27,32 @@ class CollectionStatusDataItemListVH : BaseViewHolder<DTOStatusConsolidateDataLi
         private val TAG = BuildConfig.BASE_TAG + ".CollectionSummaryDataItemListVH"
     }
 
-    private var mRecyclerView : RecyclerView?=null
-    private var mBaseAdapter : BaseAdapter?=null
+    private var mRecyclerView: RecyclerView? = null
+    private var mBaseAdapter: BaseAdapter? = null
 
     /**
      * Constructor
      *
      * @param itemView
      */
-    constructor(itemView : View) : super(itemView) {
+    constructor(itemView: View) : super(itemView) {
         Tracer.debug(TAG, "CollectionSummaryDataItemListVH: ")
         val colorDivider = ContextCompat.getColor(getContext(), R.color.divider_color)
         val dividerHeight = getContext().resources.getDimensionPixelOffset(R.dimen.divider_size)
         mRecyclerView = itemView.findViewById<View>(R.id.item_card_recycler_view) as RecyclerView
         mBaseAdapter = BaseAdapter(AdapterItemHandler())
+        mBaseAdapter?.setVHClickCallback(object : VHClickable {
+            override fun onViewHolderClicked(holder: BaseViewHolder<*>, view: View) {
+                onClick(view)
+            }
+        })
         mRecyclerView!!.adapter = mBaseAdapter
         mRecyclerView!!.layoutManager = GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false)
         mRecyclerView!!.addItemDecoration(GridSpacingItemDecoration(1, dividerHeight, colorDivider, false))
     }
 
-    override fun bindData(dto : DTOStatusConsolidateDataList) {
-        Tracer.debug(TAG, "bindData: " + dto !!)
+    override fun bindData(dto: DTOStatusConsolidateDataList) {
+        Tracer.debug(TAG, "bindData: " + dto!!)
         if (dto == null) {
             return
         }
@@ -59,7 +64,7 @@ class CollectionStatusDataItemListVH : BaseViewHolder<DTOStatusConsolidateDataLi
      *
      * @return
      */
-    private fun getSummaryConsolidateDataList(dtoStatusConsolidateDataList : DTOStatusConsolidateDataList) : ArrayList<BaseAdapterItem<*>> {
+    private fun getSummaryConsolidateDataList(dtoStatusConsolidateDataList: DTOStatusConsolidateDataList): ArrayList<BaseAdapterItem<*>> {
         Tracer.debug(TAG, "getSummaryConsolidateDataList: ")
         val baseAdapterItemList = ArrayList<BaseAdapterItem<*>>()
         val adapterViewType = AdapterItemHandler.AdapterItemViewType.STATUS_CONSOLIDATE_DATA.ordinal

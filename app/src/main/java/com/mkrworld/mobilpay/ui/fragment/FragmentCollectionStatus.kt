@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
+import android.widget.Toast
 import com.mkrworld.androidlib.BuildConfig
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
@@ -155,7 +156,9 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, BaseViewHol
     override fun onViewHolderClicked(holder: BaseViewHolder<*>, view: View) {
         Tracer.debug(TAG, "onViewHolderClicked: ")
         when (view.id) {
-
+            R.id.item_collection_status_data_imageview_question -> {
+                Toast.makeText(activity, "Jai matta de", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
