@@ -19,7 +19,7 @@ class FragmentProvider {
          * @param fragmentTag
          * @return
          */
-        fun getFragment(fragmentTag : String) : Fragment? {
+        fun getFragment(fragmentTag: String): Fragment? {
             Tracer.debug(TAG, "getFragment: $fragmentTag")
             when (fragmentTag) {
                 FragmentTag.AEPS_COLLECT -> return FragmentAEPSCollect()
@@ -38,6 +38,7 @@ class FragmentProvider {
                 FragmentTag.LOGIN -> return FragmentLogin()
                 FragmentTag.HOME -> return FragmentHome()
                 FragmentTag.COLLECTION_SUMMARY -> return FragmentCollectionSummary()
+                FragmentTag.UNPAID_DETAILS -> return FragmentUnPaidDetails()
                 else -> return null
             }
         }

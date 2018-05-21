@@ -18,6 +18,7 @@ interface FragmentTag {
         val CHANGE_PASSWORD = "FragmentChangePassword"
         val CHANGE_PASSWORD_BY_OTP = "FragmentChangePasswordByOtp"
         val COLLECTION_SUMMARY = "FragmentCollectionSummary"
+        val UNPAID_DETAILS = "UnpaidDetails"
         val NOTIFICATION = "FragmentNotification"
         val NOTIFICATION_TAB_ALL = "FragmentNotificationTabAll"
         val NOTIFICATION_TAB_AGENT = "FragmentNotificationTabAgent"

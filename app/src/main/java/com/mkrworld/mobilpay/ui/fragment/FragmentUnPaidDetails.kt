@@ -11,39 +11,28 @@ import com.mkrworld.androidlib.callback.OnBaseFragmentListener
 import com.mkrworld.androidlib.network.NetworkCallBack
 import com.mkrworld.androidlib.ui.adapter.BaseAdapter
 import com.mkrworld.androidlib.ui.adapter.BaseAdapterItem
-import com.mkrworld.androidlib.ui.adapter.BaseViewHolder
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.appdata.DTOCollectionStatusConsolidateData
-import com.mkrworld.mobilpay.dto.appdata.DTOStatusConsolidateDataList
-import com.mkrworld.mobilpay.dto.network.collectionstatus.DTOCollectionStatusRequest
-import com.mkrworld.mobilpay.dto.network.collectionstatus.DTOCollectionStatusResponse
-import com.mkrworld.mobilpay.eventbus.OpenUnpaidBillDetails
-import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
-import com.mkrworld.mobilpay.provider.fragment.FragmentTag
+import com.mkrworld.mobilpay.dto.appdata.DTOCollectionSummaryConsolidateData
+import com.mkrworld.mobilpay.dto.appdata.DTOSummaryConsolidateDataList
+import com.mkrworld.mobilpay.dto.network.collectionsummary.DTOCollectionSummaryRequest
+import com.mkrworld.mobilpay.dto.network.collectionsummary.DTOCollectionSummaryResponse
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 import java.util.*
-import kotlin.collections.ArrayList
 
-/**
- * Created by mkr on 15/3/18.
- */
-
-class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, BaseViewHolder.VHClickable { //View.OnClickListener,
+class FragmentUnPaidDetails : Fragment(), OnBaseFragmentListener, View.OnClickListener {
 
     companion object {
-        private val TAG = BuildConfig.BASE_TAG + ".FragmentAgentCollectionStatus"
+        private val TAG = BuildConfig.BASE_TAG + ".FragmentUnPaidDetails"
     }
 
     private var mBaseAdapter: BaseAdapter? = null
     private var mAppNetworkTaskProvider: AppNetworkTaskProvider? = null
-    private val mCollectionStatusNetworkCallBack = object : NetworkCallBack<DTOCollectionStatusResponse> {
-        override fun onSuccess(dto: DTOCollectionStatusResponse) {
+    private val mCollectionSummaryNetworkCallBack = object : NetworkCallBack<DTOCollectionSummaryResponse> {
+        override fun onSuccess(dto: DTOCollectionSummaryResponse) {
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
@@ -54,19 +43,13 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, BaseViewHol
             }
             // RECYCLER VIEW DATA
             val baseAdapterItemArrayList = ArrayList<BaseAdapterItem<*>>()
-            val dtoStatusConsolidateDataList = DTOStatusConsolidateDataList()
-            val dataList: ArrayList<DTOCollectionStatusResponse.Data> = dto.getData()
-            var count: Int = 0
-            for (data: DTOCollectionStatusResponse.Data in dataList) {
-                try {
-                    count += data.count!!.toInt()
-                } catch (e: Exception) {
-                    Tracer.error(TAG, "onSuccess : " + e.message)
-                }
-                dtoStatusConsolidateDataList.addConsolidateData(DTOCollectionStatusConsolidateData(DTOCollectionStatusConsolidateData.RowType.TEXT, data.label!!, data.count!!))
+            val dtoSummaryConsolidateDataList = DTOSummaryConsolidateDataList()
+            val dataList: ArrayList<DTOCollectionSummaryResponse.Data> = dto.getData()
+            dtoSummaryConsolidateDataList.addConsolidateData(DTOCollectionSummaryConsolidateData(DTOCollectionSummaryConsolidateData.RowType.TITLE, getString(R.string.mode_caps), getString(R.string.txns_caps), getString(R.string.amount_caps)))
+            for (data: DTOCollectionSummaryResponse.Data in dataList) {
+                dtoSummaryConsolidateDataList.addConsolidateData(DTOCollectionSummaryConsolidateData(DTOCollectionSummaryConsolidateData.RowType.TEXT, data.label!!, data.count!!, data.amount!!))
             }
-            dtoStatusConsolidateDataList.addConsolidateData(0, DTOCollectionStatusConsolidateData(DTOCollectionStatusConsolidateData.RowType.TITLE, getString(R.string.total_bill_sent), "" + count))
-            baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.STATUS_CONSOLIDATE_DATA_LIST.ordinal, dtoStatusConsolidateDataList))
+            baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.SUMMARY_CONSOLIDATE_DATA_LIST.ordinal, dtoSummaryConsolidateDataList))
             mBaseAdapter!!.updateAdapterItemList(baseAdapterItemArrayList)
         }
 
@@ -83,7 +66,7 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, BaseViewHol
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_collection_status, container, false)
+        return inflater!!.inflate(R.layout.fragment_unpaid_details, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -92,15 +75,6 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, BaseViewHol
         setHasOptionsMenu(true)
         setTitle()
         init()
-    }
-
-    @Subscribe()
-    fun onMessageEvent(openUnpaidBillDetails: OpenUnpaidBillDetails) {
-        Tracer.debug(TAG, "goToUnpaidDetailsScreen : ")
-        if (activity is OnBaseActivityListener) {
-            (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(FragmentProvider.getFragment(FragmentTag.UNPAID_DETAILS)!!, null,
-                    FragmentTag.UNPAID_DETAILS)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -119,18 +93,6 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, BaseViewHol
         super.onDestroyView()
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        EventBus.getDefault().unregister(this)
-    }
-
     override fun onBackPressed(): Boolean {
         Tracer.debug(TAG, "onBackPressed: ")
         return false
@@ -145,20 +107,12 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, BaseViewHol
         Tracer.debug(TAG, "onRefresh: ")
     }
 
-    /* override fun onClick(view: View) {
-         Tracer.debug(TAG, "onClick: ")
-         when (view.id) {
-
-         }
-     }*/
-
-    override fun onViewHolderClicked(holder: BaseViewHolder<*>, view: View) {
-        Tracer.debug(TAG, "onViewHolderClicked: ")
+    override fun onClick(view: View) {
+        Tracer.debug(TAG, "onClick: ")
         when (view.id) {
 
         }
     }
-
 
     /**
      * Method to set the Activity Title
@@ -166,7 +120,7 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, BaseViewHol
     private fun setTitle() {
         Tracer.debug(TAG, "setTitle: ")
         if (activity is OnBaseActivityListener) {
-            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_collection_status))
+            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_collection_summary))
         }
     }
 
@@ -181,14 +135,12 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, BaseViewHol
         if (view == null) {
             return
         }
-        val recyclerViewUserData = view!!.findViewById<View>(R.id.fragment_collection_status_recycler_view) as RecyclerView
+        val recyclerViewUserData = view!!.findViewById<View>(R.id.fragment_unpaid_details_recycler_view) as RecyclerView
         mBaseAdapter = BaseAdapter(AdapterItemHandler())
         recyclerViewUserData.adapter = mBaseAdapter
         recyclerViewUserData.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        mBaseAdapter?.setVHClickCallback(this)
         fetchCollectionSummary()
     }
-
 
     /**
      * Method to fetch collection summary
@@ -196,10 +148,10 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, BaseViewHol
     private fun fetchCollectionSummary() {
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
-        val token = Utils.createToken(activity, getString(R.string.endpoint_collection_status), date)
+        val token = Utils.createToken(activity, getString(R.string.endpoint_collection_summary), date)
         val publicKey = getString(R.string.public_key)
-        val dtoCollectionStatusRequest = DTOCollectionStatusRequest(token!!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity))
+        val dtoCollectionSummaryRequest = DTOCollectionSummaryRequest(token!!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity))
         Utils.showLoadingDialog(activity)
-        mAppNetworkTaskProvider!!.collectionStatusTask(activity, dtoCollectionStatusRequest, mCollectionStatusNetworkCallBack)
+        mAppNetworkTaskProvider!!.collectionSummaryTask(activity, dtoCollectionSummaryRequest, mCollectionSummaryNetworkCallBack)
     }
 }

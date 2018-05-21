@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/transparent"
-    android:gravity="center_horizontal"
-    android:orientation="horizontal"
-    android:paddingBottom="@dimen/item_collection_status_padding_ver"
-    android:paddingTop="@dimen/item_collection_status_padding_ver">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/transparent"
+              android:gravity="center_horizontal"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/item_collection_status_padding_ver"
+              android:paddingTop="@dimen/item_collection_status_padding_ver">
 
-    <com.mkrworld.mobilpay.ui.custom.FontTextView
-        android:id="@+id/item_collection_status_data_textView_mode"
+    <LinearLayout
         style="@style/style_text_view_default_width_weight"
         android:layout_weight="0.4"
-        android:gravity="left"
-        android:text="@string/mode_caps" />
+        android:gravity="center_vertical">
+
+        <com.mkrworld.mobilpay.ui.custom.FontTextView
+            android:id="@+id/item_collection_status_data_textView_mode"
+            style="@style/style_text_view_default"
+            android:text="@string/mode_caps"/>
+
+        <ImageView
+            android:id="@+id/item_collection_status_data_imageview_question"
+            style="@style/style_text_view_default"
+            android:layout_marginLeft="@dimen/button_margin"
+            android:src="@drawable/question"/>
+    </LinearLayout>
+
 
     <com.mkrworld.mobilpay.ui.custom.FontTextView
         android:id="@+id/item_collection_status_data_textView_count"
         style="@style/style_text_view_default_width_weight"
+        android:layout_gravity="center_vertical"
         android:layout_weight="0.25"
         android:gravity="right"
-        android:text="@string/txns_caps" />
+        android:text="@string/txns_caps"/>
 
 </LinearLayout>
