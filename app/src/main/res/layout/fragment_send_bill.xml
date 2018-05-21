@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/screen_back"
-    android:clickable="true"
-    android:fillViewport="true"
-    android:focusable="true"
-    android:paddingLeft="@dimen/fragment_send_bill_content_margin"
-    android:paddingRight="@dimen/fragment_send_bill_content_margin">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/screen_back"
+            android:clickable="true"
+            android:fillViewport="true"
+            android:focusable="true"
+            android:paddingLeft="@dimen/fragment_send_bill_content_margin"
+            android:paddingRight="@dimen/fragment_send_bill_content_margin">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         android:paddingLeft="@dimen/fragment_send_bill_content_margin"
         android:paddingRight="@dimen/fragment_send_bill_content_margin">
 
-        <ImageView style="@style/app_header_icon" />
+        <ImageView style="@style/app_header_icon"/>
 
         <!-- CUSTOMER-NUMBER -->
         <android.support.design.widget.TextInputLayout
@@ -29,7 +29,7 @@
                 style="@style/style_text_view_single_line"
                 android:hint="@string/mobile_number_star"
                 android:inputType="number"
-                android:maxLength="@integer/length_mobile_number" />
+                android:maxLength="@integer/length_mobile_number"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -40,9 +40,9 @@
 
             <com.mkrworld.mobilpay.ui.custom.FontEditText
                 android:id="@+id/fragment_send_bill_editText_bill_number"
-                style="@style/style_text_view_hint_single_line"
+                style="@style/style_text_view_single_line"
                 android:hint="@string/bill_number_star"
-                android:inputType="textNoSuggestions" />
+                android:inputType="textNoSuggestions"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -53,9 +53,9 @@
 
             <com.mkrworld.mobilpay.ui.custom.FontEditText
                 android:id="@+id/fragment_send_bill_editText_bill_description"
-                style="@style/style_text_view_hint_single_line"
+                style="@style/style_text_view_single_line"
                 android:hint="@string/bill_description_star"
-                android:inputType="textNoSuggestions" />
+                android:inputType="textNoSuggestions"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -66,9 +66,9 @@
 
             <com.mkrworld.mobilpay.ui.custom.FontEditText
                 android:id="@+id/fragment_send_bill_editText_bill_amount"
-                style="@style/style_text_view_hint_single_line"
+                style="@style/style_text_view_single_line"
                 android:hint="@string/bill_amount_star"
-                android:inputType="number" />
+                android:inputType="number"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -81,13 +81,13 @@
             <com.mkrworld.mobilpay.ui.custom.FontTextView
                 android:id="@+id/fragment_send_bill_textView_send"
                 style="@style/style_button_width_weight"
-                android:text="@string/send_caps" />
+                android:text="@string/send_caps"/>
 
             <com.mkrworld.mobilpay.ui.custom.FontTextView
                 android:id="@+id/fragment_send_bill_textView_cancel"
                 style="@style/style_button_inv_width_weight"
                 android:layout_marginLeft="@dimen/fragment_send_bill_button_margin"
-                android:text="@string/cancel_caps" />
+                android:text="@string/cancel_caps"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
