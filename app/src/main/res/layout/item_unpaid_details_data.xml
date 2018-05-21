@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/transparent"
+              android:gravity="center_horizontal"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/item_collection_summary_padding_ver"
+              android:paddingTop="@dimen/item_collection_summary_padding_ver">
+
+    <com.mkrworld.mobilpay.ui.custom.FontTextView
+        android:id="@+id/item_unpaid_details_data_textView_user_id"
+        style="@style/style_text_view_default_width_weight"
+        android:layout_weight="0.3"
+        android:gravity="left"
+        android:text="@string/mode_caps"
+        android:textSize="@dimen/mkrdp_3.54"/>
+
+    <com.mkrworld.mobilpay.ui.custom.FontTextView
+        android:id="@+id/item_unpaid_details_data_textView_name"
+        style="@style/style_text_view_default_width_weight"
+        android:layout_weight="0.25"
+        android:gravity="left"
+        android:text="@string/txns_caps"
+        android:textSize="@dimen/mkrdp_3.54"/>
+
+    <com.mkrworld.mobilpay.ui.custom.FontTextView
+        android:id="@+id/item_unpaid_details_data_textView_amount"
+        style="@style/style_text_view_default_width_weight"
+        android:layout_weight="0.25"
+        android:gravity="right"
+        android:text="@string/amount_caps"
+        android:textSize="@dimen/mkrdp_3.54"/>
+
+    <com.mkrworld.mobilpay.ui.custom.FontTextView
+        android:id="@+id/item_unpaid_details_data_textView_date"
+        style="@style/style_text_view_default_width_weight"
+        android:layout_weight="0.3"
+        android:gravity="right"
+        android:text="@string/amount_caps"
+        android:textSize="@dimen/mkrdp_3.54"/>
+
+</LinearLayout>

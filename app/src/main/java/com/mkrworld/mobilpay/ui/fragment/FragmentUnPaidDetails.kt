@@ -13,8 +13,8 @@ import com.mkrworld.androidlib.ui.adapter.BaseAdapter
 import com.mkrworld.androidlib.ui.adapter.BaseAdapterItem
 import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.R
-import com.mkrworld.mobilpay.dto.appdata.DTOCollectionSummaryConsolidateData
-import com.mkrworld.mobilpay.dto.appdata.DTOSummaryConsolidateDataList
+import com.mkrworld.mobilpay.dto.appdata.DTOUnpaidDetailsData
+import com.mkrworld.mobilpay.dto.appdata.DTOUnpaidDetailsDataList
 import com.mkrworld.mobilpay.dto.network.unpaiddetails.DTOUnpaidDetailsRequest
 import com.mkrworld.mobilpay.dto.network.unpaiddetails.DTOUnpaidDetailsResponse
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
@@ -43,13 +43,15 @@ class FragmentUnPaidDetails : Fragment(), OnBaseFragmentListener, View.OnClickLi
             }
             // RECYCLER VIEW DATA
             val baseAdapterItemArrayList = ArrayList<BaseAdapterItem<*>>()
-            val dtoSummaryConsolidateDataList = DTOSummaryConsolidateDataList()
+            val dtoUnpaidDetailsDataList = DTOUnpaidDetailsDataList()
             val dataList: ArrayList<DTOUnpaidDetailsResponse.Data> = dto.getData()
-            dtoSummaryConsolidateDataList.addConsolidateData(DTOCollectionSummaryConsolidateData(DTOCollectionSummaryConsolidateData.RowType.TITLE, getString(R.string.user_id), getString(R.string.user_name), getString(R.string.amount_caps)))
+            dtoUnpaidDetailsDataList.addConsolidateData(DTOUnpaidDetailsData(DTOUnpaidDetailsData.RowType.TITLE, getString(R.string.user_id),
+                    getString(R.string.user_name), getString(R.string.amount_caps), getString(R.string.date)))
             for (data: DTOUnpaidDetailsResponse.Data in dataList) {
-                dtoSummaryConsolidateDataList.addConsolidateData(DTOCollectionSummaryConsolidateData(DTOCollectionSummaryConsolidateData.RowType.TEXT, data.userId!!, data.firstName!! + data.lastName!!, data.billAmount!!))
+                dtoUnpaidDetailsDataList.addConsolidateData(DTOUnpaidDetailsData(DTOUnpaidDetailsData.RowType.TEXT, data.userId!!,
+                        data.firstName!! + data.lastName!!, data.billAmount!!, data.billDueDate!!))
             }
-            baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.SUMMARY_CONSOLIDATE_DATA_LIST.ordinal, dtoSummaryConsolidateDataList))
+            baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.UNPAID_DETAILS_DATA_LIST.ordinal, dtoUnpaidDetailsDataList))
             mBaseAdapter!!.updateAdapterItemList(baseAdapterItemArrayList)
         }
 

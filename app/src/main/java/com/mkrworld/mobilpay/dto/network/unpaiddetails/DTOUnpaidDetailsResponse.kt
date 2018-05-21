@@ -72,5 +72,11 @@ class DTOUnpaidDetailsResponse {
             get() {
                 return field ?: ""
             }
+
+        @SerializedName("bill_due_date")
+        var billDueDate: String? = null
+            get() {
+                return field ?: ""
+            }
     }
 }

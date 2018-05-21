@@ -18,10 +18,11 @@ class AdapterItemHandler : BaseAdapterItemHandler() {
      * Type of view hold by adapter
      */
     enum class AdapterItemViewType {
-        NONE, HOME_TAB, SUMMARY_CONSOLIDATE_DATA_LIST, SUMMARY_CONSOLIDATE_DATA, SUMMARY_USER_DATA, STATUS_CONSOLIDATE_DATA_LIST, STATUS_CONSOLIDATE_DATA, MULTI_SELECTION_ITEM
+        NONE, HOME_TAB, SUMMARY_CONSOLIDATE_DATA_LIST, SUMMARY_CONSOLIDATE_DATA, SUMMARY_USER_DATA, STATUS_CONSOLIDATE_DATA_LIST, STATUS_CONSOLIDATE_DATA, MULTI_SELECTION_ITEM,
+        UNPAID_DETAILS_DATA_LIST, UNPAID_DETAILS_DATA
     }
 
-    override fun createHolder(inflater : LayoutInflater, parent : ViewGroup, viewType : Int) : BaseViewHolder<*> {
+    override fun createHolder(inflater: LayoutInflater, parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         when (getItemViewType(viewType)) {
             AdapterItemHandler.AdapterItemViewType.HOME_TAB -> return HomeTabVH(inflater.inflate(R.layout.item_home_tab, parent, false))
             AdapterItemHandler.AdapterItemViewType.SUMMARY_CONSOLIDATE_DATA_LIST -> return CollectionSummaryDataItemListVH(inflater.inflate(R.layout.item_card_recycler_view, parent, false))
@@ -30,8 +31,10 @@ class AdapterItemHandler : BaseAdapterItemHandler() {
             AdapterItemHandler.AdapterItemViewType.STATUS_CONSOLIDATE_DATA -> return CollectionStatusDataItemVH(inflater.inflate(R.layout.item_collection_status_data, parent, false))
             AdapterItemHandler.AdapterItemViewType.SUMMARY_USER_DATA -> return SummaryUserDataVH(inflater.inflate(R.layout.item_collection_summary_user_data, parent, false))
             AdapterItemHandler.AdapterItemViewType.MULTI_SELECTION_ITEM -> return MultiSelectionDataVH(inflater.inflate(R.layout.item_multi_selection_item, parent, false))
+            AdapterItemHandler.AdapterItemViewType.UNPAID_DETAILS_DATA_LIST -> return UnpaidDetailsDataItemVHList(inflater.inflate(R.layout.item_card_recycler_view, parent, false))
+            AdapterItemHandler.AdapterItemViewType.UNPAID_DETAILS_DATA -> return UnpaidDetailsDataItemVH(inflater.inflate(R.layout.item_unpaid_details_data, parent, false))
             else -> return object : BaseViewHolder<Any>(FrameLayout(inflater.context)) {
-                protected override fun bindData(o : Any) {
+                protected override fun bindData(o: Any) {
 
                 }
             }
@@ -43,7 +46,7 @@ class AdapterItemHandler : BaseAdapterItemHandler() {
      *
      * @return
      */
-    private fun getItemViewType(viewType : Int) : AdapterItemViewType {
+    private fun getItemViewType(viewType: Int): AdapterItemViewType {
         return AdapterItemViewType.values()[viewType]
     }
 }
