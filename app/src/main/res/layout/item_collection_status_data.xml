@@ -20,7 +20,8 @@
 
         <ImageView
             android:id="@+id/item_collection_status_data_imageview_question"
-            style="@style/style_text_view_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/button_margin"
             android:src="@drawable/question"/>
     </LinearLayout>

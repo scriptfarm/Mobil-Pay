@@ -41,6 +41,10 @@ class CollectionSummaryDataItemListVH : BaseViewHolder<DTOSummaryConsolidateData
         val dividerHeight = getContext().resources.getDimensionPixelOffset(R.dimen.divider_size)
         mRecyclerView = itemView.findViewById<View>(R.id.item_card_recycler_view) as RecyclerView
         mBaseAdapter = BaseAdapter(AdapterItemHandler())
+        mBaseAdapter?.setVHClickCallback(object : VHClickable {
+            override fun onViewHolderClicked(holder: BaseViewHolder<*>, view: View) {
+                onClick(view)
+            }
         mRecyclerView!!.adapter = mBaseAdapter
         mRecyclerView!!.layoutManager = GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false)
         mRecyclerView!!.addItemDecoration(GridSpacingItemDecoration(1, dividerHeight, colorDivider, false))
