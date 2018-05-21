@@ -18,7 +18,7 @@
     <string name="url_send_forgot_password_otp">sendForgotPasswordOTP</string>
     <string name="url_forgot_password">forgotPassword</string>
     <string name="url_merchant_agent_list">getAgent</string>
-
+    <string name="url_unpaid_details">getUnpaidUser</string>
 
     <string name="endpoint_login">@string/url_login</string>
     <string name="endpoint_collection_summary">@string/url_collection_summary</string>

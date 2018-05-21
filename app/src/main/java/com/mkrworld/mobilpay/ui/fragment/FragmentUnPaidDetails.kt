@@ -15,8 +15,8 @@ import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.R
 import com.mkrworld.mobilpay.dto.appdata.DTOCollectionSummaryConsolidateData
 import com.mkrworld.mobilpay.dto.appdata.DTOSummaryConsolidateDataList
-import com.mkrworld.mobilpay.dto.network.collectionsummary.DTOCollectionSummaryRequest
-import com.mkrworld.mobilpay.dto.network.collectionsummary.DTOCollectionSummaryResponse
+import com.mkrworld.mobilpay.dto.network.unpaiddetails.DTOUnpaidDetailsRequest
+import com.mkrworld.mobilpay.dto.network.unpaiddetails.DTOUnpaidDetailsResponse
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler
 import com.mkrworld.mobilpay.utils.PreferenceData
@@ -31,8 +31,8 @@ class FragmentUnPaidDetails : Fragment(), OnBaseFragmentListener, View.OnClickLi
 
     private var mBaseAdapter: BaseAdapter? = null
     private var mAppNetworkTaskProvider: AppNetworkTaskProvider? = null
-    private val mCollectionSummaryNetworkCallBack = object : NetworkCallBack<DTOCollectionSummaryResponse> {
-        override fun onSuccess(dto: DTOCollectionSummaryResponse) {
+    private val mUnpaidDetailsNetworkCallBack = object : NetworkCallBack<DTOUnpaidDetailsResponse> {
+        override fun onSuccess(dto: DTOUnpaidDetailsResponse) {
             Utils.dismissLoadingDialog()
             if (view == null) {
                 return
@@ -44,10 +44,10 @@ class FragmentUnPaidDetails : Fragment(), OnBaseFragmentListener, View.OnClickLi
             // RECYCLER VIEW DATA
             val baseAdapterItemArrayList = ArrayList<BaseAdapterItem<*>>()
             val dtoSummaryConsolidateDataList = DTOSummaryConsolidateDataList()
-            val dataList: ArrayList<DTOCollectionSummaryResponse.Data> = dto.getData()
-            dtoSummaryConsolidateDataList.addConsolidateData(DTOCollectionSummaryConsolidateData(DTOCollectionSummaryConsolidateData.RowType.TITLE, getString(R.string.mode_caps), getString(R.string.txns_caps), getString(R.string.amount_caps)))
-            for (data: DTOCollectionSummaryResponse.Data in dataList) {
-                dtoSummaryConsolidateDataList.addConsolidateData(DTOCollectionSummaryConsolidateData(DTOCollectionSummaryConsolidateData.RowType.TEXT, data.label!!, data.count!!, data.amount!!))
+            val dataList: ArrayList<DTOUnpaidDetailsResponse.Data> = dto.getData()
+            dtoSummaryConsolidateDataList.addConsolidateData(DTOCollectionSummaryConsolidateData(DTOCollectionSummaryConsolidateData.RowType.TITLE, getString(R.string.user_id), getString(R.string.user_name), getString(R.string.amount_caps)))
+            for (data: DTOUnpaidDetailsResponse.Data in dataList) {
+                dtoSummaryConsolidateDataList.addConsolidateData(DTOCollectionSummaryConsolidateData(DTOCollectionSummaryConsolidateData.RowType.TEXT, data.userId!!, data.firstName!! + data.lastName!!, data.billAmount!!))
             }
             baseAdapterItemArrayList.add(BaseAdapterItem(AdapterItemHandler.AdapterItemViewType.SUMMARY_CONSOLIDATE_DATA_LIST.ordinal, dtoSummaryConsolidateDataList))
             mBaseAdapter!!.updateAdapterItemList(baseAdapterItemArrayList)
@@ -120,7 +120,7 @@ class FragmentUnPaidDetails : Fragment(), OnBaseFragmentListener, View.OnClickLi
     private fun setTitle() {
         Tracer.debug(TAG, "setTitle: ")
         if (activity is OnBaseActivityListener) {
-            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_collection_summary))
+            (activity as OnBaseActivityListener).onBaseActivitySetScreenTitle(getString(R.string.screen_title_unpaid_details_summary))
         }
     }
 
@@ -139,19 +139,20 @@ class FragmentUnPaidDetails : Fragment(), OnBaseFragmentListener, View.OnClickLi
         mBaseAdapter = BaseAdapter(AdapterItemHandler())
         recyclerViewUserData.adapter = mBaseAdapter
         recyclerViewUserData.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        fetchCollectionSummary()
+        fetchUnpaidDetailsSummary()
     }
 
     /**
      * Method to fetch collection summary
      */
-    private fun fetchCollectionSummary() {
+    private fun fetchUnpaidDetailsSummary() {
         val date = Date()
         val timeStamp = Utils.getDateTimeFormate(date, Utils.DATE_FORMAT)
-        val token = Utils.createToken(activity, getString(R.string.endpoint_collection_summary), date)
+        val token = Utils.createToken(activity, getString(R.string.url_unpaid_details), date)
         val publicKey = getString(R.string.public_key)
-        val dtoCollectionSummaryRequest = DTOCollectionSummaryRequest(token!!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity), PreferenceData.getLoginAgentId(activity))
+        val dtoUnpaidDetailsRequest = DTOUnpaidDetailsRequest(token!!, timeStamp, publicKey, PreferenceData.getUserType(activity), PreferenceData.getLoginMerchantId(activity),
+                PreferenceData.getLoginAgentId(activity))
         Utils.showLoadingDialog(activity)
-        mAppNetworkTaskProvider!!.collectionSummaryTask(activity, dtoCollectionSummaryRequest, mCollectionSummaryNetworkCallBack)
+        mAppNetworkTaskProvider!!.unpaidDetailsTask(activity, dtoUnpaidDetailsRequest, mUnpaidDetailsNetworkCallBack)
     }
 }

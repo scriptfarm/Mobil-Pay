@@ -29,6 +29,7 @@
     <string name="screen_title_forgot_password">Forgot Password</string>
     <string name="screen_title_change_password">Change Password</string>
     <string name="screen_title_collection_summary">Collection Summary</string>
+    <string name="screen_title_unpaid_details_summary">Unpaid Details Summary</string>
     <string name="screen_title_collection_status">Collection Status</string>
     <string name="screen_title_send_notification">Send Notification</string>
 
@@ -120,5 +121,6 @@
     <string name="are_you_sure_to_send_the_reminder_to_all">Are you sure to send the reminder to all ??</string>
     <string name="update_finger_print">Update Finger Print</string>
     <string name="are_you_sure_to_update_the_login_detail">Are you sure to update the login detail.</string>
-
+    <string name="user_id">USER ID</string>
+    <string name="user_name">NAME</string>
 </resources>

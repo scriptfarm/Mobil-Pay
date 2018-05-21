@@ -8,14 +8,8 @@ import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.dto.network.agent.agentdetails.DTOAgentDetailRequest
 import com.mkrworld.mobilpay.dto.network.agent.agentdetails.DTOAgentDetailResponse
-import com.mkrworld.mobilpay.dto.network.fcm.DTOFCMRequest
-import com.mkrworld.mobilpay.dto.network.fcm.DTOFCMResponse
-import com.mkrworld.mobilpay.dto.network.fetchbill.DTOFetchBillRequest
-import com.mkrworld.mobilpay.dto.network.fetchbill.DTOFetchBillResponse
 import com.mkrworld.mobilpay.dto.network.agent.agentmerchantlist.DTOAgentMerchantListRequest
 import com.mkrworld.mobilpay.dto.network.agent.agentmerchantlist.DTOAgentMerchantListResponse
-import com.mkrworld.mobilpay.dto.network.qrcodegenarator.DTOQRCodeGeneratorRequest
-import com.mkrworld.mobilpay.dto.network.qrcodegenarator.DTOQRCodeGeneratorResponse
 import com.mkrworld.mobilpay.dto.network.cashcollect.DTOCashCollectRequest
 import com.mkrworld.mobilpay.dto.network.cashcollect.DTOCashCollectResponse
 import com.mkrworld.mobilpay.dto.network.changepassword.DTOChangePasswordRequest
@@ -24,26 +18,35 @@ import com.mkrworld.mobilpay.dto.network.collectionstatus.DTOCollectionStatusReq
 import com.mkrworld.mobilpay.dto.network.collectionstatus.DTOCollectionStatusResponse
 import com.mkrworld.mobilpay.dto.network.collectionsummary.DTOCollectionSummaryRequest
 import com.mkrworld.mobilpay.dto.network.collectionsummary.DTOCollectionSummaryResponse
+import com.mkrworld.mobilpay.dto.network.fcm.DTOFCMRequest
+import com.mkrworld.mobilpay.dto.network.fcm.DTOFCMResponse
+import com.mkrworld.mobilpay.dto.network.fetchbill.DTOFetchBillRequest
+import com.mkrworld.mobilpay.dto.network.fetchbill.DTOFetchBillResponse
 import com.mkrworld.mobilpay.dto.network.forgotpassword.DTOForgotPasswordRequest
 import com.mkrworld.mobilpay.dto.network.forgotpassword.DTOForgotPasswordResponse
 import com.mkrworld.mobilpay.dto.network.login.DTOLoginRequest
 import com.mkrworld.mobilpay.dto.network.login.DTOLoginResponse
 import com.mkrworld.mobilpay.dto.network.logout.DTOLogoutRequest
 import com.mkrworld.mobilpay.dto.network.logout.DTOLogoutResponse
+import com.mkrworld.mobilpay.dto.network.merchantagentlist.DTOMerchantAgentListRequest
+import com.mkrworld.mobilpay.dto.network.merchantagentlist.DTOMerchantAgentListResponse
+import com.mkrworld.mobilpay.dto.network.mobilenumberstatus.DTOMobileNumberStatusRequest
+import com.mkrworld.mobilpay.dto.network.mobilenumberstatus.DTOMobileNumberStatusResponse
+import com.mkrworld.mobilpay.dto.network.qrcodegenarator.DTOQRCodeGeneratorRequest
+import com.mkrworld.mobilpay.dto.network.qrcodegenarator.DTOQRCodeGeneratorResponse
 import com.mkrworld.mobilpay.dto.network.sendbill.DTOSendBillRequest
 import com.mkrworld.mobilpay.dto.network.sendbill.DTOSendBillResponse
 import com.mkrworld.mobilpay.dto.network.sendforgotpasswordotp.DTOSendForgotPasswordOtpRequest
 import com.mkrworld.mobilpay.dto.network.sendforgotpasswordotp.DTOSendForgotPasswordOtpResponse
 import com.mkrworld.mobilpay.dto.network.sendnotification.DTOSendNotificationRequest
 import com.mkrworld.mobilpay.dto.network.sendnotification.DTOSendNotificationResponse
-import com.mkrworld.mobilpay.dto.network.merchantagentlist.DTOMerchantAgentListRequest
-import com.mkrworld.mobilpay.dto.network.merchantagentlist.DTOMerchantAgentListResponse
-import com.mkrworld.mobilpay.dto.network.mobilenumberstatus.DTOMobileNumberStatusRequest
-import com.mkrworld.mobilpay.dto.network.mobilenumberstatus.DTOMobileNumberStatusResponse
+import com.mkrworld.mobilpay.dto.network.unpaiddetails.DTOUnpaidDetailsRequest
+import com.mkrworld.mobilpay.dto.network.unpaiddetails.DTOUnpaidDetailsResponse
 import com.mkrworld.mobilpay.dto.user.userdetail.DTOUserDetailRequest
 import com.mkrworld.mobilpay.dto.user.userdetail.DTOUserDetailResponse
-import com.mkrworld.mobilpay.task.network.agent.*
 import com.mkrworld.mobilpay.task.network.*
+import com.mkrworld.mobilpay.task.network.agent.AgentDetailTask
+import com.mkrworld.mobilpay.task.network.agent.AgentMerchantsListTask
 import com.mkrworld.mobilpay.task.network.merchant.MerchantAgentListTask
 import com.mkrworld.mobilpay.task.network.merchant.MobileNumberStatusTask
 import com.mkrworld.mobilpay.task.user.UserListTask
@@ -63,17 +66,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun loginTask(context : Context, request : DTOLoginRequest, networkCallBack : NetworkCallBack<DTOLoginResponse>) {
+    fun loginTask(context: Context, request: DTOLoginRequest, networkCallBack: NetworkCallBack<DTOLoginResponse>) {
         Tracer.debug(TAG, "loginTask : ")
         val requestJson = parseDtoToJson(request, DTOLoginRequest::class.java, networkCallBack)
                 ?: return
         val task = LoginTask(context, requestJson, object : NetworkCallBack<DTOLoginResponse> {
 
-            override fun onSuccess(networkResponse : DTOLoginResponse) {
+            override fun onSuccess(networkResponse: DTOLoginResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -88,17 +91,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun logoutTask(context : Context, request : DTOLogoutRequest, networkCallBack : NetworkCallBack<DTOLogoutResponse>) {
+    fun logoutTask(context: Context, request: DTOLogoutRequest, networkCallBack: NetworkCallBack<DTOLogoutResponse>) {
         Tracer.debug(TAG, "logoutTask : ")
         val requestJson = parseDtoToJson(request, DTOLogoutRequest::class.java, networkCallBack)
                 ?: return
         val task = LogoutTask(context, requestJson, object : NetworkCallBack<DTOLogoutResponse> {
 
-            override fun onSuccess(networkResponse : DTOLogoutResponse) {
+            override fun onSuccess(networkResponse: DTOLogoutResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -112,17 +115,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun changePasswordTask(context : Context, request : DTOChangePasswordRequest, networkCallBack : NetworkCallBack<DTOChangePasswordResponse>) {
+    fun changePasswordTask(context: Context, request: DTOChangePasswordRequest, networkCallBack: NetworkCallBack<DTOChangePasswordResponse>) {
         Tracer.debug(TAG, "changePasswordTask : ")
         val requestJson = parseDtoToJson(request, DTOChangePasswordRequest::class.java, networkCallBack)
                 ?: return
         val task = ChangePasswordTask(context, requestJson, object : NetworkCallBack<DTOChangePasswordResponse> {
 
-            override fun onSuccess(networkResponse : DTOChangePasswordResponse) {
+            override fun onSuccess(networkResponse: DTOChangePasswordResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -136,17 +139,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun sendForgotPasswordOtpTask(context : Context, request : DTOSendForgotPasswordOtpRequest, networkCallBack : NetworkCallBack<DTOSendForgotPasswordOtpResponse>) {
+    fun sendForgotPasswordOtpTask(context: Context, request: DTOSendForgotPasswordOtpRequest, networkCallBack: NetworkCallBack<DTOSendForgotPasswordOtpResponse>) {
         Tracer.debug(TAG, "sendForgotPasswordOtpTask : ")
         val requestJson = parseDtoToJson(request, DTOSendForgotPasswordOtpRequest::class.java, networkCallBack)
                 ?: return
         val task = SendForgotPasswordOtpTask(context, requestJson, object : NetworkCallBack<DTOSendForgotPasswordOtpResponse> {
 
-            override fun onSuccess(networkResponse : DTOSendForgotPasswordOtpResponse) {
+            override fun onSuccess(networkResponse: DTOSendForgotPasswordOtpResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -160,17 +163,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun forgotPasswordTask(context : Context, request : DTOForgotPasswordRequest, networkCallBack : NetworkCallBack<DTOForgotPasswordResponse>) {
+    fun forgotPasswordTask(context: Context, request: DTOForgotPasswordRequest, networkCallBack: NetworkCallBack<DTOForgotPasswordResponse>) {
         Tracer.debug(TAG, "forgotPasswordTask : ")
         val requestJson = parseDtoToJson(request, DTOForgotPasswordRequest::class.java, networkCallBack)
                 ?: return
         val task = ForgotPasswordTask(context, requestJson, object : NetworkCallBack<DTOForgotPasswordResponse> {
 
-            override fun onSuccess(networkResponse : DTOForgotPasswordResponse) {
+            override fun onSuccess(networkResponse: DTOForgotPasswordResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -184,17 +187,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun collectionSummaryTask(context : Context, request : DTOCollectionSummaryRequest, networkCallBack : NetworkCallBack<DTOCollectionSummaryResponse>) {
+    fun collectionSummaryTask(context: Context, request: DTOCollectionSummaryRequest, networkCallBack: NetworkCallBack<DTOCollectionSummaryResponse>) {
         Tracer.debug(TAG, "loginTask : ")
         val requestJson = parseDtoToJson(request, DTOCollectionSummaryRequest::class.java, networkCallBack)
                 ?: return
         val task = CollectionSummaryTask(context, requestJson, object : NetworkCallBack<DTOCollectionSummaryResponse> {
 
-            override fun onSuccess(networkResponse : DTOCollectionSummaryResponse) {
+            override fun onSuccess(networkResponse: DTOCollectionSummaryResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -208,17 +211,41 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun collectionStatusTask(context : Context, request : DTOCollectionStatusRequest, networkCallBack : NetworkCallBack<DTOCollectionStatusResponse>) {
+    fun unpaidDetailsTask(context: Context, request: DTOUnpaidDetailsRequest, networkCallBack: NetworkCallBack<DTOUnpaidDetailsResponse>) {
+        Tracer.debug(TAG, "loginTask : ")
+        val requestJson = parseDtoToJson(request, DTOUnpaidDetailsRequest::class.java, networkCallBack)
+                ?: return
+        val task = UnpaidDetailsTask(context, requestJson, object : NetworkCallBack<DTOUnpaidDetailsResponse> {
+
+            override fun onSuccess(networkResponse: DTOUnpaidDetailsResponse) {
+                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
+            }
+
+            override fun onError(errorMessage: String, errorCode: Int) {
+                notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
+            }
+        })
+        task.executeTask()
+    }
+
+    /**
+     * Method called to get the collection summary
+     *
+     * @param context
+     * @param request
+     * @param networkCallBack
+     */
+    fun collectionStatusTask(context: Context, request: DTOCollectionStatusRequest, networkCallBack: NetworkCallBack<DTOCollectionStatusResponse>) {
         Tracer.debug(TAG, "loginTask : ")
         val requestJson = parseDtoToJson(request, DTOCollectionStatusRequest::class.java, networkCallBack)
                 ?: return
         val task = CollectionStatusTask(context, requestJson, object : NetworkCallBack<DTOCollectionStatusResponse> {
 
-            override fun onSuccess(networkResponse : DTOCollectionStatusResponse) {
+            override fun onSuccess(networkResponse: DTOCollectionStatusResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -233,17 +260,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun sendNotificationTaskTask(context : Context, request : DTOSendNotificationRequest, networkCallBack : NetworkCallBack<DTOSendNotificationResponse>) {
+    fun sendNotificationTaskTask(context: Context, request: DTOSendNotificationRequest, networkCallBack: NetworkCallBack<DTOSendNotificationResponse>) {
         Tracer.debug(TAG, "sendNotificationTaskTask : ")
         val requestJson = parseDtoToJson(request, DTOSendNotificationRequest::class.java, networkCallBack)
                 ?: return
         val task = SendNotificationTask(context, requestJson, object : NetworkCallBack<DTOSendNotificationResponse> {
 
-            override fun onSuccess(networkResponse : DTOSendNotificationResponse) {
+            override fun onSuccess(networkResponse: DTOSendNotificationResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -257,17 +284,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun sendBillTask(context : Context, request : DTOSendBillRequest, networkCallBack : NetworkCallBack<DTOSendBillResponse>) {
+    fun sendBillTask(context: Context, request: DTOSendBillRequest, networkCallBack: NetworkCallBack<DTOSendBillResponse>) {
         Tracer.debug(TAG, "sendBillTask : ")
         val requestJson = parseDtoToJson(request, DTOSendBillRequest::class.java, networkCallBack)
                 ?: return
         val task = SendBillTask(context, requestJson, object : NetworkCallBack<DTOSendBillResponse> {
 
-            override fun onSuccess(networkResponse : DTOSendBillResponse) {
+            override fun onSuccess(networkResponse: DTOSendBillResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -281,17 +308,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun fetchBillTask(context : Context, request : DTOFetchBillRequest, networkCallBack : NetworkCallBack<DTOFetchBillResponse>) {
+    fun fetchBillTask(context: Context, request: DTOFetchBillRequest, networkCallBack: NetworkCallBack<DTOFetchBillResponse>) {
         Tracer.debug(TAG, "fetchBillTask : ")
         val requestJson = parseDtoToJson(request, DTOFetchBillRequest::class.java, networkCallBack)
                 ?: return
         val task = FetchBillTask(context, requestJson, object : NetworkCallBack<DTOFetchBillResponse> {
 
-            override fun onSuccess(networkResponse : DTOFetchBillResponse) {
+            override fun onSuccess(networkResponse: DTOFetchBillResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -305,17 +332,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun agentQRCodeGeneratorTask(context : Context, request : DTOQRCodeGeneratorRequest, networkCallBack : NetworkCallBack<DTOQRCodeGeneratorResponse>) {
+    fun agentQRCodeGeneratorTask(context: Context, request: DTOQRCodeGeneratorRequest, networkCallBack: NetworkCallBack<DTOQRCodeGeneratorResponse>) {
         Tracer.debug(TAG, "agentQRCodeGeneratorTask : ")
         val requestJson = parseDtoToJson(request, DTOQRCodeGeneratorRequest::class.java, networkCallBack)
                 ?: return
         val task = QRCodeGeneratorTask(context, requestJson, object : NetworkCallBack<DTOQRCodeGeneratorResponse> {
 
-            override fun onSuccess(networkResponse : DTOQRCodeGeneratorResponse) {
+            override fun onSuccess(networkResponse: DTOQRCodeGeneratorResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -329,17 +356,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun setFcmId(context : Context, request : DTOFCMRequest, networkCallBack : NetworkCallBack<DTOFCMResponse>) {
+    fun setFcmId(context: Context, request: DTOFCMRequest, networkCallBack: NetworkCallBack<DTOFCMResponse>) {
         Tracer.debug(TAG, "setFcmId : ")
         val requestJson = parseDtoToJson(request, DTOFCMRequest::class.java, networkCallBack)
                 ?: return
         val task = FcmTask(context, requestJson, object : NetworkCallBack<DTOFCMResponse> {
 
-            override fun onSuccess(networkResponse : DTOFCMResponse) {
+            override fun onSuccess(networkResponse: DTOFCMResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -353,17 +380,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param collectRequest
      * @param networkCallBack
      */
-    fun cashCollectTask(context : Context, collectRequest : DTOCashCollectRequest, networkCallBack : NetworkCallBack<DTOCashCollectResponse>) {
+    fun cashCollectTask(context: Context, collectRequest: DTOCashCollectRequest, networkCallBack: NetworkCallBack<DTOCashCollectResponse>) {
         Tracer.debug(TAG, "cashCollectTask : ")
         val requestJson = parseDtoToJson(collectRequest, DTOCashCollectRequest::class.java, networkCallBack)
                 ?: return
         val task = AgentCashCollectTask(context, requestJson, object : NetworkCallBack<DTOCashCollectResponse> {
 
-            override fun onSuccess(networkCollectResponse : DTOCashCollectResponse) {
+            override fun onSuccess(networkCollectResponse: DTOCashCollectResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkCollectResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -377,17 +404,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun agentDetailTask(context : Context, request : DTOAgentDetailRequest, networkCallBack : NetworkCallBack<DTOAgentDetailResponse>) {
+    fun agentDetailTask(context: Context, request: DTOAgentDetailRequest, networkCallBack: NetworkCallBack<DTOAgentDetailResponse>) {
         Tracer.debug(TAG, "agentDetailTask : ")
         val requestJson = parseDtoToJson(request, DTOAgentDetailRequest::class.java, networkCallBack)
                 ?: return
         val task = AgentDetailTask(context, requestJson, object : NetworkCallBack<DTOAgentDetailResponse> {
 
-            override fun onSuccess(networkResponse : DTOAgentDetailResponse) {
+            override fun onSuccess(networkResponse: DTOAgentDetailResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -401,17 +428,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun mobileNumberStatusTask(context : Context, request : DTOMobileNumberStatusRequest, networkCallBack : NetworkCallBack<DTOMobileNumberStatusResponse>) {
+    fun mobileNumberStatusTask(context: Context, request: DTOMobileNumberStatusRequest, networkCallBack: NetworkCallBack<DTOMobileNumberStatusResponse>) {
         Tracer.debug(TAG, "mobileNumberStatusTask : ")
         val requestJson = parseDtoToJson(request, DTOMobileNumberStatusRequest::class.java, networkCallBack)
                 ?: return
         val task = MobileNumberStatusTask(context, requestJson, object : NetworkCallBack<DTOMobileNumberStatusResponse> {
 
-            override fun onSuccess(networkResponse : DTOMobileNumberStatusResponse) {
+            override fun onSuccess(networkResponse: DTOMobileNumberStatusResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -425,17 +452,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun agentMerchantsList(context : Context, request : DTOAgentMerchantListRequest, networkCallBack : NetworkCallBack<DTOAgentMerchantListResponse>) {
+    fun agentMerchantsList(context: Context, request: DTOAgentMerchantListRequest, networkCallBack: NetworkCallBack<DTOAgentMerchantListResponse>) {
         Tracer.debug(TAG, "mobileNumberStatusTask : ")
         val requestJson = parseDtoToJson(request, DTOAgentMerchantListRequest::class.java, networkCallBack)
                 ?: return
         val task = AgentMerchantsListTask(context, requestJson, object : NetworkCallBack<DTOAgentMerchantListResponse> {
 
-            override fun onSuccess(networkResponse : DTOAgentMerchantListResponse) {
+            override fun onSuccess(networkResponse: DTOAgentMerchantListResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -449,17 +476,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun agentListTask(context : Context, request : DTOMerchantAgentListRequest, networkCallBack : NetworkCallBack<DTOMerchantAgentListResponse>) {
+    fun agentListTask(context: Context, request: DTOMerchantAgentListRequest, networkCallBack: NetworkCallBack<DTOMerchantAgentListResponse>) {
         Tracer.debug(TAG, "agentListTask : ")
         val requestJson = parseDtoToJson(request, DTOMerchantAgentListRequest::class.java, networkCallBack)
                 ?: return
         val task = MerchantAgentListTask(context, requestJson, object : NetworkCallBack<DTOMerchantAgentListResponse> {
 
-            override fun onSuccess(networkResponse : DTOMerchantAgentListResponse) {
+            override fun onSuccess(networkResponse: DTOMerchantAgentListResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -473,17 +500,17 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param request
      * @param networkCallBack
      */
-    fun userDetailTask(context : Context, request : DTOUserDetailRequest, networkCallBack : NetworkCallBack<DTOUserDetailResponse>) {
+    fun userDetailTask(context: Context, request: DTOUserDetailRequest, networkCallBack: NetworkCallBack<DTOUserDetailResponse>) {
         Tracer.debug(TAG, "userDetailTask : ")
         val requestJson = parseDtoToJson(request, DTOUserDetailRequest::class.java, networkCallBack)
                 ?: return
         val task = UserListTask(context, requestJson, object : NetworkCallBack<DTOUserDetailResponse> {
 
-            override fun onSuccess(networkResponse : DTOUserDetailResponse) {
+            override fun onSuccess(networkResponse: DTOUserDetailResponse) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, networkResponse)
             }
 
-            override fun onError(errorMessage : String, errorCode : Int) {
+            override fun onError(errorMessage: String, errorCode: Int) {
                 notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, errorMessage, errorCode)
             }
         })
@@ -498,12 +525,12 @@ open class AppNetworkTaskProvider : BaseTaskProvider() {
      * @param networkCallBack
      * @return
      */
-    protected fun parseDtoToJson(`object` : Any, refClass : Class<*>, networkCallBack : NetworkCallBack<*>) : JSONObject? {
+    protected fun parseDtoToJson(`object`: Any, refClass: Class<*>, networkCallBack: NetworkCallBack<*>): JSONObject? {
         try {
             return JSONObject(Gson().toJson(`object`, refClass))
-        } catch (e : JSONException) {
+        } catch (e: JSONException) {
             e.printStackTrace()
-            notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, "Request JSON : " + e.message, - 1)
+            notifyTaskResponse(networkCallBack as NetworkCallBack<Any>, "Request JSON : " + e.message, -1)
         }
 
         return null

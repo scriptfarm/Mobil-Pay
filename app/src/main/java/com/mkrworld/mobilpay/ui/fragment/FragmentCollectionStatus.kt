@@ -98,8 +98,8 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, BaseViewHol
     fun onMessageEvent(openUnpaidBillDetails: OpenUnpaidBillDetails) {
         Tracer.debug(TAG, "goToUnpaidDetailsScreen : ")
         if (activity is OnBaseActivityListener) {
-            (activity as OnBaseActivityListener).onBaseActivityReplaceFragment(FragmentProvider.getFragment(FragmentTag.UNPAID_DETAILS)!!, null,
-                    FragmentTag.UNPAID_DETAILS)
+            (activity as OnBaseActivityListener).onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.UNPAID_DETAILS)!!, null,
+                    true, FragmentTag.UNPAID_DETAILS)
         }
     }
 
