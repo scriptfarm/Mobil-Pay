@@ -11,8 +11,6 @@ import com.mkrworld.androidlib.utils.Tracer
 import com.mkrworld.mobilpay.BuildConfig
 import com.mkrworld.mobilpay.R
 import com.mkrworld.mobilpay.dto.appdata.DTOCollectionStatusConsolidateData
-import com.mkrworld.mobilpay.eventbus.OpenUnpaidBillDetails
-import org.greenrobot.eventbus.EventBus
 
 /**
  * Created by mkr on 14/3/18.

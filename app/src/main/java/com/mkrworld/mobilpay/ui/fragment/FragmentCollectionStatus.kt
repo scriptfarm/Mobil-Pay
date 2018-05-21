@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
-import android.widget.Toast
 import com.mkrworld.androidlib.BuildConfig
 import com.mkrworld.androidlib.callback.OnBaseActivityListener
 import com.mkrworld.androidlib.callback.OnBaseFragmentListener
@@ -19,15 +18,12 @@ import com.mkrworld.mobilpay.dto.appdata.DTOCollectionStatusConsolidateData
 import com.mkrworld.mobilpay.dto.appdata.DTOStatusConsolidateDataList
 import com.mkrworld.mobilpay.dto.network.collectionstatus.DTOCollectionStatusRequest
 import com.mkrworld.mobilpay.dto.network.collectionstatus.DTOCollectionStatusResponse
-import com.mkrworld.mobilpay.eventbus.OpenUnpaidBillDetails
 import com.mkrworld.mobilpay.provider.fragment.FragmentProvider
 import com.mkrworld.mobilpay.provider.fragment.FragmentTag
 import com.mkrworld.mobilpay.provider.network.AppNetworkTaskProvider
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler
 import com.mkrworld.mobilpay.utils.PreferenceData
 import com.mkrworld.mobilpay.utils.Utils
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -95,15 +91,6 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, BaseViewHol
         init()
     }
 
-    @Subscribe()
-    fun onMessageEvent(openUnpaidBillDetails: OpenUnpaidBillDetails) {
-        Tracer.debug(TAG, "goToUnpaidDetailsScreen : ")
-        if (activity is OnBaseActivityListener) {
-            (activity as OnBaseActivityListener).onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.UNPAID_DETAILS)!!, null,
-                    true, FragmentTag.UNPAID_DETAILS)
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         menu?.clear()
         inflater?.inflate(R.menu.menu_nothing, menu);
@@ -118,18 +105,6 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, BaseViewHol
     override fun onDestroyView() {
         mAppNetworkTaskProvider?.detachProvider()
         super.onDestroyView()
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        EventBus.getDefault().unregister(this)
     }
 
     override fun onBackPressed(): Boolean {
@@ -157,7 +132,10 @@ class FragmentCollectionStatus : Fragment(), OnBaseFragmentListener, BaseViewHol
         Tracer.debug(TAG, "onViewHolderClicked: ")
         when (view.id) {
             R.id.item_collection_status_data_imageview_question -> {
-                Toast.makeText(activity, "Jai matta de", Toast.LENGTH_LONG).show()
+                if (activity is OnBaseActivityListener) {
+                    (activity as OnBaseActivityListener).onBaseActivityAddFragment(FragmentProvider.getFragment(FragmentTag.UNPAID_DETAILS)!!, null,
+                            true, FragmentTag.UNPAID_DETAILS)
+                }
             }
         }
     }

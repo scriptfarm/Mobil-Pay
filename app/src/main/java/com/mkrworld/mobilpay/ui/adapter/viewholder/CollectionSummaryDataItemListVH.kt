@@ -4,7 +4,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-
 import com.mkrworld.androidlib.ui.adapter.BaseAdapter
 import com.mkrworld.androidlib.ui.adapter.BaseAdapterItem
 import com.mkrworld.androidlib.ui.adapter.BaseViewHolder
@@ -14,8 +13,7 @@ import com.mkrworld.mobilpay.R
 import com.mkrworld.mobilpay.dto.appdata.DTOSummaryConsolidateDataList
 import com.mkrworld.mobilpay.ui.adapter.AdapterItemHandler
 import com.mkrworld.mobilpay.ui.adapter.GridSpacingItemDecoration
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by mkr on 16/3/18.
@@ -27,15 +25,15 @@ class CollectionSummaryDataItemListVH : BaseViewHolder<DTOSummaryConsolidateData
         private val TAG = BuildConfig.BASE_TAG + ".CollectionSummaryDataItemListVH"
     }
 
-    private var mRecyclerView : RecyclerView?=null
-    private var mBaseAdapter : BaseAdapter?=null
+    private var mRecyclerView: RecyclerView? = null
+    private var mBaseAdapter: BaseAdapter? = null
 
     /**
      * Constructor
      *
      * @param itemView
      */
-    constructor(itemView : View) : super(itemView) {
+    constructor(itemView: View) : super(itemView) {
         Tracer.debug(TAG, "CollectionSummaryDataItemListVH: ")
         val colorDivider = ContextCompat.getColor(getContext(), R.color.divider_color)
         val dividerHeight = getContext().resources.getDimensionPixelOffset(R.dimen.divider_size)
@@ -45,13 +43,14 @@ class CollectionSummaryDataItemListVH : BaseViewHolder<DTOSummaryConsolidateData
             override fun onViewHolderClicked(holder: BaseViewHolder<*>, view: View) {
                 onClick(view)
             }
+        })
         mRecyclerView!!.adapter = mBaseAdapter
         mRecyclerView!!.layoutManager = GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false)
         mRecyclerView!!.addItemDecoration(GridSpacingItemDecoration(1, dividerHeight, colorDivider, false))
     }
 
-    override fun bindData(dto : DTOSummaryConsolidateDataList) {
-        Tracer.debug(TAG, "bindData: " + dto !!)
+    override fun bindData(dto: DTOSummaryConsolidateDataList) {
+        Tracer.debug(TAG, "bindData: " + dto!!)
         if (dto == null) {
             return
         }
@@ -63,7 +62,7 @@ class CollectionSummaryDataItemListVH : BaseViewHolder<DTOSummaryConsolidateData
      *
      * @return
      */
-    private fun getSummaryConsolidateDataList(dtoSummaryConsolidateDataList : DTOSummaryConsolidateDataList) : ArrayList<BaseAdapterItem<*>> {
+    private fun getSummaryConsolidateDataList(dtoSummaryConsolidateDataList: DTOSummaryConsolidateDataList): ArrayList<BaseAdapterItem<*>> {
         Tracer.debug(TAG, "getSummaryConsolidateDataList: ")
         val baseAdapterItemList = ArrayList<BaseAdapterItem<*>>()
         val adapterViewType = AdapterItemHandler.AdapterItemViewType.SUMMARY_CONSOLIDATE_DATA.ordinal
